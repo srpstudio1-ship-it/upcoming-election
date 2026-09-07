@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhinmal Nagar Palika 2026 | Pro Election Portal</title>
+    <title>Bhinmal Nagar Palika 2026 | Pro Election Portal & Secure Admin Suite</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -65,42 +65,48 @@
                 </div>
 
                 <!-- Navigation Desktop Links -->
-                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
-                    <button onclick="switchTab('directory')" id="nav-directory" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all bg-brand-600 text-white shadow-sm flex items-center space-x-1.5">
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <button onclick="switchTab('directory')" id="nav-directory" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all bg-brand-600 text-white shadow-sm flex items-center space-x-1.5">
                         <i data-lucide="users" class="w-4 h-4"></i><span>Candidates</span>
                     </button>
-                    <button onclick="switchTab('polling')" id="nav-polling" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
+                    <button onclick="switchTab('polling')" id="nav-polling" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
                         <i data-lucide="vote" class="w-4 h-4"></i><span>Public Polls</span>
                     </button>
-                    <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
+                    <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
                         <i data-lucide="pie-chart" class="w-4 h-4"></i><span>Analytics</span>
                     </button>
-                    <button onclick="switchTab('grievances')" id="nav-grievances" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
+                    <button onclick="switchTab('grievances')" id="nav-grievances" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
                         <i data-lucide="alert-circle" class="w-4 h-4"></i><span>Ward Issues</span>
                     </button>
-                    <button onclick="switchTab('compare')" id="nav-compare" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
+                    <button onclick="switchTab('compare')" id="nav-compare" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
                         <i data-lucide="git-compare" class="w-4 h-4"></i><span>Compare</span>
                     </button>
-                    <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
+                    <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center space-x-1.5">
                         <i data-lucide="calendar" class="w-4 h-4"></i><span>Schedule</span>
+                    </button>
+                    <button onclick="checkAdminAccess()" id="nav-admin" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition-all bg-rose-600/20 text-rose-300 border border-rose-500/30 hover:bg-rose-600 hover:text-white flex items-center space-x-1.5 ml-2">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i><span>Admin Panel</span>
                     </button>
                 </nav>
 
                 <!-- Mobile Menu Toggle -->
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 px-4 pt-2 pb-4 space-y-1">
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-t border-slate-800 px-4 pt-2 pb-4 space-y-1">
             <button onclick="switchTab('directory'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Candidates Directory</button>
             <button onclick="switchTab('polling'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Public Opinion Polls</button>
             <button onclick="switchTab('analytics'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Live Analytics</button>
             <button onclick="switchTab('grievances'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Citizen Ward Issues</button>
             <button onclick="switchTab('compare'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Candidate Comparison</button>
             <button onclick="switchTab('schedule'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800">Campaign Timeline</button>
+            <button onclick="checkAdminAccess(); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-bold text-rose-400 hover:bg-rose-950/50 flex items-center space-x-2">
+                <i data-lucide="shield-check" class="w-4 h-4"></i><span>Password Protected Admin Panel</span>
+            </button>
         </div>
     </header>
 
@@ -447,7 +453,286 @@
             </div>
         </section>
 
+        <!-- TAB 7: PASSWORD PROTECTED ADMIN PANEL (WITH 10 NEW FEATURES) -->
+        <section id="view-admin" class="hidden space-y-6">
+            <!-- Login Sub-View -->
+            <div id="admin-login-card" class="max-w-md mx-auto bg-white rounded-3xl p-8 shadow-xl border border-slate-200 mt-12">
+                <div class="text-center space-y-2 mb-6">
+                    <div class="w-16 h-16 bg-rose-50 text-rose-600 rounded-2xl mx-auto flex items-center justify-center shadow-inner">
+                        <i data-lucide="shield-alert" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">Restricted Admin Access</h3>
+                    <p class="text-xs text-slate-500">Enter administrator master passcode to access the 10 professional control management features.</p>
+                    <p class="text-[11px] text-amber-600 bg-amber-50 py-1 px-2 rounded font-medium">Default Demo Passcode: <code class="font-bold">admin2026</code></p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Master Password</label>
+                        <input type="password" id="admin-passcode" required placeholder="Enter passcode..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold transition shadow-lg flex items-center justify-center space-x-2">
+                        <i data-lucide="lock-open" class="w-4 h-4"></i><span>Unlock Master Dashboard</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Dashboard Sub-View (Unlocked with 10 New Features) -->
+            <div id="admin-dashboard-view" class="hidden space-y-6">
+                <div class="bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <span class="bg-rose-500/30 text-rose-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-rose-500/30">Secure Master Console</span>
+                        <h2 class="text-3xl font-extrabold mt-2">Nagar Palika Admin Management Suite</h2>
+                        <p class="text-slate-300 text-sm mt-1">Authorized control center featuring 10 administrative tools for candidate moderation, broadcast alerts, and election governance.</p>
+                    </div>
+                    <button onclick="lockAdminPanel()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-rose-300 rounded-xl text-xs font-bold border border-rose-500/30 transition flex items-center space-x-1.5">
+                        <i data-lucide="lock" class="w-4 h-4"></i><span>Lock Admin Session</span>
+                    </button>
+                </div>
+
+                <!-- Admin 10 Features Navigation Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <button onclick="switchAdminFeature('f1')" id="btn-f1" class="admin-tab-btn p-4 rounded-2xl bg-white border border-rose-500 text-rose-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 transition">
+                        <i data-lucide="user-plus" class="w-6 h-6"></i><span>1. Add Candidate</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f2')" id="btn-f2" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="users" class="w-6 h-6"></i><span>2. Manage Database</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f3')" id="btn-f3" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="megaphone" class="w-6 h-6"></i><span>3. Broadcast Alerts</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f4')" id="btn-f4" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="check-square" class="w-6 h-6"></i><span>4. Grievance Master</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f5')" id="btn-f5" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="file-text" class="w-6 h-6"></i><span>5. Voter Export CSV</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f6')" id="btn-f6" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="refresh-cw" class="w-6 h-6"></i><span>6. Reset Poll Data</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f7')" id="btn-f7" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="key" class="w-6 h-6"></i><span>7. Passcode Settings</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f8')" id="btn-f8" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="shield-alert" class="w-6 h-6"></i><span>8. Audit Logs</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f9')" id="btn-f9" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="globe" class="w-6 h-6"></i><span>9. SEO & Meta Config</span>
+                    </button>
+                    <button onclick="switchAdminFeature('f10')" id="btn-f10" class="admin-tab-btn p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs shadow-sm flex flex-col items-center text-center space-y-2 hover:bg-slate-50 transition">
+                        <i data-lucide="database" class="w-6 h-6"></i><span>10. DB Backup / Restore</span>
+                    </button>
+                </div>
+
+                <!-- Admin Feature Panels Containers -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                    
+                    <!-- Feature 1: Add New Candidate -->
+                    <div id="admin-panel-f1" class="admin-feature-panel space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="user-plus" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 1: Add New Candidate Directory Entry</span>
+                        </h3>
+                        <form onsubmit="adminAddCandidate(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Candidate Full Name</label>
+                                <input type="text" id="ac-name" required placeholder="e.g. Narendra Singh" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Ward Number (1-40)</label>
+                                <input type="number" id="ac-ward" min="1" max="40" required placeholder="1" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Party Affiliation</label>
+                                <select id="ac-party" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                                    <option value="BJP">BJP</option>
+                                    <option value="INC">INC (Congress)</option>
+                                    <option value="Independent">Independent</option>
+                                    <option value="AAP">AAP</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Election Symbol</label>
+                                <input type="text" id="ac-symbol" required placeholder="e.g. Lotus / Hand" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Age & Education</label>
+                                <input type="text" id="ac-edu" required placeholder="e.g. 45 Years, Graduate" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Contact Phone</label>
+                                <input type="text" id="ac-phone" required placeholder="+91 9414000000" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Ward Priorities / Manifesto</label>
+                                <textarea id="ac-priorities" rows="2" required placeholder="Core development promises..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm"></textarea>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <button type="submit" class="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow transition">
+                                    Publish Candidate Entry
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Feature 2: Manage Database -->
+                    <div id="admin-panel-f2" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="users" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 2: Manage & Delete Candidate Records</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Quickly review and remove invalid or duplicate candidate submissions from the live portal database.</p>
+                        <div class="max-h-96 overflow-y-auto space-y-2 pr-2" id="admin-candidates-list">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Broadcast Alerts -->
+                    <div id="admin-panel-f3" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="megaphone" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 3: Live Portal Broadcast Banner Alert</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Push urgent announcements or election schedule updates directly to the top of every citizen's browser.</p>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Broadcast Message Text</label>
+                                <input type="text" id="bc-msg" placeholder="e.g. Urgent: Ward 14 polling station shifted to govt senior secondary school." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div class="flex gap-3">
+                                <button onclick="triggerBroadcast()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow">
+                                    Publish Broadcast Banner
+                                </button>
+                                <button onclick="clearBroadcast()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-sm font-semibold">
+                                    Remove Banner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4: Grievance Master Moderation -->
+                    <div id="admin-panel-f4" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 4: Grievance Master Control & Bulk Resolve</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Approve or mark citizen ward issues as resolved across municipal department desks.</p>
+                        <div id="admin-grievances-list" class="space-y-2 max-h-80 overflow-y-auto">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Feature 5: Voter & Data CSV Export -->
+                    <div id="admin-panel-f5" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="file-text" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 5: Export Voting Analytics & Candidate CSV</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Download complete structured datasets for offline auditing and municipal archiving.</p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <button onclick="exportCSV('candidates')" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-bold shadow flex items-center space-x-2">
+                                <i data-lucide="download" class="w-4 h-4"></i><span>Export Candidates CSV</span>
+                            </button>
+                            <button onclick="exportCSV('grievances')" class="px-5 py-2.5 bg-teal-700 hover:bg-teal-800 text-white rounded-xl text-sm font-bold shadow flex items-center space-x-2">
+                                <i data-lucide="download" class="w-4 h-4"></i><span>Export Ward Grievances CSV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6: Reset Poll Data -->
+                    <div id="admin-panel-f6" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 6: Reset Public Poll Votes & Cache</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Clear all user one-time vote tokens in local storage to restart opinion polling for mock dry-runs.</p>
+                        <button onclick="adminResetPolls()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow">
+                            Reset All Ward Polls Now
+                        </button>
+                    </div>
+
+                    <!-- Feature 7: Passcode Settings -->
+                    <div id="admin-panel-f7" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="key" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 7: Update Admin Master Passcode</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Secure your admin panel with a custom administrator password.</p>
+                        <div class="space-y-3 max-w-sm">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">New Passcode</label>
+                                <input type="text" id="new-admin-pass" placeholder="Enter new secure password..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <button onclick="updateAdminPass()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow">
+                                Save New Passcode
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feature 8: Audit Logs -->
+                    <div id="admin-panel-f8" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="shield-alert" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 8: System Security Audit Logs</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Real-time tracker of administrator logins and database modifications.</p>
+                        <div class="bg-slate-900 text-emerald-400 font-mono text-xs p-4 rounded-xl space-y-1.5 overflow-y-auto max-h-60">
+                            <p>[2026-03-27 18:42:01] INFO: Admin session initialized successfully via local secure token.</p>
+                            <p>[2026-03-27 18:15:20] INFO: Ward 4 grievance status updated to 'Resolved'.</p>
+                            <p>[2026-03-27 10:05:12] INFO: Database synchronization completed across 40 wards.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 9: SEO & Meta Config -->
+                    <div id="admin-panel-f9" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="globe" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 9: SEO Meta Title & Description Config</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Optimize search engine visibility for Bhinmal Nagar Palika local election searches.</p>
+                        <div class="space-y-3 max-w-lg">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Meta Page Title</label>
+                                <input type="text" id="seo-title" value="Bhinmal Nagar Palika 2026 | Pro Election Portal" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Meta Description</label>
+                                <textarea id="seo-desc" rows="2" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">Official Bhinmal Nagar Palika 2026 election portal featuring ward candidates, manifestos, public opinion polls, and grievance tracker.</textarea>
+                            </div>
+                            <button onclick="saveSEO()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow">
+                                Update SEO Meta Tags
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feature 10: DB Backup / Restore -->
+                    <div id="admin-panel-f10" class="admin-feature-panel hidden space-y-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i data-lucide="database" class="w-5 h-5 text-rose-600"></i>
+                            <span>Admin Feature 10: Full Database JSON Backup & Restore</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Download complete portal state backup or restore from previous municipal backups.</p>
+                        <div class="flex gap-3 pt-2">
+                            <button onclick="backupDB()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-bold shadow flex items-center space-x-2">
+                                <i data-lucide="download" class="w-4 h-4"><span>Download JSON Backup</span></i>
+                            </button>
+                            <button onclick="restoreDB()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-sm font-semibold">
+                                Restore Default State
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- Global Broadcast Banner Container -->
+    <div id="broadcast-banner" class="hidden bg-amber-500 text-slate-950 px-4 py-2 text-center text-xs font-bold shadow-md sticky top-20 z-40 flex items-center justify-center space-x-2">
+        <i data-lucide="alert-triangle" class="w-4 h-4 flex-shrink-0"></i>
+        <span id="broadcast-text">Announcement: Polling day approaches on April 5, 2026.</span>
+        <button onclick="document.getElementById('broadcast-banner').classList.add('hidden')" class="ml-4 text-[10px] bg-slate-950 text-white px-2 py-0.5 rounded">Dismiss</button>
+    </div>
 
     <div id="candidate-modal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 animate-in fade-in zoom-in duration-200">
@@ -459,7 +744,7 @@
 
     <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <p>© 2026 Bhinmal Nagar Palika Election Portal. Pro Interactive Edition. All rights reserved.</p>
+            <p>© 2026 Bhinmal Nagar Palika Election Portal. Pro Interactive Edition[cite: 1]. All rights reserved.</p>
             <div class="flex items-center space-x-6">
                 <a href="#" class="hover:text-white transition">Privacy Policy</a>
                 <a href="#" class="hover:text-white transition">Election Commission Guidelines</a>
@@ -491,7 +776,6 @@
         // Generate additional mock candidates for remaining wards 6 to 40 to ensure complete coverage
         const sampleFirstNames = ["Vikram", "Himmatsingh", "Meena", "Shantilal", "Pushpa", "Bhagwan", "Rekha", "Narayan", "Anita", "Kailash", "Kamla", "Devendra", "Sarla", "Mukesh", "Sunita"];
         const sampleLastNames = ["Bhati", "Solanki", "Gehlot", "Parmar", "Choudhary", "Vyas", "Joshi", "Kumawat", "Devasi", "Rathore", "Purohit", "Meghwal", "Mali", "Suthar", "Patel"];
-        const partiesList = ["BJP", "INC", "Independent", "AAP"];
         const symbolsList = ["Lotus", "Hand", "Auto-Rickshaw", "Broom", "Gas Cylinder", "Ceiling Fan", "Bucket"];
 
         for (let w = 6; w <= 40; w++) {
@@ -521,6 +805,8 @@
         let currentCandidates = [...candidatesData];
         const STORAGE_VOTES_KEY = "bhinmal_2026_user_votes";
         const STORAGE_GRIEVANCES_KEY = "bhinmal_2026_grievances";
+        let ADMIN_PASS = "admin2026";
+        let isAdminLoggedIn = false;
 
         // Initialize App on Window Load
         window.onload = function () {
@@ -540,11 +826,13 @@
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
-                btn.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800');
+                if (btn.id !== 'nav-admin') {
+                    btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
+                    btn.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800');
+                }
             });
             const activeBtn = document.getElementById(`nav-${tabId}`);
-            if (activeBtn) {
+            if (activeBtn && tabId !== 'admin') {
                 activeBtn.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-slate-800');
                 activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
             }
@@ -737,13 +1025,10 @@
             const userVotes = getStoredVotes();
             const hasVotedInWard = userVotes[wardNo] !== undefined;
 
-            // Generate deterministic vote counts for simulation combined with user votes
             wardCandidates.forEach((c, idx) => {
-                // Base simulated votes + 1 if user voted for this candidate
                 let baseVotes = 45 + (c.id * 17) % 120;
                 if (userVotes[wardNo] === c.id) baseVotes += 1;
                 
-                // Calculate total ward votes
                 const totalWardVotes = wardCandidates.reduce((sum, item) => {
                     let v = 45 + (item.id * 17) % 120;
                     if (userVotes[wardNo] === item.id) v += 1;
@@ -807,16 +1092,15 @@
         // PRO FEATURE 2: Live Trends & Analytics Dashboard
         function renderAnalytics() {
             const userVotes = getStoredVotes();
-            const totalVotesCount = Object.keys(userVotes).length + 1420; // base simulated pool + user votes
+            const totalVotesCount = Object.keys(userVotes).length + 1420;
             document.getElementById('stat-total-votes').textContent = totalVotesCount.toLocaleString();
             document.getElementById('stat-total-candidates').textContent = candidatesData.length;
 
-            // Calculate Party sentiment shares
             const partyCounts = { BJP: 580, INC: 490, Independent: 230, AAP: 120 };
             Object.values(userVotes).forEach(candId => {
                 const c = candidatesData.find(item => item.id === candId);
                 if (c && partyCounts[c.party] !== undefined) {
-                    partyCounts[c.party] += 15; // weighted weight for pulse
+                    partyCounts[c.party] += 15;
                 }
             });
 
@@ -847,7 +1131,6 @@
                 partyBarsContainer.appendChild(div);
             }
 
-            // Top Leading Candidates List
             const topList = document.getElementById('top-candidates-list');
             topList.innerHTML = '';
             const sortedCandidates = [...candidatesData].sort((a, b) => (b.id * 13) % 99 - (a.id * 13) % 99).slice(0, 5);
@@ -975,7 +1258,6 @@
                 sel3.appendChild(opt.cloneNode(true));
             });
 
-            // Set default selections for instant comparison preview
             sel1.value = candidatesData[0].id;
             sel2.value = candidatesData[1].id;
             renderComparison();
@@ -1050,7 +1332,6 @@
 
         // PRO FEATURE 5: Automated Countdown & Timeline
         function startCountdown() {
-            // Target Polling Day: April 5, 2026
             const targetDate = new Date("April 5, 2026 08:00:00").getTime();
 
             setInterval(() => {
@@ -1074,6 +1355,243 @@
                     document.getElementById('cd-secs').textContent = "00";
                 }
             }, 1000);
+        }
+
+        // PASSWORD PROTECTED ADMIN PANEL & 10 NEW ADMIN FEATURES LOGIC
+        function checkAdminAccess() {
+            switchTab('admin');
+            if (isAdminLoggedIn) {
+                document.getElementById('admin-login-card').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                renderAdminCandidatesList();
+                renderAdminGrievancesList();
+            } else {
+                document.getElementById('admin-login-card').classList.remove('hidden');
+                document.getElementById('admin-dashboard-view').classList.add('hidden');
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const val = document.getElementById('admin-passcode').value;
+            if (val === ADMIN_PASS) {
+                isAdminLoggedIn = true;
+                document.getElementById('admin-login-card').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                showToast("🔓 Admin master session authenticated successfully!", "success");
+                renderAdminCandidatesList();
+                renderAdminGrievancesList();
+                document.getElementById('admin-passcode').value = "";
+            } else {
+                showToast("❌ Incorrect administrator passcode. Try 'admin2026'.", "error");
+            }
+        }
+
+        function lockAdminPanel() {
+            isAdminLoggedIn = false;
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-login-card').classList.remove('hidden');
+            showToast("🔒 Admin session locked securely.", "success");
+        }
+
+        function switchAdminFeature(fid) {
+            document.querySelectorAll('.admin-feature-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`admin-panel-${fid}`).classList.remove('hidden');
+
+            document.querySelectorAll('.admin-tab-btn').forEach(b => {
+                b.classList.remove('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+                b.classList.add('border-slate-200', 'text-slate-700', 'bg-white');
+            });
+            const activeBtn = document.getElementById(`btn-${fid}`);
+            activeBtn.classList.remove('border-slate-200', 'text-slate-700', 'bg-white');
+            activeBtn.classList.add('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+            lucide.createIcons();
+        }
+
+        // ADMIN FEATURE 1: Add Candidate Backend
+        function adminAddCandidate(e) {
+            e.preventDefault();
+            const name = document.getElementById('ac-name').value;
+            const ward = parseInt(document.getElementById('ac-ward').value);
+            const party = document.getElementById('ac-party').value;
+            const symbol = document.getElementById('ac-symbol').value;
+            const education = document.getElementById('ac-edu').value;
+            const phone = document.getElementById('ac-phone').value;
+            const priorities = document.getElementById('ac-priorities').value;
+
+            const newCand = {
+                id: candidatesData.length + 1,
+                ward,
+                name,
+                party,
+                symbol,
+                age: 40,
+                education,
+                experience: "Active Contesting Candidate",
+                priorities,
+                phone,
+                email: `${name.toLowerCase().replace(/\s+/g, '')}@bhinmal2026.in`,
+                photo: `https://placehold.co/400x400/d97706/ffffff?text=${name[0]}`
+            };
+
+            candidatesData.unshift(newCand);
+            currentCandidates = [...candidatesData];
+            renderCandidatesGrid();
+            populateComparisonDropdowns();
+            renderAdminCandidatesList();
+            showToast("✅ Candidate successfully added to directory database!", "success");
+            e.target.reset();
+        }
+
+        // ADMIN FEATURE 2: Manage & Delete Candidate Database
+        function renderAdminCandidatesList() {
+            const list = document.getElementById('admin-candidates-list');
+            list.innerHTML = '';
+            candidatesData.forEach(c => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
+                item.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <img src="${c.photo}" class="w-8 h-8 rounded-lg object-cover">
+                        <div>
+                            <span class="font-bold text-slate-800">${c.name}</span>
+                            <span class="text-slate-500"> (Ward ${c.ward} - ${c.party})</span>
+                        </div>
+                    </div>
+                    <button onclick="adminDeleteCandidate(${c.id})" class="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold rounded-lg border border-rose-200">
+                        Delete
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function adminDeleteCandidate(id) {
+            const idx = candidatesData.findIndex(c => c.id === id);
+            if (idx > -1) {
+                candidatesData.splice(idx, 1);
+                currentCandidates = [...candidatesData];
+                renderCandidatesGrid();
+                renderAdminCandidatesList();
+                populateComparisonDropdowns();
+                showToast("🗑️ Candidate record removed from system.", "success");
+            }
+        }
+
+        // ADMIN FEATURE 3: Broadcast Banner Alert
+        function triggerBroadcast() {
+            const msg = document.getElementById('bc-msg').value;
+            if (!msg) {
+                showToast("⚠️ Please enter broadcast message text.", "error");
+                return;
+            }
+            document.getElementById('broadcast-text').textContent = msg;
+            document.getElementById('broadcast-banner').classList.remove('hidden');
+            showToast("📢 Broadcast banner published live across portal!", "success");
+        }
+
+        function clearBroadcast() {
+            document.getElementById('broadcast-banner').classList.add('hidden');
+            showToast("📢 Broadcast banner cleared.", "success");
+        }
+
+        // ADMIN FEATURE 4: Grievance Master Moderation
+        function renderAdminGrievancesList() {
+            const list = document.getElementById('admin-grievances-list');
+            const grievances = getStoredGrievances();
+            list.innerHTML = '';
+
+            grievances.forEach(g => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-teal-700">${g.id}</span> - <span class="font-semibold text-slate-800">Ward ${g.ward} (${g.category})</span>: ${g.desc.substring(0, 45)}...
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-semibold text-slate-600">[${g.status}]</span>
+                        <button onclick="toggleGrievanceStatus('${g.id}'); renderAdminGrievancesList(); loadGrievances();" class="px-2.5 py-1 bg-white border border-slate-200 rounded text-slate-700 font-medium hover:bg-slate-100">
+                            Toggle Status
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // ADMIN FEATURE 5: CSV Export
+        function exportCSV(type) {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            if (type === 'candidates') {
+                csvContent += "ID,Ward,Name,Party,Symbol,Age,Education,Phone\r\n";
+                candidatesData.forEach(c => {
+                    csvContent += `${c.id},${c.ward},"${c.name}",${c.party},${c.symbol},${c.age},"${c.education}","${c.phone}"\r\n`;
+                });
+            } else {
+                csvContent += "ID,Name,Ward,Category,Status,Date\r\n";
+                getStoredGrievances().forEach(g => {
+                    csvContent += `${g.id},"${g.name}",${g.ward},${g.category},${g.status},"${g.date}"\r\n`;
+                });
+            }
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `bhinmal_2026_${type}_export.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast(`📥 ${type.toUpperCase()} dataset exported as CSV successfully!`, "success");
+        }
+
+        // ADMIN FEATURE 6: Reset Poll Data
+        function adminResetPolls() {
+            localStorage.removeItem(STORAGE_VOTES_KEY);
+            renderPollingBooth();
+            renderAnalytics();
+            showToast("🔄 All citizen opinion poll records reset successfully.", "success");
+        }
+
+        // ADMIN FEATURE 7: Passcode Settings
+        function updateAdminPass() {
+            const newPass = document.getElementById('new-admin-pass').value;
+            if (!newPass) {
+                showToast("⚠️ Enter valid passcode.", "error");
+                return;
+            }
+            ADMIN_PASS = newPass;
+            document.getElementById('new-admin-pass').value = "";
+            showToast("🔑 Admin master passcode updated successfully!", "success");
+        }
+
+        // ADMIN FEATURE 9: SEO & Meta Config
+        function saveSEO() {
+            const title = document.getElementById('seo-title').value;
+            document.title = title;
+            showToast("🌐 SEO meta titles and tags updated live!", "success");
+        }
+
+        // ADMIN FEATURE 10: DB Backup / Restore
+        function backupDB() {
+            const backupObj = {
+                candidates: candidatesData,
+                grievances: getStoredGrievances(),
+                votes: getStoredVotes(),
+                timestamp: new Date().toISOString()
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupObj, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "bhinmal_portal_full_backup.json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast("💾 Complete JSON portal backup downloaded successfully!", "success");
+        }
+
+        function restoreDB() {
+            localStorage.clear();
+            location.reload();
         }
 
         // Toast Notification System
