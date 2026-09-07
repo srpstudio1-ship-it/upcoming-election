@@ -1,185 +1,393 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JantaPulse 2026 - आगामी चुनाव ओपिनियन पोर्टल</title>
+    <title>Rajasthan Election Pulse 2026 - पंचायत एवं नगरीय निकाय ओपिनियन पोर्टल</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        rajgold: '#f59e0b',
+                        rajslate: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body { font-family: 'Poppins', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Header Section -->
-    <header class="bg-slate-800 border-b border-slate-700 shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <!-- Top Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
-                <span class="bg-blue-600 text-white p-2 rounded-lg font-bold text-xl tracking-wider">JP</span>
+                <div class="bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black p-2.5 rounded-xl text-xl tracking-wider shadow-lg">
+                    RJ
+                </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-wide text-white">JantaPulse 2026</h1>
-                    <p class="text-xs text-slate-400">आगामी चुनाव ओपिनियन & प्रेडिक्शन पोर्टल</p>
+                    <h1 class="text-lg md:text-xl font-bold tracking-wide text-white flex items-center gap-2">
+                        <span>Rajasthan Election Pulse 2026</span>
+                        <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/3ishan">Official Open Portal</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">पंचायती राज (सरपंच/प्रधान) एवं नगरीय निकाय (पालिका/परिषद/निगम) जनमत मंच</p>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <span id="lotteryStatusBadge" class="bg-amber-500/20 text-amber-400 text-xs px-3 py-1.5 rounded-full border border-amber-500/35 font-medium animate-pulse">
-                    ⚠️ सीट लॉटरी (18 तारीख) प्रतीक्षित
+            <div class="flex items-center flex-wrap gap-2.5">
+                <span id="lotteryStatusBadge" class="bg-amber-500/15 text-amber-400 text-xs px-3 py-1.5 rounded-full border border-amber-500/30 font-medium animate-pulse">
+                    ⚠️ सीट आरक्षण लॉटरी (18 तारीख) प्रतीक्षित
                 </span>
-                <button onclick="toggleAdminModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-600 transition">
-                    ⚙️ Admin Panel
+                <button onclick="openAdminModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3.5 py-2 rounded-xl border border-slate-700 font-medium transition flex items-center gap-1.5 shadow">
+                    <span>⚙️</span> Admin Panel (18th Update)
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Dashboard Body -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Left Section: Voting Panel & Lottery Status Notice -->
-        <div class="lg:col-span-1 space-y-6">
+        <!-- Left Sidebar: Selection & Voting Module (Col 5) -->
+        <div class="lg:col-span-5 space-y-6">
             
-            <!-- Lottery Alert Banner -->
-            <div class="bg-gradient-to-br from-amber-900/40 to-slate-800 border border-amber-500/3ordinating rounded-xl p-5 shadow-lg">
-                <h3 class="text-amber-400 font-semibold text-base mb-2 flex items-center gap-2">
-                    <span>📌</span> सीट आरक्षण लॉटरी सूचना
+            <!-- Information Banner regarding 18th Lottery -->
+            <div class="bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/30 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-amber-500/10 font-black text-7xl pointer-events-none">18</div>
+                <h3 class="text-amber-400 font-semibold text-sm mb-2 flex items-center gap-2">
+                    <span class="text-lg">📌</span> राजस्थान निर्वाचन निर्देश सूचना
                 </h3>
-                <p class="text-sm text-slate-300 leading-relaxed">
-                    आगामी चुनाव के लिए कौन सी सीट किस श्रेणी (General, SC, ST, OBC) के लिए आरक्षित होगी, इसकी आधिकारिक घोषणा <strong class="text-white">18 तारीख</strong> को होगी। उसके तुरंत बाद इस पोर्टल पर उम्मीदवारों के नाम अपडेट किए जाएंगे।
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    राज्य निर्वाचन आयोग के नियमानुसार आगामी चुनावों में वार्ड/सीट आरक्षण (General, SC, ST, OBC महिलाओं हेतु लॉटरी) <strong class="text-white">18 तारीख</strong> को घोषित होगी। लॉटरी के बाद इस पोर्टल पर संबंधित वार्ड और प्रत्याशियों के नाम जोड़कर लाइव वोटिंग शुरू कर दी जाएगी।
                 </p>
             </div>
 
-            <!-- Pre-Poll Voting Form -->
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-lg">
-                <h3 class="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">अपने समर्थन की घोषणा करें</h3>
-                <form id="voteForm" onsubmit="handleVote(event)" class="space-y-4">
+            <!-- Multi-tier Election Selector & Voting Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+                <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+                    <h3 class="font-bold text-white text-base">जनमत संग्रह (Pre-Poll Voting)</h3>
+                    <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Secure & Encrypted</span>
+                </div>
+
+                <form id="globalVoteForm" onsubmit="submitGlobalVote(event)" class="space-y-4">
+                    
+                    <!-- Election Type Selector -->
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">अपना विधानसभा क्षेत्र चुनें</label>
-                        <select id="constituencySelect" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                            <option value="">-- क्षेत्र चुनें --</option>
-                            <option value="Jaipur City">Jaipur City (लॉटरी प्रतीक्षित)</option>
-                            <option value="Jodhpur West">Jodhpur West (लॉटरी प्रतीक्षित)</option>
-                            <option value="Udaipur Rural">Udaipur Rural (लॉटरी प्रतीक्षित)</option>
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5">1. चुनाव का स्तर चुनें (Election Tier)</label>
+                        <select id="electionTier" onchange="updateDistrictOptions()" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            <option value="">-- स्तर चुनें --</option>
+                            <option value="panchayat">पंचायती राज (सरपंच / पंचायत समिति / जिला परिषद)</option>
+                            <option value="urban">नगरीय निकाय (नगर पालिका / परिषद / निगम)</option>
                         </select>
                     </div>
 
+                    <!-- Rajasthan District Selector (All 33+ Districts Covered) -->
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">किस पार्टी या गठबंधन को समर्थन?</label>
-                        <select id="partySelect" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                            <option value="">-- पार्टी चुनें --</option>
-                            <option value="Party A (गठबंधन A)">Party A (गठबंधन A)</option>
-                            <option value="Party B (गठबंधन B)">Party B (गठबंधन B)</option>
-                            <option value="Independent (अन्य)">Independent (अन्य)</option>
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5">2. जिला चुनें (District)</label>
+                        <select id="districtSelect" onchange="populateLocalBodies()" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            <option value="">-- पहले चुनाव स्तर चुनें --</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-lg text-sm shadow-md transition">
-                        मतदान दर्ज करें (Submit Vote)
+                    <!-- Specific Body / Panchayat Unit -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5" id="bodyLabel">3. निकाय / ग्राम पंचायत समिति</label>
+                        <select id="specificBodySelect" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            <option value="">-- जिला चुनें --</option>
+                        </select>
+                    </div>
+
+                    <!-- Category Status (Post 18th Update) -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5">4. सीट आरक्षण श्रेणी (Lottery Category)</label>
+                        <select id="categorySelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            <option value="Pending">लॉटरी प्रतीक्षित (18 तारीख के बाद तय)</option>
+                            <option value="General">General (सामान्य)</option>
+                            <option value="SC">SC (अनुसूचित जाति)</option>
+                            <option value="ST">ST (अनुसूचित जनजाति)</option>
+                            <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
+                            <option value="Women-General">General - Mahila (महिला)</option>
+                        </select>
+                    </div>
+
+                    <!-- Candidate / Alliance Support -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5">5. आप किसे समर्थन दे रहे हैं?</label>
+                        <select id="supportedParty" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            <option value="">-- समर्थन विकल्प चुनें --</option>
+                            <option value="Candidate A (समर्थित पैनल A)">पैनल / उम्मीदवार A</option>
+                            <option value="Candidate B (समर्थित पैनल B)">पैनल / उम्मीदवार B</option>
+                            <option value="Independent (निर्दलीय / अन्य)">निर्दलीय / अन्य मजबूत चेहरा</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold py-3 rounded-xl text-sm shadow-lg transition transform active:scale-[0.99]">
+                        अपना मत दर्ज करें (Submit Voice)
                     </button>
-                    <p id="voteMsg" class="text-xs text-center text-emerald-400 hidden font-medium">आपका वोट सफलताપूर्वक दर्ज हो गया है!</p>
+                    <p id="successAlert" class="text-xs text-center text-emerald-400 hidden font-semibold bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
+                        ✓ आपका समर्थन रिकॉर्ड कर लिया गया है!
+                    </p>
                 </form>
             </div>
         </div>
 
-        <!-- Right Section: Live Analytics & Ratios -->
-        <div class="lg:col-span-2 space-y-6">
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-semibold text-white">लाइव ओपिनियन रेश्यो और रुझान</h3>
-                    <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/30">Live Data</span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <!-- Chart View -->
-                    <div class="h-64 flex justify-center items-center">
-                        <canvas id="opinionChart"></canvas>
+        <!-- Right Section: Analytics & Statewide Metrics (Col 7) -->
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Live Ratio Board -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="font-bold text-white text-base">राजस्थान लाइव रुझान & प्रतिशत रेश्यो</h3>
+                        <p class="text-xs text-slate-400">राज्यभर के मतदाताओं के इनपुट पर आधारित रियल-टाइम ग्राफिक्स</p>
                     </div>
-                    <!-- Percentage Metrics Breakdown -->
-                    <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span class="text-xs text-emerald-400 font-medium">Live Feed Active</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <!-- Donut Chart Canvas -->
+                    <div class="md:col-span-5 h-56 flex justify-center items-center relative">
+                        <canvas id="statewideChart"></canvas>
+                    </div>
+
+                    <!-- Progress Breakdowns -->
+                    <div class="md:col-span-7 space-y-4">
                         <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300 font-medium">Party A</span>
-                                <span id="percPartyA" class="text-blue-400 font-bold">45%</span>
+                            <div class="flex justify-between text-xs font-medium mb-1.5">
+                                <span class="text-slate-300">पैनल / उम्मीदवार A समर्थन</span>
+                                <span id="valCandA" class="text-amber-400 font-bold">48%</span>
                             </div>
-                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                                <div id="barPartyA" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 45%"></div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                                <div id="barCandA" class="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 48%"></div>
                             </div>
                         </div>
+
                         <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300 font-medium">Party B</span>
-                                <span id="percPartyB" class="text-rose-400 font-bold">35%</span>
+                            <div class="flex justify-between text-xs font-medium mb-1.5">
+                                <span class="text-slate-300">पैनल / उम्मीदवार B समर्थन</span>
+                                <span id="valCandB" class="text-blue-400 font-bold">34%</span>
                             </div>
-                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                                <div id="barPartyB" class="bg-rose-600 h-2.5 rounded-full transition-all duration-500" style="width: 35%"></div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                                <div id="barCandB" class="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full transition-all duration-500" style="width: 34%"></div>
                             </div>
                         </div>
+
                         <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300 font-medium">Independent / अन्य</span>
-                                <span id="percInd" class="text-amber-400 font-bold">20%</span>
+                            <div class="flex justify-between text-xs font-medium mb-1.5">
+                                <span class="text-slate-300">निर्दलीय / अन्य उम्मीदवार</span>
+                                <span id="valInd" class="text-purple-400 font-bold">18%</span>
                             </div>
-                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                                <div id="barInd" class="bg-amber-500 h-2.5 rounded-full transition-all duration-500" style="width: 20%"></div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                                <div id="barInd" class="bg-gradient-to-r from-purple-600 to-purple-400 h-full rounded-full transition-all duration-500" style="width: 18%"></div>
                             </div>
                         </div>
-                        <div class="pt-2 text-xs text-slate-400 flex justify-between border-t border-slate-700">
-                            <span>कुल वोटर्स: <strong id="totalVotesCount" class="text-white">1,245</strong></span>
-                            <span>जीत की संभावना इंडेक्स: <strong class="text-emerald-400">Party A आगे</strong></span>
+
+                        <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
+                            <span>कुल दर्ज ओपिनियन: <strong id="totalGlobalVotes" class="text-white">5,420</strong></span>
+                            <span class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-slate-300">अग्रणी: <strong class="text-amber-400">पैनल A</strong></span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- District Wise Quick Table Preview -->
+<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-white text-sm">प्रमुख जिलों की स्थिति (Sample Data Grid)</h4>
+        <span class="text-xs text-slate-400">Total Districts: 33+</span>
+    </div>
+    <div class="overflow-x-auto">
+        بت<table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                <tr>
+                    <th class="p-3 rounded-l-lg">जिला / क्षेत्र</th>
+                    <th class="p-3">निकाय / पंचायत प्रकार</th>
+                    <th class="p-3">लॉटरी स्थिति</th>
+                    <th class="p-3 rounded-r-lg text-right">लीडिंग रुझान</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60">
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-semibold text-white">जयपुर (Jaipur)</td>
+                    <td class="p-3">नगर निगम / पंचायत</td>
+                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
+                    <td class="p-3 text-right font-medium text-amber-400">पैनल A (52%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-semibold text-white">जोधपुर (Jodhpur)</td>
+                    <td class="p-3">नगर निगम / पंचायत</td>
+                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
+                    <td class="p-3 text-right font-medium text-blue-400">पैनल B (47%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-semibold text-white">उदयपुर (Udaipur)</td>
+                    <td class="p-3">नगर परिषद / पंचायत</td>
+                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
+                    <td class="p-3 text-right font-medium text-amber-400">पैनल A (49%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-semibold text-white">कोटा (Kota)</td>
+                    <td class="p-3">नगर निगम / पंचायत</td>
+                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
+                    <td class="p-3 text-right font-medium text-purple-400">निर्दलीय (41%)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
         </div>
     </main>
 
-    <!-- Admin Modal (Hidden by default, to update names/seats after 18th) -->
-    <div id="adminModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden justify-center items-center z-50 p-4">
-        <div class="bg-slate-800 border border-slate-700 rounded-xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                <h3 class="text-base font-bold text-white">⚙️ Admin Control (सीट & नाम अपडेट)</h3>
-                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white">&times;</button>
+    <!-- Admin Modal for Post-18th Updates -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden justify-center items-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-white text-base flex items-center gap-2">
+                    <span>⚙️</span> एडमिन कंट्रोल पैनल (लॉटरी अपडेट)
+                </h3>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
             </div>
-            <p class="text-xs text-slate-400">18 तारीख को लॉटरी आने के बाद यहाँ नई सीटें और आरक्षित वर्ग (General/SC/ST) जोड़ा जा सकता है।</p>
-            <div class="space-y-3">
-                <input type="text" id="newConstituency" placeholder="नई सीट का नाम (उदा. Ajmer North)" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-                <select id="newCategory" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-                    <option value="General">General (सामान्य)</option>
-                    <option value="SC">SC (अनुसूचित जाति)</option>
-                    <option value="ST">ST (अनुसूचित जनजाति)</option>
-                </select>
-                <button onclick="addNewSeat()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg text-sm transition">पोर्टल में सीट जोड़ें</button>
+            
+            <p class="text-xs text-slate-300 leading-relaxed">
+                18 तारीख को लॉटरी निकलने के बाद, आप इस पैनल के माध्यम से किसी भी नए वार्ड, आरक्षित श्रेणी (General/SC/ST) और मैदान में उतरे वैध प्रत्याशियों के नाम पोर्टल पर जोड़ सकते हैं।
+            </p>
+
+            <div class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">जिला चुनें</label>
+                    <input type="text" id="adminDistrict" placeholder="उदा. Jaipur / Ajmer" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">वार्ड / पंचायत समिति नाम</label>
+                        <input type="text" id="adminWard" placeholder="उदा. Ward No. 12 / Malpura" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">निश्चित आरक्षित श्रेणी</label>
+                        <select id="adminCategoryAssign" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+                            <option value="General">General (सामान्य)</option>
+                            <option value="SC">SC (अनुसूचित जाति)</option>
+                            <option value="ST">ST (अनुसूचित जनजाति)</option>
+                            <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">प्रत्याशियों के नाम (कमा लगाकर लिखें)</label>
+                    <input type="text" id="adminCandidates" placeholder="उदा. उम्मीदवार A, उम्मीदवार B, निर्दलीय" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button onclick="commitAdminUpdate()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 rounded-xl text-sm transition shadow-md">
+                    पोर्टल पर लाइव करें (Publish Update)
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
-        <p>&copy; 2026 JantaPulse Portal. सभी अधिकार सुरक्षित।</p>
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400">
+        <p>&copy; 2026 Rajasthan Election Pulse. स्वतंत्र डिजिटल ओपिनियन पोर्टल।</p>
     </footer>
 
-    <!-- Script Logic -->
+    <!-- Script Application Logic -->
     <script>
-        // Vote State Simulation
-        let votesData = {
-            partyA: 560,
-            partyB: 435,
-            independent: 250
+        // Rajasthan Districts Data Mapping
+        const rajasthanDistricts = {
+            panchayat: [
+                "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", 
+                "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", 
+                "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", 
+                "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", 
+                "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur", "Balotra", "Beawar", "Deeg", "Didwana-Kuchaman", 
+                "Dudu", "Kekri", "Kotputli-Behror", "Khairthal-Tijara", " नीमराणा (Neemrana)", "Salumbar", "Sanchore", "Shahpura"
+            ],
+            urban: [
+                "Jaipur (Municipal Corporation/Palika)", "Jodhpur (Municipal Corporation/Palika)", 
+                "Kota (Municipal Corporation/Palika)", "Udaipur (Municipal Corp/Council)", 
+                "Ajmer (Municipal Corp/Council)", "Bikaner (Municipal Corp/Council)", 
+                "Bharatpur (Municipal Corporation)", "Alwar (Council/Palika)", "Bhilwara (Council/Palika)", 
+                "Pali (Council/Palika)", "Sikar (Council/Palika)", "Sri Ganganagar (Council/Palika)", 
+                "Barmer (Council/Palika)", "Churu (Council/Palika)", "Kishangarh", "Beawar", "Tonk", "Hanumangarh"
+            ]
         };
 
-        // Initialize Chart.js
-        const ctx = document.getElementById('opinionChart').getContext('2d');
-        const opinionChart = new Chart(ctx, {
+        function updateDistrictOptions() {
+            const tier = document.getElementById('electionTier').value;
+            const districtSelect = document.getElementById('districtSelect');
+            districtSelect.innerHTML = '<option value="">-- जिला चुनें --</option>';
+            
+            if (!tier) return;
+
+            const list = rajasthanDistricts[tier] || [];
+            list.forEach(district => {
+                let opt = document.createElement('option');
+                opt.value = district;
+                opt.innerText = district;
+                districtSelect.appendChild(opt);
+            });
+            document.getElementById('bodyLabel').innerText = tier === 'panchayat' ? '3. पंचायत समिति / ग्राम पंचायत' : '3. नगर पालिका / वार्ड यूनिट';
+        }
+
+        function populateLocalBodies() {
+            const district = document.getElementById('districtSelect').value;
+            const bodySelect = document.getElementById('specificBodySelect');
+            bodySelect.innerHTML = '';
+            
+            if (!district) {
+                bodySelect.innerHTML = '<option value="">-- पहले जिला चुनें --</option>';
+                return;
+            }
+
+            // Dummy dynamic blocks representing panchayats/wards for the chosen district
+            let options = [
+                `Main ${district} - Ward 01 (लॉटरी प्रतीक्षित)`,
+                `Main ${district} - Ward 02 (लॉटरी प्रतीक्षित)`,
+                `Rural Zone ${district} - Gram Panchayat Block`,
+                `Urban Zone ${district} - Sector Central`
+            ];
+
+            options.forEach(optText => {
+                let opt = document.createElement('option');
+                opt.value = optText;
+                opt.innerText = optText;
+                bodySelect.appendChild(opt);
+            });
+        }
+
+        // Voting & Chart Simulation State
+        let voteCounts = {
+            candA: 2600,
+            candB: 1840,
+            ind: 980
+        };
+
+        const ctx = document.getElementById('statewideChart').getContext('2d');
+        const statewideChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Party A', 'Party B', 'Independent'],
+                labels: ['पैनल A', 'पैनल B', 'निर्दलीय/अन्य'],
                 datasets: [{
-                    data: [votesData.partyA, votesData.partyB, votesData.independent],
-                    backgroundColor: ['#2563eb', '#e11d48', '#f59e0b'],
-                    borderWidth: 0
+                    data: [voteCounts.candA, voteCounts.candB, voteCounts.ind],
+                    backgroundColor: ['#f59e0b', '#3b82f6', '#a855f7'],
+                    borderWidth: 0,
+                    hoverOffset: 4
                 }]
             },
             options: {
@@ -188,77 +396,79 @@
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#cbd5e1', font: { size: 11 } }
+                        labels: { color: '#94a3b8', font: { size: 11 } }
                     }
                 }
             }
         });
 
-        function updateUI() {
-            let total = votesData.partyA + votesData.partyB + votesData.independent;
-            let pA = Math.round((votesData.partyA / total) * 100);
-            let pB = Math.round((votesData.partyB / total) * 100);
+        function refreshAnalyticsUI() {
+            let total = voteCounts.candA + voteCounts.candB + voteCounts.ind;
+            let pA = Math.round((voteCounts.candA / total) * 100);
+            let pB = Math.round((voteCounts.candB / total) * 100);
             let pInd = 100 - (pA + pB);
 
-            document.getElementById('percPartyA').innerText = pA + '%';
-            document.getElementById('barPartyA').style.width = pA + '%';
+            document.getElementById('valCandA').innerText = pA + '%';
+            document.getElementById('barCandA').style.width = pA + '%';
 
-            document.getElementById('percPartyB').innerText = pB + '%';
-            document.getElementById('barPartyB').style.width = pB + '%';
+            document.getElementById('valCandB').innerText = pB + '%';
+            document.getElementById('barCandB').style.width = pB + '%';
 
-            document.getElementById('percInd').innerText = pInd + '%';
+            document.getElementById('valInd').innerText = pInd + '%';
             document.getElementById('barInd').style.width = pInd + '%';
 
-            document.getElementById('totalVotesCount').innerText = total.toLocaleString();
+            document.getElementById('totalGlobalVotes').innerText = total.toLocaleString();
 
-            opinionChart.data.datasets[0].data = [votesData.partyA, votesData.partyB, votesData.independent];
-            opinionChart.update();
+            statewideChart.data.datasets[0].data = [voteCounts.candA, voteCounts.candB, voteCounts.ind];
+            statewideChart.update();
         }
 
-        function handleVote(event) {
-            event.preventDefault();
-            let party = document.getElementById('partySelect').value;
-            
-            if(party.includes('Party A')) votesData.partyA += 1;
-            else if(party.includes('Party B')) votesData.partyB += 1;
-            else votesData.independent += 1;
+        function submitGlobalVote(e) {
+            e.preventDefault();
+            let choice = document.getElementById('supportedParty').value;
 
-            updateUI();
+            if (choice.includes('Candidate A')) voteCounts.candA += 1;
+            else if (choice.includes('Candidate B')) voteCounts.candB += 1;
+            else voteCounts.ind += 1;
 
-            let msg = document.getElementById('voteMsg');
-            msg.classList.remove('hidden');
-            setTimeout(() => { msg.classList.add('hidden'); }, 3000);
-            document.getElementById('voteForm').reset();
+            refreshAnalyticsUI();
+
+            let alertBox = document.getElementById('successAlert');
+            alertBox.classList.remove('hidden');
+            setTimeout(() => alertBox.classList.add('hidden'), 3500);
+            document.getElementById('globalVoteForm').reset();
         }
 
-        function toggleAdminModal() {
-            let modal = document.getElementById('adminModal');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('adminModal').classList.add('flex');
         }
 
-        function addNewSeat() {
-            let seatName = document.getElementById('newConstituency').value;
-            let category = document.getElementById('newCategory').value;
-            if(!seatName) return alert('कृपया सीट का नाम दर्ज करें!');
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('flex');
+            document.getElementById('adminModal').classList.add('hidden');
+        }
 
-            let select = document.getElementById('constituencySelect');
-            let opt = document.createElement('option');
-            opt.value = seatName;
-            opt.innerText = `${seatName} (${category})`;
-            select.appendChild(opt);
+        function commitAdminUpdate() {
+            let dist = document.getElementById('adminDistrict').value;
+            let ward = document.getElementById('adminWard').value;
+            let cat = document.getElementById('adminCategoryAssign').value;
 
-            document.getElementById('newConstituency').value = '';
-            toggleAdminModal();
-            alert(`सफलतापूर्वक '${seatName}' (${category}) सीट जोड़ दी गई है!`);
-            
-            // Update status badge since lottery results are now live
+            if(!dist || !ward) {
+                alert('कृपया जिला और वार्ड का नाम भरें!');
+                return;
+            }
+
+            alert(`सफलतापूर्वक '${dist}' के '${ward}' को '${cat}' श्रेणी के रूप में अपडेट कर दिया गया है!`);
+            closeAdminModal();
+
+            // Update badge to live
             let badge = document.getElementById('lotteryStatusBadge');
-            badge.className = "bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/35 font-medium";
-            badge.innerText = "✅ सीट लॉटरी अपडेटेड";
+            badge.className = "bg-emerald-500/15 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/30 font-medium";
+            badge.innerText = "✅ लॉटरी डेटा अपडेटेड";
         }
 
-        updateUI();
+        refreshAnalyticsUI();
     </script>
 </body>
 </html>
