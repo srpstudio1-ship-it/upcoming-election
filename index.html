@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JantaPulse 2026 - आगामी चुनाव ओपिनियन पोर्टल</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-slate-800 border-b border-slate-700 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="bg-blue-600 text-white p-2 rounded-lg font-bold text-xl tracking-wider">JP</span>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide text-white">JantaPulse 2026</h1>
+                    <p class="text-xs text-slate-400">आगामी चुनाव ओपिनियन & प्रेडिक्शन पोर्टल</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="lotteryStatusBadge" class="bg-amber-500/20 text-amber-400 text-xs px-3 py-1.5 rounded-full border border-amber-500/35 font-medium animate-pulse">
+                    ⚠️ सीट लॉटरी (18 तारीख) प्रतीक्षित
+                </span>
+                <button onclick="toggleAdminModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-600 transition">
+                    ⚙️ Admin Panel
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Section: Voting Panel & Lottery Status Notice -->
+        <div class="lg:col-span-1 space-y-6">
+            
+            <!-- Lottery Alert Banner -->
+            <div class="bg-gradient-to-br from-amber-900/40 to-slate-800 border border-amber-500/3ordinating rounded-xl p-5 shadow-lg">
+                <h3 class="text-amber-400 font-semibold text-base mb-2 flex items-center gap-2">
+                    <span>📌</span> सीट आरक्षण लॉटरी सूचना
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    आगामी चुनाव के लिए कौन सी सीट किस श्रेणी (General, SC, ST, OBC) के लिए आरक्षित होगी, इसकी आधिकारिक घोषणा <strong class="text-white">18 तारीख</strong> को होगी। उसके तुरंत बाद इस पोर्टल पर उम्मीदवारों के नाम अपडेट किए जाएंगे।
+                </p>
+            </div>
+
+            <!-- Pre-Poll Voting Form -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-lg">
+                <h3 class="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">अपने समर्थन की घोषणा करें</h3>
+                <form id="voteForm" onsubmit="handleVote(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">अपना विधानसभा क्षेत्र चुनें</label>
+                        <select id="constituencySelect" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                            <option value="">-- क्षेत्र चुनें --</option>
+                            <option value="Jaipur City">Jaipur City (लॉटरी प्रतीक्षित)</option>
+                            <option value="Jodhpur West">Jodhpur West (लॉटरी प्रतीक्षित)</option>
+                            <option value="Udaipur Rural">Udaipur Rural (लॉटरी प्रतीक्षित)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">किस पार्टी या गठबंधन को समर्थन?</label>
+                        <select id="partySelect" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                            <option value="">-- पार्टी चुनें --</option>
+                            <option value="Party A (गठबंधन A)">Party A (गठबंधन A)</option>
+                            <option value="Party B (गठबंधन B)">Party B (गठबंधन B)</option>
+                            <option value="Independent (अन्य)">Independent (अन्य)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-lg text-sm shadow-md transition">
+                        मतदान दर्ज करें (Submit Vote)
+                    </button>
+                    <p id="voteMsg" class="text-xs text-center text-emerald-400 hidden font-medium">आपका वोट सफलताપूर्वक दर्ज हो गया है!</p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Section: Live Analytics & Ratios -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold text-white">लाइव ओपिनियन रेश्यो और रुझान</h3>
+                    <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/30">Live Data</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Chart View -->
+                    <div class="h-64 flex justify-center items-center">
+                        <canvas id="opinionChart"></canvas>
+                    </div>
+                    <!-- Percentage Metrics Breakdown -->
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300 font-medium">Party A</span>
+                                <span id="percPartyA" class="text-blue-400 font-bold">45%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                                <div id="barPartyA" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300 font-medium">Party B</span>
+                                <span id="percPartyB" class="text-rose-400 font-bold">35%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                                <div id="barPartyB" class="bg-rose-600 h-2.5 rounded-full transition-all duration-500" style="width: 35%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300 font-medium">Independent / अन्य</span>
+                                <span id="percInd" class="text-amber-400 font-bold">20%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                                <div id="barInd" class="bg-amber-500 h-2.5 rounded-full transition-all duration-500" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        <div class="pt-2 text-xs text-slate-400 flex justify-between border-t border-slate-700">
+                            <span>कुल वोटर्स: <strong id="totalVotesCount" class="text-white">1,245</strong></span>
+                            <span>जीत की संभावना इंडेक्स: <strong class="text-emerald-400">Party A आगे</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Admin Modal (Hidden by default, to update names/seats after 18th) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden justify-center items-center z-50 p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <h3 class="text-base font-bold text-white">⚙️ Admin Control (सीट & नाम अपडेट)</h3>
+                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white">&times;</button>
+            </div>
+            <p class="text-xs text-slate-400">18 तारीख को लॉटरी आने के बाद यहाँ नई सीटें और आरक्षित वर्ग (General/SC/ST) जोड़ा जा सकता है।</p>
+            <div class="space-y-3">
+                <input type="text" id="newConstituency" placeholder="नई सीट का नाम (उदा. Ajmer North)" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+                <select id="newCategory" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+                    <option value="General">General (सामान्य)</option>
+                    <option value="SC">SC (अनुसूचित जाति)</option>
+                    <option value="ST">ST (अनुसूचित जनजाति)</option>
+                </select>
+                <button onclick="addNewSeat()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg text-sm transition">पोर्टल में सीट जोड़ें</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
+        <p>&copy; 2026 JantaPulse Portal. सभी अधिकार सुरक्षित।</p>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        // Vote State Simulation
+        let votesData = {
+            partyA: 560,
+            partyB: 435,
+            independent: 250
+        };
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('opinionChart').getContext('2d');
+        const opinionChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Party A', 'Party B', 'Independent'],
+                datasets: [{
+                    data: [votesData.partyA, votesData.partyB, votesData.independent],
+                    backgroundColor: ['#2563eb', '#e11d48', '#f59e0b'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#cbd5e1', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        function updateUI() {
+            let total = votesData.partyA + votesData.partyB + votesData.independent;
+            let pA = Math.round((votesData.partyA / total) * 100);
+            let pB = Math.round((votesData.partyB / total) * 100);
+            let pInd = 100 - (pA + pB);
+
+            document.getElementById('percPartyA').innerText = pA + '%';
+            document.getElementById('barPartyA').style.width = pA + '%';
+
+            document.getElementById('percPartyB').innerText = pB + '%';
+            document.getElementById('barPartyB').style.width = pB + '%';
+
+            document.getElementById('percInd').innerText = pInd + '%';
+            document.getElementById('barInd').style.width = pInd + '%';
+
+            document.getElementById('totalVotesCount').innerText = total.toLocaleString();
+
+            opinionChart.data.datasets[0].data = [votesData.partyA, votesData.partyB, votesData.independent];
+            opinionChart.update();
+        }
+
+        function handleVote(event) {
+            event.preventDefault();
+            let party = document.getElementById('partySelect').value;
+            
+            if(party.includes('Party A')) votesData.partyA += 1;
+            else if(party.includes('Party B')) votesData.partyB += 1;
+            else votesData.independent += 1;
+
+            updateUI();
+
+            let msg = document.getElementById('voteMsg');
+            msg.classList.remove('hidden');
+            setTimeout(() => { msg.classList.add('hidden'); }, 3000);
+            document.getElementById('voteForm').reset();
+        }
+
+        function toggleAdminModal() {
+            let modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function addNewSeat() {
+            let seatName = document.getElementById('newConstituency').value;
+            let category = document.getElementById('newCategory').value;
+            if(!seatName) return alert('कृपया सीट का नाम दर्ज करें!');
+
+            let select = document.getElementById('constituencySelect');
+            let opt = document.createElement('option');
+            opt.value = seatName;
+            opt.innerText = `${seatName} (${category})`;
+            select.appendChild(opt);
+
+            document.getElementById('newConstituency').value = '';
+            toggleAdminModal();
+            alert(`सफलतापूर्वक '${seatName}' (${category}) सीट जोड़ दी गई है!`);
+            
+            // Update status badge since lottery results are now live
+            let badge = document.getElementById('lotteryStatusBadge');
+            badge.className = "bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/35 font-medium";
+            badge.innerText = "✅ सीट लॉटरी अपडेटेड";
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
