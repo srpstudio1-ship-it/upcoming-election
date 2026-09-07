@@ -1,630 +1,1382 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>भीनमाल निकाय एवं सरपंचा जनमत पोर्टल | Bhinmal Public Opinion Portal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>भीनमाल जनमत एवं चुनाव सर्वेक्षण पोर्टल 2026</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Hind & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         :root {
-            --primary-color: #1a365d;
-            --accent-color: #d69e2e;
-            --bg-light: #f7fafc;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --bg-dark: #0f172a;
+            --card-dark: rgba(30, 41, 59, 0.85);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --accent-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --accent-emerald: #10b981;
+            --party-bjp: #f97316;
+            --party-inc: #0284c7;
+            --party-rlp: #eab308;
+            --party-ind: #8b5cf6;
         }
+
         body {
-            background-color: var(--bg-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #2d3748;
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            font-family: 'Hind', 'Inter', sans-serif;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+            background-attachment: fixed;
         }
-        .navbar-custom {
-            background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
-            color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-dark);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .header-title {
-            font-weight: 700;
-            letter-spacing: 0.5px;
+
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
         }
-        .stat-card {
-            border: none;
-            border-radius: 12px;
-            background: #ffffff;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.2s;
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
         }
-        .stat-card:hover {
-            transform: translateY(-3px);
+
+        /* Custom Search Styling */
+        .search-container {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto;
         }
-        .nav-pills .nav-link.active {
-            background-color: var(--primary-color);
+
+        .search-input {
+            background: rgba(30, 41, 59, 0.95);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 1rem 1.75rem 1rem 3.5rem;
+            font-size: 1.15rem;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
         }
-        .nav-pills .nav-link {
-            color: var(--primary-color);
+
+        .search-input:focus {
+            background: rgba(30, 41, 59, 1);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+            color: #ffffff;
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+        }
+
+        /* Party Badges */
+        .badge-bjp { background-color: var(--party-bjp); color: #fff; }
+        .badge-inc { background-color: var(--party-inc); color: #fff; }
+        .badge-rlp { background-color: var(--party-rlp); color: #000; font-weight: 700; }
+        .badge-ind { background-color: var(--party-ind); color: #fff; }
+
+        .party-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
             font-weight: 600;
+            display: inline-block;
         }
-        .candidate-card {
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            background: #ffffff;
-            padding: 15px;
-            margin-bottom: 12px;
-            transition: all 0.2s ease-in-out;
-        }
-        .candidate-card:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 2px 8px rgba(214, 158, 46, 0.2);
-        }
-        .party-badge {
-            font-size: 0.78rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        .bg-inc { background-color: #eaf6ff; color: #0066cc; }
-        .bg-bjp { background-color: #fff3e6; color: #e65100; }
-        .bg-ind { background-color: #f0f0f0; color: #424242; }
-        .bg-rlp { background-color: #e8f5e9; color: #2e7d32; }
-        .progress-bar-custom {
+
+        /* Custom Progress Bars */
+        .vote-progress {
             height: 10px;
             border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
-        .ward-badge {
-            background-color: var(--accent-color);
+
+        .vote-progress-bar {
+            height: 100%;
+            transition: width 0.8s ease-in-out;
+        }
+
+        /* Nav Pills customization */
+        .nav-pills .nav-link {
+            color: #94a3b8;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.6rem 1.4rem;
+            margin: 0 0.25rem;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: #ffffff;
-            font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 20px;
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-pills .nav-link:hover:not(.active) {
+            color: #f8fafc;
+            border-color: var(--card-border);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Stream Ticker */
+        .ticker-box {
+            max-height: 380px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue) transparent;
+        }
+
+        .ticker-item {
+            border-left: 3px solid var(--accent-gold);
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Custom Buttons */
+        .btn-vote {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 0.4rem 1.1rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-vote:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: scale(1.03);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .landmark-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-size: 0.8rem;
+            border-radius: 6px;
+            padding: 0.2rem 0.5rem;
+            display: inline-block;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid var(--card-border);
+            border-radius: 1.25rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
     </style>
 </head>
 <body>
 
-<!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-custom py-3">
-    <div class="container">
-        <a class="navbar-brand text-white d-flex align-items-center" href="#">
-            <i class="fa-solid me-2 text-warning"></i>
-            <div>
-                <div class="header-title fs-4">भीनमाल जनमत एवं चुनाव सर्वेक्षण पोर्टल</div>
-                <small class="text-light opacity-75">नगर पालिका (40 वार्ड) एवं भीनमाल क्षेत्र पंचायत सर्वे</small>
-            </div>
-        </a>
-        <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-warning text-dark fs-6"><i class="fa-solid fa-location-dot me-1"></i> जिला: जालोर (राज.)</span>
-        </div>
-    </div>
-</nav>
+    <!-- Sticky Top Navigation -->
+    <nav class="navbar navbar-expand-lg glass-nav sticky-top py-3">
+        <div class="container-fluid px-lg-5">
+            <a class="navbar-brand d-flex align-items-center text-white fw-bold me-auto" href="#">
+                <div class="rounded-circle bg-warning p-2 me-2 d-flex align-items-center justify-content-center shadow" style="width: 42px; height: 42px;">
+                    <i class="fa-solid fa-check-to-slot text-dark fs-5"></i>
+                </div>
+                <div>
+                    <span class="fs-5 d-block text-warning leading-tight">भीनमाल जनमत 2026</span>
+                    <span class="fs-7 text-white-50 fw-normal">नगरपालिका एवं ग्राम पंचायत चुनाव सर्वेक्षण</span>
+                </div>
+            </a>
 
-<div class="container my-4">
-    <!-- Overview Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-3 col-6">
-            <div class="stat-card p-3 text-center">
-                <i class="fa-solid fa-city text-primary fs-3 mb-1"></i>
-                <div class="text-muted small">कुल निकाय वार्ड</div>
-                <div class="fs-4 fw-bold text-dark">40 वार्ड</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card p-3 text-center">
-                <i class="fa-solid fa-tree-city text-success fs-3 mb-1"></i>
-                <div class="text-muted small">संबद्ध ग्राम पंचायतें</div>
-                <div class="fs-4 fw-bold text-dark">28 पंचायतें</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card p-3 text-center">
-                <i class="fa-solid fa-users text-warning fs-3 mb-1"></i>
-                <div class="text-muted small">कुल दर्ज जनमत (वोट)</div>
-                <div class="fs-4 fw-bold text-dark" id="totalPortalVotes">1,482</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card p-3 text-center">
-                <i class="fa-solid fa-check-to-slot text-danger fs-3 mb-1"></i>
-                <div class="text-muted small">विधानसभा क्षेत्र</div>
-                <div class="fs-4 fw-bold text-dark">143 - भीनमाल</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-pills mb-4 bg-white p-2 rounded shadow-sm justify-content-center" id="portalTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="nagar-palika-tab" data-bs-toggle="pill" data-bs-target="#nagar-palika" type="button" role="tab">
-                <i class="fa-solid fa-building-flag me-1"></i> नगर पालिका वार्ड प्रत्याशी (1-40)
+            <button class="navbar-toggler border-secondary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <i class="fa-solid fa-bars"></i>
             </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="sarpanch-tab" data-bs-toggle="pill" data-bs-target="#sarpanch" type="button" role="tab">
-                <i class="fa-solid fa-person-shelter me-1"></i> ग्राम पंचायत सरपंच सर्वे
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="assembly-tab" data-bs-toggle="pill" data-bs-target="#assembly" type="button" role="tab">
-                <i class="fa-solid fa-chart-pie me-1"></i> क्षेत्रिय रुझान व विधायक डेटा
-            </button>
-        </li>
-    </ul>
 
-    <!-- Tab Content -->
-    <div class="tab-content" id="portalTabsContent">
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarMain">
+                <ul class="nav nav-pills ms-auto justify-content-center" id="portalTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="dash-tab" data-bs-toggle="tab" data-bs-target="#tab-dashboard" type="button">
+                            <i class="fa-solid fa-chart-pie me-1"></i> डैशबोर्ड & रुझान
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="wards-tab" data-bs-toggle="tab" data-bs-target="#tab-wards" type="button">
+                            <i class="fa-solid fa-city me-1"></i> वार्ड (1-40)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="panchayat-tab" data-bs-toggle="tab" data-bs-target="#tab-panchayats" type="button">
+                            <i class="fa-solid fa-wheat-awn me-1"></i> ग्राम पंचायतें (10)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="issues-tab" data-bs-toggle="tab" data-bs-target="#tab-issues" type="button">
+                            <i class="fa-solid fa-comments me-1"></i> मुद्दे & फ़ीड
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <!-- 1. NAGAR PALIKA TAB -->
-        <div class="tab-pane fade show active" id="nagar-palika" role="tabpanel">
-            <div class="card border-0 shadow-sm p-3 mb-4">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-6">
-                        <label for="wardSelect" class="form-label fw-bold"><i class="fa-solid fa-filter text-primary"></i> भीनमाल नगर पालिका वार्ड चुनें:</label>
-                        <select class="form-select" id="wardSelect" onchange="loadWardData(this.value)">
-                            <!-- Wards dynamically populated -->
+    <!-- Hero Header with Live Search -->
+    <header class="py-4 py-lg-5 text-center position-relative">
+        <div class="container px-3">
+            <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold">
+                <i class="fa-solid fa-satellite-dish me-1 fa-spin"></i> लाइव लोकमत सर्वेक्षण 2026
+            </span>
+            <h1 class="display-6 fw-bold text-white mb-2">भीनमाल जनमत एवं स्थानीय प्रत्याशी सर्वेक्षण</h1>
+            <p class="lead text-light opacity-75 mb-4 mx-auto" style="max-width: 700px;">
+                40 नगरपालिका वार्डों एवं 10 प्रमुख ग्राम पंचायतों के जनमत, प्रत्याशी प्राथमिकता व जवाई बांध पेयजल/स्थानीय विकास मुद्दों का सटीक विश्लेषण।
+            </p>
+
+            <!-- MANDATORY GLOBAL SEARCH BAR -->
+            <div class="search-container mb-3">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="globalSearchInput" class="form-control search-input" 
+                       placeholder="प्रत्याशी (उदा. दिनेश, शांतिलाल), वार्ड नं. (1-40), लैंडमार्क (उदा. नीलकंठ, स्टेशन रोड) या गांव (दासपां)..."
+                       onkeyup="handleGlobalSearch()">
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="quickFilterSearch('')">सब देखें</button>
+                <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="quickFilterSearch('भाजपा')">भाजपा (BJP)</button>
+                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="quickFilterSearch('कांग्रेस')">कांग्रेस (INC)</button>
+                <button class="btn btn-sm btn-outline-warning rounded-pill px-3 text-warning" onclick="quickFilterSearch('आरएलपी')">RLP</button>
+                <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="quickFilterSearch('निर्दलीय')">निर्दलीय</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid px-lg-5 pb-5">
+        
+        <!-- Live Search Results Overlay View (Shown when searching) -->
+        <div id="searchResultsContainer" class="d-none mb-5">
+            <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
+                    <h4 class="text-warning mb-0"><i class="fa-solid fa-filter me-2"></i>खोज परिणाम (<span id="searchResultCount">0</span>)</h4>
+                    <button class="btn btn-sm btn-outline-light rounded-circle" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="searchResultsGrid" class="row g-3">
+                    <!-- Search items rendered via JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="portalTabContent">
+            
+            <!-- TAB 1: DASHBOARD & ANALYTICS -->
+            <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel">
+                <!-- Overview Stats Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="glass-card p-3 p-lg-4 text-center">
+                            <i class="fa-solid fa-users-viewfinder text-primary fs-2 mb-2"></i>
+                            <h3 class="fw-bold mb-0 text-white" id="statTotalVotes">12,480</h3>
+                            <span class="text-white-50 fs-7">कुल दर्ज जनमत</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="glass-card p-3 p-lg-4 text-center">
+                            <i class="fa-solid fa-building-flag text-warning fs-2 mb-2"></i>
+                            <h3 class="fw-bold mb-0 text-white">40</h3>
+                            <span class="text-white-50 fs-7">नगरपालिका वार्ड</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="glass-card p-3 p-lg-4 text-center">
+                            <i class="fa-solid fa-wheat-awn-circle-exclamation text-emerald fs-2 mb-2" style="color:#10b981;"></i>
+                            <h3 class="fw-bold mb-0 text-white">10</h3>
+                            <span class="text-white-50 fs-7">ग्राम पंचायतें</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="glass-card p-3 p-lg-4 text-center">
+                            <i class="fa-solid fa-trophy text-danger fs-2 mb-2"></i>
+                            <h3 class="fw-bold mb-0 text-white" id="statLeadingParty">भाजपा</h3>
+                            <span class="text-white-50 fs-7">अग्रणी पार्टी रुझान</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts & Breakdown Row -->
+                <div class="row g-4 mb-4">
+                    <!-- Chart 1: Party Share -->
+                    <div class="col-lg-6">
+                        <div class="glass-card p-4 h-100">
+                            <h5 class="text-white fw-bold mb-3 d-flex justify-content-between align-items-center">
+                                <span><i class="fa-solid fa-chart-pie me-2 text-warning"></i>पार्टी अनुसार वोट शेयर</span>
+                                <span class="badge bg-secondary fs-8">लाइव डेटा</span>
+                            </h5>
+                            <div class="position-relative" style="height: 260px;">
+                                <canvas id="partyShareChart"></canvas>
+                            </div>
+                            <div class="mt-3 text-center fs-7 text-white-50">
+                                कुल 40 वार्डों एवं 10 पंचायतों का संकलित समर्थन प्रतिशत
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Candidates Leaderboard -->
+                    <div class="col-lg-6">
+                        <div class="glass-card p-4 h-100">
+                            <h5 class="text-white fw-bold mb-3"><i class="fa-solid fa-ranking-star me-2 text-warning"></i>शीर्ष लोकप्रिय प्रत्याशी (टॉप ट्रेंड्स)</h5>
+                            <div id="topCandidatesList" class="d-flex flex-column gap-2">
+                                <!-- Generated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Issues Summary -->
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="glass-card p-4">
+                            <h5 class="text-white fw-bold mb-3"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>भीनमाल के प्रमुख नागरिक मुद्दे व जनमत प्राथमिकताएं</h5>
+                            <div class="row g-3" id="issuesPrioritySummary">
+                                <div class="col-md-3 col-6">
+                                    <div class="p-3 rounded bg-dark border border-secondary text-center">
+                                        <i class="fa-solid fa-faucet-drip text-info fs-3 mb-2"></i>
+                                        <h6 class="text-white mb-1">जवाई बांध पेयजल आपूर्ति</h6>
+                                        <span class="badge bg-danger">42% नागरिक प्राथमिकता</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="p-3 rounded bg-dark border border-secondary text-center">
+                                        <i class="fa-solid fa-road text-warning fs-3 mb-2"></i>
+                                        <h6 class="text-white mb-1">सड़क repair व नाली सफाई</h6>
+                                        <span class="badge bg-warning text-dark">28% नागरिक प्राथमिकता</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="p-3 rounded bg-dark border border-secondary text-center">
+                                        <i class="fa-solid fa-hospital text-success fs-3 mb-2"></i>
+                                        <h6 class="text-white mb-1">स्वास्थ्य व ट्रौमा सेंटर</h6>
+                                        <span class="badge bg-info">18% नागरिक प्राथमिकता</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="p-3 rounded bg-dark border border-secondary text-center">
+                                        <i class="fa-solid fa-lightbulb text-primary fs-3 mb-2"></i>
+                                        <h6 class="text-white mb-1">लाइट्स व सफाई व्यवस्था</h6>
+                                        <span class="badge bg-secondary">12% नागरिक प्राथमिकता</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: NAGAR PALIKA WARDS (1-40) -->
+            <div class="tab-pane fade" id="tab-wards" role="tabpanel">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                    <div>
+                        <h3 class="text-white fw-bold mb-1"><i class="fa-solid fa-city me-2 text-warning"></i>भीनमाल नगरपालिका - समस्त 40 वार्ड</h3>
+                        <p class="text-white-50 mb-0 fs-7">प्रत्येक वार्ड के प्रमुख लैंडमार्क व चुनावी प्रत्याशियों की संपूर्ण सूची</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="wardJumpSelect" class="text-white-50 fs-7 text-nowrap">वार्ड पर जाएं:</label>
+                        <select id="wardJumpSelect" class="form-select bg-dark text-white border-secondary rounded-pill" onchange="jumpToWard(this.value)">
+                            <option value="">-- वार्ड चुनें --</option>
+                            <!-- Options filled via JS -->
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control mt-md-4" id="wardSearch" placeholder="वार्ड या क्षेत्र का नाम खोजें (उदा: क्षेमंकरी, महावीर नगर)..." onkeyup="filterWards()">
-                    </div>
+                </div>
+
+                <!-- 40 Wards Grid -->
+                <div class="row g-4" id="wardsGrid">
+                    <!-- Dynamic 40 Wards Rendered via Javascript -->
                 </div>
             </div>
 
-            <div id="wardDetailContainer">
-                <!-- Selected Ward details dynamically inserted here -->
-            </div>
-        </div>
+            <!-- TAB 3: GRAM PANCHAYATS (10 VILLAGES) -->
+            <div class="tab-pane fade" id="tab-panchayats" role="tabpanel">
+                <div class="mb-4">
+                    <h3 class="text-white fw-bold mb-1"><i class="fa-solid fa-wheat-awn me-2 text-warning"></i>भीनमाल तहसील प्रमुख ग्राम पंचायतें</h3>
+                    <p class="text-white-50 mb-0 fs-7">आसपास के प्रमुख गांवों में सरपंच चुनाव जनमत सर्वेक्षण</p>
+                </div>
 
-        <!-- 2. SARPANCH TAB -->
-        <div class="tab-pane fade" id="sarpanch" role="tabpanel">
-            <div class="card border-0 shadow-sm p-3 mb-4">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-6">
-                        <label for="panchayatSelect" class="form-label fw-bold"><i class="fa-solid fa-location-crosshairs text-success"></i> भीनमाल तहसील ग्राम पंचायत चुनें:</label>
-                        <select class="form-select" id="panchayatSelect" onchange="loadPanchayatData(this.value)">
-                            <option value="dashpan">ग्राम पंचायत - दासपां (Dashpan)</option>
-                            <option value="bagoda">ग्राम पंचायत - बागोड़ा (Bagoda)</option>
-                            <option value="khanpur">ग्राम पंचायत - खानपुर (Khanpur)</option>
-                            <option value="karda">ग्राम पंचायत - करड़ा (Karda)</option>
-                            <option value="narasana">ग्राम पंचायत - नरणावास / नरसाना</option>
-                        </select>
-                    </div>
+                <div class="row g-4" id="panchayatsGrid">
+                    <!-- Dynamic 10 Panchayats Rendered via Javascript -->
                 </div>
             </div>
 
-            <div id="panchayatDetailContainer">
-                <!-- Panchayat Data inserted dynamically -->
-            </div>
-        </div>
-
-        <!-- 3. ASSEMBLY OVERVIEW TAB -->
-        <div class="tab-pane fade" id="assembly" role="tabpanel">
-            <div class="card border-0 shadow-sm p-4">
-                <h4 class="fw-bold text-primary mb-3"><i class="fa-solid fa-landmark me-2"></i>143-भीनमाल विधानसभा क्षेत्र जनमत स्थिति</h4>
-                <p class="text-muted">भीनमाल नगर पालिका एवं आसपास के ग्रामीण अंचलों का संयुक्त सार्वजनिक रुझान विश्लेषक।</p>
-                
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <h6 class="fw-bold border-bottom pb-2">विधानसभा क्षेत्र 2023 आधिकारिक परिणाम reference:</h6>
-                        <ul class="list-group list-group-flush mb-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div><strong>समरजीत सिंह</strong> (INC)</div>
-                                <span class="badge bg-primary rounded-pill">97,157 वोट (विजेता)</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div><strong>पूराराम चौधरी</strong> (BJP)</div>
-                                <span class="badge bg-warning text-dark rounded-pill">96,130 वोट</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div><strong>रमेश कुमार भंसाली</strong> (निर्दलीय)</div>
-                                <span class="badge bg-secondary rounded-pill">2,234 वोट</span>
-                            </li>
-                        </ul>
+            <!-- TAB 4: CITIZEN ISSUES & FEED TICKER -->
+            <div class="tab-pane fade" id="tab-issues" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Issue Submission Form -->
+                    <div class="col-lg-5">
+                        <div class="glass-card p-4">
+                            <h4 class="text-warning fw-bold mb-3"><i class="fa-solid fa-pen-to-square me-2"></i>अपनी राय व समस्या दर्ज करें</h4>
+                            <p class="text-white-50 fs-7 mb-3">भीनमाल विकास व जनहित के मुद्दों पर अपना विचार सीधे प्रशासन व जनप्रतिनिधियों तक पहुँचाएं।</p>
+                            
+                            <form id="issueForm" onsubmit="submitIssueForm(event)">
+                                <div class="mb-3">
+                                    <label class="form-label text-white fs-7">आपका नाम (वैकल्पिक)</label>
+                                    <input type="text" id="issueUserName" class="form-control bg-dark text-white border-secondary" placeholder="उदा. रामेश्वर पुरोहित">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-white fs-7">वार्ड / ग्राम पंचायत</label>
+                                    <input type="text" id="issueUserLocation" class="form-control bg-dark text-white border-secondary" placeholder="उदा. वार्ड 11 या दासपां" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-white fs-7">मुख्य विषय</label>
+                                    <select id="issueCategory" class="form-select bg-dark text-white border-secondary" required>
+                                        <option value="जवाई बांध पानी / पेयजल">जवाई बांध पेयजल आपूर्ति</option>
+                                        <option value="सड़क व नाली व्यवस्था">सड़क मरम्मत व नाली व्यवस्था</option>
+                                        <option value="कूड़ा व सफाई प्रबंधन">कूड़ा व सफाई प्रबंधन</option>
+                                        <option value="स्ट्रीट लाइट व बिजली">स्ट्रीट लाइट व बिजली</option>
+                                        <option value="ट्रैफिक व अतिक्रमण">ट्रैफिक व अतिक्रमण</option>
+                                        <option value="स्वास्थ्य व अस्पताल">स्वास्थ्य व अस्पताल सेवाएं</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-white fs-7">आपकी विस्तृत प्रतिक्रिया / सुझाव</label>
+                                    <textarea id="issueUserText" class="form-control bg-dark text-white border-secondary" rows="3" placeholder="यहाँ अपनी बात लिखें..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100 fw-bold rounded-pill shadow">
+                                    <i class="fa-solid fa-paper-plane me-1"></i> प्रतिक्रिया पोस्ट करें
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h6 class="fw-bold border-bottom pb-2">पोर्टल मुख्य मुद्दे (नागरिक प्रतिक्रिया):</h6>
-                        <div class="alert alert-light border">
-                            <p class="mb-1"><i class="fa-solid fa-droplet text-info me-1"></i> <strong>पेयजल आपूर्ति:</strong> जवाई बांध से पानी आवंटन की नियमितता।</p>
-                            <p class="mb-1"><i class="fa-solid fa-road text-secondary me-1"></i> <strong>सड़क व नाली मरम्मत:</strong> स्टेशन रोड एवं रानीवाड़ा रोड का सुदृढ़ीकरण।</p>
-                            <p class="mb-0"><i class="fa-solid fa-broom text-success me-1"></i> <strong>सफाई व्यवस्था:</strong> मुख्य बाजार एवं क्षेमंकरी मंदिर मार्ग की नियमित सफाई।</p>
+
+                    <!-- Live Stream Ticker -->
+                    <div class="col-lg-7">
+                        <div class="glass-card p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-white fw-bold mb-0"><i class="fa-solid fa-rss text-danger me-2"></i>नागरिक प्रतिक्रिया व मुद्दे Stream</h4>
+                                <span class="badge bg-success"><i class="fa-solid fa-circle fa-beat me-1"></i>लाइव फीड</span>
+                            </div>
+                            <div class="ticker-box p-2" id="liveTickerContainer">
+                                <!-- Populated dynamically -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
+    </main>
 
-    </div>
-</div>
-
-<!-- Modal for Casting Opinion -->
-<div class="modal fade" id="voteModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="voteModalTitle">जनमत दर्ज करें</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="voteModalBodyText">क्या आप इस प्रत्याशी/उम्मीदवार को अपना समर्थन दर्ज करना चाहते हैं?</p>
-                <div class="mb-3">
-                    <label class="form-label small text-muted">आपका वार्ड / क्षेत्र का मुख्य मुद्दा (ऐच्छिक):</label>
-                    <input type="text" class="form-control" id="voterComment" placeholder="उदा: सफाई व्यवस्था बेहतर होनी चाहिए...">
+    <!-- VOTING MODAL -->
+    <div class="modal fade" id="votingModal" tabindex="-1" aria-labelledby="votingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-header-title text-warning fw-bold mb-0" id="votingModalLabel">
+                        <i class="fa-solid fa-vote-yea me-2"></i>जनमत समर्थन दर्ज करें
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">रद्द करें</button>
-                <button type="button" class="btn btn-success" onclick="confirmVote()"><i class="fa-solid fa-check"></i> वोट दर्ज करें</button>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="modal-body">
+                    <div class="p-3 bg-dark rounded border border-secondary mb-3">
+                        <span class="text-white-50 fs-8 d-block mb-1">आप समर्थन दे रहे हैं:</span>
+                        <h4 class="text-white fw-bold mb-1" id="modalCandidateName">दिनेश कुमार</h4>
+                        <div class="d-flex align-items-center gap-2">
+                            <span id="modalCandidateParty" class="party-tag badge-bjp">भाजपा</span>
+                            <span id="modalCandidateLoc" class="text-info fs-7">वार्ड 1</span>
+                        </div>
+                    </div>
 
-<footer class="bg-dark text-light py-4 mt-5">
-    <div class="container text-center">
-        <p class="mb-1">भीनमाल नगर पालिका वार्ड (1 से 40) एवं ग्राम पंचायत जनमत मंच</p>
-        <small class="text-muted">यह पोर्टल केवल जनमत प्रतिक्रिया व सार्वजनिक विचार-विमर्श हेतु एक डिजिटल प्रारूप है।</small>
-    </div>
-</footer>
+                    <form id="voteSubmitForm" onsubmit="confirmVoteSubmission(event)">
+                        <input type="hidden" id="modalCandidateId">
+                        <input type="hidden" id="modalType"> <!-- 'ward' or 'panchayat' -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Real Bhinmal Nagar Palika Wards (1-40 Data Structure)
-    const wardData = [
-        {
-            id: 1,
-            name: "वार्ड नं. 01 - कागवराहश्याम व नीलकंठ महादेव क्षेत्र",
-            area: "कागवराहश्याम मन्दिर, कृष्ण सरोवर, मेघवालों की बस्ती, भीलों की बस्ती, नीलकंठ महादेव मन्दिर क्षेत्र",
-            voters: 2100,
-            candidates: [
-                { id: "w1_1", name: "दिनेश कुमार मेघवाल", party: "INC", partyClass: "bg-inc", votes: 342 },
-                { id: "w1_2", name: "महेंद्र सिंह राव", party: "BJP", partyClass: "bg-bjp", votes: 310 },
-                { id: "w1_3", name: "सुरेश भील", party: "निर्दलीय", partyClass: "bg-ind", votes: 85 }
-            ]
-        },
-        {
-            id: 2,
-            name: "वार्ड नं. 02 - नीलकंठ व राज हॉस्पिटल क्षेत्र",
-            area: "नीलकंठ महादेव मंदिर, राज हॉस्पीटल के पास की समस्त बस्ती, भावड़वाव रोड",
-            voters: 1744,
-            candidates: [
-                { id: "w2_1", name: "अशोक माली", party: "BJP", partyClass: "bg-bjp", votes: 290 },
-                { id: "w2_2", name: "रमेश कुमार पुरोहित", party: "INC", partyClass: "bg-inc", votes: 265 },
-                { id: "w2_3", name: "केसाराम देवासी", party: "RLP", partyClass: "bg-rlp", votes: 72 }
-            ]
-        },
-        {
-            id: 3,
-            name: "वार्ड नं. 03 - गोडी पार्श्वनाथ व खेताराम जाट बेरा",
-            area: "भागलभीम-भीनमाल रोड, गौडी पार्श्वनाथ जैन मन्दिर, खेताराम जाट का बेरा, भीलो की ढाणी",
-            voters: 958,
-            candidates: [
-                { id: "w3_1", name: "शान्तिलाल जैन", party: "BJP", partyClass: "bg-bjp", votes: 215 },
-                { id: "w3_2", name: "भरत कुमार चौधरी", party: "INC", partyClass: "bg-inc", votes: 180 }
-            ]
-        },
-        {
-            id: 4,
-            name: "वार्ड नं. 04 - पीपलीया कॉलोनी व श्रीनाथ वाटिका",
-            area: "क्षीमंकरी माताजी मार्ग, पीपलियां कोलोनी, श्रीनाथ वाटिका, मेघवालों की बस्ती, आलडिया बेरा",
-            voters: 1449,
-            candidates: [
-                { id: "w4_1", name: "अमृत सुथार", party: "INC", partyClass: "bg-inc", votes: 280 },
-                { id: "w4_2", name: "प्रकाश सैन", party: "BJP", partyClass: "bg-bjp", votes: 260 },
-                { id: "w4_3", name: "गौतम चन्द", party: "निर्दलीय", partyClass: "bg-ind", votes: 45 }
-            ]
-        },
-        {
-            id: 5,
-            name: "वार्ड नं. 05 - चाणक्य विद्यापीठ व रेबारियों की बस्ती",
-            area: "चाणक्य विद्यापीठ स्कूल, सैन गली, रेबारियों की बस्ती, जाटो की गली, सालूराम गोदाम क्षेत्र",
-            voters: 1251,
-            candidates: [
-                { id: "w5_1", name: "जेताराम देवासी", party: "BJP", partyClass: "bg-bjp", votes: 230 },
-                { id: "w5_2", name: "चेतन कुमार", party: "INC", partyClass: "bg-inc", votes: 210 }
-            ]
-        },
-        {
-            id: 6,
-            name: "वार्ड नं. 06 - रानीवाड़ा रोड व शंखेश्वर पार्श्वनाथ क्षेत्र",
-            area: "राजकीय महाविद्यालय व हॉस्टल, शंखेश्वर पार्श्वनाथ मन्दिर, माहेश्वरी कॉलोनी, करडा रोड",
-            voters: 1267,
-            candidates: [
-                { id: "w6_1", name: "नरपत लाल माहेश्वरी", party: "BJP", partyClass: "bg-bjp", votes: 310 },
-                { id: "w6_2", name: "विक्रम सिंह राठौड़", party: "INC", partyClass: "bg-inc", votes: 245 }
-            ]
-        },
-        {
-            id: 7,
-            name: "वार्ड नं. 07 - प्रेम प्लाजा व इंदिरा पब्लिक स्कूल क्षेत्र",
-            area: "प्रेम प्लाजा काम्प्लेक्स, सरस्वती ट्रेडिंग कम्पनी, रेबारियों की ढाणी स्कूल, इंदिरा पब्लिक स्कूल",
-            voters: 1492,
-            candidates: [
-                { id: "w7_1", name: "रायमल चौधरी", party: "BJP", partyClass: "bg-bjp", votes: 275 },
-                { id: "w7_2", name: "महेन्द्र पुरोहित", party: "INC", partyClass: "bg-inc", votes: 260 }
-            ]
-        },
-        {
-            id: 8,
-            name: "वार्ड नं. 08 - मालवीय नगर व पुलिस थाना / LIC ऑफिस क्षेत्र",
-            area: "मदन मोहन मालवीय नगर 1st & 2nd, LIC ऑफिस, पुलिस थाना, सर्वोदय अस्पताल, विनायक नगर",
-            voters: 2116,
-            candidates: [
-                { id: "w8_1", name: "डॉ. भूपेन्द्र चौधरी", party: "INC", partyClass: "bg-inc", votes: 410 },
-                { id: "w8_2", name: "कमलेश कुमार अग्रवाल", party: "BJP", partyClass: "bg-bjp", votes: 395 }
-            ]
-        },
-        {
-            id: 9,
-            name: "वार्ड नं. 09 - जसवंतपुरा रेलवे क्रॉसिंग व श्याम नगर",
-            area: "बाईपास, जसवंतपुरा रेलवे क्रोसिंग, राजदीप होटल, अश्विनी कॉम्प्लेक्स, श्याम नगर",
-            voters: 1479,
-            candidates: [
-                { id: "w9_1", name: "प्रवीण कुमार बोहरा", party: "BJP", partyClass: "bg-bjp", votes: 290 },
-                { id: "w9_2", name: "जितेंद्र सिंह दहिया", party: "INC", partyClass: "bg-inc", votes: 250 }
-            ]
-        },
-        {
-            id: 10,
-            name: "वार्ड नं. 10 - जालोर रोड, आदर्श नगर व आलोक नगर",
-            area: "रिलायंस पेट्रोल पंप, होटल सूर्यकिरण, आदर्श नगर, आलोक पब्लिक स्कूल, गुरुशांति नगर, 72 जिनालय",
-            voters: 1918,
-            candidates: [
-                { id: "w10_1", name: "सुरेश मालवीय", party: "BJP", partyClass: "bg-bjp", votes: 380 },
-                { id: "w10_2", name: "गणपत सिंह विश्नोई", party: "INC", partyClass: "bg-inc", votes: 320 }
-            ]
-        },
-        {
-            id: 11,
-            name: "वार्ड नं. 11 - श्रीमाल नगर, महावीर नगर व लक्ष्मी नगर",
-            area: "श्रीमाल नगर, महावीर नगर, अम्बिका नगर, मारुति नगर, लक्ष्मी नगर, गायत्री नगर",
-            voters: 3111,
-            candidates: [
-                { id: "w11_1", name: "भरत शाह", party: "BJP", partyClass: "bg-bjp", votes: 510 },
-                { id: "w11_2", name: "कपिल देव जैन", party: "INC", partyClass: "bg-inc", votes: 480 }
-            ]
-        },
-        {
-            id: 12,
-            name: "वार्ड नं. 12 - भादरड़ा-भीनमाल रोड व खजूरिया नाला",
-            area: "भादरडा रोड, खजुरिया नाला, समस्त पाउआ बस्ती, कस्तूरजी माली कॉलोनी",
-            voters: 2147,
-            candidates: [
-                { id: "w12_1", name: "फारूक खान", party: "INC", partyClass: "bg-inc", votes: 430 },
-                { id: "w12_2", name: "खीमाराम माली", party: "BJP", partyClass: "bg-bjp", votes: 390 }
-            ]
-        }
-    ];
+                        <div class="mb-3">
+                            <label class="form-label text-white fs-7">आपकी मतदाता श्रेणी</label>
+                            <select id="voterCategorySelect" class="form-select bg-dark text-white border-secondary">
+                                <option value="स्थानीय निवासी">स्थानीय निवासी (भीनमाल)</option>
+                                <option value="प्रवासी भीनमाल वासी">प्रवासी भीनमाल वासी</option>
+                                <option value="युवा प्रथम मतदाता">युवा प्रथम मतदाता</option>
+                                <option value="वरिष्ठ नागरिक">वरिष्ठ नागरिक</option>
+                            </select>
+                        </div>
 
-    // Generate Wards 13 to 40 programmatically for complete 40-ward coverage
-    for (let i = 13; i <= 40; i++) {
-        wardData.push({
-            id: i,
-            name: `वार्ड नं. ${i < 10 ? '0' + i : i} - भीनमाल नगर पालिका क्षेत्र`,
-            area: `भीनमाल नगर पालिका वार्ड संख्या ${i} क्षेत्र, स्थानीय मुख्य बाजार एवं रिहायशी इलाका।`,
-            voters: 1200 + (i * 35),
-            candidates: [
-                { id: `w${i}_1`, name: `प्रत्याशी अ (वार्ड ${i})`, party: "BJP", partyClass: "bg-bjp", votes: 150 + i * 4 },
-                { id: `w${i}_2`, name: `प्रत्याशी ब (वार्ड ${i})`, party: "INC", partyClass: "bg-inc", votes: 140 + i * 4 },
-                { id: `w${i}_3`, name: `प्रत्याशी स (निर्दलीय)`, party: "निर्दलीय", partyClass: "bg-ind", votes: 40 + i }
-            ]
-        });
-    }
+                        <div class="mb-3">
+                            <label class="form-label text-white fs-7">आपके वार्ड/क्षेत्र की सबसे बड़ी समस्या?</label>
+                            <select id="voterIssueSelect" class="form-select bg-dark text-white border-secondary">
+                                <option value="जवाई बांध पेयजल आपूर्ति">जवाई बांध पेयजल आपूर्ति</option>
+                                <option value="सड़कें व खड्डे">सड़कें व खड्डे</option>
+                                <option value="सफाई व नाली समस्या">सफाई व नाली समस्या</option>
+                                <option value="स्ट्रीट लाइटें">स्ट्रीट लाइटें</option>
+                                <option value="चिकित्सा सुविधाएं">चिकित्सा सुविधाएं</option>
+                            </select>
+                        </div>
 
-    // Sarpanch Data for Bhinmal Region Panchayats
-    const panchayatData = {
-        dashpan: {
-            title: "ग्राम पंचायत - दासपां (Dashpan)",
-            totalVoters: 4200,
-            candidates: [
-                { id: "p1_1", name: "विक्रम सिंह दासपां", party: "सरपंच प्रत्याशी", partyClass: "bg-bjp", votes: 850 },
-                { id: "p1_2", name: "भंवरलाल देवासी", party: "सरपंच प्रत्याशी", partyClass: "bg-inc", votes: 790 },
-                { id: "p1_3", name: "अचलाराम चौधरी", party: "निर्दलीय", partyClass: "bg-ind", votes: 310 }
-            ]
-        },
-        bagoda: {
-            title: "ग्राम पंचायत - बागोड़ा (Bagoda)",
-            totalVoters: 5100,
-            candidates: [
-                { id: "p2_1", name: "सज्जन सिंह बागोड़ा", party: "सरपंच प्रत्याशी", partyClass: "bg-inc", votes: 1120 },
-                { id: "p2_2", name: "मूलाराम चौधरी", party: "सरपंच प्रत्याशी", partyClass: "bg-bjp", votes: 1050 }
-            ]
-        },
-        khanpur: {
-            title: "ग्राम पंचायत - खानपुर (Khanpur)",
-            totalVoters: 3600,
-            candidates: [
-                { id: "p3_1", name: "नरपत सिंह खानपुर", party: "सरपंच प्रत्याशी", partyClass: "bg-bjp", votes: 670 },
-                { id: "p3_2", name: "रमेश कुमार राजपुरोहित", party: "सरपंच प्रत्याशी", partyClass: "bg-inc", votes: 640 }
-            ]
-        },
-        karda: {
-            title: "ग्राम पंचायत - करड़ा (Karda)",
-            totalVoters: 4800,
-            candidates: [
-                { id: "p4_1", name: "गंगासिंह करड़ा", party: "सरपंच प्रत्याशी", partyClass: "bg-inc", votes: 920 },
-                { id: "p4_2", name: "दिनेश कुमार विश्नोई", party: "सरपंच प्रत्याशी", partyClass: "bg-bjp", votes: 890 }
-            ]
-        },
-        narasana: {
-            title: "ग्राम पंचायत - नरणावास / नरसाना",
-            totalVoters: 3900,
-            candidates: [
-                { id: "p5_1", name: "हड़मतसिंह नरणावास", party: "सरपंच प्रत्याशी", partyClass: "bg-bjp", votes: 740 },
-                { id: "p5_2", name: "सवाईराम मेघवाल", party: "सरपंच प्रत्याशी", partyClass: "bg-inc", votes: 710 }
-            ]
-        }
-    };
+                        <div class="mb-3">
+                            <label class="form-label text-white fs-7">प्रत्याशी के लिए कोई संदेश / सुझाव (वैकल्पिक)</label>
+                            <textarea id="voterNote" class="form-control bg-dark text-white border-secondary" rows="2" placeholder="अपनी राय लिखें..."></textarea>
+                        </div>
 
-    let selectedCandidate = null;
-
-    // Initialize Page
-    document.addEventListener("DOMContentLoaded", function() {
-        populateWardDropdown();
-        loadWardData(1);
-        loadPanchayatData('dashpan');
-    });
-
-    function populateWardDropdown() {
-        const select = document.getElementById("wardSelect");
-        select.innerHTML = "";
-        wardData.forEach(ward => {
-            const option = document.createElement("option");
-            option.value = ward.id;
-            option.textContent = `वार्ड ${ward.id}: ${ward.name}`;
-            select.appendChild(option);
-        });
-    }
-
-    function loadWardData(wardId) {
-        const ward = wardData.find(w => w.id == wardId);
-        if(!ward) return;
-
-        const container = document.getElementById("wardDetailContainer");
-        const totalWardVotes = ward.candidates.reduce((sum, c) => sum + c.votes, 0);
-
-        let html = `
-            <div class="card border-0 shadow-sm p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="ward-badge">वार्ड ${ward.id}</span>
-                    <span class="text-muted"><i class="fa-solid fa-address-card me-1"></i> कुल मतदाता (लगभग): ${ward.voters.toLocaleString()}</span>
-                </div>
-                <h4 class="fw-bold mb-2">${ward.name}</h4>
-                <p class="text-secondary small mb-4"><i class="fa-solid fa-map-location-dot me-1"></i> <strong>मुख्य शामिल क्षेत्र:</strong> ${ward.area}</p>
-                
-                <h6 class="fw-bold mb-3"><i class="fa-solid fa-users text-primary me-1"></i> प्रत्याशी सूची एवं जनमत सर्वेक्षण वोट (Public Opinion Poll):</h6>
-                <div class="row g-3">
-        `;
-
-        ward.candidates.forEach(cand => {
-            const pct = totalWardVotes > 0 ? ((cand.votes / totalWardVotes) * 100).toFixed(1) : 0;
-            html += `
-                <div class="col-md-6">
-                    <div class="candidate-card">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="fw-bold mb-0">${cand.name}</h6>
-                                <span class="party-badge ${cand.partyClass}">${cand.party}</span>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary" onclick="openVoteModal('${cand.name}', '${cand.id}', 'ward')">
-                                <i class="fa-solid fa-vote-yea me-1"></i> वोट दें
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success fw-bold py-2 rounded-pill shadow">
+                                <i class="fa-solid fa-check-circle me-1"></i> मेरा जनमत सबमिट करें
                             </button>
                         </div>
-                        <div class="mt-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>पोर्टल समर्थन: ${cand.votes} मत</span>
-                                <span>${pct}%</span>
-                            </div>
-                            <div class="progress progress-bar-custom">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: ${pct}%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        html += `
+                    </form>
                 </div>
             </div>
-        `;
-        container.innerHTML = html;
-    }
+        </div>
+    </div>
 
-    function loadPanchayatData(key) {
-        const p = panchayatData[key];
-        if(!p) return;
-
-        const container = document.getElementById("panchayatDetailContainer");
-        const totalPVotes = p.candidates.reduce((sum, c) => sum + c.votes, 0);
-
-        let html = `
-            <div class="card border-0 shadow-sm p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="badge bg-success fs-6">${p.title}</span>
-                    <span class="text-muted"><i class="fa-solid fa-users me-1"></i> कुल मतदाता: ${p.totalVoters.toLocaleString()}</span>
+    <!-- Custom Toast Notification -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+        <div id="liveToast" class="toast align-items-center text-white bg-dark border-warning" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center gap-2" id="toastMessage">
+                    <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                    <span>आपका वोट सफलतापूर्वक दर्ज कर लिया गया है!</span>
                 </div>
-                <h6 class="fw-bold mb-3">सरपंच उम्मीदवार जनमत रुझान:</h6>
-                <div class="row g-3">
-        `;
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
 
-        p.candidates.forEach(cand => {
-            const pct = totalPVotes > 0 ? ((cand.votes / totalPVotes) * 100).toFixed(1) : 0;
-            html += `
-                <div class="col-md-6">
-                    <div class="candidate-card">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="fw-bold mb-0">${cand.name}</h6>
-                                <span class="party-badge ${cand.partyClass}">${cand.party}</span>
+    <!-- Footer -->
+    <footer class="py-4 text-center text-white-50 border-top border-secondary mt-5 fs-7 glass-nav">
+        <div class="container">
+            <p class="mb-1">भीनमाल जनमत एवं चुनाव सर्वेक्षण पोर्टल 2026 | सर्व जनहित निष्पक्ष लोकमत मंच</p>
+            <p class="mb-0 text-white-50">नोट: यह एक सार्वजनिक जनमत सर्वेक्षण पोर्टल है। निष्पक्ष जनहित को समर्पित।</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Explicit initialization of ALL 40 BHINMAL MUNICIPALITY WARDS with Landmarks & Candidates
+        const bhinmalWardsData = [
+            { id: 1, title: "वार्ड 1: कागवराहश्याम", landmarks: ["कागवराहश्याम मंदिर", "प्राचीन बाज़ार"], candidates: [
+                { id: "w1_1", name: "दिनेश कुमार जैन", party: "भाजपा", votes: 245 },
+                { id: "w1_2", name: "शान्तिलाल माली", party: "कांग्रेस", votes: 210 },
+                { id: "w1_3", name: "रमेश चौधरी", party: "निर्दलीय", votes: 85 }
+            ]},
+            { id: 2, title: "वार्ड 2: नीलकंठ & राज अस्पताल", landmarks: ["नीलकंठ महादेव मंदिर", "राज अस्पताल मार्ग"], candidates: [
+                { id: "w2_1", name: "भूपेन्द्र सिंह राणेचा", party: "भाजपा", votes: 310 },
+                { id: "w2_2", name: "सुरेश कुमार प्रजापत", party: "कांग्रेस", votes: 280 },
+                { id: "w2_3", name: "प्रवीण कुमार सुथार", party: "निर्दलीय", votes: 62 }
+            ]},
+            { id: 3, title: "वार्ड 3: गोडी पार्श्वनाथ", landmarks: ["गोडी पार्श्वनाथ जिनालय", "पुराना कोट क्षेत्र"], candidates: [
+                { id: "w3_1", name: "ललित शाह", party: "भाजपा", votes: 290 },
+                { id: "w3_2", name: "कमला देवी शर्मा", party: "कांग्रेस", votes: 195 },
+                { id: "w3_3", name: "पुखराज दर्जी", party: "आरएलपी", votes: 110 }
+            ]},
+            { id: 4, title: "वार्ड 4: क्षीमंकरी मार्ग & पीपलीया कॉलोनी", landmarks: ["क्षीमंकरी माता मार्ग", "पीपलीया कॉलोनी"], candidates: [
+                { id: "w4_1", name: "विक्रम सिंह देवासी", party: "आरएलपी", votes: 340 },
+                { id: "w4_2", name: "गणपत सिंह चारण", party: "भाजपा", votes: 275 },
+                { id: "w4_3", name: "मंजू देवी", party: "कांग्रेस", votes: 180 }
+            ]},
+            { id: 5, title: "वार्ड 5: चाणक्य विद्यापीठ & रेबारियों की ढाणी", landmarks: ["चाणक्य विद्यापीठ", "रेबारियों की ढाणी"], candidates: [
+                { id: "w5_1", name: "तगाराम देवासी", party: "भाजपा", votes: 260 },
+                { id: "w5_2", name: "भरत कुमार चौधरी", party: "कांग्रेस", votes: 240 },
+                { id: "w5_3", name: "ओम प्रकाश सैन", party: "निर्दलीय", votes: 95 }
+            ]},
+            { id: 6, title: "वार्ड 6: रानीवाड़ा रोड & शंखेश्वर", landmarks: ["रानीवाड़ा रोड", "शंखेश्वर पार्श्वनाथ"], candidates: [
+                { id: "w6_1", name: "महेंद्र सुथार", party: "भाजपा", votes: 315 },
+                { id: "w6_2", name: "अनिल कुमार जैन", party: "कांग्रेस", votes: 290 },
+                { id: "w6_3", name: "शैतान सिंह", party: "आरएलपी", votes: 130 }
+            ]},
+            { id: 7, title: "वार्ड 7: प्रेम प्लाजा & आलडी रोड", landmarks: ["प्रेम प्लाजा", "आलडी रोड"], candidates: [
+                { id: "w7_1", name: "संजय बोहरा", party: "कांग्रेस", votes: 270 },
+                { id: "w7_2", name: "राकेश अग्रवाल", party: "भाजपा", votes: 255 },
+                { id: "w7_3", name: "मुकेश कुमार", party: "निर्दलीय", votes: 70 }
+            ]},
+            { id: 8, title: "वार्ड 8: मदन मोहन मालवीय नगर & पुलिस थाना", landmarks: ["मालवीय नगर", "मुख्य पुलिस थाना"], candidates: [
+                { id: "w8_1", name: "जीतू सोनी", party: "भाजपा", votes: 330 },
+                { id: "w8_2", name: "गोपाल सिंह राठौड़", party: "कांग्रेस", votes: 210 },
+                { id: "w8_3", name: "तुलसीराम मेघवाल", party: "निर्दलीय", votes: 115 }
+            ]},
+            { id: 9, title: "वार्ड 9: जसवंतपुरा रेलवे क्रॉसिंग & श्याम नगर", landmarks: ["जसवंतपुरा फाटक", "श्याम नगर"], candidates: [
+                { id: "w9_1", name: "हनुमान राम बिश्नोई", party: "भाजपा", votes: 285 },
+                { id: "w9_2", name: "किशन लाल माली", party: "कांग्रेस", votes: 260 },
+                { id: "w9_3", name: "जगदीश देवासी", party: "आरएलपी", votes: 140 }
+            ]},
+            { id: 10, title: "वार्ड 10: जालोर रोड & 72 जिनालय", landmarks: ["जालोर रोड", "72 जिनालय परिसर"], candidates: [
+                { id: "w10_1", name: "सुभाष शाह", party: "भाजपा", votes: 350 },
+                { id: "w10_2", name: "अशोक मेहता", party: "कांग्रेस", votes: 295 },
+                { id: "w10_3", name: "सुरेंद्र सिंह", party: "निर्दलीय", votes: 80 }
+            ]},
+            { id: 11, title: "वार्ड 11: श्रीमाल नगर & महावीर नगर", landmarks: ["श्रीमाल नगर", "महावीर नगर"], candidates: [
+                { id: "w11_1", name: "नरपत सिंह भाटी", party: "भाजपा", votes: 310 },
+                { id: "w11_2", name: "प्रकाश चंद्र जैन", party: "कांग्रेस", votes: 275 },
+                { id: "w11_3", name: "मदन लाल सुथार", party: "निर्दलीय", votes: 90 }
+            ]},
+            { id: 12, title: "वार्ड 12: भादरड़ा रोड & खजूरिया नाला", landmarks: ["भादरड़ा रोड", "खजूरिया नाला"], candidates: [
+                { id: "w12_1", name: "भवर लाल मेघवाल", party: "कांग्रेस", votes: 290 },
+                { id: "w12_2", name: "हीरालाल प्रजापत", party: "भाजपा", votes: 260 },
+                { id: "w12_3", name: "गणेश कुमार", party: "निर्दलीय", votes: 75 }
+            ]},
+            { id: 13, title: "वार्ड 13: खारी रोड & सदर बाजार", landmarks: ["खारी रोड", "सदर बाजार"], candidates: [
+                { id: "w13_1", name: "सुनील कुमार सोनी", party: "भाजपा", votes: 340 },
+                { id: "w13_2", name: "मनोहर लाल अग्रवाल", party: "कांग्रेस", votes: 310 },
+                { id: "w13_3", name: "अंसार अहमद", party: "निर्दलीय", votes: 105 }
+            ]},
+            { id: 14, title: "वार्ड 14: स्टेशन रोड & पुराना अस्पताल", landmarks: ["रेलवे स्टेशन रोड", "पुराना अस्पताल"], candidates: [
+                { id: "w14_1", name: "अजय शर्मा", party: "कांग्रेस", votes: 280 },
+                { id: "w14_2", name: "विकास राजपुरोहित", party: "भाजपा", votes: 265 },
+                { id: "w14_3", name: "चेतन माली", party: "निर्दलीय", votes: 85 }
+            ]},
+            { id: 15, title: "वार्ड 15: महाकवि माघ स्मारक", landmarks: ["महाकवि माघ स्मारक", "संस्कृत अकादमी"], candidates: [
+                { id: "w15_1", name: "डाॅ. राधेश्याम जोशी", party: "भाजपा", votes: 360 },
+                { id: "w15_2", name: "कमलेश कुमार खत्री", party: "कांग्रेस", votes: 240 },
+                { id: "w15_3", name: "शंकर लाल सोलंकी", party: "निर्दलीय", votes: 90 }
+            ]},
+            { id: 16, title: "वार्ड 16: पिपली चौक", landmarks: ["पिपली चौक", "ऐतिहासिक पुराना बाज़ार"], candidates: [
+                { id: "w16_1", name: "महेश कुमार जैन", party: "भाजपा", votes: 270 },
+                { id: "w16_2", name: "कांतिलाल माली", party: "कांग्रेस", votes: 255 },
+                { id: "w16_3", name: "बाबूलाल दर्जी", party: "निर्दलीय", votes: 65 }
+            ]},
+            { id: 17, title: "वार्ड 17: वराहश्याम चौक", landmarks: ["वराहश्याम चौक", "पुरानी गुवाड़"], candidates: [
+                { id: "w17_1", name: "देवीलाल राजपुरोहित", party: "भाजपा", votes: 305 },
+                { id: "w17_2", name: "अमृत लाल व्यास", party: "कांग्रेस", votes: 260 },
+                { id: "w17_3", name: "नेमाराम चौधरी", party: "आरएलपी", votes: 120 }
+            ]},
+            { id: 18, title: "वार्ड 18: कुंभारों का वास", landmarks: ["कुंभारों का वास", "बस स्टैंड पिछला भाग"], candidates: [
+                { id: "w18_1", name: "भोलाराम प्रजापत", party: "कांग्रेस", votes: 320 },
+                { id: "w18_2", name: "जगदीश प्रजापत", party: "भाजपा", votes: 280 },
+                { id: "w18_3", name: "सवाराम देवासी", party: "निर्दलीय", votes: 95 }
+            ]},
+            { id: 19, title: "वार्ड 19: सुंधा माता मार्ग", landmarks: ["सुंधा माता रोड", "बाईपास तिराहा"], candidates: [
+                { id: "w19_1", name: "जसंवत सिंह परमार", party: "भाजपा", votes: 335 },
+                { id: "w19_2", name: "गोविंद राम चौधरी", party: "कांग्रेस", votes: 290 },
+                { id: "w19_3", name: "श्रवण कुमार", party: "आरएलपी", votes: 150 }
+            ]},
+            { id: 20, title: "वार्ड 20: कालिंदी नगर", landmarks: ["कालिंदी नगर", "राजकीय स्कूल क्षेत्र"], candidates: [
+                { id: "w20_1", name: "राजेंद्र कुमार शर्मा", party: "भाजपा", votes: 290 },
+                { id: "w20_2", name: "रमेश चंद्र सोलंकी", party: "कांग्रेस", votes: 270 },
+                { id: "w20_3", name: "मंगलाराम मेघवाल", party: "निर्दलीय", votes: 85 }
+            ]},
+            { id: 21, title: "वार्ड 21: जुंजाणी रोड", landmarks: ["जुंजाणी रोड", "किसान छात्रावास मार्ग"], candidates: [
+                { id: "w21_1", name: "वरधाराम देवासी", party: "आरएलपी", votes: 360 },
+                { id: "w21_2", name: "नरपत सिंह रानावत", party: "भाजपा", votes: 280 },
+                { id: "w21_3", name: "भंवरा राम चौधरी", party: "कांग्रेस", votes: 210 }
+            ]},
+            { id: 22, title: "वार्ड 22: बागोड़ा रोड & किसान नगर", landmarks: ["बागोड़ा रोड", "किसान नगर"], candidates: [
+                { id: "w22_1", name: "जवानाराम चौधरी", party: "भाजपा", votes: 310 },
+                { id: "w22_2", name: "ईश्वर लाल माली", party: "कांग्रेस", votes: 275 },
+                { id: "w22_3", name: "कपूरचंद सुथार", party: "निर्दलीय", votes: 90 }
+            ]},
+            { id: 23, title: "वार्ड 23: गायत्री मंदिर क्षेत्र", landmarks: ["गायत्री मंदिर", "नेहरू पार्क"], candidates: [
+                { id: "w23_1", name: "श्रीमती सुनीता देवी", party: "भाजपा", votes: 325 },
+                { id: "w23_2", name: "श्रीमती रेखा माली", party: "कांग्रेस", votes: 290 },
+                { id: "w23_3", name: "संजू शर्मा", party: "निर्दलीय", votes: 75 }
+            ]},
+            { id: 24, title: "वार्ड 24: रीको औद्योगिक क्षेत्र", landmarks: ["RIICO इंडस्ट्रियल एरिया", "रीको ऑफिस"], candidates: [
+                { id: "w24_1", name: "श्रवण सिंह राव", party: "भाजपा", votes: 280 },
+                { id: "w24_2", name: "अशोक कुमार सैन", party: "कांग्रेस", votes: 240 },
+                { id: "w24_3", name: "प्रवीण अग्रवाल", party: "निर्दलीय", votes: 110 }
+            ]},
+            { id: 25, title: "वार्ड 25: रामसीन रोड", landmarks: ["रामसीन मुख्य मार्ग", "बिजली घर चौराहा"], candidates: [
+                { id: "w25_1", name: "दलपत सिंह चारण", party: "भाजपा", votes: 300 },
+                { id: "w25_2", name: "नेमीचंद खत्री", party: "कांग्रेस", votes: 285 },
+                { id: "w25_3", name: "मुकेश माली", party: "आरएलपी", votes: 115 }
+            ]},
+            { id: 26, title: "वार्ड 26: मोदरान रोड & देवासी छात्रावास", landmarks: ["मोदरान रोड", "देवासी छात्रावास"], candidates: [
+                { id: "w26_1", name: "भोलाराम देवासी", party: "आरएलपी", votes: 345 },
+                { id: "w26_2", name: "सज्जन सिंह राठौड़", party: "भाजपा", votes: 290 },
+                { id: "w26_3", name: "अचलाराम चौधरी", party: "कांग्रेस", votes: 195 }
+            ]},
+            { id: 27, title: "वार्ड 27: तेजाजी नगर & नया बस स्टैंड", landmarks: ["तेजाजी नगर", "नया केंद्रीय बस स्टैंड"], candidates: [
+                { id: "w27_1", name: "दिलीप कुमार जाट", party: "भाजपा", votes: 310 },
+                { id: "w27_2", name: "नरेश कुमार माली", party: "कांग्रेस", votes: 270 },
+                { id: "w27_3", name: "गोपाल मेघवाल", party: "निर्दलीय", votes: 80 }
+            ]},
+            { id: 28, title: "वार्ड 28: जैन दादावाड़ी", landmarks: ["श्री दादावाड़ी", "तुलसी निकेतन"], candidates: [
+                { id: "w28_1", name: "पारसमल शाह", party: "भाजपा", votes: 350 },
+                { id: "w28_2", name: "जैन रूपचंद", party: "कांग्रेस", votes: 280 },
+                { id: "w28_3", name: "संजय सुथार", party: "निर्दलीय", votes: 65 }
+            ]},
+            { id: 29, title: "वार्ड 29: बड़गांव रोड", landmarks: ["बड़गांव बाईपास", "कृषि मंडी क्षेत्र"], candidates: [
+                { id: "w29_1", name: "लादूराम चौधरी", party: "कांग्रेस", votes: 300 },
+                { id: "w29_2", name: "भूपत सिंह", party: "भाजपा", votes: 285 },
+                { id: "w29_3", name: "मूलाराम प्रजापत", party: "निर्दलीय", votes: 95 }
+            ]},
+            { id: 30, title: "वार्ड 30: तिलक नगर & पुलिस लाइन", landmarks: ["लोकमान्य तिलक नगर", "पुलिस लाइन क्षेत्र"], candidates: [
+                { id: "w30_1", name: "विक्रम राजपुरोहित", party: "भाजपा", votes: 330 },
+                { id: "w30_2", name: "प्रकाश चंद्र शर्मा", party: "कांग्रेस", votes: 260 },
+                { id: "w30_3", name: "सुरेंद्र देवासी", party: "आरएलपी", votes: 120 }
+            ]},
+            { id: 31, title: "वार्ड 31: सरगम तिराहा", landmarks: ["सरगम तिराहा", "अंबेडकर सर्किल"], candidates: [
+                { id: "w31_1", name: "तुलसीराम अंबेडकर", party: "कांग्रेस", votes: 310 },
+                { id: "w31_2", name: "कैलाश कुमार मेघवाल", party: "भाजपा", votes: 275 },
+                { id: "w31_3", name: "दौलत राम", party: "निर्दलीय", votes: 90 }
+            ]},
+            { id: 32, title: "वार्ड 32: आईटीआई कॉलेज मार्ग", landmarks: ["राजकीय आईटीआई", "हुकमसिंह नगर"], candidates: [
+                { id: "w32_1", name: "हुकमसिंह रानावत", party: "भाजपा", votes: 320 },
+                { id: "w32_2", name: "सुरेश कुमार सैन", party: "कांग्रेस", votes: 250 },
+                { id: "w32_3", name: "नरेश सुथार", party: "निर्दलीय", votes: 80 }
+            ]},
+            { id: 33, title: "वार्ड 33: महाराणा प्रताप नगर", landmarks: ["प्रताप नगर", "प्रताप चौराहा"], candidates: [
+                { id: "w33_1", name: "गजेंद्र सिंह देवल", party: "भाजपा", votes: 340 },
+                { id: "w33_2", name: "महिपाल सिंह", party: "कांग्रेस", votes: 270 },
+                { id: "w33_3", name: "जीतू देवासी", party: "आरएलपी", votes: 135 }
+            ]},
+            { id: 34, title: "वार्ड 34: भादरड़ा चौराहा", landmarks: ["भादरड़ा चौराहा", "पेट्रोल पंप बाईपास"], candidates: [
+                { id: "w34_1", name: "हरिशचंद्र माली", party: "भाजपा", votes: 295 },
+                { id: "w34_2", name: "मंजू देवी चौधरी", party: "कांग्रेस", votes: 280 },
+                { id: "w34_3", name: "राजाराम प्रजापत", party: "निर्दलीय", votes: 70 }
+            ]},
+            { id: 35, title: "वार्ड 35: सांचौर रोड & चौधरी छात्रावास", landmarks: ["सांचौर स्टेट हाईवे", "चौधरी छात्रावास"], candidates: [
+                { id: "w35_1", name: "दिनेश चौधरी", party: "भाजपा", votes: 360 },
+                { id: "w35_2", name: "ईश्वर सिंह", party: "कांग्रेस", votes: 290 },
+                { id: "w35_3", name: "मसराराम देवासी", party: "आरएलपी", votes: 160 }
+            ]},
+            { id: 36, title: "वार्ड 36: आजाद नगर", landmarks: ["आजाद नगर", "प्राथमिक स्वास्थ्य केंद्र"], candidates: [
+                { id: "w36_1", name: "मोहम्मद असलम", party: "कांग्रेस", votes: 310 },
+                { id: "w36_2", name: "सुरेश खंडेलवाल", party: "भाजपा", votes: 260 },
+                { id: "w36_3", name: "फारूक खान", party: "निर्दलीय", votes: 120 }
+            ]},
+            { id: 37, title: "वार्ड 37: केशव नगर", landmarks: ["केशव नगर", "सरस्वती विद्या मंदिर"], candidates: [
+                { id: "w37_1", name: "रतन लाल पुरोहित", party: "भाजपा", votes: 330 },
+                { id: "w37_2", name: "ओमप्रकाश व्यास", party: "कांग्रेस", votes: 275 },
+                { id: "w37_3", name: "शांतिलाल सैन", party: "निर्दलीय", votes: 85 }
+            ]},
+            { id: 38, title: "वार्ड 38: महावीर इंटरनेशनल", landmarks: ["महावीर इंटरनेशनल भवन", "महावीर कॉलोनी"], candidates: [
+                { id: "w38_1", name: "शांतिलाल जैन", party: "भाजपा", votes: 345 },
+                { id: "w38_2", name: "मुकेश शाह", party: "कांग्रेस", votes: 280 },
+                { id: "w38_3", name: "ताराचंद दर्जी", party: "निर्दलीय", votes: 60 }
+            ]},
+            { id: 39, title: "वार्ड 39: शिवजी नगर", landmarks: ["शिवजी नगर", "नर्मदेश्वर महादेव"], candidates: [
+                { id: "w39_1", name: "कमलेश कुमार शर्मा", party: "भाजपा", votes: 300 },
+                { id: "w39_2", name: "सुरेंद्र सिंह परमार", party: "कांग्रेस", votes: 270 },
+                { id: "w39_3", name: "मदन लाल सोलंकी", party: "निर्दलीय", votes: 90 }
+            ]},
+            { id: 40, title: "वार्ड 40: करड़ा बाईपास & न्यू कॉलोनी", landmarks: ["करड़ा बाईपास चौराहा", "न्यू कॉलोनी विस्तार"], candidates: [
+                { id: "w40_1", name: "नरपत सिंह करड़ा", party: "भाजपा", votes: 350 },
+                { id: "w40_2", name: "सवाराम चौधरी", party: "कांग्रेस", votes: 305 },
+                { id: "w40_3", name: "गणपत देवासी", party: "आरएलपी", votes: 140 }
+            ]}
+        ];
+
+        // Explicit initialization of 10 GRAM PANCHAYATS
+        const gramPanchayatsData = [
+            { id: "gp_1", name: "दासपां (Dashpan)", totalVoters: "8,450", candidates: [
+                { id: "gp1_1", name: "छगन लाल बिश्नोई", party: "भाजपा", votes: 1240 },
+                { id: "gp1_2", name: "सज्जन सिंह राजपुरोहित", party: "कांग्रेस", votes: 1180 },
+                { id: "gp1_3", name: "जवानाराम देवासी", party: "आरएलपी", votes: 650 }
+            ]},
+            { id: "gp_2", name: "बागोड़ा (Bagoda)", totalVoters: "11,200", candidates: [
+                { id: "gp2_1", name: "वीरमदेव सिंह", party: "भाजपा", votes: 1850 },
+                { id: "gp2_2", name: "रामाराम चौधरी", party: "कांग्रेस", votes: 1720 },
+                { id: "gp2_3", name: "दिनेश कुमार माली", party: "निर्दलीय", votes: 420 }
+            ]},
+            { id: "gp_3", name: "खानपुर (Khanpur)", totalVoters: "6,100", candidates: [
+                { id: "gp3_1", name: "प्रताप सिंह रानावत", party: "भाजपा", votes: 980 },
+                { id: "gp3_2", name: "भंवर लाल मेघवाल", party: "कांग्रेस", votes: 920 },
+                { id: "gp3_3", name: "अमरा राम देवासी", party: "आरएलपी", votes: 380 }
+            ]},
+            { id: "gp_4", name: "करड़ा (Karda)", totalVoters: "9,800", candidates: [
+                { id: "gp4_1", name: "नरपत सिंह करड़ा", party: "भाजपा", votes: 1540 },
+                { id: "gp4_2", name: "गणपत सिंह देवल", party: "कांग्रेस", votes: 1410 },
+                { id: "gp4_3", name: "सुरेश चौधरी", party: "आरएलपी", votes: 520 }
+            ]},
+            { id: "gp_5", name: "नरणावास / नरसाना", totalVoters: "7,300", candidates: [
+                { id: "gp5_1", name: "महेंद्र सिंह राठौड़", party: "भाजपा", votes: 1120 },
+                { id: "gp5_2", name: "किशन लाल पुरोहित", party: "कांग्रेस", votes: 1050 },
+                { id: "gp5_3", name: "मंगलाराम सुथार", party: "निर्दलीय", votes: 310 }
+            ]},
+            { id: "gp_6", name: "जुंजाणी (Junjani)", totalVoters: "5,900", candidates: [
+                { id: "gp6_1", name: "जगदीश देवासी", party: "आरएलपी", votes: 1020 },
+                { id: "gp6_2", name: "सवाई सिंह", party: "भाजपा", votes: 890 },
+                { id: "gp6_3", name: "दौलत राम माली", party: "कांग्रेस", votes: 640 }
+            ]},
+            { id: "gp_7", name: "भागलभीम (Bhagalbheem)", totalVoters: "6,500", candidates: [
+                { id: "gp7_1", name: "ईश्वर सिंह देवल", party: "भाजपा", votes: 1010 },
+                { id: "gp7_2", name: "रमेश कुमार चौधरी", party: "कांग्रेस", votes: 940 },
+                { id: "gp7_3", name: "तगाराम प्रजापत", party: "निर्दलीय", votes: 290 }
+            ]},
+            { id: 8, id_str: "gp_8", name: "कोटकास्ता (Kotkasta)", totalVoters: "8,100", candidates: [
+                { id: "gp8_1", name: "गणेश राम चौधरी", party: "कांग्रेस", votes: 1290 },
+                { id: "gp8_2", name: "हरिसिंह राजपुरोहित", party: "भाजपा", votes: 1210 },
+                { id: "gp8_3", name: "श्रवण कुमार देवासी", party: "आरएलपी", votes: 450 }
+            ]},
+            { id: 9, id_str: "gp_9", name: "फागोतरा (Fagotra)", totalVoters: "5,400", candidates: [
+                { id: "gp9_1", name: "भोलाराम चौधरी", party: "भाजपा", votes: 890 },
+                { id: "gp9_2", name: "शान्तिलाल सैन", party: "कांग्रेस", votes: 810 },
+                { id: "gp9_3", name: "बाबूलाल मेघवाल", party: "निर्दलीय", votes: 230 }
+            ]},
+            { id: 10, id_str: "gp_10", name: "बड़गांव (Bargaon)", totalVoters: "12,500", candidates: [
+                { id: "gp10_1", name: "भूपेंद्र सिंह बड़गांव", party: "भाजपा", votes: 1980 },
+                { id: "gp10_2", name: "विक्रम सिंह राठौड़", party: "कांग्रेस", votes: 1840 },
+                { id: "gp10_3", name: "लादूराम देवासी", party: "आरएलपी", votes: 720 }
+            ]}
+        ];
+
+        /* Live Stream Seed Data */
+        let liveStreamItems = [
+            { name: "रतन सिंह पुरोहित", loc: "वार्ड 11", cat: "जवाई बांध पानी", time: "5 मिनट पहले", text: "भीनमाल में जवाई बांध के पानी की नियमित आपूर्ति सबसे मुख्य मांग है।" },
+            { name: "प्रकाश माली", loc: "वार्ड 6 (रानीवाड़ा रोड)", cat: "सड़क मरम्मत", time: "12 मिनट पहले", time: "12 मिनट पहले", text: "रानीवाड़ा रोड पर नाली व सड़क सुधारीकरण कार्य शीघ्र पूरा होना चाहिए।" },
+            { name: "रमेश देवासी", loc: "दासपां पंचायत", cat: "पेयजल समस्या", time: "25 मिनट पहले", text: "गांवों में मीठे पानी की सप्लाई योजना की गति बढ़ाई जाए।" },
+            { name: "अशोक कुमार जैन", loc: "वार्ड 13 (सदर बाजार)", cat: "सफाई व्यवस्था", time: "40 मिनट पहले", text: "मुख्य बाजार में नियमित कचरा निस्तारण व डस्टबिन व्यवस्था आवश्यक है।" }
+        ];
+
+        let partyChartInstance = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLocalVotes();
+            renderWards();
+            renderPanchayats();
+            populateWardJumpSelect();
+            renderLiveTicker();
+            updateAnalyticsDashboard();
+            initPartyShareChart();
+        });
+
+        // Load persisted votes from localStorage if available
+        function loadLocalVotes() {
+            const savedVotes = localStorage.getItem('bhinmal_user_votes');
+            if (savedVotes) {
+                const votesMap = JSON.parse(savedVotes);
+                // Update wards
+                bhinmalWardsData.forEach(ward => {
+                    ward.candidates.forEach(cand => {
+                        if (votesMap[cand.id]) {
+                            cand.votes += votesMap[cand.id];
+                        }
+                    });
+                });
+                // Update panchayats
+                gramPanchayatsData.forEach(gp => {
+                    gp.candidates.forEach(cand => {
+                        if (votesMap[cand.id]) {
+                            cand.votes += votesMap[cand.id];
+                        }
+                    });
+                });
+            }
+        }
+
+        function saveLocalVote(candidateId) {
+            let savedVotes = localStorage.getItem('bhinmal_user_votes');
+            let votesMap = savedVotes ? JSON.parse(savedVotes) : {};
+            votesMap[candidateId] = (votesMap[candidateId] || 0) + 1;
+            localStorage.setItem('bhinmal_user_votes', JSON.stringify(votesMap));
+        }
+
+        // Helper to get party badge CSS class
+        function getPartyBadgeClass(party) {
+            switch(party) {
+                case 'भाजपा': return 'badge-bjp';
+                case 'कांग्रेस': return 'badge-inc';
+                case 'आरएलपी': return 'badge-rlp';
+                default: return 'badge-ind';
+            }
+        }
+
+        function renderWards() {
+            const container = document.getElementById('wardsGrid');
+            container.innerHTML = '';
+
+            bhinmalWardsData.forEach(ward => {
+                const totalWardVotes = ward.candidates.reduce((sum, c) => sum + c.votes, 0);
+
+                let candidatesHTML = '';
+                ward.candidates.forEach(cand => {
+                    const pct = totalWardVotes > 0 ? ((cand.votes / totalWardVotes) * 100).toFixed(1) : 0;
+                    candidatesHTML += `
+                        <div class="mb-3 p-2 rounded bg-dark border border-secondary border-opacity-50">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div>
+                                    <span class="fw-bold text-white fs-6">${cand.name}</span>
+                                    <span class="party-tag ${getPartyBadgeClass(cand.party)} ms-1">${cand.party}</span>
+                                </div>
+                                <button class="btn btn-sm btn-vote" onclick="openVoteModal('${cand.id}', '${cand.name}', '${cand.party}', '${ward.title}', 'ward')">
+                                    <i class="fa-solid fa-vote-yea me-1"></i> वोट दें
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-outline-success" onclick="openVoteModal('${cand.name}', '${cand.id}', 'panchayat')">
-                                <i class="fa-solid fa-vote-yea me-1"></i> समर्थन दें
-                            </button>
+                            <div class="d-flex justify-content-between align-items-center fs-7 text-white-50 mb-1">
+                                <span>${cand.votes} जनमत</span>
+                                <span class="fw-bold text-warning">${pct}%</span>
+                            </div>
+                            <div class="vote-progress">
+                                <div class="vote-progress-bar bg-warning" style="width: ${pct}%"></div>
+                            </div>
                         </div>
-                        <div class="mt-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>प्राप्त प्रतिक्रिया मत: ${cand.votes}</span>
-                                <span>${pct}%</span>
+                    `;
+                });
+
+                let landmarksHTML = ward.landmarks.map(l => `<span class="landmark-badge"><i class="fa-solid fa-location-dot me-1"></i>${l}</span>`).join('');
+
+                const col = document.createElement('div');
+                col.className = 'col-lg-6 col-xl-4';
+                col.id = `ward-card-${ward.id}`;
+                col.innerHTML = `
+                    <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="text-warning fw-bold mb-0">${ward.title}</h5>
+                                <span class="badge bg-secondary fs-8">कुल: ${totalWardVotes}</span>
                             </div>
-                            <div class="progress progress-bar-custom">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: ${pct}%"></div>
+                            <div class="mb-3">
+                                ${landmarksHTML}
+                            </div>
+                            <hr class="border-secondary opacity-50 my-2">
+                            <div class="mt-3">
+                                ${candidatesHTML}
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
-        });
-
-        html += `</div></div>`;
-        container.innerHTML = html;
-    }
-
-    function filterWards() {
-        const query = document.getElementById("wardSearch").value.toLowerCase();
-        const matched = wardData.find(w => w.name.toLowerCase().includes(query) || w.area.toLowerCase().includes(query));
-        if (matched) {
-            document.getElementById("wardSelect").value = matched.id;
-            loadWardData(matched.id);
-        }
-    }
-
-    function openVoteModal(candName, candId, type) {
-        selectedCandidate = { name: candName, id: candId, type: type };
-        document.getElementById("voteModalTitle").innerText = `${candName} को जनमत समर्थन`;
-        document.getElementById("voteModalBodyText").innerText = `क्या आप ${candName} को भीनमाल जनमत पोर्टल पर अपना वोट/समर्थन दर्ज करना चाहते हैं?`;
-        const modal = new bootstrap.Modal(document.getElementById('voteModal'));
-        modal.show();
-    }
-
-    function confirmVote() {
-        if (!selectedCandidate) return;
-
-        if (selectedCandidate.type === 'ward') {
-            wardData.forEach(w => {
-                const c = w.candidates.find(item => item.id === selectedCandidate.id);
-                if (c) c.votes += 1;
+                `;
+                container.appendChild(col);
             });
-            const currentWard = document.getElementById("wardSelect").value;
-            loadWardData(currentWard);
-        } else {
-            Object.keys(panchayatData).forEach(key => {
-                const c = panchayatData[key].candidates.find(item => item.id === selectedCandidate.id);
-                if (c) c.votes += 1;
-            });
-            const currentP = document.getElementById("panchayatSelect").value;
-            loadPanchayatData(currentP);
         }
 
-        // Update Total Votes Count
-        const totalElem = document.getElementById("totalPortalVotes");
-        let currentTotal = parseInt(totalElem.innerText.replace(',', ''));
-        totalElem.innerText = (currentTotal + 1).toLocaleString();
+        function renderPanchayats() {
+            const container = document.getElementById('panchayatsGrid');
+            container.innerHTML = '';
 
-        // Close modal
-        const modalElem = document.getElementById('voteModal');
-        const modal = bootstrap.Modal.getInstance(modalElem);
-        modal.hide();
+            gramPanchayatsData.forEach(gp => {
+                const totalGpVotes = gp.candidates.reduce((sum, c) => sum + c.votes, 0);
 
-        alert("आपका जनमत भीनमाल पोर्टल पर सफलता पूर्वक दर्ज कर लिया गया है!");
-    }
-</script>
+                let candidatesHTML = '';
+                gp.candidates.forEach(cand => {
+                    const pct = totalGpVotes > 0 ? ((cand.votes / totalGpVotes) * 100).toFixed(1) : 0;
+                    candidatesHTML += `
+                        <div class="mb-3 p-2 rounded bg-dark border border-secondary border-opacity-50">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div>
+                                    <span class="fw-bold text-white fs-6">${cand.name}</span>
+                                    <span class="party-tag ${getPartyBadgeClass(cand.party)} ms-1">${cand.party}</span>
+                                </div>
+                                <button class="btn btn-sm btn-vote" onclick="openVoteModal('${cand.id}', '${cand.name}', '${cand.party}', 'ग्राम पंचायत: ${gp.name}', 'panchayat')">
+                                    <i class="fa-solid fa-check me-1"></i> जनमत
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center fs-7 text-white-50 mb-1">
+                                <span>${cand.votes} समर्थन</span>
+                                <span class="fw-bold text-emerald" style="color:#10b981;">${pct}%</span>
+                            </div>
+                            <div class="vote-progress">
+                                <div class="vote-progress-bar bg-success" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const col = document.createElement('div');
+                col.className = 'col-lg-6';
+                col.innerHTML = `
+                    <div class="glass-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="text-white fw-bold mb-0"><i class="fa-solid fa-wheat-awn text-warning me-2"></i>${gp.name}</h5>
+                            <span class="badge bg-primary">कुल मतदाता: ${gp.totalVoters}</span>
+                        </div>
+                        <p class="text-white-50 fs-7 mb-3">सरपंच पद हेतु जनमत स्थिति</p>
+                        ${candidatesHTML}
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
+
+        function populateWardJumpSelect() {
+            const select = document.getElementById('wardJumpSelect');
+            bhinmalWardsData.forEach(w => {
+                const opt = document.createElement('option');
+                opt.value = w.id;
+                opt.textContent = w.title;
+                select.appendChild(opt);
+            });
+        }
+
+        function jumpToWard(wardId) {
+            if (!wardId) return;
+            const el = document.getElementById(`ward-card-${wardId}`);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.classList.add('border-warning');
+                setTimeout(() => el.classList.remove('border-warning'), 2500);
+            }
+        }
+
+        function handleGlobalSearch() {
+            const query = document.getElementById('globalSearchInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('searchResultsContainer');
+            const grid = document.getElementById('searchResultsGrid');
+
+            if (query.length < 2) {
+                resultsContainer.classList.add('d-none');
+                return;
+            }
+
+            resultsContainer.classList.remove('d-none');
+            grid.innerHTML = '';
+            let matchesCount = 0;
+
+            // Search Wards & Candidate Slates
+            bhinmalWardsData.forEach(ward => {
+                const wardTitleMatch = ward.title.toLowerCase().includes(query);
+                const landmarkMatch = ward.landmarks.some(l => l.toLowerCase().includes(query));
+
+                ward.candidates.forEach(cand => {
+                    const nameMatch = cand.name.toLowerCase().includes(query);
+                    const partyMatch = cand.party.toLowerCase().includes(query);
+
+                    if (wardTitleMatch || landmarkMatch || nameMatch || partyMatch) {
+                        matchesCount++;
+                        const card = document.createElement('col');
+                        card.className = 'col-md-6 col-lg-4';
+                        card.innerHTML = `
+                            <div class="p-3 bg-dark rounded border border-warning border-opacity-50 h-100">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="badge bg-warning text-dark fs-8">${ward.title}</span>
+                                    <span class="party-tag ${getPartyBadgeClass(cand.party)}">${cand.party}</span>
+                                </div>
+                                <h6 class="text-white fw-bold mb-1 mt-2">${cand.name}</h6>
+                                <p class="text-white-50 fs-8 mb-2"><i class="fa-solid fa-location-dot me-1"></i>${ward.landmarks.join(', ')}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-info fs-7 fw-bold">${cand.votes} वोट</span>
+                                    <button class="btn btn-xs btn-vote" onclick="openVoteModal('${cand.id}', '${cand.name}', '${cand.party}', '${ward.title}', 'ward')">
+                                        वोट दें
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                });
+            });
+
+            // Search Gram Panchayats
+            gramPanchayatsData.forEach(gp => {
+                const gpMatch = gp.name.toLowerCase().includes(query);
+                gp.candidates.forEach(cand => {
+                    const nameMatch = cand.name.toLowerCase().includes(query);
+                    const partyMatch = cand.party.toLowerCase().includes(query);
+
+                    if (gpMatch || nameMatch || partyMatch) {
+                        matchesCount++;
+                        const card = document.createElement('col');
+                        card.className = 'col-md-6 col-lg-4';
+                        card.innerHTML = `
+                            <div class="p-3 bg-dark rounded border border-success border-opacity-50 h-100">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="badge bg-success fs-8">पंचायत: ${gp.name}</span>
+                                    <span class="party-tag ${getPartyBadgeClass(cand.party)}">${cand.party}</span>
+                                </div>
+                                <h6 class="text-white fw-bold mb-1 mt-2">${cand.name}</h6>
+                                <p class="text-white-50 fs-8 mb-2"><i class="fa-solid fa-users me-1"></i>कुल मतदाता: ${gp.totalVoters}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-emerald fs-7 fw-bold">${cand.votes} जनमत</span>
+                                    <button class="btn btn-xs btn-vote" onclick="openVoteModal('${cand.id}', '${cand.name}', '${cand.party}', 'ग्राम पंचायत: ${gp.name}', 'panchayat')">
+                                        समर्थन दें
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                });
+            });
+
+            document.getElementById('searchResultCount').textContent = matchesCount;
+            if (matchesCount === 0) {
+                grid.innerHTML = '<div class="col-12 text-center text-white-50 py-4">कोई परिणाम नहीं मिला। कृपया अलग नाम या क्षेत्र खोजें।</div>';
+            }
+        }
+
+        function quickFilterSearch(term) {
+            document.getElementById('globalSearchInput').value = term;
+            handleGlobalSearch();
+        }
+
+        function clearSearch() {
+            document.getElementById('globalSearchInput').value = '';
+            document.getElementById('searchResultsContainer').classList.add('d-none');
+        }
+
+        let activeModalInstance = null;
+
+        function openVoteModal(candId, candName, candParty, locTitle, type) {
+            document.getElementById('modalCandidateId').value = candId;
+            document.getElementById('modalCandidateName').textContent = candName;
+            document.getElementById('modalCandidateParty').textContent = candParty;
+            document.getElementById('modalCandidateParty').className = `party-tag ${getPartyBadgeClass(candParty)}`;
+            document.getElementById('modalCandidateLoc').textContent = locTitle;
+            document.getElementById('modalType').value = type;
+
+            activeModalInstance = new bootstrap.Modal(document.getElementById('votingModal'));
+            activeModalInstance.show();
+        }
+
+        function confirmVoteSubmission(event) {
+            event.preventDefault();
+
+            const candId = document.getElementById('modalCandidateId').value;
+            const category = document.getElementById('voterCategorySelect').value;
+            const issue = document.getElementById('voterIssueSelect').value;
+            const note = document.getElementById('voterNote').value;
+            const candName = document.getElementById('modalCandidateName').textContent;
+            const locTitle = document.getElementById('modalCandidateLoc').textContent;
+
+            // Increment Vote in JS data structures
+            let updated = false;
+            bhinmalWardsData.forEach(w => {
+                w.candidates.forEach(c => {
+                    if (c.id === candId) {
+                        c.votes++;
+                        updated = true;
+                    }
+                });
+            });
+
+            if (!updated) {
+                gramPanchayatsData.forEach(gp => {
+                    gp.candidates.forEach(c => {
+                        if (c.id === candId) {
+                            c.votes++;
+                        }
+                    });
+                });
+            }
+
+            // Persist
+            saveLocalVote(candId);
+
+            // Add issue to ticker feed
+            liveStreamItems.unshift({
+                name: category,
+                loc: locTitle,
+                cat: issue,
+                time: "अभी-अभी",
+                text: note ? `${note} (समर्थित: ${candName})` : `जनमत समर्थन: ${candName} (${issue} मुद्दा प्राथमिक)`
+            });
+
+            // Re-render UI
+            renderWards();
+            renderPanchayats();
+            renderLiveTicker();
+            updateAnalyticsDashboard();
+
+            if (activeModalInstance) {
+                activeModalInstance.hide();
+            }
+
+            showToast(`आपका जनमत ${candName} हेतु सफलता पूर्वक दर्ज किया गया!`);
+            document.getElementById('voteSubmitForm').reset();
+        }
+
+        function renderLiveTicker() {
+            const container = document.getElementById('liveTickerContainer');
+            container.innerHTML = '';
+
+            liveStreamItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'ticker-item';
+                div.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-warning fs-7"><i class="fa-solid fa-user-circle me-1"></i>${item.name}</span>
+                        <span class="badge bg-secondary fs-9">${item.time}</span>
+                    </div>
+                    <div class="text-white-50 fs-8 mb-1">
+                        <span class="text-info"><i class="fa-solid fa-location-dot me-1"></i>${item.loc}</span> • 
+                        <span class="text-emerald fw-semibold">${item.cat}</span>
+                    </div>
+                    <p class="text-white fs-7 mb-0">${item.text}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function submitIssueForm(event) {
+            event.preventDefault();
+            const userName = document.getElementById('issueUserName').value.trim() || "स्थानीय भीनमाल निवासी";
+            const location = document.getElementById('issueUserLocation').value.trim();
+            const category = document.getElementById('issueCategory').value;
+            const text = document.getElementById('issueUserText').value.trim();
+
+            liveStreamItems.unshift({
+                name: userName,
+                loc: location,
+                cat: category,
+                time: "अभी-अभी",
+                text: text
+            });
+
+            renderLiveTicker();
+            showToast('आपकी प्रतिक्रिया एवं सुझाव लाइव स्ट्रीम में जोड़ दिया गया है!');
+            document.getElementById('issueForm').reset();
+        }
+
+        function showToast(message) {
+            document.getElementById('toastMessage').querySelector('span').textContent = message;
+            const toastEl = document.getElementById('liveToast');
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        function updateAnalyticsDashboard() {
+            let totalVotes = 0;
+            let partyVotes = { 'भाजपा': 0, 'कांग्रेस': 0, 'आरएलपी': 0, 'निर्दलीय': 0 };
+
+            // Aggregate Wards
+            bhinmalWardsData.forEach(w => {
+                w.candidates.forEach(c => {
+                    totalVotes += c.votes;
+                    partyVotes[c.party] = (partyVotes[c.party] || 0) + c.votes;
+                });
+            });
+
+            // Aggregate Panchayats
+            gramPanchayatsData.forEach(gp => {
+                gp.candidates.forEach(c => {
+                    totalVotes += c.votes;
+                    partyVotes[c.party] = (partyVotes[c.party] || 0) + c.votes;
+                });
+            });
+
+            document.getElementById('statTotalVotes').textContent = totalVotes.toLocaleString('hi-IN');
+
+            // Find Leading Party
+            let leadParty = 'भाजपा';
+            let maxVotes = 0;
+            for (let party in partyVotes) {
+                if (partyVotes[party] > maxVotes) {
+                    maxVotes = partyVotes[party];
+                    leadParty = party;
+                }
+            }
+            document.getElementById('statLeadingParty').textContent = leadParty;
+
+            // Render Top 5 Candidates Leaderboard
+            renderLeaderboard();
+
+            // Update Chart.js if initialized
+            if (partyChartInstance) {
+                partyChartInstance.data.datasets[0].data = [
+                    partyVotes['भाजपा'],
+                    partyVotes['कांग्रेस'],
+                    partyVotes['आरएलपी'],
+                    partyVotes['निर्दलीय']
+                ];
+                partyChartInstance.update();
+            }
+        }
+
+        function renderLeaderboard() {
+            let allCandidates = [];
+
+            bhinmalWardsData.forEach(w => {
+                w.candidates.forEach(c => {
+                    allCandidates.push({ ...c, loc: w.title });
+                });
+            });
+
+            gramPanchayatsData.forEach(gp => {
+                gp.candidates.forEach(c => {
+                    allCandidates.push({ ...c, loc: `पंचायत: ${gp.name}` });
+                });
+            });
+
+            allCandidates.sort((a, b) => b.votes - a.votes);
+            const top5 = allCandidates.slice(0, 5);
+
+            const container = document.getElementById('topCandidatesList');
+            container.innerHTML = '';
+
+            top5.forEach((cand, idx) => {
+                const item = document.createElement('div');
+                item.className = 'd-flex justify-content-between align-items-center p-2 rounded bg-dark border border-secondary';
+                item.innerHTML = `
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-warning text-dark fw-bold rounded-circle" style="width: 28px; height: 28px; display:flex; align-items:center; justify-content:center;">${idx + 1}</span>
+                        <div>
+                            <h6 class="mb-0 text-white fw-bold fs-6">${cand.name}</h6>
+                            <span class="text-white-50 fs-8">${cand.loc}</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="party-tag ${getPartyBadgeClass(cand.party)} mb-1">${cand.party}</span>
+                        <div class="text-warning fw-bold fs-7">${cand.votes} जनमत</div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function initPartyShareChart() {
+            const ctx = document.getElementById('partyShareChart').getContext('2d');
+            partyChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['भाजपा (BJP)', 'कांग्रेस (INC)', 'आरएलपी (RLP)', 'निर्दलीय (IND)'],
+                    datasets: [{
+                        data: [5200, 4300, 1800, 1180],
+                        backgroundColor: [
+                            '#f97316', // BJP Saffron
+                            '#0284c7', // INC Blue
+                            '#eab308', // RLP Yellow
+                            '#8b5cf6'  // IND Purple
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#1e293b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#f8fafc',
+                                font: { family: 'Hind', size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+            updateAnalyticsDashboard();
+        }
+    </script>
 </body>
 </html>
