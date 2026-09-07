@@ -1,474 +1,1267 @@
 <!DOCTYPE html>
-<html lang="hi" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajasthan Election Pulse 2026 - पंचायत एवं नगरीय निकाय ओपिनियन पोर्टल</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        rajgold: '#f59e0b',
-                        rajslate: '#0f172a'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Poppins', sans-serif; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6d28d9">
+<meta name="description" content="Rajasthan Public Opinion Portal 2026 - unofficial public opinion and estimated preference portal.">
+<title>Rajasthan Public Opinion 2026</title>
+<style>
+:root{
+  --primary:#6d28d9;
+  --primary2:#4f46e5;
+  --accent:#f59e0b;
+  --success:#059669;
+  --danger:#dc2626;
+  --dark:#111827;
+  --muted:#6b7280;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --shadow:0 12px 35px rgba(17,24,39,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.container{width:min(1180px,92%);margin:auto}
+.topbar{
+  background:#111827;color:#fff;padding:8px 0;font-size:13px
+}
+.topbar .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+header{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border)
+}
+.nav{
+  min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900}
+.logoMark{
+  width:44px;height:44px;border-radius:13px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  display:grid;place-items:center;color:white;font-size:22px
+}
+.logo small{display:block;color:var(--muted);font-weight:600;font-size:11px}
+nav{display:flex;align-items:center;gap:18px}
+nav a{font-size:14px;font-weight:700;color:#374151}
+nav a:hover{color:var(--primary)}
+.navToggle{display:none;border:0;background:none;font-size:28px}
+.hero{
+  background:
+    radial-gradient(circle at 10% 20%,rgba(245,158,11,.28),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(99,102,241,.30),transparent 32%),
+    linear-gradient(135deg,#312e81,#6d28d9);
+  color:white;padding:78px 0 90px
+}
+.heroGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:42px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);font-size:13px;font-weight:800
+}
+.hero h1{font-size:clamp(36px,6vw,70px);line-height:1.04;margin:18px 0}
+.hero p{font-size:18px;max-width:720px;color:#ede9fe}
+.heroActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  border:0;border-radius:12px;padding:12px 18px;font-weight:800;
+  transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px
+}
+.btn:hover{transform:translateY(-1px)}
+.btnPrimary{background:var(--accent);color:#111827}
+.btnWhite{background:#fff;color:#312e81}
+.btnDark{background:#111827;color:#fff}
+.btnOutline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btnDanger{background:var(--danger);color:#fff}
+.btnSuccess{background:var(--success);color:#fff}
+.heroCard{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:24px;padding:24px;box-shadow:0 25px 60px rgba(0,0,0,.18)
+}
+.heroCard h3{margin-bottom:14px}
+.statGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{
+  background:rgba(255,255,255,.1);border-radius:16px;padding:16px
+}
+.stat strong{font-size:28px;display:block}
+.stat span{font-size:12px;color:#ddd6fe}
+.section{padding:70px 0}
+.sectionHead{text-align:center;margin-bottom:32px}
+.sectionHead h2{font-size:36px;margin-bottom:8px}
+.sectionHead p{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow)
+}
+.icon{
+  width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+  background:#ede9fe;color:var(--primary);font-size:22px;margin-bottom:15px
+}
+.card h3{margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px}
+.panel{
+  background:white;border:1px solid var(--border);border-radius:22px;
+  padding:26px;box-shadow:var(--shadow)
+}
+.filters{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px
+}
+.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px;color:#374151}
+.field input,.field select{
+  width:100%;padding:12px 13px;border:1px solid #d1d5db;border-radius:11px;
+  outline:none;background:white
+}
+.field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px #ede9fe}
+.candidateGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.candidate{
+  border:1px solid var(--border);border-radius:17px;padding:18px;
+  position:relative;background:#fff;transition:.2s
+}
+.candidate:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.candidateTop{display:flex;align-items:center;gap:12px}
+.avatar{
+  width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#ede9fe,#e0e7ff);font-weight:900;color:#4338ca
+}
+.candidate h3{font-size:17px}
+.meta{font-size:12px;color:var(--muted)}
+.tag{
+  display:inline-block;margin-top:9px;padding:4px 8px;border-radius:999px;
+  background:#f3f4f6;color:#374151;font-size:11px;font-weight:800
+}
+.voteBtn{width:100%;margin-top:15px}
+.notice{
+  padding:15px 18px;border-radius:14px;background:#fffbeb;
+  border:1px solid #fde68a;color:#92400e;font-size:13px;margin-bottom:18px
+}
+.info{
+  padding:15px 18px;border-radius:14px;background:#eff6ff;
+  border:1px solid #bfdbfe;color:#1e40af;font-size:13px
+}
+.resultsGrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.resultRow{margin:18px 0}
+.resultHead{display:flex;justify-content:space-between;gap:10px;font-weight:800;font-size:14px}
+.bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:7px}
+.fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:999px;width:0;transition:width .5s}
+.resultSmall{font-size:12px;color:var(--muted);margin-top:4px}
+.bigResult{text-align:center;padding:35px}
+.bigResult .percent{font-size:64px;font-weight:900;color:var(--primary);line-height:1}
+.tableWrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:13px;border-bottom:1px solid var(--border);text-align:left;font-size:13px}
+th{background:#f9fafb}
+.badgeGreen{background:#dcfce7;color:#166534;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}
+footer{background:#111827;color:#d1d5db;padding:50px 0}
+.footerGrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
+footer h3{color:white;margin-bottom:10px}
+footer a{color:#c4b5fd}
+.disclaimer{
+  margin-top:20px;padding:14px;border:1px solid #374151;border-radius:12px;
+  font-size:12px;color:#d1d5db
+}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal.open{display:flex}
+.modalBox{
+  background:white;width:min(520px,100%);border-radius:22px;padding:25px;
+  max-height:90vh;overflow:auto
+}
+.modalHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.close{border:0;background:#f3f4f6;width:36px;height:36px;border-radius:50%;font-size:20px}
+.step{display:none}
+.step.active{display:block}
+.otpInputs{display:flex;gap:8px;margin:15px 0}
+.otpInputs input{text-align:center;font-size:22px;font-weight:900}
+.progress{
+  display:flex;gap:7px;margin-bottom:18px
+}
+.progress span{height:5px;flex:1;background:#e5e7eb;border-radius:99px}
+.progress span.active{background:var(--primary)}
+.toast{
+  position:fixed;right:20px;bottom:20px;z-index:3000;
+  background:#111827;color:#fff;padding:13px 17px;border-radius:12px;
+  display:none;box-shadow:var(--shadow);max-width:360px
+}
+.toast.show{display:block}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.searchBox{margin-bottom:18px}
+.searchBox input{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:12px}
+.kpiGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.kpi{background:white;border:1px solid var(--border);border-radius:16px;padding:18px}
+.kpi strong{display:block;font-size:28px}
+.kpi span{font-size:12px;color:var(--muted)}
+.adminHidden{display:none}
+.small{font-size:12px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+@media(max-width:900px){
+  .heroGrid,.resultsGrid{grid-template-columns:1fr}
+  .cards,.candidateGrid{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:repeat(2,1fr)}
+  .footerGrid{grid-template-columns:1fr 1fr}
+  nav{display:none}
+  .navToggle{display:block}
+}
+@media(max-width:600px){
+  .cards,.candidateGrid,.filters,.kpiGrid,.footerGrid{grid-template-columns:1fr}
+  .hero{padding:55px 0}
+  .section{padding:50px 0}
+  .hero h1{font-size:42px}
+  .hero p{font-size:16px}
+  .topbar .row{justify-content:center}
+}
+</style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+<body>
 
-    <!-- Top Header -->
-    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black p-2.5 rounded-xl text-xl tracking-wider shadow-lg">
-                    RJ
-                </div>
-                <div>
-                    <h1 class="text-lg md:text-xl font-bold tracking-wide text-white flex items-center gap-2">
-                        <span>Rajasthan Election Pulse 2026</span>
-                        <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/3ishan">Official Open Portal</span>
-                    </h1>
-                    <p class="text-xs text-slate-400">पंचायती राज (सरपंच/प्रधान) एवं नगरीय निकाय (पालिका/परिषद/निगम) जनमत मंच</p>
-                </div>
-            </div>
-            <div class="flex items-center flex-wrap gap-2.5">
-                <span id="lotteryStatusBadge" class="bg-amber-500/15 text-amber-400 text-xs px-3 py-1.5 rounded-full border border-amber-500/30 font-medium animate-pulse">
-                    ⚠️ सीट आरक्षण लॉटरी (18 तारीख) प्रतीक्षित
-                </span>
-                <button onclick="openAdminModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3.5 py-2 rounded-xl border border-slate-700 font-medium transition flex items-center gap-1.5 shadow">
-                    <span>⚙️</span> Admin Panel (18th Update)
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Dashboard Body -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Left Sidebar: Selection & Voting Module (Col 5) -->
-        <div class="lg:col-span-5 space-y-6">
-            
-            <!-- Information Banner regarding 18th Lottery -->
-            <div class="bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/30 rounded-2xl p-5 shadow-xl relative overflow-hidden">
-                <div class="absolute -right-4 -bottom-4 text-amber-500/10 font-black text-7xl pointer-events-none">18</div>
-                <h3 class="text-amber-400 font-semibold text-sm mb-2 flex items-center gap-2">
-                    <span class="text-lg">📌</span> राजस्थान निर्वाचन निर्देश सूचना
-                </h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
-                    राज्य निर्वाचन आयोग के नियमानुसार आगामी चुनावों में वार्ड/सीट आरक्षण (General, SC, ST, OBC महिलाओं हेतु लॉटरी) <strong class="text-white">18 तारीख</strong> को घोषित होगी। लॉटरी के बाद इस पोर्टल पर संबंधित वार्ड और प्रत्याशियों के नाम जोड़कर लाइव वोटिंग शुरू कर दी जाएगी।
-                </p>
-            </div>
-
-            <!-- Multi-tier Election Selector & Voting Card -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
-                <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
-                    <h3 class="font-bold text-white text-base">जनमत संग्रह (Pre-Poll Voting)</h3>
-                    <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Secure & Encrypted</span>
-                </div>
-
-                <form id="globalVoteForm" onsubmit="submitGlobalVote(event)" class="space-y-4">
-                    
-                    <!-- Election Type Selector -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1.5">1. चुनाव का स्तर चुनें (Election Tier)</label>
-                        <select id="electionTier" onchange="updateDistrictOptions()" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                            <option value="">-- स्तर चुनें --</option>
-                            <option value="panchayat">पंचायती राज (सरपंच / पंचायत समिति / जिला परिषद)</option>
-                            <option value="urban">नगरीय निकाय (नगर पालिका / परिषद / निगम)</option>
-                        </select>
-                    </div>
-
-                    <!-- Rajasthan District Selector (All 33+ Districts Covered) -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1.5">2. जिला चुनें (District)</label>
-                        <select id="districtSelect" onchange="populateLocalBodies()" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                            <option value="">-- पहले चुनाव स्तर चुनें --</option>
-                        </select>
-                    </div>
-
-                    <!-- Specific Body / Panchayat Unit -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1.5" id="bodyLabel">3. निकाय / ग्राम पंचायत समिति</label>
-                        <select id="specificBodySelect" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                            <option value="">-- जिला चुनें --</option>
-                        </select>
-                    </div>
-
-                    <!-- Category Status (Post 18th Update) -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1.5">4. सीट आरक्षण श्रेणी (Lottery Category)</label>
-                        <select id="categorySelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                            <option value="Pending">लॉटरी प्रतीक्षित (18 तारीख के बाद तय)</option>
-                            <option value="General">General (सामान्य)</option>
-                            <option value="SC">SC (अनुसूचित जाति)</option>
-                            <option value="ST">ST (अनुसूचित जनजाति)</option>
-                            <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
-                            <option value="Women-General">General - Mahila (महिला)</option>
-                        </select>
-                    </div>
-
-                    <!-- Candidate / Alliance Support -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1.5">5. आप किसे समर्थन दे रहे हैं?</label>
-                        <select id="supportedParty" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                            <option value="">-- समर्थन विकल्प चुनें --</option>
-                            <option value="Candidate A (समर्थित पैनल A)">पैनल / उम्मीदवार A</option>
-                            <option value="Candidate B (समर्थित पैनल B)">पैनल / उम्मीदवार B</option>
-                            <option value="Independent (निर्दलीय / अन्य)">निर्दलीय / अन्य मजबूत चेहरा</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold py-3 rounded-xl text-sm shadow-lg transition transform active:scale-[0.99]">
-                        अपना मत दर्ज करें (Submit Voice)
-                    </button>
-                    <p id="successAlert" class="text-xs text-center text-emerald-400 hidden font-semibold bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-                        ✓ आपका समर्थन रिकॉर्ड कर लिया गया है!
-                    </p>
-                </form>
-            </div>
-        </div>
-
-        <!-- Right Section: Analytics & Statewide Metrics (Col 7) -->
-        <div class="lg:col-span-7 space-y-6">
-            
-            <!-- Live Ratio Board -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 border-b border-slate-800 pb-4">
-                    <div>
-                        <h3 class="font-bold text-white text-base">राजस्थान लाइव रुझान & प्रतिशत रेश्यो</h3>
-                        <p class="text-xs text-slate-400">राज्यभर के मतदाताओं के इनपुट पर आधारित रियल-टाइम ग्राफिक्स</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                        <span class="text-xs text-emerald-400 font-medium">Live Feed Active</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <!-- Donut Chart Canvas -->
-                    <div class="md:col-span-5 h-56 flex justify-center items-center relative">
-                        <canvas id="statewideChart"></canvas>
-                    </div>
-
-                    <!-- Progress Breakdowns -->
-                    <div class="md:col-span-7 space-y-4">
-                        <div>
-                            <div class="flex justify-between text-xs font-medium mb-1.5">
-                                <span class="text-slate-300">पैनल / उम्मीदवार A समर्थन</span>
-                                <span id="valCandA" class="text-amber-400 font-bold">48%</span>
-                            </div>
-                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
-                                <div id="barCandA" class="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 48%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-xs font-medium mb-1.5">
-                                <span class="text-slate-300">पैनल / उम्मीदवार B समर्थन</span>
-                                <span id="valCandB" class="text-blue-400 font-bold">34%</span>
-                            </div>
-                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
-                                <div id="barCandB" class="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full transition-all duration-500" style="width: 34%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-xs font-medium mb-1.5">
-                                <span class="text-slate-300">निर्दलीय / अन्य उम्मीदवार</span>
-                                <span id="valInd" class="text-purple-400 font-bold">18%</span>
-                            </div>
-                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
-                                <div id="barInd" class="bg-gradient-to-r from-purple-600 to-purple-400 h-full rounded-full transition-all duration-500" style="width: 18%"></div>
-                            </div>
-                        </div>
-
-                        <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
-                            <span>कुल दर्ज ओपिनियन: <strong id="totalGlobalVotes" class="text-white">5,420</strong></span>
-                            <span class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-slate-300">अग्रणी: <strong class="text-amber-400">पैनल A</strong></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- District Wise Quick Table Preview -->
-<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-    <div class="flex justify-between items-center mb-4">
-        <h4 class="font-bold text-white text-sm">प्रमुख जिलों की स्थिति (Sample Data Grid)</h4>
-        <span class="text-xs text-slate-400">Total Districts: 33+</span>
-    </div>
-    <div class="overflow-x-auto">
-        بت<table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                <tr>
-                    <th class="p-3 rounded-l-lg">जिला / क्षेत्र</th>
-                    <th class="p-3">निकाय / पंचायत प्रकार</th>
-                    <th class="p-3">लॉटरी स्थिति</th>
-                    <th class="p-3 rounded-r-lg text-right">लीडिंग रुझान</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-800/60">
-                <tr class="hover:bg-slate-800/40 transition">
-                    <td class="p-3 font-semibold text-white">जयपुर (Jaipur)</td>
-                    <td class="p-3">नगर निगम / पंचायत</td>
-                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
-                    <td class="p-3 text-right font-medium text-amber-400">पैनल A (52%)</td>
-                </tr>
-                <tr class="hover:bg-slate-800/40 transition">
-                    <td class="p-3 font-semibold text-white">जोधपुर (Jodhpur)</td>
-                    <td class="p-3">नगर निगम / पंचायत</td>
-                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
-                    <td class="p-3 text-right font-medium text-blue-400">पैनल B (47%)</td>
-                </tr>
-                <tr class="hover:bg-slate-800/40 transition">
-                    <td class="p-3 font-semibold text-white">उदयपुर (Udaipur)</td>
-                    <td class="p-3">नगर परिषद / पंचायत</td>
-                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
-                    <td class="p-3 text-right font-medium text-amber-400">पैनल A (49%)</td>
-                </tr>
-                <tr class="hover:bg-slate-800/40 transition">
-                    <td class="p-3 font-semibold text-white">कोटा (Kota)</td>
-                    <td class="p-3">नगर निगम / पंचायत</td>
-                    <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">18 तारीख प्रतीक्षित</span></td>
-                    <td class="p-3 text-right font-medium text-purple-400">निर्दलीय (41%)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="topbar">
+  <div class="container row">
+    <span>🇮🇳 Rajasthan Public Opinion Portal • 2026</span>
+    <span>UNOFFICIAL • NOT AN ELECTION AUTHORITY</span>
+  </div>
 </div>
 
-        </div>
-    </main>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home">
+      <div class="logoMark">RJ</div>
+      <div>
+        Rajasthan Opinion
+        <small>Public preference platform</small>
+      </div>
+    </a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#candidates">Candidates</a>
+      <a href="#poll">Opinion Poll</a>
+      <a href="#results">Results</a>
+      <a href="#official">Official Info</a>
+      <a href="#admin">Admin</a>
+    </nav>
+    <button class="navToggle" onclick="mobileMenu()">☰</button>
+  </div>
+</header>
 
-    <!-- Admin Modal for Post-18th Updates -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden justify-center items-center z-50 p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="font-bold text-white text-base flex items-center gap-2">
-                    <span>⚙️</span> एडमिन कंट्रोल पैनल (लॉटरी अपडेट)
-                </h3>
-                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
-            </div>
-            
-            <p class="text-xs text-slate-300 leading-relaxed">
-                18 तारीख को लॉटरी निकलने के बाद, आप इस पैनल के माध्यम से किसी भी नए वार्ड, आरक्षित श्रेणी (General/SC/ST) और मैदान में उतरे वैध प्रत्याशियों के नाम पोर्टल पर जोड़ सकते हैं।
-            </p>
+<main id="home">
+<section class="hero">
+  <div class="container heroGrid">
+    <div>
+      <span class="badge">📊 PUBLIC OPINION • ESTIMATED PREFERENCE</span>
+      <h1>Know what Rajasthan thinks.</h1>
+      <p>
+        A public-opinion platform for Rajasthan local-body elections.
+        People can select their area and express a preference. Results shown
+        here are estimates from portal responses and are not official election results.
+      </p>
+      <div class="heroActions">
+        <a class="btn btnPrimary" href="#poll">Give Your Opinion</a>
+        <a class="btn btnWhite" href="#results">View Estimated Results</a>
+      </div>
+    </div>
+    <div class="heroCard">
+      <h3>Live Portal Overview</h3>
+      <div class="statGrid">
+        <div class="stat"><strong id="heroResponses">0</strong><span>Total responses</span></div>
+        <div class="stat"><strong id="heroAreas">0</strong><span>Areas loaded</span></div>
+        <div class="stat"><strong id="heroCandidates">0</strong><span>Candidates loaded</span></div>
+        <div class="stat"><strong>1</strong><span>Opinion per browser demo</span></div>
+      </div>
+      <div class="disclaimer">
+        This demo does not conduct or replace government voting. Never present
+        these figures as official election results.
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="space-y-3.5">
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">जिला चुनें</label>
-                    <input type="text" id="adminDistrict" placeholder="उदा. Jaipur / Ajmer" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">वार्ड / पंचायत समिति नाम</label>
-                        <input type="text" id="adminWard" placeholder="उदा. Ward No. 12 / Malpura" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">निश्चित आरक्षित श्रेणी</label>
-                        <select id="adminCategoryAssign" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-                            <option value="General">General (सामान्य)</option>
-                            <option value="SC">SC (अनुसूचित जाति)</option>
-                            <option value="ST">ST (अनुसूचित जनजाति)</option>
-                            <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">प्रत्याशियों के नाम (कमा लगाकर लिखें)</label>
-                    <input type="text" id="adminCandidates" placeholder="उदा. उम्मीदवार A, उम्मीदवार B, निर्दलीय" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-                </div>
+<section class="section">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>How it works</h2>
+      <p>Simple, transparent and clearly separated from official election machinery.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="icon">📍</div>
+        <h3>Select your area</h3>
+        <p>Choose district, local body, ward/gram panchayat and post before viewing the available opinion options.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🗳️</div>
+        <h3>Submit preference</h3>
+        <p>Choose one candidate and submit your public opinion. In a production deployment, verification should be handled by a secure backend.</p>
+      </article>
+      <article class="card">
+        <div class="icon">📈</div>
+        <h3>See the estimate</h3>
+        <p>Aggregated responses are converted into percentages and rankings for an estimated public-preference view.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-                <button onclick="commitAdminUpdate()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 rounded-xl text-sm transition shadow-md">
-                    पोर्टल पर लाइव करें (Publish Update)
-                </button>
-            </div>
-        </div>
+<section class="section" id="candidates">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>Candidate Directory</h2>
+      <p>Demo records are intentionally labelled. Replace them with verified official data before publishing.</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400">
-        <p>&copy; 2026 Rajasthan Election Pulse. स्वतंत्र डिजिटल ओपिनियन पोर्टल।</p>
-    </footer>
+    <div class="panel">
+      <div class="notice">
+        <strong>DATA NOTICE:</strong>
+        The sample candidate records below are demonstration records only.
+        Do not publish them as real 2026 nominees. Import and verify the latest
+        official candidate information before launch.
+      </div>
 
-    <!-- Script Application Logic -->
-    <script>
-        // Rajasthan Districts Data Mapping
-        const rajasthanDistricts = {
-            panchayat: [
-                "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", 
-                "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", 
-                "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", 
-                "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", 
-                "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur", "Balotra", "Beawar", "Deeg", "Didwana-Kuchaman", 
-                "Dudu", "Kekri", "Kotputli-Behror", "Khairthal-Tijara", " नीमराणा (Neemrana)", "Salumbar", "Sanchore", "Shahpura"
-            ],
-            urban: [
-                "Jaipur (Municipal Corporation/Palika)", "Jodhpur (Municipal Corporation/Palika)", 
-                "Kota (Municipal Corporation/Palika)", "Udaipur (Municipal Corp/Council)", 
-                "Ajmer (Municipal Corp/Council)", "Bikaner (Municipal Corp/Council)", 
-                "Bharatpur (Municipal Corporation)", "Alwar (Council/Palika)", "Bhilwara (Council/Palika)", 
-                "Pali (Council/Palika)", "Sikar (Council/Palika)", "Sri Ganganagar (Council/Palika)", 
-                "Barmer (Council/Palika)", "Churu (Council/Palika)", "Kishangarh", "Beawar", "Tonk", "Hanumangarh"
-            ]
-        };
+      <div class="filters">
+        <div class="field">
+          <label>District</label>
+          <select id="candidateDistrict" onchange="filterCandidates()"></select>
+        </div>
+        <div class="field">
+          <label>Local Body</label>
+          <select id="candidateBody" onchange="filterCandidates()"></select>
+        </div>
+        <div class="field">
+          <label>Post</label>
+          <select id="candidatePost" onchange="filterCandidates()"></select>
+        </div>
+        <div class="field">
+          <label>Search</label>
+          <input id="candidateSearch" oninput="filterCandidates()" placeholder="Search name or area">
+        </div>
+      </div>
 
-        function updateDistrictOptions() {
-            const tier = document.getElementById('electionTier').value;
-            const districtSelect = document.getElementById('districtSelect');
-            districtSelect.innerHTML = '<option value="">-- जिला चुनें --</option>';
-            
-            if (!tier) return;
+      <div id="candidateGrid" class="candidateGrid"></div>
+    </div>
+  </div>
+</section>
 
-            const list = rajasthanDistricts[tier] || [];
-            list.forEach(district => {
-                let opt = document.createElement('option');
-                opt.value = district;
-                opt.innerText = district;
-                districtSelect.appendChild(opt);
-            });
-            document.getElementById('bodyLabel').innerText = tier === 'panchayat' ? '3. पंचायत समिति / ग्राम पंचायत' : '3. नगर पालिका / वार्ड यूनिट';
-        }
+<section class="section" id="poll">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>Public Opinion Poll</h2>
+      <p>One preference per poll in this browser demo.</p>
+    </div>
 
-        function populateLocalBodies() {
-            const district = document.getElementById('districtSelect').value;
-            const bodySelect = document.getElementById('specificBodySelect');
-            bodySelect.innerHTML = '';
-            
-            if (!district) {
-                bodySelect.innerHTML = '<option value="">-- पहले जिला चुनें --</option>';
-                return;
-            }
+    <div class="panel">
+      <div class="notice">
+        <strong>IMPORTANT:</strong>
+        This is a public-opinion survey. It is not government voting, postal voting,
+        EVM voting, or an official election result. A real “one person, one opinion”
+        system requires a server, OTP provider, database and anti-abuse controls.
+      </div>
 
-            // Dummy dynamic blocks representing panchayats/wards for the chosen district
-            let options = [
-                `Main ${district} - Ward 01 (लॉटरी प्रतीक्षित)`,
-                `Main ${district} - Ward 02 (लॉटरी प्रतीक्षित)`,
-                `Rural Zone ${district} - Gram Panchayat Block`,
-                `Urban Zone ${district} - Sector Central`
-            ];
+      <div class="filters">
+        <div class="field">
+          <label>District</label>
+          <select id="pollDistrict" onchange="loadPollAreas()"></select>
+        </div>
+        <div class="field">
+          <label>Area / Local Body</label>
+          <select id="pollBody" onchange="loadPollPosts()"></select>
+        </div>
+        <div class="field">
+          <label>Post</label>
+          <select id="pollPost" onchange="loadPollCandidates()"></select>
+        </div>
+        <div class="field">
+          <label>Ward / Area</label>
+          <select id="pollWard" onchange="loadPollCandidates()"></select>
+        </div>
+      </div>
 
-            options.forEach(optText => {
-                let opt = document.createElement('option');
-                opt.value = optText;
-                opt.innerText = optText;
-                bodySelect.appendChild(opt);
-            });
-        }
+      <div id="pollCandidates" class="candidateGrid"></div>
+    </div>
+  </div>
+</section>
 
-        // Voting & Chart Simulation State
-        let voteCounts = {
-            candA: 2600,
-            candB: 1840,
-            ind: 980
-        };
+<section class="section" id="results">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>Estimated Public Preference</h2>
+      <p>Figures are based only on responses recorded by this portal.</p>
+    </div>
 
-        const ctx = document.getElementById('statewideChart').getContext('2d');
-        const statewideChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['पैनल A', 'पैनल B', 'निर्दलीय/अन्य'],
-                datasets: [{
-                    data: [voteCounts.candA, voteCounts.candB, voteCounts.ind],
-                    backgroundColor: ['#f59e0b', '#3b82f6', '#a855f7'],
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#94a3b8', font: { size: 11 } }
-                    }
-                }
-            }
-        });
+    <div class="resultsGrid">
+      <div class="panel">
+        <h3>Choose a poll</h3>
+        <div class="field" style="margin-top:14px">
+          <label>Poll</label>
+          <select id="resultPoll" onchange="renderResults()"></select>
+        </div>
+        <div id="resultRows"></div>
+      </div>
 
-        function refreshAnalyticsUI() {
-            let total = voteCounts.candA + voteCounts.candB + voteCounts.ind;
-            let pA = Math.round((voteCounts.candA / total) * 100);
-            let pB = Math.round((voteCounts.candB / total) * 100);
-            let pInd = 100 - (pA + pB);
+      <div class="panel bigResult">
+        <div class="small">CURRENT LEADER IN PORTAL RESPONSES</div>
+        <h2 id="leaderName" style="margin:14px 0">No responses yet</h2>
+        <div class="percent" id="leaderPercent">0%</div>
+        <p id="leaderVotes" class="resultSmall">0 responses</p>
+        <hr>
+        <p class="small">
+          This leader is not a prediction guaranteed to win. It only represents
+          the current distribution of responses submitted to this website.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            document.getElementById('valCandA').innerText = pA + '%';
-            document.getElementById('barCandA').style.width = pA + '%';
+<section class="section" id="official">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>Official Election Information</h2>
+      <p>Use the State Election Commission as the authoritative source.</p>
+    </div>
 
-            document.getElementById('valCandB').innerText = pB + '%';
-            document.getElementById('barCandB').style.width = pB + '%';
+    <div class="cards">
+      <article class="card">
+        <div class="icon">🏛️</div>
+        <h3>Rajasthan State Election Commission</h3>
+        <p>Official notifications, election information, electoral-roll resources and local-body election material.</p>
+        <br>
+        <a class="btn btnDark" target="_blank" rel="noopener" href="https://sec.rajasthan.gov.in/">Open Official Website</a>
+      </article>
+      <article class="card">
+        <div class="icon">📄</div>
+        <h3>Candidate Forms</h3>
+        <p>The official SEC candidate-forms page includes municipal and Panchayati Raj nomination forms.</p>
+        <br>
+        <a class="btn btnDark" target="_blank" rel="noopener" href="https://sec.rajasthan.gov.in/CandidateForms.aspx">Open SEC Forms</a>
+      </article>
+      <article class="card">
+        <div class="icon">⚠️</div>
+        <h3>Verification required</h3>
+        <p>Before publishing candidate names, verify the final/current official list, area mapping, post and election status.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-            document.getElementById('valInd').innerText = pInd + '%';
-            document.getElementById('barInd').style.width = pInd + '%';
+<section class="section" id="admin">
+  <div class="container">
+    <div class="sectionHead">
+      <h2>Demo Admin Panel</h2>
+      <p>Local-only management for this HTML demonstration.</p>
+    </div>
 
-            document.getElementById('totalGlobalVotes').innerText = total.toLocaleString();
+    <div class="panel">
+      <div class="notice">
+        The admin area in this single-file demo is NOT secure authentication.
+        Never use a hard-coded password for a real production election-information
+        service. Put authentication and data operations on a secure backend.
+      </div>
 
-            statewideChart.data.datasets[0].data = [voteCounts.candA, voteCounts.candB, voteCounts.ind];
-            statewideChart.update();
-        }
+      <div id="adminLogin">
+        <div class="field">
+          <label>Demo admin password</label>
+          <input id="adminPassword" type="password" placeholder="Enter demo password">
+        </div>
+        <button class="btn btnDark" style="margin-top:12px" onclick="adminLogin()">Login</button>
+        <p class="small" style="margin-top:10px">Demo password: <strong>demo-admin</strong></p>
+      </div>
 
-        function submitGlobalVote(e) {
-            e.preventDefault();
-            let choice = document.getElementById('supportedParty').value;
+      <div id="adminDashboard" class="adminHidden">
+        <div class="kpiGrid">
+          <div class="kpi"><strong id="adminResponses">0</strong><span>Responses</span></div>
+          <div class="kpi"><strong id="adminCandidates">0</strong><span>Demo candidates</span></div>
+          <div class="kpi"><strong id="adminPolls">0</strong><span>Polls</span></div>
+          <div class="kpi"><strong id="adminAreas">0</strong><span>Areas</span></div>
+        </div>
 
-            if (choice.includes('Candidate A')) voteCounts.candA += 1;
-            else if (choice.includes('Candidate B')) voteCounts.candB += 1;
-            else voteCounts.ind += 1;
+        <div class="cards">
+          <div class="card">
+            <h3>Export Responses</h3>
+            <p>Download current browser-demo responses as JSON.</p>
+            <button class="btn btnSuccess" style="margin-top:15px" onclick="exportData()">Export JSON</button>
+          </div>
+          <div class="card">
+            <h3>Reset Demo Poll</h3>
+            <p>Deletes local demo responses from this browser.</p>
+            <button class="btn btnDanger" style="margin-top:15px" onclick="resetPoll()">Reset</button>
+          </div>
+          <div class="card">
+            <h3>Official Data Workflow</h3>
+            <p>Replace sampleRecords with verified SEC data or connect this UI to a backend API.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 
-            refreshAnalyticsUI();
+<footer>
+  <div class="container footerGrid">
+    <div>
+      <h3>Rajasthan Opinion 2026</h3>
+      <p class="small">
+        Independent public-opinion interface. Not affiliated with or operated by
+        the Rajasthan State Election Commission.
+      </p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <p><a href="#poll">Give Opinion</a></p>
+      <p><a href="#results">Estimated Results</a></p>
+      <p><a href="#official">Official Information</a></p>
+    </div>
+    <div>
+      <h3>Source</h3>
+      <p><a target="_blank" rel="noopener" href="https://sec.rajasthan.gov.in/">sec.rajasthan.gov.in</a></p>
+      <p><a target="_blank" rel="noopener" href="https://sec.rajasthan.gov.in/CandidateForms.aspx">Candidate Forms</a></p>
+    </div>
+  </div>
+  <div class="container disclaimer">
+    DISCLAIMER: This website collects public opinions and displays estimated preference
+    based on portal responses. It is not an official election portal, does not conduct
+    government voting, and does not publish official election results.
+  </div>
+</footer>
 
-            let alertBox = document.getElementById('successAlert');
-            alertBox.classList.remove('hidden');
-            setTimeout(() => alertBox.classList.add('hidden'), 3500);
-            document.getElementById('globalVoteForm').reset();
-        }
+<div class="modal" id="voteModal">
+  <div class="modalBox">
+    <div class="modalHead">
+      <h2>Submit Public Opinion</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div class="progress">
+      <span id="prog1" class="active"></span>
+      <span id="prog2"></span>
+      <span id="prog3"></span>
+    </div>
 
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.remove('hidden');
-            document.getElementById('adminModal').classList.add('flex');
-        }
+    <div id="step1" class="step active">
+      <h3>Confirm selection</h3>
+      <p class="small" style="margin:8px 0 18px">
+        You are submitting an opinion, not an official vote.
+      </p>
+      <div class="card" style="box-shadow:none">
+        <strong id="selectedCandidate">Candidate</strong>
+        <div id="selectedArea" class="small"></div>
+      </div>
+      <button class="btn btnPrimary" style="width:100%;margin-top:15px" onclick="goStep(2)">Continue</button>
+    </div>
 
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.remove('flex');
-            document.getElementById('adminModal').classList.add('hidden');
-        }
+    <div id="step2" class="step">
+      <h3>Demo verification</h3>
+      <p class="small" style="margin:8px 0 14px">
+        In this standalone HTML demo, OTP is simulated locally. A real deployment
+        must use a backend SMS/OTP provider and must never expose provider secrets here.
+      </p>
+      <div class="field">
+        <label>Mobile number</label>
+        <input id="mobileNumber" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
+      </div>
+      <button class="btn btnDark" style="width:100%;margin-top:14px" onclick="sendDemoOtp()">Send Demo OTP</button>
+      <div id="otpArea" style="display:none;margin-top:15px">
+        <div class="field">
+          <label>Enter demo OTP</label>
+          <input id="otpCode" inputmode="numeric" maxlength="6" placeholder="6-digit OTP">
+        </div>
+        <button class="btn btnSuccess" style="width:100%;margin-top:12px" onclick="verifyDemoOtp()">Verify OTP</button>
+        <p class="small" style="margin-top:8px">Demo OTP will be shown only for testing.</p>
+      </div>
+    </div>
 
-        function commitAdminUpdate() {
-            let dist = document.getElementById('adminDistrict').value;
-            let ward = document.getElementById('adminWard').value;
-            let cat = document.getElementById('adminCategoryAssign').value;
+    <div id="step3" class="step">
+      <h3>Final confirmation</h3>
+      <p class="small" style="margin:8px 0 16px">
+        By continuing, you understand that the result is a public-opinion estimate.
+      </p>
+      <button class="btn btnSuccess" style="width:100%" onclick="submitOpinion()">Submit Opinion</button>
+    </div>
+  </div>
+</div>
 
-            if(!dist || !ward) {
-                alert('कृपया जिला और वार्ड का नाम भरें!');
-                return;
-            }
+<div class="toast" id="toast"></div>
 
-            alert(`सफलतापूर्वक '${dist}' के '${ward}' को '${cat}' श्रेणी के रूप में अपडेट कर दिया गया है!`);
-            closeAdminModal();
+<script>
+/* ============================================================
+   RAJASTHAN PUBLIC OPINION PORTAL 2026
+   SINGLE-FILE FRONTEND DEMO
+   ------------------------------------------------------------
+   IMPORTANT:
+   1. Sample candidate data below is NOT official.
+   2. This file does not perform real government voting.
+   3. Demo OTP is local only.
+   4. Browser localStorage cannot enforce one-person-one-opinion.
+   5. Production requires a backend/database/OTP service.
+   ============================================================ */
 
-            // Update badge to live
-            let badge = document.getElementById('lotteryStatusBadge');
-            badge.className = "bg-emerald-500/15 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/30 font-medium";
-            badge.innerText = "✅ लॉटरी डेटा अपडेटेड";
-        }
+const sampleRecords = [
+  {
+    id:"demo-001",
+    district:"Jaipur",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 01",
+    name:"Demo Candidate A",
+    symbol:"★",
+    status:"DEMO"
+  },
+  {
+    id:"demo-002",
+    district:"Jaipur",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 01",
+    name:"Demo Candidate B",
+    symbol:"◆",
+    status:"DEMO"
+  },
+  {
+    id:"demo-003",
+    district:"Jaipur",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 01",
+    name:"Demo Candidate C",
+    symbol:"●",
+    status:"DEMO"
+  },
+  {
+    id:"demo-004",
+    district:"Jodhpur",
+    body:"Demo Gram Panchayat",
+    post:"Sarpanch",
+    ward:"Area 01",
+    name:"Demo Candidate D",
+    symbol:"▲",
+    status:"DEMO"
+  },
+  {
+    id:"demo-005",
+    district:"Jodhpur",
+    body:"Demo Gram Panchayat",
+    post:"Sarpanch",
+    ward:"Area 01",
+    name:"Demo Candidate E",
+    symbol:"■",
+    status:"DEMO"
+  },
+  {
+    id:"demo-006",
+    district:"Udaipur",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 02",
+    name:"Demo Candidate F",
+    symbol:"✦",
+    status:"DEMO"
+  },
+  {
+    id:"demo-007",
+    district:"Udaipur",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 02",
+    name:"Demo Candidate G",
+    symbol:"⬟",
+    status:"DEMO"
+  },
+  {
+    id:"demo-008",
+    district:"Kota",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 03",
+    name:"Demo Candidate H",
+    symbol:"✚",
+    status:"DEMO"
+  },
+  {
+    id:"demo-009",
+    district:"Kota",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 03",
+    name:"Demo Candidate I",
+    symbol:"◆",
+    status:"DEMO"
+  },
+  {
+    id:"demo-010",
+    district:"Ajmer",
+    body:"Demo Gram Panchayat",
+    post:"Sarpanch",
+    ward:"Area 02",
+    name:"Demo Candidate J",
+    symbol:"★",
+    status:"DEMO"
+  },
+  {
+    id:"demo-011",
+    district:"Ajmer",
+    body:"Demo Gram Panchayat",
+    post:"Sarpanch",
+    ward:"Area 02",
+    name:"Demo Candidate K",
+    symbol:"●",
+    status:"DEMO"
+  },
+  {
+    id:"demo-012",
+    district:"Bikaner",
+    body:"Demo Nagar Palika",
+    post:"Ward Councillor",
+    ward:"Ward 04",
+    name:"Demo Candidate L",
+    symbol:"▲",
+    status:"DEMO"
+  }
+];
 
-        refreshAnalyticsUI();
-    </script>
+const state = {
+  selectedCandidate:null,
+  generatedOtp:null,
+  verified:false,
+  demoMobile:null
+};
+
+function getResponses(){
+  try{
+    return JSON.parse(localStorage.getItem("rajasthanOpinionResponses") || "[]");
+  }catch(e){
+    return [];
+  }
+}
+
+function saveResponses(items){
+  localStorage.setItem("rajasthanOpinionResponses", JSON.stringify(items));
+}
+
+function getVotedKeys(){
+  try{
+    return JSON.parse(localStorage.getItem("rajasthanOpinionVotedKeys") || "[]");
+  }catch(e){
+    return [];
+  }
+}
+
+function saveVotedKeys(items){
+  localStorage.setItem("rajasthanOpinionVotedKeys", JSON.stringify(items));
+}
+
+function unique(list){
+  return [...new Set(list)];
+}
+
+function fillSelect(id, values, firstLabel){
+  const el = document.getElementById(id);
+  if(!el)return;
+  el.innerHTML = "";
+  const first = document.createElement("option");
+  first.value = "";
+  first.textContent = firstLabel || "Select";
+  el.appendChild(first);
+  values.forEach(v=>{
+    const option=document.createElement("option");
+    option.value=v;
+    option.textContent=v;
+    el.appendChild(option);
+  });
+}
+
+function initials(name){
+  return name.split(" ").slice(0,2).map(x=>x[0]).join("").toUpperCase();
+}
+
+function populateCandidateFilters(){
+  fillSelect("candidateDistrict", unique(sampleRecords.map(x=>x.district)), "All districts");
+  fillSelect("candidateBody", unique(sampleRecords.map(x=>x.body)), "All local bodies");
+  fillSelect("candidatePost", unique(sampleRecords.map(x=>x.post)), "All posts");
+}
+
+function filterCandidates(){
+  const district=document.getElementById("candidateDistrict").value;
+  const body=document.getElementById("candidateBody").value;
+  const post=document.getElementById("candidatePost").value;
+  const search=document.getElementById("candidateSearch").value.toLowerCase().trim();
+
+  const rows=sampleRecords.filter(x=>{
+    return (!district || x.district===district)
+      && (!body || x.body===body)
+      && (!post || x.post===post)
+      && (!search || (x.name+" "+x.ward+" "+x.body).toLowerCase().includes(search));
+  });
+
+  renderCandidateCards(rows);
+}
+
+function renderCandidateCards(rows){
+  const grid=document.getElementById("candidateGrid");
+  grid.innerHTML="";
+  if(!rows.length){
+    grid.innerHTML='<div class="empty">No matching demo records.</div>';
+    return;
+  }
+  rows.forEach(x=>{
+    const card=document.createElement("article");
+    card.className="candidate";
+    card.innerHTML=`
+      <div class="candidateTop">
+        <div class="avatar">${escapeHtml(initials(x.name))}</div>
+        <div>
+          <h3>${escapeHtml(x.name)}</h3>
+          <div class="meta">${escapeHtml(x.district)} • ${escapeHtml(x.body)}</div>
+        </div>
+      </div>
+      <span class="tag">${escapeHtml(x.post)} • ${escapeHtml(x.ward)}</span>
+      <span class="tag">${escapeHtml(x.symbol)} DEMO SYMBOL</span>
+      <button class="btn btnPrimary voteBtn" onclick="startOpinion('${x.id}')">Give Opinion</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function populatePollFilters(){
+  fillSelect("pollDistrict", unique(sampleRecords.map(x=>x.district)), "Select district");
+  document.getElementById("pollBody").innerHTML='<option value="">Select area</option>';
+  document.getElementById("pollPost").innerHTML='<option value="">Select post</option>';
+  document.getElementById("pollWard").innerHTML='<option value="">Select ward</option>';
+  document.getElementById("pollCandidates").innerHTML='<div class="empty">Select location filters first.</div>';
+}
+
+function loadPollAreas(){
+  const district=document.getElementById("pollDistrict").value;
+  const rows=sampleRecords.filter(x=>x.district===district);
+  fillSelect("pollBody", unique(rows.map(x=>x.body)), "Select area");
+  fillSelect("pollPost", [], "Select post");
+  fillSelect("pollWard", [], "Select ward");
+  document.getElementById("pollCandidates").innerHTML='<div class="empty">Select area, post and ward.</div>';
+}
+
+function loadPollPosts(){
+  const district=document.getElementById("pollDistrict").value;
+  const body=document.getElementById("pollBody").value;
+  const rows=sampleRecords.filter(x=>x.district===district && x.body===body);
+  fillSelect("pollPost", unique(rows.map(x=>x.post)), "Select post");
+  fillSelect("pollWard", [], "Select ward");
+  document.getElementById("pollCandidates").innerHTML='<div class="empty">Select post and ward.</div>';
+}
+
+function loadPollCandidates(){
+  const district=document.getElementById("pollDistrict").value;
+  const body=document.getElementById("pollBody").value;
+  const post=document.getElementById("pollPost").value;
+  const rows=sampleRecords.filter(x=>x.district===district && x.body===body && x.post===post);
+  fillSelect("pollWard", unique(rows.map(x=>x.ward)), "Select ward");
+
+  const ward=document.getElementById("pollWard").value;
+  if(!ward){
+    document.getElementById("pollCandidates").innerHTML='<div class="empty">Select a ward/area.</div>';
+    return;
+  }
+  const candidates=rows.filter(x=>x.ward===ward);
+  renderPollCandidates(candidates);
+}
+
+function renderPollCandidates(rows){
+  const grid=document.getElementById("pollCandidates");
+  grid.innerHTML="";
+  if(!rows.length){
+    grid.innerHTML='<div class="empty">No candidates in this demo poll.</div>';
+    return;
+  }
+  rows.forEach(x=>{
+    const card=document.createElement("article");
+    card.className="candidate";
+    card.innerHTML=`
+      <div class="candidateTop">
+        <div class="avatar">${escapeHtml(x.symbol)}</div>
+        <div>
+          <h3>${escapeHtml(x.name)}</h3>
+          <div class="meta">${escapeHtml(x.body)} • ${escapeHtml(x.ward)}</div>
+        </div>
+      </div>
+      <span class="tag">${escapeHtml(x.post)}</span>
+      <button class="btn btnPrimary voteBtn" onclick="startOpinion('${x.id}')">Select Preference</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function startOpinion(candidateId){
+  const candidate=sampleRecords.find(x=>x.id===candidateId);
+  if(!candidate)return;
+
+  state.selectedCandidate=candidate;
+  state.generatedOtp=null;
+  state.verified=false;
+  state.demoMobile=null;
+
+  document.getElementById("selectedCandidate").textContent=candidate.name;
+  document.getElementById("selectedArea").textContent=
+    `${candidate.district} • ${candidate.body} • ${candidate.post} • ${candidate.ward}`;
+
+  document.getElementById("mobileNumber").value="";
+  document.getElementById("otpCode").value="";
+  document.getElementById("otpArea").style.display="none";
+
+  goStep(1);
+  document.getElementById("voteModal").classList.add("open");
+}
+
+function closeModal(){
+  document.getElementById("voteModal").classList.remove("open");
+}
+
+function goStep(number){
+  document.querySelectorAll(".step").forEach(x=>x.classList.remove("active"));
+  document.getElementById("step"+number).classList.add("active");
+  document.querySelectorAll(".progress span").forEach(x=>x.classList.remove("active"));
+  for(let i=1;i<=number;i++){
+    document.getElementById("prog"+i).classList.add("active");
+  }
+}
+
+function sendDemoOtp(){
+  const mobile=document.getElementById("mobileNumber").value.replace(/\D/g,"");
+  if(mobile.length!==10){
+    toast("Enter a valid 10-digit demo mobile number.");
+    return;
+  }
+
+  state.demoMobile=mobile;
+  state.generatedOtp=String(Math.floor(100000+Math.random()*900000));
+  document.getElementById("otpArea").style.display="block";
+
+  /*
+    SECURITY NOTE:
+    Never do this in production.
+    The OTP is deliberately shown here only because this is a standalone demo.
+  */
+  toast("Demo OTP: "+state.generatedOtp);
+}
+
+function verifyDemoOtp(){
+  const entered=document.getElementById("otpCode").value.trim();
+  if(!state.generatedOtp){
+    toast("Request the demo OTP first.");
+    return;
+  }
+  if(entered!==state.generatedOtp){
+    toast("Incorrect demo OTP.");
+    return;
+  }
+  state.verified=true;
+  toast("Demo verification successful.");
+  goStep(3);
+}
+
+function submitOpinion(){
+  if(!state.selectedCandidate || !state.verified || !state.demoMobile){
+    toast("Complete verification first.");
+    return;
+  }
+
+  const pollKey=
+    state.selectedCandidate.district+"|"+
+    state.selectedCandidate.body+"|"+
+    state.selectedCandidate.post+"|"+
+    state.selectedCandidate.ward;
+
+  const voteKey=pollKey+"|"+state.demoMobile;
+  const voted=getVotedKeys();
+
+  if(voted.includes(voteKey)){
+    toast("This demo mobile has already submitted an opinion for this poll.");
+    return;
+  }
+
+  const responses=getResponses();
+
+  responses.push({
+    id:cryptoRandomId(),
+    pollKey:pollKey,
+    candidateId:state.selectedCandidate.id,
+    candidateName:state.selectedCandidate.name,
+    district:state.selectedCandidate.district,
+    body:state.selectedCandidate.body,
+    post:state.selectedCandidate.post,
+    ward:state.selectedCandidate.ward,
+    createdAt:new Date().toISOString()
+  });
+
+  voted.push(voteKey);
+  saveResponses(responses);
+  saveVotedKeys(voted);
+
+  closeModal();
+  refreshAll();
+  toast("Your public opinion was recorded.");
+  document.getElementById("results").scrollIntoView({behavior:"smooth"});
+}
+
+function cryptoRandomId(){
+  if(window.crypto && crypto.randomUUID)return crypto.randomUUID();
+  return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2);
+}
+
+function buildPollOptions(){
+  const polls=unique(sampleRecords.map(x=>
+    [x.district,x.body,x.post,x.ward].join("|")
+  ));
+  const select=document.getElementById("resultPoll");
+  select.innerHTML='<option value="">Select a poll</option>';
+  polls.forEach(key=>{
+    const p=key.split("|");
+    const o=document.createElement("option");
+    o.value=key;
+    o.textContent=`${p[0]} • ${p[1]} • ${p[2]} • ${p[3]}`;
+    select.appendChild(o);
+  });
+}
+
+function renderResults(){
+  const pollKey=document.getElementById("resultPoll").value;
+  const resultRows=document.getElementById("resultRows");
+  resultRows.innerHTML="";
+
+  if(!pollKey){
+    document.getElementById("leaderName").textContent="No poll selected";
+    document.getElementById("leaderPercent").textContent="0%";
+    document.getElementById("leaderVotes").textContent="0 responses";
+    return;
+  }
+
+  const candidates=sampleRecords.filter(x=>
+    [x.district,x.body,x.post,x.ward].join("|")===pollKey
+  );
+
+  const responses=getResponses().filter(x=>x.pollKey===pollKey);
+  const total=responses.length;
+
+  const counts=candidates.map(c=>{
+    return {
+      candidate:c,
+      count:responses.filter(r=>r.candidateId===c.id).length
+    };
+  }).sort((a,b)=>b.count-a.count);
+
+  counts.forEach(item=>{
+    const pct=total ? (item.count/total*100) : 0;
+    const row=document.createElement("div");
+    row.className="resultRow";
+    row.innerHTML=`
+      <div class="resultHead">
+        <span>${escapeHtml(item.candidate.name)}</span>
+        <span>${pct.toFixed(1)}%</span>
+      </div>
+      <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="resultSmall">${item.count} response${item.count===1?"":"s"}</div>
+    `;
+    resultRows.appendChild(row);
+  });
+
+  if(counts.length && total){
+    const leader=counts[0];
+    const pct=leader.count/total*100;
+    document.getElementById("leaderName").textContent=leader.candidate.name;
+    document.getElementById("leaderPercent").textContent=pct.toFixed(1)+"%";
+    document.getElementById("leaderVotes").textContent=
+      `${leader.count} of ${total} portal responses`;
+  }else{
+    document.getElementById("leaderName").textContent="No responses yet";
+    document.getElementById("leaderPercent").textContent="0%";
+    document.getElementById("leaderVotes").textContent="0 responses";
+  }
+}
+
+function refreshAll(){
+  const responses=getResponses();
+  document.getElementById("heroResponses").textContent=responses.length;
+  document.getElementById("heroAreas").textContent=unique(sampleRecords.map(x=>x.body)).length;
+  document.getElementById("heroCandidates").textContent=sampleRecords.length;
+
+  document.getElementById("adminResponses").textContent=responses.length;
+  document.getElementById("adminCandidates").textContent=sampleRecords.length;
+  document.getElementById("adminPolls").textContent=unique(sampleRecords.map(x=>
+    [x.district,x.body,x.post,x.ward].join("|")
+  )).length;
+  document.getElementById("adminAreas").textContent=unique(sampleRecords.map(x=>x.body)).length;
+
+  renderResults();
+}
+
+function adminLogin(){
+  const password=document.getElementById("adminPassword").value;
+  if(password!=="demo-admin"){
+    toast("Incorrect demo password.");
+    return;
+  }
+  document.getElementById("adminLogin").style.display="none";
+  document.getElementById("adminDashboard").classList.remove("adminHidden");
+  refreshAll();
+  toast("Demo admin panel opened.");
+}
+
+function exportData(){
+  const data={
+    exportedAt:new Date().toISOString(),
+    disclaimer:"Public opinion demo data only; not official election data.",
+    responses:getResponses()
+  };
+
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="rajasthan-public-opinion-demo.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetPoll(){
+  if(!confirm("Delete all local demo responses?"))return;
+  localStorage.removeItem("rajasthanOpinionResponses");
+  localStorage.removeItem("rajasthanOpinionVotedKeys");
+  refreshAll();
+  toast("Demo responses reset.");
+}
+
+function toast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>el.classList.remove("show"),3500);
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function mobileMenu(){
+  const nav=document.querySelector("nav");
+  if(!nav)return;
+  nav.style.display=nav.style.display==="flex" ? "" : "flex";
+  nav.style.position="absolute";
+  nav.style.top="72px";
+  nav.style.left="0";
+  nav.style.right="0";
+  nav.style.background="#fff";
+  nav.style.padding="20px";
+  nav.style.flexDirection="column";
+  nav.style.boxShadow="0 15px 30px rgba(0,0,0,.1)";
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  populateCandidateFilters();
+  filterCandidates();
+  populatePollFilters();
+  buildPollOptions();
+  refreshAll();
+
+  document.getElementById("voteModal").addEventListener("click",e=>{
+    if(e.target.id==="voteModal")closeModal();
+  });
+});
+</script>
+
+<!-- ============================================================
+     PRODUCTION BACKEND CONTRACT
+     ------------------------------------------------------------
+     This section is documentation only. A standalone HTML file
+     cannot securely implement real OTP or one-person-one-vote.
+
+     Recommended API:
+
+     POST /api/auth/request-otp
+       { "mobile": "XXXXXXXXXX" }
+
+     POST /api/auth/verify-otp
+       { "mobile": "XXXXXXXXXX", "otp": "123456" }
+
+     GET /api/polls
+       Returns verified poll/area/candidate data.
+
+     POST /api/polls/{pollId}/opinion
+       Authorization: Bearer <session>
+       { "candidateId": "..." }
+
+     GET /api/polls/{pollId}/results
+       Returns aggregate counts only.
+
+     Database recommendation:
+
+     users
+       id
+       mobile_hash
+       verified_at
+       created_at
+
+     polls
+       id
+       district
+       body
+       post
+       ward
+       source_url
+       source_date
+       status
+
+     candidates
+       id
+       poll_id
+       name
+       symbol
+       official_reference
+       verified_at
+
+     opinions
+       id
+       poll_id
+       candidate_id
+       user_id
+       created_at
+
+     Database constraint:
+
+       UNIQUE(user_id, poll_id)
+
+     Additional protections:
+       - OTP expiry
+       - OTP attempt limit
+       - IP rate limiting
+       - device/risk monitoring
+       - CSRF protection
+       - server-side validation
+       - audit logs
+       - encrypted transport
+       - secret management
+       - admin RBAC
+       - verified source imports
+       - duplicate/replay protection
+
+     Do NOT put:
+       - SMS provider API secrets
+       - database credentials
+       - admin passwords
+       - private API keys
+
+     inside this HTML file.
+     ============================================================ -->
+
 </body>
 </html>
