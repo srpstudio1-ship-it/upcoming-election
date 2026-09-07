@@ -47,7 +47,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-    <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-lg">
+    <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('directory')">
@@ -460,6 +460,7 @@
 
             <!-- Grid of 10 User Features -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
                 <!-- Feature U1: Ward Polling Station Locator -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
                     <div>
@@ -567,10 +568,11 @@
                     </div>
                     <button onclick="runUserTool10()" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition">Print / Save PDF</button>
                 </div>
+
             </div>
         </section>
 
-        <!-- TAB 7: PASSWORD PROTECTED ADMIN PANEL -->
+        <!-- TAB 7: PASSWORD PROTECTED ADMIN PANEL (WITH 10 NEW FEATURES) -->
         <section id="view-admin" class="hidden space-y-6">
             <!-- Login Sub-View -->
             <div id="admin-login-card" class="max-w-md mx-auto bg-white rounded-3xl p-8 shadow-xl border border-slate-200 mt-12">
@@ -593,7 +595,7 @@
                 </form>
             </div>
 
-            <!-- Dashboard Sub-View -->
+            <!-- Dashboard Sub-View (Unlocked with 10 New Features) -->
             <div id="admin-dashboard-view" class="hidden space-y-6">
                 <div class="bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -642,6 +644,7 @@
 
                 <!-- Admin Feature Panels Containers -->
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                    
                     <!-- Feature 1: Add New Candidate -->
                     <div id="admin-panel-f1" class="admin-feature-panel space-y-4">
                         <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
@@ -792,9 +795,9 @@
                         </h3>
                         <p class="text-xs text-slate-500">Real-time tracker of administrator logins and database modifications.</p>
                         <div class="bg-slate-900 text-emerald-400 font-mono text-xs p-4 rounded-xl space-y-1.5 overflow-y-auto max-h-60">
-                            <p>[2026-03-27 18:42:01] INFO: Admin session initialized successfully via local secure token.</p>
-                            <p>[2026-03-27 18:15:20] INFO: Ward 4 grievance status updated to 'Resolved'.</p>
-                            <p>[2026-03-27 10:05:12] INFO: Database synchronization completed across 40 wards.</p>
+                            <p>[2026-09-07 18:42:01] INFO: Admin session initialized successfully via local secure token.</p>
+                            <p>[2026-09-07 18:15:20] INFO: Ward 4 grievance status updated to 'Resolved'.</p>
+                            <p>[2026-09-07 10:05:12] INFO: Database synchronization completed across 40 wards.</p>
                         </div>
                     </div>
 
@@ -836,6 +839,7 @@
                             </button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -849,15 +853,16 @@
         <button onclick="document.getElementById('broadcast-banner').classList.add('hidden')" class="ml-4 text-[10px] bg-slate-950 text-white px-2 py-0.5 rounded">Dismiss</button>
     </div>
 
+    <!-- Candidate Profile Modal -->
     <div id="candidate-modal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 animate-in fade-in zoom-in duration-200">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
             <div id="modal-content" class="p-6 sm:p-8">
                 <!-- Dynamically populated profile -->
             </div>
         </div>
     </div>
 
-    <!-- NEW MODAL FOR USER TOOLS INTERACTION -->
+    <!-- User Tools Interactive Modal -->
     <div id="usertool-modal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 p-6 sm:p-8 space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -877,7 +882,7 @@
 
     <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <p>© 2026 Bhinmal Nagar Palika Election Portal. Pro Interactive Edition[cite: 1]. All rights reserved.</p>
+            <p>© 2026 Bhinmal Nagar Palika Election Portal. Pro Interactive Edition[cite: 3]. All rights reserved.</p>
             <div class="flex items-center space-x-6">
                 <a href="#" class="hover:text-white transition">Privacy Policy</a>
                 <a href="#" class="hover:text-white transition">Election Commission Guidelines</a>
@@ -892,12 +897,16 @@
             { id: 1, ward: 1, name: "Ramesh Kumar Purohit", party: "BJP", symbol: "Lotus", age: 48, education: "B.Com, JNVU", experience: "Social Worker & Former Ward Councillor", priorities: "Paved concrete roads, clean drinking water supply, and LED street lighting.", phone: "+91 94141XXXX1", email: "ramesh.bjp@bhinmal2026.in", photo: "https://placehold.co/400x400/d97706/ffffff?text=RK" },
             { id: 2, ward: 1, name: "Sohan Lal Meghwal", party: "INC", symbol: "Hand", age: 42, education: "M.A. Political Science", experience: "Youth Congress District Coordinator", priorities: "Drainage overhaul, community hall construction, and youth sports parks.", phone: "+91 94141XXXX2", email: "sohan.inc@bhinmal2026.in", photo: "https://placehold.co/400x400/2563eb/ffffff?text=SM" },
             { id: 3, ward: 1, name: "Kantaben Suthar", party: "Independent", symbol: "Auto-Rickshaw", age: 39, education: "Higher Secondary", experience: "Mahila Mandal President", priorities: "Women self-help groups micro-financing, sanitary napkin vending machines.", phone: "+91 94141XXXX3", email: "kantaben.ind@bhinmal2026.in", photo: "https://placehold.co/400x400/059669/ffffff?text=KS" },
+            
             { id: 4, ward: 2, name: "Praveen Singh Rajpurohit", party: "BJP", symbol: "Lotus", age: 51, education: "LLB, Law Graduate", experience: "High Court Advocate & Nagar Palika Committee Member", priorities: "Speedy property dispute resolution, green parks, and CCTV security grids.", phone: "+91 94142XXXX1", email: "praveen.bjp@bhinmal2026.in", photo: "https://placehold.co/400x400/d97706/ffffff?text=PS" },
             { id: 5, ward: 2, name: "Imran Khan Mewati", party: "INC", symbol: "Hand", age: 45, education: "B.Sc Graduate", experience: "Business Owner & Welfare Activist", priorities: "Ward water pipeline pressure balancing and solar streetlamp installation.", phone: "+91 94142XXXX2", email: "imran.inc@bhinmal2026.in", photo: "https://placehold.co/400x400/2563eb/ffffff?text=IK" },
+
             { id: 6, ward: 3, name: "Dinesh Kumar Mali", party: "BJP", symbol: "Lotus", age: 40, education: "Diploma in Civil Engineering", experience: "Contractor & Civic Infrastructure Promoter", priorities: "Flawless sewerage pipelines and underground electricity cabling in Ward 3.", phone: "+91 94143XXXX1", email: "dinesh.bjp@bhinmal2026.in", photo: "https://placehold.co/400x400/d97706/ffffff?text=DM" },
             { id: 7, ward: 3, name: "Geeta Devi Patel", party: "Independent", symbol: "Gas Cylinder", age: 44, education: "Graduate", experience: "Ex-Anganwadi Supervisor", priorities: "Child nutrition programs, primary school computer labs funding.", phone: "+91 94143XXXX2", email: "geeta.ind@bhinmal2026.in", photo: "https://placehold.co/400x400/059669/ffffff?text=GD" },
+
             { id: 8, ward: 4, name: "Mahendra Singh Chouhan", party: "BJP", symbol: "Lotus", age: 53, education: "Post Graduate in History", experience: "Senior Party Functionary", priorities: "Heritage temple square beautification and tourist amenities.", phone: "+91 94144XXXX1", email: "mahendra.bjp@bhinmal2026.in", photo: "https://placehold.co/400x400/d97706/ffffff?text=MS" },
             { id: 9, ward: 4, name: "Bharat Kumar Agarwal", party: "INC", symbol: "Hand", age: 49, education: "B.Com, Merchant", experience: "Bhinmal Grain Market Association Treasurer", priorities: "Market tax rationalization, fire safety equipment, and public toilets.", phone: "+91 94144XXXX2", email: "bharat.inc@bhinmal2026.in", photo: "https://placehold.co/400x400/2563eb/ffffff?text=BA" },
+
             { id: 10, ward: 5, name: "Nirmala Prajapat", party: "BJP", symbol: "Lotus", age: 38, education: "B.A. B.Ed", experience: "Teacher & Social Reformer", priorities: "Free coaching centers for underprivileged girls and library setup.", phone: "+91 94145XXXX1", email: "nirmala.bjp@bhinmal2026.in", photo: "https://placehold.co/400x400/d97706/ffffff?text=NP" },
             { id: 11, ward: 5, name: "Kishore Kumar Sen", party: "AAP", symbol: "Broom", age: 41, education: "ITI Diploma", experience: "Union Leader", priorities: "Zero corruption in municipal certificate issuance, doorstep water tanker dispatch.", phone: "+91 94145XXXX2", email: "kishore.aap@bhinmal2026.in", photo: "https://placehold.co/400x400/ca8a04/ffffff?text=KK" }
         ];
@@ -929,6 +938,7 @@
             }
         }
 
+        // Global State & LocalStorage Keys
         let currentCandidates = [...candidatesData];
         const STORAGE_VOTES_KEY = "bhinmal_2026_user_votes";
         const STORAGE_GRIEVANCES_KEY = "bhinmal_2026_grievances";
@@ -1014,7 +1024,7 @@
             lucide.createIcons();
         }
 
-        // U1: Polling Station Locator
+        // 10 User Feature Handlers
         function runUserTool1() {
             const ward = document.getElementById('u1-ward').value;
             const schools = [
@@ -1034,7 +1044,6 @@
             `);
         }
 
-        // U2: Digital Voter Slip
         function runUserTool2() {
             const name = document.getElementById('u2-name').value || "Respected Citizen";
             const randomSerial = Math.floor(10000 + Math.random() * 90000);
@@ -1063,7 +1072,6 @@
             `);
         }
 
-        // U3: Promise & Pledge Tracker
         function runUserTool3() {
             openUserToolModal(`📜 Candidate Affidavit & Pledge Tracker`, `
                 <div class="space-y-3 text-xs">
@@ -1075,7 +1083,6 @@
             `);
         }
 
-        // U4: Theme Dark/Light Switcher
         let isDarkMode = false;
         function runUserTool4() {
             isDarkMode = !isDarkMode;
@@ -1090,7 +1097,6 @@
             }
         }
 
-        // U5: Quick Language Toggle
         let hindiMode = false;
         function runUserTool5() {
             hindiMode = !hindiMode;
@@ -1101,7 +1107,6 @@
             }
         }
 
-        // U6: Community Discussion Board
         function runUserTool6() {
             openUserToolModal(`💬 Community Q&A Board`, `
                 <div class="space-y-3 text-xs">
@@ -1117,7 +1122,6 @@
             `);
         }
 
-        // U7: Emergency Helplines
         function runUserTool7() {
             openUserToolModal(`☎️ Bhinmal Emergency Helplines`, `
                 <div class="space-y-2 text-xs">
@@ -1137,7 +1141,6 @@
             `);
         }
 
-        // U8: Audio Manifesto Player
         function runUserTool8() {
             openUserToolModal(`🎧 Audio Manifesto Player`, `
                 <div class="text-center space-y-4 py-4">
@@ -1148,7 +1151,6 @@
             `);
         }
 
-        // U9: Turnout Estimator Calculator
         function runUserTool9() {
             const estTurnout = (78.4 + Math.random() * 4).toFixed(1);
             openUserToolModal(`📊 Ward Turnout Estimator`, `
@@ -1160,11 +1162,11 @@
             `);
         }
 
-        // U10: Printable Summary Report
         function runUserTool10() {
             window.print();
         }
 
+        // Render Candidates Grid
         function renderCandidatesGrid() {
             const grid = document.getElementById('candidates-grid');
             const noResults = document.getElementById('no-results');
@@ -1246,253 +1248,258 @@
                     <div class="flex items-center space-x-4">
                         <img src="${c.photo}" alt="${c.name}" class="w-20 h-20 rounded-2xl object-cover shadow-md">
                         <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Ward ${c.ward}</span>
-                                <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-brand-50 text-brand-700 border border-brand-200">${c.party}</span>
-                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Ward ${c.ward}</span>
                             <h3 class="text-xl font-bold text-slate-900 mt-1">${c.name}</h3>
-                            <p class="text-xs text-slate-500">Election Symbol: <span class="font-semibold text-slate-700">${c.symbol}</span></p>
+                            <p class="text-xs text-brand-600 font-semibold mt-0.5">${c.party} Candidate • Symbol: ${c.symbol}</p>
                         </div>
                     </div>
-                    <button onclick="closeCandidateModal()" class="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition">
+                    <button onclick="document.getElementById('candidate-modal').classList.add('hidden')" class="p-2 rounded-full hover:bg-slate-100 text-slate-400">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
-                <div class="space-y-4 pt-6 text-sm">
+                <div class="space-y-4 pt-4 text-sm">
                     <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                         <div>
-                            <span class="text-xs text-slate-400 block font-medium uppercase">Age</span>
-                            <span class="font-semibold text-slate-800">${c.age} Years</span>
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Age & Education</span>
+                            <p class="font-medium text-slate-800 mt-0.5">${c.age} Years, ${c.education}</p>
                         </div>
                         <div>
-                            <span class="text-xs text-slate-400 block font-medium uppercase">Education</span>
-                            <span class="font-semibold text-slate-800">${c.education}</span>
-                        </div>
-                        <div class="col-span-2 pt-2 border-t border-slate-200">
-                            <span class="text-xs text-slate-400 block font-medium uppercase">Prior Experience</span>
-                            <span class="font-semibold text-slate-800">${c.experience}</span>
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Past Experience</span>
+                            <p class="font-medium text-slate-800 mt-0.5">${c.experience}</p>
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-800 mb-1 flex items-center space-x-1.5">
-                            <i data-lucide="target" class="w-4 h-4 text-brand-600"></i>
-                            <span>Ward Manifesto & Key Priorities</span>
-                        </h4>
-                        <p class="text-slate-600 bg-amber-50/50 p-3.5 rounded-xl border border-amber-200/60 leading-relaxed">${c.priorities}</p>
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Ward Priorities & Manifesto</span>
+                        <p class="text-slate-700 bg-amber-50/50 p-3.5 rounded-2xl border border-amber-200/60 mt-1 leading-relaxed">${c.priorities}</p>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-1 flex items-center space-x-1.5">
-                            <i data-lucide="contact" class="w-4 h-4 text-brand-600"></i>
-                            <span>Official Campaign Contact</span>
-                        </h4>
-                        <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                            <p>📞 Phone: <span class="font-semibold text-slate-800">${c.phone}</span></p>
-                            <p>✉️ Email: <span class="font-semibold text-slate-800">${c.email}</span></p>
+                    <div class="grid grid-cols-2 gap-4 pt-2 text-xs">
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Contact Phone:</span>
+                            <span class="font-bold text-slate-800">${c.phone}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Official Email:</span>
+                            <span class="font-bold text-slate-800">${c.email}</span>
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 pt-4 border-t border-slate-100 flex justify-end">
-                    <button onclick="closeCandidateModal()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold transition shadow">
-                        Close Profile
-                    </button>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                    <button onclick="document.getElementById('candidate-modal').classList.add('hidden')" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold">Close Profile</button>
                 </div>
             `;
             document.getElementById('candidate-modal').classList.remove('hidden');
             lucide.createIcons();
         }
 
-        function closeCandidateModal() {
-            document.getElementById('candidate-modal').classList.add('hidden');
-        }
-
-        function getStoredVotes() {
+        // Polling & Votes
+        function getVotesDB() {
             const data = localStorage.getItem(STORAGE_VOTES_KEY);
             return data ? JSON.parse(data) : {};
         }
 
+        function saveVotesDB(db) {
+            localStorage.setItem(STORAGE_VOTES_KEY, JSON.stringify(db));
+        }
+
         function renderPollingBooth() {
-            const wardNo = parseInt(document.getElementById('poll-ward-select').value);
+            const ward = document.getElementById('poll-ward-select').value;
             const container = document.getElementById('polling-container');
             container.innerHTML = '';
 
-            const wardCandidates = candidatesData.filter(c => c.ward === wardNo);
-            const userVotes = getStoredVotes();
-            const hasVotedInWard = userVotes[wardNo] !== undefined;
+            const wardCandidates = candidatesData.filter(c => c.ward.toString() === ward);
+            const votesDB = getVotesDB();
+            const userVotedWardKey = `voted_ward_${ward}`;
+            const hasVotedThisWard = localStorage.getItem(userVotedWardKey);
 
-            wardCandidates.forEach((c) => {
-                let baseVotes = 45 + (c.id * 17) % 120;
-                if (userVotes[wardNo] === c.id) baseVotes += 1;
-                
-                const totalWardVotes = wardCandidates.reduce((sum, item) => {
-                    let v = 45 + (item.id * 17) % 120;
-                    if (userVotes[wardNo] === item.id) v += 1;
-                    return sum + v;
-                }, 0);
+            if (wardCandidates.length === 0) {
+                container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-400">No contesting candidates listed for Ward ${ward} yet.</div>`;
+                return;
+            }
 
-                const percentage = totalWardVotes > 0 ? ((baseVotes / totalWardVotes) * 100).toFixed(1) : 0;
-                const isMyVote = userVotes[wardNo] === c.id;
-
+            wardCandidates.forEach(c => {
+                const count = votesDB[c.id] || (12 + (c.id * 3) % 45); // Simulated baseline + votes
                 const card = document.createElement('div');
-                card.className = `p-5 rounded-2xl border ${isMyVote ? 'border-brand-500 bg-brand-50/35 ring-2 ring-brand-500/20' : 'border-slate-200 bg-slate-50/50'} flex flex-col justify-between space-y-4`;
+                card.className = "bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4";
                 card.innerHTML = `
                     <div class="flex items-center space-x-4">
-                        <img src="${c.photo}" alt="${c.name}" class="w-14 h-14 rounded-xl object-cover shadow">
-                        <div class="flex-grow">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold uppercase tracking-wider bg-white px-2 py-0.5 rounded border border-slate-200">${c.party}</span>
-                                ${isMyVote ? '<span class="text-xs font-bold bg-brand-600 text-white px-2.5 py-0.5 rounded-full flex items-center space-x-1"><i data-lucide="check" class="w-3 h-3"></i><span>Your Vote</span></span>' : ''}
-                            </div>
+                        <img src="${c.photo}" alt="${c.name}" class="w-14 h-14 rounded-2xl object-cover shadow">
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-brand-50 text-brand-700 px-2 py-0.5 rounded">${c.party}</span>
                             <h4 class="font-bold text-slate-800 text-base mt-1">${c.name}</h4>
-                            <p class="text-xs text-slate-500">Symbol: <span class="font-medium text-slate-700">${c.symbol}</span></p>
+                            <p class="text-xs text-slate-500">Symbol: ${c.symbol}</p>
                         </div>
                     </div>
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs font-semibold">
-                            <span class="text-slate-600">Public Support Share</span>
-                            <span class="text-brand-600">${percentage}% (${baseVotes} votes)</span>
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-200/60">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase">Recorded Pulse Votes</span>
+                            <p class="text-lg font-extrabold text-slate-900">${count} Votes</p>
                         </div>
-                        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                            <div class="bg-gradient-to-r from-brand-500 to-amber-500 h-2.5 rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        ${hasVotedInWard ? 
-                            `<button disabled class="w-full py-2 bg-slate-200 text-slate-500 rounded-xl text-xs font-semibold cursor-not-allowed">Vote Recorded</button>` :
-                            `<button onclick="castVote(${wardNo}, ${c.id})" class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition shadow flex items-center justify-center space-x-1.5"><i data-lucide="vote" class="w-4 h-4"></i><span>Cast Secure Vote</span></button>`
-                        }
+                        <button onclick="castVote(${c.id}, ${ward})" class="px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-sm ${hasVotedThisWard ? 'bg-slate-200 text-slate-500 cursor-not-allowed' : 'bg-brand-600 hover:bg-brand-700 text-white'}">
+                            ${hasVotedThisWard ? 'Voted ✓' : 'Cast Vote'}
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
             });
-            lucide.createIcons();
+            renderAnalytics();
         }
 
-        function castVote(wardNo, candidateId) {
-            const votes = getStoredVotes();
-            votes[wardNo] = candidateId;
-            localStorage.setItem(STORAGE_VOTES_KEY, JSON.stringify(votes));
+        function castVote(candidateId, ward) {
+            const userVotedWardKey = `voted_ward_${ward}`;
+            if (localStorage.getItem(userVotedWardKey)) {
+                alert("Security Notice: You have already cast your one-time opinion vote for Ward " + ward + ". Multiple voting is restricted.");
+                return;
+            }
+            localStorage.setItem(userVotedWardKey, "true");
+
+            const votesDB = getVotesDB();
+            votesDB[candidateId] = (votesDB[candidateId] || (12 + (candidateId * 3) % 45)) + 1;
+            saveVotesDB(votesDB);
+
+            alert("Success! Your secure opinion vote has been recorded for Ward " + ward + ".");
             renderPollingBooth();
             renderAnalytics();
-            alert("✅ Your one-time pulse vote has been securely recorded for Ward No. " + wardNo);
         }
 
+        // Analytics
         function renderAnalytics() {
-            const votes = getStoredVotes();
-            const totalRecorded = Object.keys(votes).length * 142;
-            document.getElementById('stat-total-votes').textContent = totalRecorded > 0 ? totalRecorded : "1,420";
-            document.getElementById('stat-total-candidates').textContent = candidatesData.length;
+            const votesDB = getVotesDB();
+            let totalVotes = 0;
+            let partyShares = { BJP: 0, INC: 0, Independent: 0, AAP: 0 };
 
-            const partyCounts = { BJP: 42, INC: 38, Independent: 15, AAP: 5 };
-            Object.values(votes).forEach(cid => {
-                const cand = candidatesData.find(item => item.id === cid);
-                if (cand && partyCounts[cand.party] !== undefined) {
-                    partyCounts[cand.party] += 5;
+            candidatesData.forEach(c => {
+                const v = votesDB[c.id] || (12 + (c.id * 3) % 45);
+                totalVotes += v;
+                if (partyShares[c.party] !== undefined) {
+                    partyShares[c.party] += v;
+                } else {
+                    partyShares['Independent'] += v;
                 }
             });
 
-            const totalPartyVotes = Object.values(partyCounts).reduce((a, b) => a + b, 0);
-            const partyBarsContainer = document.getElementById('party-share-bars');
-            partyBarsContainer.innerHTML = '';
+            document.getElementById('stat-total-votes').textContent = totalVotes;
+            document.getElementById('stat-total-candidates').textContent = candidatesData.length;
 
-            for (const [party, count] of Object.entries(partyCounts)) {
-                const share = ((count / totalPartyVotes) * 100).toFixed(1);
-                const colorClass = party === 'BJP' ? 'bg-amber-600' : party === 'INC' ? 'bg-blue-600' : party === 'AAP' ? 'bg-yellow-500' : 'bg-emerald-600';
+            // Render Party Share Bars
+            const barsContainer = document.getElementById('party-share-bars');
+            barsContainer.innerHTML = '';
+            const parties = [
+                { name: 'BJP', color: 'bg-amber-500', text: 'text-amber-600' },
+                { name: 'INC', color: 'bg-blue-600', text: 'text-blue-600' },
+                { name: 'Independent', color: 'bg-emerald-600', text: 'text-emerald-600' },
+                { name: 'AAP', color: 'bg-yellow-500', text: 'text-yellow-600' }
+            ];
 
+            parties.forEach(p => {
+                const count = partyShares[p.name] || 0;
+                const pct = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 25;
                 const row = document.createElement('div');
                 row.className = "space-y-1";
                 row.innerHTML = `
-                    <div class="flex justify-between text-xs font-semibold text-slate-700">
-                        <span>${party} Party Share</span>
-                        <span>${share}%</span>
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-slate-700">${p.name} Party</span>
+                        <span class="${p.text}">${pct}% (${count} votes)</span>
                     </div>
-                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
-                        <div class="${colorClass} h-3 rounded-full transition-all duration-500" style="width: ${share}%"></div>
+                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                        <div class="${p.color} h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
                     </div>
                 `;
-                partyBarsContainer.appendChild(row);
-            }
+                barsContainer.appendChild(row);
+            });
 
+            // Top Candidates
             const topList = document.getElementById('top-candidates-list');
             topList.innerHTML = '';
-            candidatesData.slice(0, 5).forEach((c, idx) => {
+            const sortedCandidates = [...candidatesData].sort((a, b) => {
+                const va = votesDB[a.id] || (12 + (a.id * 3) % 45);
+                const vb = votesDB[b.id] || (12 + (b.id * 3) % 45);
+                return vb - va;
+            }).slice(0, 5);
+
+            sortedCandidates.forEach((c, idx) => {
+                const v = votesDB[c.id] || (12 + (c.id * 3) % 45);
                 const item = document.createElement('div');
-                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100";
+                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs";
                 item.innerHTML = `
                     <div class="flex items-center space-x-3">
-                        <span class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 font-bold text-xs flex items-center justify-center">#${idx + 1}</span>
+                        <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center">#${idx + 1}</span>
                         <div>
-                            <p class="font-bold text-slate-800 text-xs">${c.name}</p>
-                            <p class="text-[10px] text-slate-500">Ward ${c.ward} • ${c.party}</p>
+                            <p class="font-bold text-slate-800">${c.name} <span class="text-slate-400 font-normal">(Ward ${c.ward})</span></p>
+                            <p class="text-[10px] text-slate-500">${c.party} • Symbol: ${c.symbol}</p>
                         </div>
                     </div>
-                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">98.${idx} Rating</span>
+                    <span class="font-extrabold text-brand-600">${v} Votes</span>
                 `;
                 topList.appendChild(item);
             });
         }
 
-        function getStoredGrievances() {
+        // Grievances Tracker
+        function getGrievancesDB() {
             const data = localStorage.getItem(STORAGE_GRIEVANCES_KEY);
             return data ? JSON.parse(data) : [
-                { id: "BNP-8841", name: "Kailash Bishnoi", ward: 3, category: "Water Supply", desc: "Low water pressure during morning supply hours.", status: "In Progress", date: "2026-03-25" },
-                { id: "BNP-8842", name: "Suman Joshi", ward: 12, category: "Streetlights", desc: "Three streetlights non-functional near temple lane.", status: "Resolved", date: "2026-03-24" }
+                { id: "BMP-9821", name: "Mahesh Joshi", ward: 3, category: "Water Supply", desc: "Low water pressure during morning supply hours.", status: "In Progress", date: "2026-03-25" },
+                { id: "BMP-7432", name: "Pankaj Sharma", ward: 12, category: "Streetlights", desc: "Two LED streetlamps non-functional near temple square.", status: "Resolved", date: "2026-03-24" }
             ];
         }
 
-        function loadGrievances() {
-            const list = document.getElementById('grievances-list');
-            const grievances = getStoredGrievances();
-            document.getElementById('grievance-count').textContent = grievances.length + " Reported";
-            list.innerHTML = '';
-
-            grievances.forEach(g => {
-                const statusBadge = g.status === 'Resolved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200';
-                const el = document.createElement('div');
-                el.className = "p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2";
-                el.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-md border border-teal-200">${g.id}</span>
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${statusBadge}">${g.status}</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm">Ward No. ${g.ward} - ${g.category}</h4>
-                        <p class="text-xs text-slate-600 mt-1">${g.desc}</p>
-                    </div>
-                    <div class="flex justify-between items-center text-[11px] text-slate-400 pt-1 border-t border-slate-200">
-                        <span>Reported by: ${g.name}</span>
-                        <span>${g.date}</span>
-                    </div>
-                `;
-                list.appendChild(el);
-            });
+        function saveGrievancesDB(db) {
+            localStorage.setItem(STORAGE_GRIEVANCES_KEY, JSON.stringify(db));
         }
 
-        function submitGrievance(event) {
-            event.preventDefault();
+        function submitGrievance(e) {
+            e.preventDefault();
             const name = document.getElementById('g-name').value;
             const ward = document.getElementById('g-ward').value;
             const category = document.getElementById('g-category').value;
             const desc = document.getElementById('g-desc').value;
 
-            const newG = {
-                id: "BNP-" + Math.floor(1000 + Math.random() * 9000),
-                name, ward, category, desc,
-                status: "In Progress",
-                date: new Date().toISOString().split('T')[0]
-            };
+            const newId = `BMP-${Math.floor(1000 + Math.random() * 9000)}`;
+            const list = getGrievancesDB();
+            list.unshift({ id: newId, name, ward, category, desc, status: "Submitted", date: new Date().toISOString().split('T')[0] });
+            saveGrievancesDB(list);
 
-            const grievances = getStoredGrievances();
-            grievances.unshift(newG);
-            localStorage.setItem(STORAGE_GRIEVANCES_KEY, JSON.stringify(grievances));
+            alert(`Grievance submitted successfully! Your Tracking ID is: ${newId}`);
             document.getElementById('grievance-form').reset();
             loadGrievances();
-            alert("✅ Ward issue reported successfully! Tracking ID: " + newG.id);
         }
 
+        function loadGrievances() {
+            const list = getGrievancesDB();
+            const container = document.getElementById('grievances-list');
+            document.getElementById('grievance-count').textContent = `${list.length} Reported`;
+            container.innerHTML = '';
+
+            list.forEach(g => {
+                const badgeColor = g.status === 'Resolved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                   g.status === 'In Progress' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                                   'bg-blue-50 text-blue-700 border-blue-200';
+
+                const card = document.createElement('div');
+                card.className = "p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-bold text-slate-900">${g.id}</span>
+                        <span class="px-2.5 py-0.5 rounded-full font-semibold border ${badgeColor}">${g.status}</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm">${g.category} (Ward No. ${g.ward})</p>
+                        <p class="text-slate-600 mt-0.5">${g.desc}</p>
+                    </div>
+                    <div class="flex justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-200/60">
+                        <span>Reported by: ${g.name}</span>
+                        <span>Date: ${g.date}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Comparison Matrix
         function populateComparisonDropdowns() {
             const selects = ['comp-1', 'comp-2', 'comp-3'];
-            selects.forEach(id => {
-                const sel = document.getElementById(id);
+            selects.forEach(selId => {
+                const sel = document.getElementById(selId);
                 sel.innerHTML = `<option value="">-- Choose Candidate --</option>`;
                 candidatesData.forEach(c => {
                     const opt = document.createElement('option');
@@ -1521,232 +1528,287 @@
                 return;
             }
 
-            const cList = selectedIds.map(id => candidatesData.find(item => item.id == id));
-            let gridCols = cList.length === 3 ? 'grid-cols-4' : 'grid-cols-3';
+            const candidates = selectedIds.map(id => candidatesData.find(c => c.id.toString() === id)).filter(Boolean);
+            const votesDB = getVotesDB();
 
-            let html = `<div class="grid ${gridCols} divide-x divide-slate-200 text-sm">`;
-            html += `
-                <div class="p-4 bg-slate-50 font-bold text-slate-600 uppercase text-xs space-y-12">
-                    <div class="h-20 flex items-center">Metric / Detail</div>
-                    <div class="py-4 border-b border-slate-200">Ward & Party</div>
-                    <div class="py-4 border-b border-slate-200">Symbol</div>
-                    <div class="py-4 border-b border-slate-200">Age & Education</div>
-                    <div class="py-4 border-b border-slate-200">Experience</div>
-                    <div class="py-4">Manifesto Priorities</div>
-                </div>
+            let tableHtml = `
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="p-4 font-bold w-1/4">Metric / Parameter</th>
+                            ${candidates.map(c => `<th class="p-4 font-bold w-1/4">${c.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Ward Number</td>
+                            ${candidates.map(c => `<td class="p-4 font-medium">Ward No. ${c.ward}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Party Affiliation</td>
+                            ${candidates.map(c => `<td class="p-4 font-bold text-brand-600">${c.party} (${c.symbol})</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Age & Education</td>
+                            ${candidates.map(c => `<td class="p-4">${c.age} yrs, ${c.education}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Background / Experience</td>
+                            ${candidates.map(c => `<td class="p-4">${c.experience}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Core Manifesto</td>
+                            ${candidates.map(c => `<td class="p-4 text-slate-600">${c.priorities}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-500 bg-slate-50">Public Opinion Votes</td>
+                            ${candidates.map(c => `<td class="p-4 font-extrabold text-brand-600">${votesDB[c.id] || (12 + (c.id * 3) % 45)} Votes</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
             `;
-
-            cList.forEach(c => {
-                html += `
-                    <div class="p-4 space-y-12">
-                        <div class="h-20 flex items-center space-x-3">
-                            <img src="${c.photo}" class="w-12 h-12 rounded-xl object-cover shadow">
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-sm">${c.name}</h4>
-                                <span class="text-xs text-slate-500">${c.phone}</span>
-                            </div>
-                        </div>
-                        <div class="py-4 border-b border-slate-200">
-                            <span class="font-semibold text-slate-800">Ward No. ${c.ward}</span>
-                            <span class="block text-xs text-brand-600 font-bold">${c.party}</span>
-                        </div>
-                        <div class="py-4 border-b border-slate-200 font-medium text-slate-700">${c.symbol}</div>
-                        <div class="py-4 border-b border-slate-200 text-xs text-slate-600">${c.age} Yrs | ${c.education}</div>
-                        <div class="py-4 border-b border-slate-200 text-xs text-slate-600">${c.experience}</div>
-                        <div class="py-4 text-xs text-slate-600 leading-relaxed">${c.priorities}</div>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-            container.innerHTML = html;
+            container.innerHTML = tableHtml;
         }
 
+        // Countdown
         function startCountdown() {
-            const targetDate = new Date("April 5, 2026 08:00:00").getTime();
+            const pollingDate = new Date("April 5, 2026 08:00:00").getTime();
             setInterval(() => {
                 const now = new Date().getTime();
-                const diff = targetDate - now;
-                if (diff > 0) {
-                    document.getElementById('cd-days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    document.getElementById('cd-hours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    document.getElementById('cd-mins').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    document.getElementById('cd-secs').textContent = Math.floor((diff % (1000 * 60)) / 1000);
+                const distance = pollingDate - now;
+                if (distance > 0) {
+                    document.getElementById('cd-days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                    document.getElementById('cd-hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    document.getElementById('cd-mins').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    document.getElementById('cd-secs').textContent = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
                 }
             }, 1000);
         }
 
+        // Admin Panel Logic
         function checkAdminAccess() {
             switchTab('admin');
             if (isAdminLoggedIn) {
                 document.getElementById('admin-login-card').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                loadAdminCandidates();
-                loadAdminGrievances();
+                loadAdminCandidatesList();
+                loadAdminGrievancesList();
             } else {
                 document.getElementById('admin-login-card').classList.remove('hidden');
                 document.getElementById('admin-dashboard-view').classList.add('hidden');
             }
         }
 
-        function handleAdminLogin(event) {
-            event.preventDefault();
+        function handleAdminLogin(e) {
+            e.preventDefault();
             const pass = document.getElementById('admin-passcode').value;
             if (pass === ADMIN_PASS) {
                 isAdminLoggedIn = true;
                 document.getElementById('admin-login-card').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                loadAdminCandidates();
-                loadAdminGrievances();
-                alert("🔓 Admin Master Suite Unlocked Successfully!");
+                loadAdminCandidatesList();
+                loadAdminGrievancesList();
+                alert("Welcome Admin! Secure master session unlocked successfully.");
             } else {
-                alert("❌ Incorrect master passcode. Default demo passcode is: admin2026");
+                alert("Incorrect master passcode. Default demo passcode is: admin2026");
             }
         }
 
         function lockAdminPanel() {
             isAdminLoggedIn = false;
-            switchTab('directory');
-            alert("🔒 Admin session locked securely.");
+            document.getElementById('admin-passcode').value = "";
+            checkAdminAccess();
         }
 
-        function switchAdminFeature(fid) {
+        function switchAdminFeature(fId) {
             document.querySelectorAll('.admin-feature-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.admin-tab-btn').forEach(b => {
-                b.classList.remove('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
-                b.classList.add('border-slate-200', 'text-slate-700', 'bg-white');
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+                btn.classList.add('border-slate-200', 'text-slate-700', 'bg-white');
             });
-            document.getElementById(`admin-panel-${fid}`).classList.remove('hidden');
-            const btn = document.getElementById(`btn-${fid}`);
-            btn.classList.remove('border-slate-200', 'text-slate-700', 'bg-white');
-            btn.classList.add('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+
+            document.getElementById(`admin-panel-${fId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${fId}`);
+            activeBtn.classList.remove('border-slate-200', 'text-slate-700', 'bg-white');
+            activeBtn.classList.add('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
         }
 
-        function adminAddCandidate(event) {
-            event.preventDefault();
+        // Admin Feature 1: Add Candidate
+        function adminAddCandidate(e) {
+            e.preventDefault();
             const newC = {
                 id: candidatesData.length + 1,
-                name: document.getElementById('ac-name').value,
                 ward: parseInt(document.getElementById('ac-ward').value),
+                name: document.getElementById('ac-name').value,
                 party: document.getElementById('ac-party').value,
                 symbol: document.getElementById('ac-symbol').value,
-                education: document.getElementById('ac-edu').value.split(',')[1] || "Graduate",
-                age: parseInt(document.getElementById('ac-edu').value) || 42,
-                experience: "Newly Verified Candidate",
+                age: 42,
+                education: document.getElementById('ac-edu').value,
+                experience: "Newly Registered Candidate",
                 priorities: document.getElementById('ac-priorities').value,
                 phone: document.getElementById('ac-phone').value,
-                email: "official@bhinmal2026.in",
+                email: "candidate@bhinmal2026.in",
                 photo: "https://placehold.co/400x400/0f172a/ffffff?text=New"
             };
             candidatesData.unshift(newC);
             currentCandidates = [...candidatesData];
             renderCandidatesGrid();
             populateComparisonDropdowns();
-            alert("✅ Candidate successfully added to portal database!");
-            event.target.reset();
+            alert("Candidate successfully added and published to live directory!");
+            e.target.reset();
         }
 
-        function loadAdminCandidates() {
-            const list = document.getElementById('admin-candidates-list');
-            list.innerHTML = '';
+        // Admin Feature 2: Manage Candidates
+        function loadAdminCandidatesList() {
+            const container = document.getElementById('admin-candidates-list');
+            container.innerHTML = '';
             candidatesData.forEach(c => {
-                const row = document.createElement('div');
-                row.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
-                row.innerHTML = `
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
+                item.innerHTML = `
                     <div>
                         <span class="font-bold text-slate-800">${c.name}</span>
-                        <span class="text-slate-500"> (Ward ${c.ward} • ${c.party})</span>
+                        <span class="text-slate-500">(Ward ${c.ward} - ${c.party})</span>
                     </div>
-                    <button onclick="adminDeleteCandidate(${c.id})" class="px-3 py-1 bg-rose-100 text-rose-700 rounded-lg font-semibold hover:bg-rose-200 transition">Delete</button>
+                    <button onclick="adminDeleteCandidate(${c.id})" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-semibold">Delete</button>
                 `;
-                list.appendChild(row);
+                container.appendChild(item);
             });
         }
 
         function adminDeleteCandidate(id) {
-            const idx = candidatesData.findIndex(item => item.id === id);
-            if (idx !== -1) {
-                candidatesData.splice(idx, 1);
+            if (confirm("Are you sure you want to remove this candidate record?")) {
+                const idx = candidatesData.findIndex(c => c.id === id);
+                if (idx !== -1) candidatesData.splice(idx, 1);
                 currentCandidates = [...candidatesData];
                 renderCandidatesGrid();
-                loadAdminCandidates();
+                loadAdminCandidatesList();
                 populateComparisonDropdowns();
-                alert("🗑️ Candidate record removed.");
+                alert("Candidate deleted successfully.");
             }
         }
 
+        // Admin Feature 3: Broadcast
         function triggerBroadcast() {
             const msg = document.getElementById('bc-msg').value;
-            if (!msg) return;
+            if (!msg) return alert("Please enter broadcast message text.");
             document.getElementById('broadcast-text').textContent = msg;
             document.getElementById('broadcast-banner').classList.remove('hidden');
-            alert("📢 Broadcast banner published across all citizen screens!");
+            alert("Broadcast banner published successfully across all pages!");
         }
 
         function clearBroadcast() {
             document.getElementById('broadcast-banner').classList.add('hidden');
+            document.getElementById('bc-msg').value = "";
         }
 
-        function loadAdminGrievances() {
-            const list = document.getElementById('admin-grievances-list');
-            const grievances = getStoredGrievances();
-            list.innerHTML = '';
-            grievances.forEach((g, idx) => {
-                const row = document.createElement('div');
-                row.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
-                row.innerHTML = `
+        // Admin Feature 4: Grievance Master
+        function loadAdminGrievancesList() {
+            const list = getGrievancesDB();
+            const container = document.getElementById('admin-grievances-list');
+            container.innerHTML = '';
+            list.forEach((g, idx) => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs";
+                item.innerHTML = `
                     <div>
-                        <span class="font-bold">${g.id} (Ward ${g.ward}):</span> <span class="text-slate-600">${g.category}</span>
+                        <span class="font-bold text-slate-900">${g.id} (Ward ${g.ward})</span> - <span class="text-slate-600">${g.category}</span> [${g.status}]
                     </div>
-                    <button onclick="adminResolveGrievance(${idx})" class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg font-semibold hover:bg-emerald-200 transition">Mark Resolved</button>
+                    <div class="flex gap-2">
+                        <button onclick="adminResolveGrievance(${idx})" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold">Resolve</button>
+                        <button onclick="adminDeleteGrievance(${idx})" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-semibold">Delete</button>
+                    </div>
                 `;
-                list.appendChild(row);
+                container.appendChild(item);
             });
         }
 
         function adminResolveGrievance(idx) {
-            const grievances = getStoredGrievances();
-            grievances[idx].status = "Resolved";
-            localStorage.setItem(STORAGE_GRIEVANCES_KEY, JSON.stringify(grievances));
-            loadAdminGrievances();
+            const list = getGrievancesDB();
+            list[idx].status = "Resolved";
+            saveGrievancesDB(list);
+            loadAdminGrievancesList();
             loadGrievances();
-            alert("✅ Grievance status updated to Resolved.");
+            alert("Grievance marked as resolved.");
         }
 
+        function adminDeleteGrievance(idx) {
+            const list = getGrievancesDB();
+            list.splice(idx, 1);
+            saveGrievancesDB(list);
+            loadAdminGrievancesList();
+            loadGrievances();
+        }
+
+        // Admin Feature 5: Export CSV
         function exportCSV(type) {
-            alert(`📥 Exporting ${type} dataset as CSV for municipal archiving.`);
+            let csvContent = "data:text/csv;charset=utf-8,";
+            if (type === 'candidates') {
+                csvContent += "ID,Ward,Name,Party,Symbol,Age,Phone\r\n";
+                candidatesData.forEach(c => {
+                    csvContent += `${c.id},${c.ward},"${c.name}",${c.party},${c.symbol},${c.age},${c.phone}\r\n`;
+                });
+            } else {
+                csvContent += "ID,Name,Ward,Category,Status,Date\r\n";
+                getGrievancesDB().forEach(g => {
+                    csvContent += `${g.id},"${g.name}",${g.ward},${g.category},${g.status},${g.date}\r\n`;
+                });
+            }
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `bhinmal_${type}_export.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
+        // Admin Feature 6: Reset Polls
         function adminResetPolls() {
-            localStorage.removeItem(STORAGE_VOTES_KEY);
-            renderPollingBooth();
-            renderAnalytics();
-            alert("🔄 All public opinion poll votes have been reset.");
-        }
-
-        function updateAdminPass() {
-            const newPass = document.getElementById('new-admin-pass').value;
-            if (newPass) {
-                ADMIN_PASS = newPass;
-                alert("🔑 Master passcode successfully updated.");
+            if (confirm("Are you sure you want to reset all opinion votes across all wards?")) {
+                localStorage.removeItem(STORAGE_VOTES_KEY);
+                for (let i = 1; i <= 40; i++) localStorage.removeItem(`voted_ward_${i}`);
+                renderPollingBooth();
+                renderAnalytics();
+                alert("All ward poll votes have been reset.");
             }
         }
 
-        function saveSEO() {
-            alert("🌐 SEO meta tags updated successfully.");
+        // Admin Feature 7: Passcode Settings
+        function updateAdminPass() {
+            const newPass = document.getElementById('new-admin-pass').value;
+            if (!newPass) return alert("Please enter a valid password.");
+            ADMIN_PASS = newPass;
+            alert("Admin master passcode updated successfully!");
+            document.getElementById('new-admin-pass').value = "";
         }
 
+        // Admin Feature 9: SEO Meta
+        function saveSEO() {
+            const title = document.getElementById('seo-title').value;
+            document.title = title;
+            alert("SEO meta tags updated successfully!");
+        }
+
+        // Admin Feature 10: DB Backup
         function backupDB() {
-            const state = { candidates: candidatesData, grievances: getStoredGrievances() };
-            const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "bhinmal_nagar_palika_backup_2026.json";
-            a.click();
+            const backup = {
+                candidates: candidatesData,
+                votes: getVotesDB(),
+                grievances: getGrievancesDB()
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "bhinmal_nagar_palika_backup.json");
+            dlAnchorElem.click();
         }
 
         function restoreDB() {
-            alert("📂 Database restored to default state.");
+            if (confirm("Restore default mock datasets?")) {
+                localStorage.clear();
+                location.reload();
+            }
         }
     </script>
 </body>
