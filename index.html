@@ -1,578 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajasthan Local Elections 2026 - Public Opinion & Lead Tracker</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN for Live Estimation Graphs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .gradient-header { background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-    </style>
-</head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
-
-    <!-- Top Disclaimer Bar -->
-    <div class="bg-amber-500 text-slate-900 text-xs py-2 px-4 text-center font-bold shadow-sm">
-        <i class="fa-solid fa-triangle-exclamation mr-1"></i> UNOFFICIAL PUBLIC OPINION POLL: This portal is an independent prediction portal and is NOT affiliated with the State Election Commission, Rajasthan.
-    </div>
-
-    <!-- Main Navigation Header -->
-    <header class="gradient-header text-white shadow-lg py-6 px-4 sm:px-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight flex items-center gap-2">
-                    <i class="fa-solid fa-check-to-slot text-yellow-300"></i>
-                    Rajasthan Jan-Mat 2026
-                </h1>
-                <p class="text-orange-100 text-sm mt-1">Live Opinion Trends & Exit Estimation for Sarpanch & Nagar Palika Elections</p>
-            </div>
-            <div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-lg text-xs sm:text-sm">
-                <span class="inline-block w-3 h-3 bg-green-400 rounded-full animate-ping"></span>
-                <span>Live Data Sync: <strong>SEC Rajasthan Schema 2026</strong></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Body Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-        <!-- Left Column: Location & Candidate Selection Form -->
-        <section class="lg:col-span-5 flex flex-col gap-6">
-            <div class="glass-card p-6 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-map-location-dot text-orange-600"></i>
-                    Step 1: Select Area
-                </h2>
-
-                <form id="areaForm" class="space-y-4">
-                    <!-- Election Type -->
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Election Body Type</label>
-                        <select id="bodyType" class="w-full p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none text-slate-800">
-                            <option value="gram_panchayat">Panchayati Raj (Gram Panchayat / Sarpanch)</option>
-                            <option value="nagar_palika">Urban Local Body (Nagar Palika / Ward Member)</option>
-                        </select>
-                    </div>
-
-                    <!-- District Selection -->
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">District (जिला)</label>
-                        <select id="districtSelect" class="w-full p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none text-slate-800">
-                            <option value="">-- Select District --</option>
-                        </select>
-                    </div>
-
-                    <!-- Block / Tehsil / Zone -->
-                    <div>
-                        <label id="subDivLabel" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Panchayat Samiti / Sub-Division</label>
-                        <select id="subDivSelect" class="w-full p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none text-slate-800" disabled>
-                            <option value="">-- Select District First --</option>
-                        </select>
-                    </div>
-
-                    <!-- Gram Panchayat or Ward -->
-                    <div>
-                        <label id="areaLabel" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Gram Panchayat / Ward</label>
-                        <select id="areaSelect" class="w-full p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none text-slate-800" disabled>
-                            <option value="">-- Select Sub-Division First --</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Voting Action Box -->
-            <div class="glass-card p-6 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-user-check text-orange-600"></i>
-                    Step 2: Cast Public Opinion Vote
-                </h2>
-
-                <div id="voterVerificationBox" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Voter EPIC Number / Mobile Hash</label>
-                        <input type="text" id="voterEpic" placeholder="e.g. RJ/01/123/456789" class="w-full p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none uppercase">
-                        <p class="text-[11px] text-slate-500 mt-1">Hashed locally to enforce strict 1-person-1-vote security.</p>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-2">Select Your Candidate Choice</label>
-                        <div id="candidateListContainer" class="space-y-2 max-h-56 overflow-y-auto pr-1">
-                            <div class="text-xs text-slate-500 italic p-3 text-center border border-dashed rounded-lg">Please complete area selection to load official nominations.</div>
-                        </div>
-                    </div>
-
-                    <button id="submitVoteBtn" disabled class="w-full py-3 bg-slate-400 text-white font-bold rounded-lg shadow-md cursor-not-allowed hover:bg-orange-600 transition duration-200 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i> Submit Opinion Vote
-                    </button>
-                    <div id="voteStatusMessage" class="text-xs text-center font-medium"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Right Column: Real-Time Opinion Analytics & Predictions -->
-        <section class="lg:col-span-7 flex flex-col gap-6">
-            <div class="glass-card p-6 rounded-2xl shadow-md border border-slate-200 flex-grow">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-4 gap-2">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900">Live Estimation & Leading Candidate</h2>
-                        <p id="activeAreaTitle" class="text-xs text-slate-500">Select a region on the left to view estimated projection</p>
-                    </div>
-                    <span id="totalVotesBadge" class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full border border-orange-200">
-                        Total Sample Votes: 0
-                    </span>
-                </div>
-
-                <!-- Estimation Banner -->
-                <div id="winnerBanner" class="hidden mb-6 p-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl shadow-lg flex items-center justify-between">
-                    <div>
-                        <div class="text-xs uppercase tracking-wider text-emerald-100 font-semibold">Public Prediction Leader</div>
-                        <div id="leaderName" class="text-2xl font-black">--</div>
-                        <div id="leaderMargin" class="text-xs text-emerald-100">Leading by 0%</div>
-                    </div>
-                    <div class="text-4xl text-emerald-200">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                </div>
-
-                <!-- Live Chart Visualization -->
-                <div class="relative w-full h-64 sm:h-80 my-4">
-                    <canvas id="opinionChart"></canvas>
-                </div>
-
-                <!-- Detailed Candidate Breakdown Table -->
-                <div class="mt-6 overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
-                        <thead>
-                            <tr class="border-b border-slate-200 text-slate-500">
-                                <th class="py-2 px-3 font-semibold">Nominated Candidate</th>
-                                <th class="py-2 px-3 font-semibold">Symbol / Party</th>
-                                <th class="py-2 px-3 font-semibold text-right">Votes Cast</th>
-                                <th class="py-2 px-3 font-semibold text-right">Percentage</th>
-                            </tr>
-                        </thead>
-                        <tbody id="candidateTableBody" class="divide-y divide-slate-100">
-                            <tr>
-                                <td colspan="4" class="py-6 text-center text-slate-400">No region selected. Select District & Gram Panchayat / Ward above.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-6 px-4 text-center border-t border-slate-800">
-        <div class="max-w-7xl mx-auto space-y-2">
-            <p><strong>Disclaimer:</strong> This software is built purely for academic, research, and journalistic public opinion estimation purposes. It strictly prevents double voting using SHA-256 identifier hashing.</p>
-            <p>© 2026 Rajasthan Jan-Mat Opinion Analytics Engine | SEC Govt Data Structure Compatible</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript Application Logic -->
-    <script>
-        // --- 1. Mock Database (Representing Government SEC Data Schema) ---
-        const SEC_DATA = {
-            districts: {
-                "JAIPUR": {
-                    subDivs: ["Sanganer", "Amber", "Chaksu"],
-                    gramPanchayats: {
-                        "Sanganer": ["Vatika", "Mahapura", "Shikarpura"],
-                        "Amber": ["Kukas", "Achrol", "Chandwaji"],
-                        "Chaksu": ["Kadera", "Kotkhawda"]
-                    },
-                    wards: {
-                        "Sanganer": ["Ward No 01", "Ward No 02", "Ward No 03"],
-                        "Amber": ["Ward No 01", "Ward No 02"],
-                        "Chaksu": ["Ward No 01", "Ward No 02"]
-                    }
-                },
-                "JODHPUR": {
-                    subDivs: ["Luni", "Mandore", "Osian"],
-                    gramPanchayats: {
-                        "Luni": ["Salawas", "Boranada", "Mogra"],
-                        "Mandore": ["Daijar", "Karwar"],
-                        "Osian": ["Tiwri", "Mathania"]
-                    },
-                    wards: {
-                        "Luni": ["Ward No 01", "Ward No 02"],
-                        "Mandore": ["Ward No 01", "Ward No 02"],
-                        "Osian": ["Ward No 01", "Ward No 02"]
-                    }
-                },
-                "UDAIPUR": {
-                    subDivs: ["Girwa", "Badgaon", "Mavli"],
-                    gramPanchayats: {
-                        "Girwa": ["Bhuwana", "Dakhan Kotra"],
-                        "Badgaon": ["Iswal", "Lakhawali"],
-                        "Mavli": ["Ghasar", "Sanwar"]
-                    },
-                    wards: {
-                        "Girwa": ["Ward No 01", "Ward No 02"],
-                        "Badgaon": ["Ward No 01", "Ward No 02"],
-                        "Mavli": ["Ward No 01", "Ward No 02"]
-                    }
-                }
-            },
-            candidatesPool: {
-                "Vatika": [
-                    { id: "c1", name: "Rameshwar Prasad Gurjar", symbol: "Banyan Tree (बरगद)", party: "Independent" },
-                    { id: "c2", name: "Sunita Devi Meena", symbol: "Earthen Lamp (दिये)", party: "Independent" },
-                    { id: "c3", name: "Mukesh Kumar Saini", symbol: "Tractor (ट्रैक्टर)", party: "Independent" }
-                ],
-                "Mahapura": [
-                    { id: "c4", name: "Vikram Singh Rathore", symbol: "Sword (तलवार)", party: "Independent" },
-                    { id: "c5", name: "Kamla Devi Chaudhari", symbol: "Bucket (बाल्टी)", party: "Independent" }
-                ],
-                "Ward No 01": [
-                    { id: "c6", name: "Anil Sharma", symbol: "Auto-Rickshaw", party: "Party A" },
-                    { id: "c7", name: "Priya Verma", symbol: "Kite", party: "Party B" },
-                    { id: "c8", name: "Rajesh Tank", symbol: "Gas Cylinder", party: "Party C" }
-                ]
-            }
-        };
-
-        // Local Storage Lead & Vote Store Key
-        const STORE_KEY = "RJ_ELECTION_VOTES_2026_V2";
-        const VOTER_HASH_STORE = "RJ_ELECTION_VOTERS_HASH_2026_V2";
-
-        // State variables
-        let chartInstance = null;
-        let selectedCandidateId = null;
-
-        // Initialize App
-        document.addEventListener("DOMContentLoaded", () => {
-            initDatabaseStore();
-            populateDistricts();
-            setupEventListeners();
-            initChart();
-        });
-
-        // Initialize local storage structure
-        function initDatabaseStore() {
-            if (!localStorage.getItem(STORE_KEY)) {
-                localStorage.setItem(STORE_KEY, JSON.stringify({}));
-            }
-            if (!localStorage.getItem(VOTER_HASH_STORE)) {
-                localStorage.setItem(VOTER_HASH_STORE, JSON.stringify([]));
-            }
-        }
-
-        // Populate District Dropdown
-        function populateDistricts() {
-            const districtSelect = document.getElementById("districtSelect");
-            Object.keys(SEC_DATA.districts).forEach(dist => {
-                const opt = document.createElement("option");
-                opt.value = dist;
-                opt.textContent = dist;
-                districtSelect.appendChild(opt);
-            });
-        }
-
-        // Setup Event Handlers
-        function setupEventListeners() {
-            const bodyType = document.getElementById("bodyType");
-            const districtSelect = document.getElementById("districtSelect");
-            const subDivSelect = document.getElementById("subDivSelect");
-            const areaSelect = document.getElementById("areaSelect");
-            const submitVoteBtn = document.getElementById("submitVoteBtn");
-            const voterEpic = document.getElementById("voterEpic");
-
-            bodyType.addEventListener("change", handleAreaCascadeReset);
-            districtSelect.addEventListener("change", handleDistrictChange);
-            subDivSelect.addEventListener("change", handleSubDivChange);
-            areaSelect.addEventListener("change", handleAreaChange);
-
-            voterEpic.addEventListener("input", validateVoteForm);
-            submitVoteBtn.addEventListener("click", handleVoteSubmission);
-        }
-
-        function handleAreaCascadeReset() {
-            const isUrban = document.getElementById("bodyType").value === "nagar_palika";
-            document.getElementById("subDivLabel").textContent = isUrban ? "Tehsil / Ward Zone" : "Panchayat Samiti";
-            document.getElementById("areaLabel").textContent = isUrban ? "Nagar Palika Ward" : "Gram Panchayat";
-            handleDistrictChange();
-        }
-
-        function handleDistrictChange() {
-            const district = document.getElementById("districtSelect").value;
-            const subDivSelect = document.getElementById("subDivSelect");
-            const areaSelect = document.getElementById("areaSelect");
-
-            subDivSelect.innerHTML = '<option value="">-- Select Sub-Division --</option>';
-            areaSelect.innerHTML = '<option value="">-- Select Area First --</option>';
-            areaSelect.disabled = true;
-
-            if (!district) {
-                subDivSelect.disabled = true;
-                return;
-            }
-
-            const subDivs = SEC_DATA.districts[district].subDivs;
-            subDivs.forEach(sd => {
-                const opt = document.createElement("option");
-                opt.value = sd;
-                opt.textContent = sd;
-                subDivSelect.appendChild(opt);
-            });
-            subDivSelect.disabled = false;
-        }
-
-        function handleSubDivChange() {
-            const district = document.getElementById("districtSelect").value;
-            const subDiv = document.getElementById("subDivSelect").value;
-            const bodyType = document.getElementById("bodyType").value;
-            const areaSelect = document.getElementById("areaSelect");
-
-            areaSelect.innerHTML = '<option value="">-- Select Location --</option>';
-
-            if (!subDiv) {
-                areaSelect.disabled = true;
-                return;
-            }
-
-            const areas = (bodyType === "gram_panchayat")
-                ? SEC_DATA.districts[district].gramPanchayats[subDiv]
-                : SEC_DATA.districts[district].wards[subDiv];
-
-            (areas || []).forEach(a => {
-                const opt = document.createElement("option");
-                opt.value = a;
-                opt.textContent = a;
-                areaSelect.appendChild(opt);
-            });
-            areaSelect.disabled = false;
-        }
-
-        function handleAreaChange() {
-            const area = document.getElementById("areaSelect").value;
-            const container = document.getElementById("candidateListContainer");
-            container.innerHTML = "";
-            selectedCandidateId = null;
-
-            if (!area) {
-                container.innerHTML = '<div class="text-xs text-slate-500 italic p-3 text-center border border-dashed rounded-lg">Please select an area to view candidates.</div>';
-                renderAnalytics(null);
-                validateVoteForm();
-                return;
-            }
-
-            // Get Nominations for area
-            const candidates = SEC_DATA.candidatesPool[area] || [
-                { id: `${area}_1`, name: "Candidate Alpha", symbol: "Rising Sun", party: "Independent" },
-                { id: `${area}_2`, name: "Candidate Beta", symbol: "Bow & Arrow", party: "Independent" },
-                { id: `${area}_3`, name: "Candidate Gamma", symbol: "Ceiling Fan", party: "Independent" }
-            ];
-
-            candidates.forEach(cand => {
-                const div = document.createElement("label");
-                div.className = "flex items-center justify-between p-3 border rounded-lg hover:bg-orange-50 cursor-pointer transition";
-                div.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <input type="radio" name="candidateOption" value="${cand.id}" class="text-orange-600 focus:ring-orange-500">
-                        <div>
-                            <div class="font-bold text-slate-800 text-sm">${cand.name}</div>
-                            <div class="text-xs text-slate-500">Symbol: ${cand.symbol} | ${cand.party}</div>
-                        </div>
-                    </div>
-                `;
-                div.querySelector('input').addEventListener('change', (e) => {
-                    selectedCandidateId = e.target.value;
-                    validateVoteForm();
-                });
-                container.appendChild(div);
-            });
-
-            renderAnalytics(area, candidates);
-            validateVoteForm();
-        }
-
-        function validateVoteForm() {
-            const epic = document.getElementById("voterEpic").value.trim();
-            const area = document.getElementById("areaSelect").value;
-            const btn = document.getElementById("submitVoteBtn");
-
-            if (epic.length >= 6 && area && selectedCandidateId) {
-                btn.disabled = false;
-                btn.classList.remove("bg-slate-400", "cursor-not-allowed");
-                btn.classList.add("bg-orange-600", "hover:bg-orange-700", "cursor-pointer");
-            } else {
-                btn.disabled = true;
-                btn.classList.add("bg-slate-400", "cursor-not-allowed");
-                btn.classList.remove("bg-orange-600", "hover:bg-orange-700", "cursor-pointer");
-            }
-        }
-
-        // --- Cryptographic SHA-256 Simple Hash Generator for Voter Anonymity & Anti-Fraud ---
-        async function hashIdentifier(identifier) {
-            const msgUint8 = new TextEncoder().encode(identifier.toLowerCase().trim());
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // Handle Voting Logic (1 Person 1 Vote Enforcer)
-        async function handleVoteSubmission() {
-            const epicInput = document.getElementById("voterEpic").value.trim();
-            const area = document.getElementById("areaSelect").value;
-            const statusMsg = document.getElementById("voteStatusMessage");
-
-            if (!epicInput || !area || !selectedCandidateId) return;
-
-            const voterHash = await hashIdentifier(epicInput);
-            const voterStore = JSON.parse(localStorage.getItem(VOTER_HASH_STORE));
-
-            // Check if voter already voted
-            if (voterStore.includes(voterHash)) {
-                statusMsg.className = "text-xs text-center font-bold text-red-600 mt-2";
-                statusMsg.textContent = "Error: This Voter EPIC / Mobile hash has already cast an opinion vote!";
-                return;
-            }
-
-            // Record Vote
-            const voteStore = JSON.parse(localStorage.getItem(STORE_KEY));
-            if (!voteStore[area]) voteStore[area] = {};
-            voteStore[area][selectedCandidateId] = (voteStore[area][selectedCandidateId] || 0) + 1;
-
-            voterStore.push(voterHash);
-
-            localStorage.setItem(STORE_KEY, JSON.stringify(voteStore));
-            localStorage.setItem(VOTER_HASH_STORE, JSON.stringify(voterStore));
-
-            statusMsg.className = "text-xs text-center font-bold text-emerald-600 mt-2";
-            statusMsg.textContent = "✓ Success! Your public opinion vote has been recorded securely.";
-
-            document.getElementById("voterEpic").value = "";
-            validateVoteForm();
-
-            // Refresh Chart
-            const candidates = SEC_DATA.candidatesPool[area] || [];
-            renderAnalytics(area, candidates);
-        }
-
-        // Render Analytics & Leading Candidate Breakdown
-        function renderAnalytics(area, candidates = []) {
-            const activeTitle = document.getElementById("activeAreaTitle");
-            const totalBadge = document.getElementById("totalVotesBadge");
-            const winnerBanner = document.getElementById("winnerBanner");
-            const tableBody = document.getElementById("candidateTableBody");
-
-            if (!area) {
-                activeTitle.textContent = "Select a region on the left to view estimated projection";
-                totalBadge.textContent = "Total Sample Votes: 0";
-                winnerBanner.classList.add("hidden");
-                tableBody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-400">No region selected.</td></tr>`;
-                updateChart([], []);
-                return;
-            }
-
-            activeTitle.textContent = `Live Projections for: ${area} (${document.getElementById("districtSelect").value} District)`;
-
-            const voteStore = JSON.parse(localStorage.getItem(STORE_KEY));
-            const areaVotes = voteStore[area] || {};
-
-            let totalAreaVotes = 0;
-            const chartLabels = [];
-            const chartData = [];
-            const tableRows = [];
-
-            candidates.forEach(c => {
-                const count = areaVotes[c.id] || 0;
-                totalAreaVotes += count;
-            });
-
-            totalBadge.textContent = `Total Sample Votes: ${totalAreaVotes}`;
-
-            // Calculate winner & percentages
-            let leader = null;
-            let topVotes = -1;
-            let secondVotes = 0;
-
-            candidates.forEach(c => {
-                const count = areaVotes[c.id] || 0;
-                const pct = totalAreaVotes > 0 ? ((count / totalAreaVotes) * 100).toFixed(1) : "0.0";
-
-                chartLabels.push(c.name);
-                chartData.push(count);
-
-                if (count > topVotes) {
-                    secondVotes = topVotes;
-                    topVotes = count;
-                    leader = { ...c, count, pct };
-                } else if (count > secondVotes) {
-                    secondVotes = count;
-                }
-
-                tableRows.push(`
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-3 px-3 font-bold text-slate-800">${c.name}</td>
-                        <td class="py-3 px-3 text-slate-600">${c.symbol}</td>
-                        <td class="py-3 px-3 text-right font-semibold text-slate-700">${count}</td>
-                        <td class="py-3 px-3 text-right font-bold text-orange-600">${pct}%</td>
-                    </tr>
-                `);
-            });
-
-            tableBody.innerHTML = tableRows.join("");
-
-            // Update Leading Banner
-            if (leader && totalAreaVotes > 0) {
-                winnerBanner.classList.remove("hidden");
-                document.getElementById("leaderName").textContent = `${leader.name} (${leader.pct}%)`;
-                const marginPct = (((topVotes - secondVotes) / (totalAreaVotes || 1)) * 100).toFixed(1);
-                document.getElementById("leaderMargin").textContent = `Leading by ~${marginPct}% margin over nearest rival`;
-            } else {
-                winnerBanner.classList.add("hidden");
-            }
-
-            updateChart(chartLabels, chartData);
-        }
-
-        // Initialize Chart.js Bar Graph
-        function initChart() {
-            const ctx = document.getElementById('opinionChart').getContext('2d');
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Estimated Votes Cast',
-                        data: [],
-                        backgroundColor: 'rgba(234, 88, 12, 0.75)',
-                        borderColor: 'rgba(194, 65, 12, 1)',
-                        borderWidth: 2,
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { precision: 0 }
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateChart(labels, data) {
-            if (!chartInstance) return;
-            chartInstance.data.labels = labels;
-            chartInstance.data.datasets[0].data = data;
-            chartInstance.update();
-        }
-    </script>
-</body>
-</html>
+import time
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+
+def scrape_nagar_palika_votes(district_name="JALORE"):
+    # Setup Chrome Driver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
+    
+    # Official SEC Rajasthan Download / Results Portal URL
+    url = "https://sec.rajasthan.gov.in/se_pdfdownload.aspx"
+    driver.get(url)
+    wait = WebDriverWait(driver, 10)
+    
+    vote_data = []
+    
+    try:
+        # Select District
+        district_dropdown = Select(wait.until(EC.presence_of_element_located((By.ID, "ddlDistrict"))))
+        district_dropdown.select_by_visible_text(district_name)
+        time.sleep(2)
+        
+        # Select Municipality (Nagar Palika / Parishad)
+        body_dropdown = Select(wait.until(EC.presence_of_element_located((By.ID, "ddlLocalBody"))))
+        body_options = [opt.text for opt in body_dropdown.options if "Select" not in opt.text]
+        
+        for body in body_options:
+            body_dropdown.select_by_visible_text(body)
+            time.sleep(2)
+            
+            # Click Search/View Results
+            search_btn = driver.find_element(By.ID, "btnSearch")
+            search_btn.click()
+            time.sleep(3)
+            
+            # Extract Results Table
+            rows = driver.find_elements(By.XPATH, "//table[@id='gvResults']//tr[position()>1]")
+            for row in rows:
+                cols = row.find_elements(By.TAG_NAME, "td")
+                if len(cols) >= 6:
+                    vote_data.append({
+                        "District": district_name,
+                        "Nagar Palika": body,
+                        "Ward No": cols[0].text.strip(),
+                        "Candidate Name": cols[1].text.strip(),
+                        "Party": cols[2].text.strip(),
+                        "Votes Secured": cols[3].text.strip(),
+                        "Margin / Result": cols[4].text.strip()
+                    })
+                    
+    except Exception as e:
+        print(f"Scraper error: {e}")
+    finally:
+        driver.quit()
+        
+    df = pd.DataFrame(vote_data)
+    df.to_csv(f"{district_name}_Nagar_Palika_Votes.csv", index=False)
+    print(f"Exported {len(vote_data)} records to {district_name}_Nagar_Palika_Votes.csv")
+
+if __name__ == "__main__":
+    scrape_nagar_palika_votes("JALORE")
