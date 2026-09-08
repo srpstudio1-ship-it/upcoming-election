@@ -113,47 +113,47 @@
             </div>
         </div>
 
-        <!-- USER FEATURE #2: Opinion Voting Home Section -->
+        <!-- USER FEATURE #2: Opinion Voting Home Section (Updated for Village -> Accepted Nominations Workflow) -->
         <section class="mb-8">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-7">
                 <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
                     <h2 class="text-lg font-bold text-slate-900 flex items-center">
                         <i class="fa-solid fa-box-archive text-blue-600 mr-2"></i>
-                        Public Opinion Voting Booth
+                        Public Opinion Voting Booth – Accepted Nominations
                     </h2>
                     <span id="voting-badge-status" class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">
                         Voting Open
                     </span>
                 </div>
 
-                <!-- USER FEATURE #3: Panchayat Selector -->
+                <!-- Step 1: Village / Panchayat Selector -->
                 <div class="mb-4">
                     <label class="block text-xs font-semibold text-slate-700 mb-1.5">
-                        1. Select Gram Panchayat (ग्राम पंचायत चुनें)
+                        1. Select Village / Gram Panchayat (ग्राम पंचायत चुनें)
                     </label>
                     <select id="user-panchayat-select" onchange="onUserPanchayatChange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none">
-                        <option value="">-- Choose Gram Panchayat --</option>
+                        <option value="">-- Choose Village / Gram Panchayat --</option>
                         <option value="Morseem">Morseem (मोरसीम – 13 Wards)</option>
                         <option value="NayaMorseem">Naya Morseem (नया मोरसीम – 11 Wards)</option>
                     </select>
                 </div>
 
-                <!-- USER FEATURE #4: Ward Selector -->
+                <!-- Step 2: Ward Number Selector -->
                 <div class="mb-4">
                     <label class="block text-xs font-semibold text-slate-700 mb-1.5">
                         2. Select Ward Number (वार्ड चुनें)
                     </label>
                     <select id="user-ward-select" onchange="onUserWardChange()" disabled class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none disabled:bg-slate-100 disabled:text-slate-400">
-                        <option value="">-- Select Panchayat First --</option>
+                        <option value="">-- Select Village First --</option>
                     </select>
                 </div>
 
-                <!-- USER FEATURE #5: Lottery / Reservation Status Box -->
+                <!-- Lottery / Reservation Status Box -->
                 <div id="user-lottery-box" class="hidden mb-4 bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-start space-x-2.5">
                     <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 text-sm"></i>
                     <div>
                         <h4 class="text-[10px] font-bold uppercase tracking-wide text-blue-900">
-                            Lottery & Reservation Status (17–18 Sept Schedule)
+                            Lottery & Ward Reservation Status
                         </h4>
                         <p id="user-lottery-text" class="text-xs text-blue-800 font-semibold mt-0.5">
                             General / Pending
@@ -161,16 +161,16 @@
                     </div>
                 </div>
 
-                <!-- USER FEATURE #6: Candidate Selection Grid -->
+                <!-- Step 3: Candidate Selection Grid (Showing all fields from official nomination table) -->
                 <div id="user-candidates-wrapper" class="hidden">
                     <label class="block text-xs font-semibold text-slate-700 mb-2">
-                        3. Choose Your Preferred Candidate / Opinion Support
+                        3. Choose Person / Accepted Nomination (उम्मीदवार चुनें)
                     </label>
-                    <div id="user-candidates-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                    <div id="user-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                         <!-- Injected via JS -->
                     </div>
 
-                    <!-- USER FEATURE #7: Mobile Verification & Vote Submit -->
+                    <!-- Mobile Verification & Vote Submit -->
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 mb-4">
                         <label class="block text-[10px] font-bold uppercase text-slate-600 mb-1">
                             Enter Mobile Number to Verify & Vote
@@ -188,7 +188,7 @@
                     </div>
                 </div>
 
-                <!-- USER FEATURE #8: Live Opinion Analytics -->
+                <!-- Live Opinion Analytics -->
                 <div class="mt-5 pt-4 border-t border-slate-100">
                     <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center justify-between">
                         <span>
@@ -201,7 +201,7 @@
                     </h3>
                     <div id="live-results-container" class="space-y-3">
                         <p class="text-xs text-slate-500 text-center py-4">
-                            Select Panchayat and Ward to view live analytics.
+                            Select Village and Ward to view live analytics.
                         </p>
                     </div>
                 </div>
@@ -313,7 +313,7 @@
                 <div class="space-y-2 text-[11px] text-slate-600 max-h-36 overflow-y-auto custom-scrollbar">
                     <div>
                         <p class="font-semibold text-slate-800">How do I vote?</p>
-                        <p>Select Panchayat → Ward → Candidate → Enter mobile → Submit.</p>
+                        <p>Select Village → Ward → Candidate → Enter mobile → Submit.</p>
                     </div>
                     <div>
                         <p class="font-semibold text-slate-800">Can I vote twice?</p>
@@ -536,7 +536,7 @@
          JAVASCRIPT ENGINE
          ========================= -->
     <script>
-        const STORAGE_KEY = "MORSEEM_PANCHAYAT_DB_PRO_v3";
+        const STORAGE_KEY = "MORSEEM_PANCHAYAT_DB_PRO_v4";
 
         const defaultDatabase = {
             settings: {
@@ -574,14 +574,42 @@
             }
         };
 
-        // Initialize wards
+        // Initialize wards with full official nomination fields: Sr No, District, ULB, Ward No, Reservation, Name, Gender, Age, Candidate Category, Party Name, Pledge/Symbol
         for (let i = 1; i <= 13; i++) {
             defaultDatabase.panchayats.Morseem.wardsData[i] = {
                 wardNo: i,
                 reservation: "Pending Lottery (17–18 Sep)",
                 candidates: [
-                    { id: `m_${i}_1`, name: `Candidate Alpha (Ward ${i})`, symbol: "🌾 Wheat", manifesto: "Clean drinking water & road connectivity." },
-                    { id: `m_${i}_2`, name: `Candidate Beta (Ward ${i})`, symbol: "☀️ Sun", manifesto: "Street lights and digital e-gram center." }
+                    { 
+                        id: `m_${i}_1`, 
+                        srNo: "1",
+                        districtName: "Jalore",
+                        ulbName: "Morseem",
+                        wardNo: i,
+                        wardReservation: "General",
+                        name: `Candidate Alpha (Ward ${i})`, 
+                        gender: "Male",
+                        age: "38",
+                        candidateCategory: "General",
+                        partyName: "Independent",
+                        symbol: "🌾 Wheat", 
+                        pledge: "Clean drinking water & road connectivity." 
+                    },
+                    { 
+                        id: `m_${i}_2`, 
+                        srNo: "2",
+                        districtName: "Jalore",
+                        ulbName: "Morseem",
+                        wardNo: i,
+                        wardReservation: "General",
+                        name: `Candidate Beta (Ward ${i})`, 
+                        gender: "Female",
+                        age: "42",
+                        candidateCategory: "OBC",
+                        partyName: "Party Symbol",
+                        symbol: "☀️ Sun", 
+                        pledge: "Street lights and digital e-gram center." 
+                    }
                 ],
                 votes: { [`m_${i}_1`]: 12, [`m_${i}_2`]: 9 }
             };
@@ -591,8 +619,36 @@
                 wardNo: i,
                 reservation: "Pending Lottery (17–18 Sep)",
                 candidates: [
-                    { id: `nm_${i}_1`, name: `Candidate X (Ward ${i})`, symbol: "🚜 Tractor", manifesto: "Better drainage and school renovation." },
-                    { id: `nm_${i}_2`, name: `Candidate Y (Ward ${i})`, symbol: "🪷 Lotus", manifesto: "Transparent governance and youth welfare." }
+                    { 
+                        id: `nm_${i}_1`, 
+                        srNo: "1",
+                        districtName: "Jalore",
+                        ulbName: "Naya Morseem",
+                        wardNo: i,
+                        wardReservation: "General",
+                        name: `Candidate X (Ward ${i})`, 
+                        gender: "Male",
+                        age: "45",
+                        candidateCategory: "SC",
+                        partyName: "Independent",
+                        symbol: "🚜 Tractor", 
+                        pledge: "Better drainage and school renovation." 
+                    },
+                    { 
+                        id: `nm_${i}_2`, 
+                        srNo: "2",
+                        districtName: "Jalore",
+                        ulbName: "Naya Morseem",
+                        wardNo: i,
+                        wardReservation: "General",
+                        name: `Candidate Y (Ward ${i})`, 
+                        gender: "Female",
+                        age: "35",
+                        candidateCategory: "General",
+                        partyName: "Party Symbol",
+                        symbol: "🪷 Lotus", 
+                        pledge: "Transparent governance and youth welfare." 
+                    }
                 ],
                 votes: { [`nm_${i}_1`]: 15, [`nm_${i}_2`]: 14 }
             };
@@ -651,7 +707,7 @@
         }
 
         // =========================
-        // USER FEATURES LOGIC
+        // USER FEATURES LOGIC (Village -> Ward -> Accepted Nominations Workflow)
         // =========================
 
         function onUserPanchayatChange() {
@@ -693,7 +749,7 @@
 
             const wardObj = db.panchayats[pKey].wardsData[wNo];
 
-            lotteryText.innerText = `Reservation Status: ${wardObj.reservation || "General"}`;
+            lotteryText.innerText = `Ward Reservation: ${wardObj.reservation || "General"}`;
             lotteryBox.classList.remove("hidden");
 
             if (!db.settings.votingEnabled) {
@@ -703,19 +759,28 @@
             }
 
             candidatesGrid.innerHTML = "";
-            if (wardObj.candidates.length === 0) {
-                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-4">No candidates registered for this ward yet.</div>`;
+            if (!wardObj.candidates || wardObj.candidates.length === 0) {
+                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-4">No accepted nominations registered for this ward yet.</div>`;
             } else {
-                wardObj.candidates.forEach(c => {
+                wardObj.candidates.forEach((c, index) => {
                     candidatesGrid.innerHTML += `
-                        <div onclick="selectUserCandidate('${c.id}')" id="cand-card-${c.id}" class="border border-slate-200 bg-slate-50 hover:bg-blue-50/50 p-3 rounded-xl cursor-pointer transition flex flex-col justify-between">
+                        <div onclick="selectUserCandidate('${c.id}')" id="cand-card-${c.id}" class="border border-slate-200 bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-xl cursor-pointer transition flex flex-col justify-between">
                             <div>
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] font-bold text-blue-600 bg-blue-100 px-1.5 py-0.5 rounded">${c.symbol || "candidate"}</span>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Sr No. ${c.srNo || (index + 1)}</span>
+                                    <span class="text-[10px] font-semibold text-slate-600">Ward No. ${wNo}</span>
                                     <i class="fa-regular fa-circle text-slate-400 select-icon text-base" id="icon-${c.id}"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-900 text-xs">${escapeHtml(c.name)}</h4>
-                                <p class="text-[10px] text-slate-500 mt-0.5 italic">"${escapeHtml(c.manifesto || "No manifesto provided")}"</p>
+                                <h4 class="font-bold text-slate-900 text-sm mb-1">${escapeHtml(c.name)}</h4>
+                                <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 mb-2 bg-white p-2 rounded-lg border border-slate-200">
+                                    <div><b>District:</b> ${escapeHtml(c.districtName || "Jalore")}</div>
+                                    <div><b>ULB:</b> ${escapeHtml(c.ulbName || pKey)}</div>
+                                    <div><b>Gender:</b> ${escapeHtml(c.gender || "N/A")}</div>
+                                    <div><b>Age:</b> ${escapeHtml(c.age || "N/A")}</div>
+                                    <div><b>Category:</b> ${escapeHtml(c.candidateCategory || "General")}</div>
+                                    <div><b>Party:</b> ${escapeHtml(c.partyName || "Independent")}</div>
+                                </div>
+                                <p class="text-[10px] text-slate-500 italic"><b>Pledge / Manifesto:</b> "${escapeHtml(c.pledge || c.manifesto || "No pledge provided")}"</p>
                             </div>
                         </div>
                     `;
@@ -753,8 +818,8 @@
             const wNo = document.getElementById("user-ward-select").value;
             const mobile = document.getElementById("voter-mobile-input").value.trim();
 
-            if (!pKey || !wNo) return alert("Please select Gram Panchayat and Ward.");
-            if (!selectedUserCandidateId) return alert("Please select a candidate first.");
+            if (!pKey || !wNo) return alert("Please select Village (Panchayat) and Ward.");
+            if (!selectedUserCandidateId) return alert("Please select a person / accepted nomination first.");
             if (mobile.length !== 10 || isNaN(mobile)) return alert("Please enter a valid 10-digit mobile number.");
 
             const voteKey = `${pKey}_W${wNo}_${mobile}`;
@@ -774,7 +839,7 @@
             };
 
             persistDB();
-            alert("Success! Your opinion vote has been recorded.");
+            alert("Success! Your vote for the accepted nomination has been recorded.");
             document.getElementById("voter-mobile-input").value = "";
             onUserWardChange();
         }
@@ -786,7 +851,7 @@
             const counter = document.getElementById("total-votes-counter");
 
             if (!pKey || !wNo) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Select Panchayat and Ward to view analytics.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Select Village and Ward to view analytics.</p>`;
                 counter.innerText = `Total Votes: 0`;
                 return;
             }
@@ -817,7 +882,7 @@
                 html += `
                     <div class="space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-200">
                         <div class="flex justify-between text-xs font-bold text-slate-800">
-                            <span>${escapeHtml(c.name)} (${c.symbol || ""})</span>
+                            <span>${escapeHtml(c.name)} (${escapeHtml(c.partyName || "Independent")})</span>
                             <span>${cVotes} Votes (${percent}%)</span>
                         </div>
                         <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
@@ -883,13 +948,13 @@
             report += `Generated on: ${new Date().toLocaleString()}\n\n`;
 
             for (let pKey of ["Morseem", "NayaMorseem"]) {
-                report += `[PANCHAYAT: ${db.panchayats[pKey].name}]\n`;
+                report += `[VILLAGE / PANCHAYAT: ${db.panchayats[pKey].name}]\n`;
                 const totalWards = db.panchayats[pKey].totalWards;
                 for (let i = 1; i <= totalWards; i++) {
                     const w = db.panchayats[pKey].wardsData[i];
                     report += `  Ward ${i} | Reservation: ${w.reservation}\n`;
                     w.candidates.forEach(c => {
-                        report += `    - ${c.name} (${c.symbol}): ${w.votes[c.id] || 0} votes\n`;
+                        report += `    - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Cat: ${c.candidateCategory}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
                     });
                 }
                 report += "\n";
@@ -922,7 +987,7 @@
                 for (let i = 1; i <= p.totalWards; i++) {
                     const w = p.wardsData[i];
                     w.candidates.forEach(c => {
-                        if ((c.name || "").toLowerCase().includes(query) || (c.symbol || "").toLowerCase().includes(query)) {
+                        if ((c.name || "").toLowerCase().includes(query) || (c.partyName || "").toLowerCase().includes(query)) {
                             matches.push({ panchayat: p.name, ward: i, candidate: c });
                         }
                     });
@@ -937,8 +1002,8 @@
             matches.forEach(m => {
                 resultsContainer.innerHTML += `
                     <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[11px]">
-                        <div class="font-semibold text-slate-800">${escapeHtml(m.candidate.name)} (${m.candidate.symbol || ""})</div>
-                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward}</div>
+                        <div class="font-semibold text-slate-800">${escapeHtml(m.candidate.name)} (${escapeHtml(m.candidate.partyName || "")})</div>
+                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward} (Cat: ${escapeHtml(m.candidate.candidateCategory)})</div>
                     </div>
                 `;
             });
@@ -1016,7 +1081,7 @@
                 out.innerHTML += `
                     <div class="bg-slate-50 border border-slate-200 rounded p-1.5 mb-1">
                         <div><b>${pKey}</b> – Ward ${wNo}</div>
-                        <div class="text-slate-600">${cand ? escapeHtml(cand.name) : "Unknown candidate"}</div>
+                        <div class="text-slate-600">${cand ? escapeHtml(cand.name) : "Unknown nomination"}</div>
                         <div class="text-[10px] text-slate-400">${new Date(e.val.time).toLocaleString()}</div>
                     </div>
                 `;
@@ -1100,9 +1165,9 @@
 
         const adminFeaturesList = [
             "1. Update Ward Reservation (Lottery)",
-            "2. Add New Candidate to Ward",
-            "3. Remove Candidate from Ward",
-            "4. Edit Candidate Manifesto & Symbol",
+            "2. Add Accepted Nomination to Ward",
+            "3. Remove Nomination from Ward",
+            "4. Edit Nomination Details (Sr No, Name, Gender, Age, Cat, Party)",
             "5. Publish Government Notification",
             "6. Delete Government Notification",
             "7. Master Live Vote Audit Table",
@@ -1187,7 +1252,7 @@
                     <p class="text-xs text-slate-400 mb-3">Permanently assign official reservation results from the September 17 and 18 lottery drawings.</p>
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Select Gram Panchayat</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Select Village / Gram Panchayat</label>
                             <select id="adm-lot-p" onchange="renderAdminLotteryWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                                 <option value="Morseem">Morseem (13 Wards)</option>
                                 <option value="NayaMorseem">Naya Morseem (11 Wards)</option>
@@ -1206,44 +1271,74 @@
                 `;
                 renderAdminLotteryWards();
             }
-            // Tool 2: Add Candidate
+            // Tool 2: Add Accepted Nomination (matching screenshot fields)
             else if (idx === 1) {
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Panchayat</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village / Panchayat</label>
                             <select id="adm-ac-p" onchange="renderAdminAddCandWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                                 <option value="Morseem">Morseem</option>
                                 <option value="NayaMorseem">Naya Morseem</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward No.</label>
                             <select id="adm-ac-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Candidate Name</label>
-                            <input type="text" id="adm-ac-name" placeholder="Candidate Name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Sr No.</label>
+                                <input type="text" id="adm-ac-srno" placeholder="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">District Name</label>
+                                <input type="text" id="adm-ac-district" value="Jalore" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Person Name</label>
+                                <input type="text" id="adm-ac-name" placeholder="Full Name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Gender</label>
+                                <select id="adm-ac-gender" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Age</label>
+                                <input type="text" id="adm-ac-age" placeholder="35" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Candidate Category</label>
+                                <input type="text" id="adm-ac-cat" placeholder="General / SC / ST / OBC" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Party Name</label>
+                                <input type="text" id="adm-ac-party" placeholder="Independent / Party" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Symbol</label>
-                            <input type="text" id="adm-ac-symbol" placeholder="🌾 Wheat" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">View Pledge / Manifesto</label>
+                            <input type="text" id="adm-ac-pledge" placeholder="Pledge details..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Manifesto</label>
-                            <input type="text" id="adm-ac-manifesto" placeholder="Water, roads, electrification..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                        </div>
-                        <button onclick="executeAdminAddCandidate()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Add Candidate</button>
+                        <button onclick="executeAdminAddCandidate()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Add Accepted Nomination</button>
                     </div>
                 `;
                 renderAdminAddCandWards();
             }
-            // Tool 3: Remove Candidate
+            // Tool 3: Remove Nomination
             else if (idx === 2) {
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Panchayat</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village / Panchayat</label>
                             <select id="adm-rc-p" onchange="renderAdminRemoveCandidates()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                                 <option value="Morseem">Morseem</option>
                                 <option value="NayaMorseem">Naya Morseem</option>
@@ -1254,18 +1349,18 @@
                             <select id="adm-rc-w" onchange="renderAdminRemoveCandidatesDropdown()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Select Candidate</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Select Nomination / Person</label>
                             <select id="adm-rc-id" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select>
                         </div>
-                        <button onclick="executeAdminRemoveCandidate()" class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Delete Candidate</button>
+                        <button onclick="executeAdminRemoveCandidate()" class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Delete Nomination</button>
                     </div>
                 `;
                 renderAdminRemoveCandidates();
             }
-            // Tool 4: Edit Candidate
+            // Tool 4: Edit Nomination Details
             else if (idx === 3) {
                 body.innerHTML = `
-                    <p class="text-xs text-slate-400 mb-3">Modify candidate symbols or manifestos directly.</p>
+                    <p class="text-xs text-slate-400 mb-3">Modify nomination details (Sr No, Name, Gender, Age, Category, Party, Pledge) directly.</p>
                     <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs text-slate-300">
                         <select id="adm-ec-p" onchange="renderAdminEditCandidates()" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white mb-2">
                             <option value="Morseem">Morseem</option>
@@ -1326,7 +1421,7 @@
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Panchayat</label>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village / Panchayat</label>
                             <select id="adm-rv-p" onchange="renderAdminResetWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                                 <option value="Morseem">Morseem</option>
                                 <option value="NayaMorseem">Naya Morseem</option>
@@ -1606,19 +1701,39 @@
         function executeAdminAddCandidate() {
             const p = document.getElementById("adm-ac-p").value;
             const w = document.getElementById("adm-ac-w").value;
+            const srNo = document.getElementById("adm-ac-srno").value.trim() || "1";
+            const districtName = document.getElementById("adm-ac-district").value.trim() || "Jalore";
             const name = document.getElementById("adm-ac-name").value.trim();
-            const symbol = document.getElementById("adm-ac-symbol").value.trim() || "⭐ Star";
-            const manifesto = document.getElementById("adm-ac-manifesto").value.trim() || "General welfare";
+            const gender = document.getElementById("adm-ac-gender").value;
+            const age = document.getElementById("adm-ac-age").value.trim() || "30";
+            const candidateCategory = document.getElementById("adm-ac-cat").value.trim() || "General";
+            const partyName = document.getElementById("adm-ac-party").value.trim() || "Independent";
+            const pledge = document.getElementById("adm-ac-pledge").value.trim() || "Development and public welfare.";
 
-            if (!name) return alert("Enter candidate name.");
+            if (!name) return alert("Enter person name.");
             const cId = `c_${Date.now()}`;
-            db.panchayats[p].wardsData[w].candidates.push({ id: cId, name, symbol, manifesto });
+            db.panchayats[p].wardsData[w].candidates.push({ 
+                id: cId, 
+                srNo, 
+                districtName, 
+                ulbName: p, 
+                wardNo: w, 
+                wardReservation: db.panchayats[p].wardsData[w].reservation,
+                name, 
+                gender, 
+                age, 
+                candidateCategory, 
+                partyName, 
+                pledge 
+            });
             db.panchayats[p].wardsData[w].votes[cId] = 0;
             persistDB();
-            alert("Candidate added.");
+            alert("Accepted nomination added successfully.");
             document.getElementById("adm-ac-name").value = "";
-            document.getElementById("adm-ac-symbol").value = "";
-            document.getElementById("adm-ac-manifesto").value = "";
+            document.getElementById("adm-ac-age").value = "";
+            document.getElementById("adm-ac-cat").value = "";
+            document.getElementById("adm-ac-party").value = "";
+            document.getElementById("adm-ac-pledge").value = "";
         }
 
         function renderAdminRemoveCandidates() {
@@ -1639,7 +1754,7 @@
             cSel.innerHTML = "";
             const cList = db.panchayats[p].wardsData[w].candidates;
             cList.forEach(c => {
-                cSel.innerHTML += `<option value="${c.id}">${escapeHtml(c.name)} (${escapeHtml(c.symbol || "")})</option>`;
+                cSel.innerHTML += `<option value="${c.id}">${escapeHtml(c.name)} (${escapeHtml(c.partyName || "")})</option>`;
             });
         }
 
@@ -1647,11 +1762,11 @@
             const p = document.getElementById("adm-rc-p").value;
             const w = document.getElementById("adm-rc-w").value;
             const cId = document.getElementById("adm-rc-id").value;
-            if (!cId) return alert("No candidate selected.");
+            if (!cId) return alert("No nomination selected.");
             db.panchayats[p].wardsData[w].candidates = db.panchayats[p].wardsData[w].candidates.filter(c => c.id !== cId);
             delete db.panchayats[p].wardsData[w].votes[cId];
             persistDB();
-            alert("Candidate removed.");
+            alert("Nomination removed.");
             renderAdminRemoveCandidates();
         }
 
@@ -1674,24 +1789,32 @@
             const cList = db.panchayats[p].wardsData[w].candidates;
             cList.forEach(c => {
                 container.innerHTML += `
-                    <div class="bg-slate-950 p-2 rounded-lg border border-slate-800 flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-                        <input type="text" id="edit-name-${c.id}" value="${escapeHtml(c.name)}" class="bg-slate-900 border border-slate-700 rounded p-1.5 text-white text-xs flex-grow">
-                        <input type="text" id="edit-sym-${c.id}" value="${escapeHtml(c.symbol || "")}" class="bg-slate-900 border border-slate-700 rounded p-1.5 text-white text-xs w-28">
-                        <button onclick="saveEditedCandidate('${p}', '${w}', '${c.id}')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Save</button>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-2">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="edit-name-${c.id}" value="${escapeHtml(c.name)}" placeholder="Name" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                            <input type="text" id="edit-party-${c.id}" value="${escapeHtml(c.partyName || "")}" placeholder="Party Name" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="text" id="edit-gender-${c.id}" value="${escapeHtml(c.gender || "")}" placeholder="Gender" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                            <input type="text" id="edit-age-${c.id}" value="${escapeHtml(c.age || "")}" placeholder="Age" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                            <input type="text" id="edit-cat-${c.id}" value="${escapeHtml(c.candidateCategory || "")}" placeholder="Category" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                        </div>
+                        <button onclick="saveEditedCandidate('${p}', '${w}', '${c.id}')" class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold">Save Nomination Info</button>
                     </div>
                 `;
             });
         }
 
         function saveEditedCandidate(p, w, cId) {
-            const newName = document.getElementById(`edit-name-${cId}`).value;
-            const newSym = document.getElementById(`edit-sym-${cId}`).value;
             const cObj = db.panchayats[p].wardsData[w].candidates.find(x => x.id === cId);
             if (cObj) {
-                cObj.name = newName;
-                cObj.symbol = newSym;
+                cObj.name = document.getElementById(`edit-name-${cId}`).value;
+                cObj.partyName = document.getElementById(`edit-party-${cId}`).value;
+                cObj.gender = document.getElementById(`edit-gender-${cId}`).value;
+                cObj.age = document.getElementById(`edit-age-${cId}`).value;
+                cObj.candidateCategory = document.getElementById(`edit-cat-${cId}`).value;
                 persistDB();
-                alert("Candidate updated.");
+                alert("Nomination updated successfully.");
             }
         }
 
@@ -1811,7 +1934,7 @@
                     w.candidates.forEach(c => { totalVotes += (w.votes[c.id] || 0); });
                     report += `Ward ${i} | Reservation: ${w.reservation} | Total Votes: ${totalVotes}\n`;
                     w.candidates.forEach(c => {
-                        report += `  - ${c.name} (${c.symbol}): ${w.votes[c.id] || 0}\n`;
+                        report += `  - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Cat: ${c.candidateCategory}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
                     });
                 }
                 report += "\n";
@@ -1832,7 +1955,6 @@
             if (!val || val < 1 || val > 50) return alert("Enter a number between 1 and 50.");
             const p = db.panchayats[panchayatKey];
 
-            // Adjust wardsData if needed
             if (val > p.totalWards) {
                 for (let i = p.totalWards + 1; i <= val; i++) {
                     const prefix = panchayatKey === "Morseem" ? "m" : "nm";
@@ -1840,10 +1962,22 @@
                         wardNo: i,
                         reservation: "General Open",
                         candidates: [
-                            { id: `${prefix}_${i}_1`, name: `Candidate A (Ward ${i})`, symbol: "🌾 Wheat", manifesto: "Development." },
-                            { id: `${prefix}_${i}_2`, name: `Candidate B (Ward ${i})`, symbol: "☀️ Sun", manifesto: "Services." }
+                            { 
+                                id: `${prefix}_${i}_1`, 
+                                srNo: "1", 
+                                districtName: "Jalore", 
+                                ulbName: panchayatKey, 
+                                wardNo: i, 
+                                wardReservation: "General Open", 
+                                name: `Candidate A (Ward ${i})`, 
+                                gender: "Male", 
+                                age: "35", 
+                                candidateCategory: "General", 
+                                partyName: "Independent", 
+                                pledge: "Development." 
+                            }
                         ],
-                        votes: { [`${prefix}_${i}_1`]: 0, [`${prefix}_${i}_2`]: 0 }
+                        votes: { [`${prefix}_${i}_1`]: 0 }
                     };
                 }
             } else if (val < p.totalWards) {
