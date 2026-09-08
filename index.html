@@ -122,10 +122,10 @@
                     </span>
                 </div>
 
-                <!-- Village Selector -->
+                <!-- Step 1: Village Selector (Shows all candidates of the village across all wards immediately) -->
                 <div class="mb-4">
                     <label class="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Select Village / Gram Panchayat (ग्राम पंचायत चुनें) - <span class="text-blue-600">Rule: Only 1 vote allowed per person in this entire village</span>
+                        1. Select Village / Gram Panchayat (ग्राम पंचायत चुनें) - <span class="text-blue-600">Rule: Only 1 vote allowed per person in this entire village</span>
                     </label>
                     <select id="user-panchayat-select" onchange="onUserPanchayatChange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none">
                         <option value="">-- Choose Village / Gram Panchayat --</option>
@@ -134,10 +134,23 @@
                     </select>
                 </div>
 
-                <!-- Village Candidates Grid (Shows ALL candidates from all wards of the selected village) -->
+                <!-- Village Overview & Info Box -->
+                <div id="user-village-info-box" class="hidden mb-4 bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-start space-x-2.5">
+                    <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 text-sm"></i>
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-wide text-blue-900">
+                            Village Election Overview (All Wards Included)
+                        </h4>
+                        <p id="user-village-info-text" class="text-xs text-blue-800 font-semibold mt-0.5">
+                            Showing all participating candidates across all wards for this village.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2: All Candidates Grid for Selected Village -->
                 <div id="user-candidates-wrapper" class="hidden">
                     <label class="block text-xs font-semibold text-slate-700 mb-2">
-                        All Participating Candidates Across All Wards (सभी वार्डों के उम्मीदवार)
+                        2. Choose Person / Accepted Nomination from any Ward (उम्मीदवार चुनें)
                     </label>
                     <div id="user-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Injected via JS -->
@@ -156,25 +169,25 @@
                             </button>
                         </div>
                         <p class="text-[10px] text-slate-500 mt-1">
-                            <i class="fa-solid fa-shield-halved text-blue-600"></i> Note: Voting locks this mobile number for the selected village.
+                            <i class="fa-solid fa-shield-halved text-blue-600"></i> Note: Voting locks this mobile number for the selected village. You can choose a candidate from any ward in this village.
                         </p>
                     </div>
                 </div>
 
-                <!-- Live Village Analytics -->
+                <!-- Live Opinion Analytics -->
                 <div class="mt-5 pt-4 border-t border-slate-100">
                     <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center justify-between">
                         <span>
                             <i class="fa-solid fa-chart-pie text-indigo-600 mr-1.5"></i>
-                            Live Village Opinion Analytics & Trends
+                            Live Village Analytics & Trends
                         </span>
                         <span id="total-votes-counter" class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-                            Total Village Votes: 0
+                            Total Votes: 0
                         </span>
                     </h3>
                     <div id="live-results-container" class="space-y-3">
                         <p class="text-xs text-slate-500 text-center py-4">
-                            Select a Village to view live analytics for all candidates.
+                            Select a Village to view live analytics across all its wards.
                         </p>
                     </div>
                 </div>
@@ -282,6 +295,67 @@
                 </div>
             </div>
         </section>
+
+        <!-- USER FEATURES ROW 4 -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-envelope text-blue-600 mr-1.5"></i>
+                    Contact Admin
+                </h3>
+                <input id="contact-name" type="text" placeholder="Your Name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs mb-2" />
+                <input id="contact-mobile" type="text" placeholder="Mobile Number" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs mb-2" />
+                <textarea id="contact-message" rows="2" placeholder="Message" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs mb-2"></textarea>
+                <button onclick="submitContactMessage()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-1.5 rounded-lg">
+                    Send Message
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-language text-indigo-600 mr-1.5"></i>
+                    Language / भाषा
+                </h3>
+                <div class="flex space-x-2">
+                    <button onclick="setLanguage('en')" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-1.5 rounded-lg">English</button>
+                    <button onclick="setLanguage('hi')" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-1.5 rounded-lg">हिन्दी</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-universal-access text-emerald-600 mr-1.5"></i>
+                    Accessibility
+                </h3>
+                <div class="space-y-2 text-xs">
+                    <label class="flex items-center space-x-2"><input type="checkbox" id="a11y-high-contrast" onchange="toggleHighContrast()" /><span>High Contrast Mode</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox" id="a11y-large-text" onchange="toggleLargeText()" /><span>Larger Text</span></label>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-share-nodes text-amber-600 mr-1.5"></i>
+                    Share This Portal
+                </h3>
+                <button onclick="sharePortalLink()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-semibold py-1.5 rounded-lg">Copy Link</button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-star text-yellow-500 mr-1.5"></i>
+                    Rate This Portal
+                </h3>
+                <div class="flex space-x-1 mb-2">
+                    <button onclick="setRating(1)" class="text-xl">☆</button>
+                    <button onclick="setRating(2)" class="text-xl">☆</button>
+                    <button onclick="setRating(3)" class="text-xl">☆</button>
+                    <button onclick="setRating(4)" class="text-xl">☆</button>
+                    <button onclick="setRating(5)" class="text-xl">☆</button>
+                </div>
+                <p id="rating-message" class="text-[11px] text-slate-600"></p>
+            </div>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -384,12 +458,12 @@
         // Disable right-click context menu
         document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        // Disable developer shortcut keys
+        // Disable developer shortcut keys (F12, Ctrl+Shift+I, Ctrl+Shift+U, etc.)
         document.onkeydown = (e) => {
             if (
-                e.keyCode === 123 || 
-                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                (e.ctrlKey && e.keyCode === 85) 
+                e.keyCode === 123 || // F12
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I, J, C
+                (e.ctrlKey && e.keyCode === 85) // Ctrl+U (View Source)
             ) {
                 return false;
             }
@@ -446,7 +520,7 @@
         for (let i = 1; i <= 13; i++) {
             defaultDatabase.panchayats.Morseem.wardsData[i] = {
                 wardNo: i,
-                reservation: "General / Pending",
+                reservation: "Pending Lottery (17–18 Sep)",
                 candidates: [],
                 votes: {}
             };
@@ -454,7 +528,7 @@
         for (let i = 1; i <= 11; i++) {
             defaultDatabase.panchayats.NayaMorseem.wardsData[i] = {
                 wardNo: i,
-                reservation: "General / Pending",
+                reservation: "Pending Lottery (17–18 Sep)",
                 candidates: [],
                 votes: {}
             };
@@ -472,7 +546,6 @@
         }
 
         let selectedUserCandidateId = null;
-        let selectedUserWardNo = null;
 
         window.addEventListener("DOMContentLoaded", () => {
             renderGovNotificationTicker();
@@ -513,39 +586,46 @@
             }
         }
 
-        // Updated function to show ALL candidates from all wards when a village is selected
+        // When Village is changed, show ALL candidates across ALL wards of that village immediately
         function onUserPanchayatChange() {
             const pKey = document.getElementById("user-panchayat-select").value;
+            const infoBox = document.getElementById("user-village-info-box");
+            const infoText = document.getElementById("user-village-info-text");
             const candWrapper = document.getElementById("user-candidates-wrapper");
             const candidatesGrid = document.getElementById("user-candidates-grid");
 
             selectedUserCandidateId = null;
-            selectedUserWardNo = null;
 
             if (!pKey || !db.panchayats[pKey]) {
+                infoBox.classList.add("hidden");
                 candWrapper.classList.add("hidden");
                 renderLiveOpinionAnalytics();
                 populateCompareDropdowns();
                 return;
             }
 
+            const panchayatObj = db.panchayats[pKey];
+            infoText.innerText = `Gram Panchayat ${panchayatObj.name} contains ${panchayatObj.totalWards} wards. Below are all participating candidates across all wards in this village.`;
+            infoBox.classList.remove("hidden");
+
             if (!db.settings.votingEnabled) {
                 candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-rose-600 font-bold py-4">Voting is currently paused by the Panchayat Admin.</div>`;
                 candWrapper.classList.remove("hidden");
+                renderLiveOpinionAnalytics();
+                populateCompareDropdowns();
                 return;
             }
 
-            // Gather ALL candidates across all wards of this village
+            // Gather all candidates from all wards of this village
             let allVillageCandidates = [];
-            const panchayatObj = db.panchayats[pKey];
-            for (let w = 1; w <= panchayatObj.totalWards; w++) {
-                const wardObj = panchayatObj.wardsData[w];
+            for (let i = 1; i <= panchayatObj.totalWards; i++) {
+                const wardObj = panchayatObj.wardsData[i];
                 if (wardObj && wardObj.candidates) {
                     wardObj.candidates.forEach(c => {
                         allVillageCandidates.push({
                             ...c,
-                            wardNo: w,
-                            wardReservation: wardObj.reservation
+                            wardNo: i,
+                            reservation: wardObj.reservation || "General"
                         });
                     });
                 }
@@ -553,14 +633,14 @@
 
             candidatesGrid.innerHTML = "";
             if (allVillageCandidates.length === 0) {
-                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300"><i class="fa-solid fa-triangle-exclamation text-amber-500 mb-1 text-base block"></i> No candidates registered from ${pKey} yet. Use Admin Panel to add candidates.</div>`;
+                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300"><i class="fa-solid fa-triangle-exclamation text-amber-500 mb-1 text-base block"></i> No candidates registered in any ward of ${panchayatObj.name} yet.</div>`;
             } else {
                 allVillageCandidates.forEach((c, index) => {
                     const avatarUrl = c.personImage ? c.personImage : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
                     const signUrl = c.votingSign ? c.votingSign : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80';
 
                     candidatesGrid.innerHTML += `
-                        <div onclick="selectUserCandidate('${c.id}', ${c.wardNo})" id="cand-card-${c.id}" class="border border-slate-200 bg-slate-50 hover:bg-blue-50/50 p-4 rounded-xl cursor-pointer transition flex flex-col justify-between shadow-sm">
+                        <div onclick="selectUserCandidate('${c.id}')" id="cand-card-${c.id}" class="border border-slate-200 bg-slate-50 hover:bg-blue-50/50 p-4 rounded-xl cursor-pointer transition flex flex-col justify-between shadow-sm">
                             <div>
                                 <div class="flex items-center justify-between mb-3">
                                     <span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Sr No. ${c.srNo || (index + 1)}</span>
@@ -568,14 +648,14 @@
                                     <i class="fa-regular fa-circle text-slate-400 select-icon text-lg" id="icon-${c.id}"></i>
                                 </div>
 
-                                <!-- Gallery Person Image & Voting Sign Display -->
+                                <!-- Gallery Person Image & Voting Sign / Poster Display -->
                                 <div class="flex items-center space-x-3 mb-3 bg-white p-2.5 rounded-xl border border-slate-200">
                                     <div class="relative">
                                         <img src="${escapeHtml(avatarUrl)}" alt="Candidate Image" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow-sm" />
                                     </div>
                                     <div class="flex-grow">
                                         <h4 class="font-bold text-slate-900 text-sm">${escapeHtml(c.name)}</h4>
-                                        <p class="text-[11px] text-slate-500">${escapeHtml(c.partyName || "Independent")} | Symbol: <b>${escapeHtml(c.symbol || "N/A")}</b></p>
+                                        <p class="text-[11px] text-slate-500">Post: <b>Ward Member</b> | Symbol: <b>${escapeHtml(c.symbol || c.partyName || "Independent")}</b></p>
                                     </div>
                                     <div class="text-center">
                                         <span class="text-[9px] font-bold uppercase text-slate-400 block mb-0.5">Sign / Poster</span>
@@ -585,11 +665,11 @@
 
                                 <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 mb-2 bg-white p-2 rounded-lg border border-slate-200">
                                     <div><b>District:</b> ${escapeHtml(c.districtName || "Jalore")}</div>
-                                    <div><b>Post/Res:</b> ${escapeHtml(c.wardReservation || "General")}</div>
+                                    <div><b>ULB:</b> ${escapeHtml(c.ulbName || pKey)}</div>
+                                    <div><b>Reservation:</b> ${escapeHtml(c.reservation)}</div>
                                     <div><b>Gender:</b> ${escapeHtml(c.gender || "N/A")}</div>
                                     <div><b>Age:</b> ${escapeHtml(c.age || "N/A")}</div>
                                     <div><b>Category:</b> ${escapeHtml(c.candidateCategory || "General")}</div>
-                                    <div><b>Ward:</b> #${c.wardNo}</div>
                                 </div>
                             </div>
                         </div>
@@ -601,31 +681,29 @@
             populateCompareDropdowns();
         }
 
-        function selectUserCandidate(cId, wNo) {
+        function selectUserCandidate(cId) {
             selectedUserCandidateId = cId;
-            selectedUserWardNo = wNo;
             const pKey = document.getElementById("user-panchayat-select").value;
             const panchayatObj = db.panchayats[pKey];
 
-            // Highlight selected candidate and clear others
-            for (let w = 1; w <= panchayatObj.totalWards; w++) {
-                const wardObj = panchayatObj.wardsData[w];
+            // Iterate through all wards to locate and update selection visuals
+            for (let i = 1; i <= panchayatObj.totalWards; i++) {
+                const wardObj = panchayatObj.wardsData[i];
                 if (wardObj && wardObj.candidates) {
                     wardObj.candidates.forEach(c => {
                         const card = document.getElementById(`cand-card-${c.id}`);
                         const icon = document.getElementById(`icon-${c.id}`);
-                        if (card && icon) {
-                            if (c.id === cId) {
-                                card.classList.remove("border-slate-200", "bg-slate-50");
-                                card.classList.add("border-blue-500", "bg-blue-50", "ring-2", "ring-blue-500/20");
-                                icon.classList.remove("fa-regular", "fa-circle", "text-slate-400");
-                                icon.classList.add("fa-solid", "fa-circle-check", "text-blue-600");
-                            } else {
-                                card.classList.add("border-slate-200", "bg-slate-50");
-                                card.classList.remove("border-blue-500", "bg-blue-50", "ring-2", "ring-blue-500/20");
-                                icon.classList.add("fa-regular", "fa-circle", "text-slate-400");
-                                icon.classList.remove("fa-solid", "fa-circle-check", "text-blue-600");
-                            }
+                        if (!card || !icon) return;
+                        if (c.id === cId) {
+                            card.classList.remove("border-slate-200", "bg-slate-50");
+                            card.classList.add("border-blue-500", "bg-blue-50", "ring-2", "ring-blue-500/20");
+                            icon.classList.remove("fa-regular", "fa-circle", "text-slate-400");
+                            icon.classList.add("fa-solid", "fa-circle-check", "text-blue-600");
+                        } else {
+                            card.classList.add("border-slate-200", "bg-slate-50");
+                            card.classList.remove("border-blue-500", "bg-blue-50", "ring-2", "ring-blue-500/20");
+                            icon.classList.add("fa-regular", "fa-circle", "text-slate-400");
+                            icon.classList.remove("fa-solid", "fa-circle-check", "text-blue-600");
                         }
                     });
                 }
@@ -636,9 +714,23 @@
             const pKey = document.getElementById("user-panchayat-select").value;
             const mobile = document.getElementById("voter-mobile-input").value.trim();
 
-            if (!pKey) return alert("Please select a Village (Panchayat).");
-            if (!selectedUserCandidateId || !selectedUserWardNo) return alert("Please select a candidate for voting first.");
+            if (!pKey) return alert("Please select Village (Gram Panchayat).");
+            if (!selectedUserCandidateId) return alert("Please select a candidate from the village list first.");
             if (mobile.length !== 10 || isNaN(mobile)) return alert("Please enter a valid 10-digit mobile number.");
+
+            // Find which ward this candidate belongs to
+            let targetWardNo = null;
+            const panchayatObj = db.panchayats[pKey];
+            for (let i = 1; i <= panchayatObj.totalWards; i++) {
+                const wardObj = panchayatObj.wardsData[i];
+                const found = wardObj.candidates.find(c => c.id === selectedUserCandidateId);
+                if (found) {
+                    targetWardNo = i;
+                    break;
+                }
+            }
+
+            if (!targetWardNo) return alert("Selected candidate ward could not be verified.");
 
             const deviceFp = getDeviceFingerprint();
             const villageMobileKey = `${pKey}_MOBILE_${mobile}`;
@@ -646,7 +738,7 @@
 
             if (db.villageVotedLog[villageMobileKey]) {
                 const existingVoteData = db.villageVotedLog[villageMobileKey];
-                return alert(`⚠️ Rule Violation: This mobile number has already cast a vote in Ward ${existingVoteData.ward} of Gram Panchayat ${pKey}. Under "One Person, One Vote per Village", you cannot vote multiple times.`);
+                return alert(`⚠️ Rule Violation: This mobile number has already cast a vote in Ward ${existingVoteData.ward} of Gram Panchayat ${pKey}. Under "One Person, One Vote per Village", you cannot vote multiple times in this village.`);
             }
 
             if (db.villageVotedLog[villageDeviceKey]) {
@@ -654,25 +746,25 @@
                 return alert(`⚠️ Security Alert: This device has already cast a vote in Ward ${existingVoteData.ward} of Gram Panchayat ${pKey}. Multi-voting from the same device is blocked.`);
             }
 
-            const wardObj = db.panchayats[pKey].wardsData[selectedUserWardNo];
+            const wardObj = panchayatObj.wardsData[targetWardNo];
             if (!wardObj.votes[selectedUserCandidateId]) wardObj.votes[selectedUserCandidateId] = 0;
             wardObj.votes[selectedUserCandidateId]++;
 
-            const voteKey = `${pKey}_W${selectedUserWardNo}_${mobile}_${Date.now()}`;
+            const voteKey = `${pKey}_W${targetWardNo}_${mobile}_${Date.now()}`;
             db.votersLog[voteKey] = {
                 time: new Date().toISOString(),
                 candidate: selectedUserCandidateId,
                 panchayat: pKey,
-                ward: selectedUserWardNo,
+                ward: targetWardNo,
                 mobile: mobile,
                 device: deviceFp
             };
 
-            db.villageVotedLog[villageMobileKey] = { ward: selectedUserWardNo, time: new Date().toISOString() };
-            db.villageVotedLog[villageDeviceKey] = { ward: selectedUserWardNo, time: new Date().toISOString() };
+            db.villageVotedLog[villageMobileKey] = { ward: targetWardNo, time: new Date().toISOString() };
+            db.villageVotedLog[villageDeviceKey] = { ward: targetWardNo, time: new Date().toISOString() };
 
             persistDB();
-            alert(`✅ Success! Your vote for Gram Panchayat ${pKey} (Ward ${selectedUserWardNo}) has been securely recorded.`);
+            alert(`✅ Success! Your single vote for Gram Panchayat ${pKey} (Ward ${targetWardNo}) has been securely recorded. Your mobile number is now locked for this village.`);
             document.getElementById("voter-mobile-input").value = "";
             onUserPanchayatChange();
         }
@@ -683,8 +775,8 @@
             const counter = document.getElementById("total-votes-counter");
 
             if (!pKey) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Select a Village to view analytics.</p>`;
-                counter.innerText = `Total Village Votes: 0`;
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Select Village to view analytics.</p>`;
+                counter.innerText = `Total Votes: 0`;
                 return;
             }
 
@@ -698,21 +790,25 @@
             let totalVillageVotes = 0;
             let allCandidatesWithVotes = [];
 
-            for (let w = 1; w <= panchayatObj.totalWards; w++) {
-                const wardObj = panchayatObj.wardsData[w];
+            for (let i = 1; i <= panchayatObj.totalWards; i++) {
+                const wardObj = panchayatObj.wardsData[i];
                 if (wardObj && wardObj.candidates) {
                     wardObj.candidates.forEach(c => {
-                        const votes = wardObj.votes[c.id] || 0;
-                        totalVillageVotes += votes;
-                        allCandidatesWithVotes.push({ ...c, wardNo: w, votes });
+                        const vCount = wardObj.votes[c.id] || 0;
+                        totalVillageVotes += vCount;
+                        allCandidatesWithVotes.push({
+                            ...c,
+                            wardNo: i,
+                            votes: vCount
+                        });
                     });
                 }
             }
 
-            counter.innerText = `Total Village Votes: ${totalVillageVotes}`;
+            counter.innerText = `Total Votes: ${totalVillageVotes}`;
 
             if (allCandidatesWithVotes.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No candidates available for analytics.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No candidates or votes recorded for ${panchayatObj.name} yet.</p>`;
                 return;
             }
 
@@ -722,7 +818,7 @@
                 html += `
                     <div class="space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-200">
                         <div class="flex justify-between text-xs font-bold text-slate-800">
-                            <span>${escapeHtml(c.name)} (Ward #${c.wardNo} - ${escapeHtml(c.partyName || "Independent")})</span>
+                            <span>${escapeHtml(c.name)} (Ward ${c.wardNo}) – ${escapeHtml(c.partyName || "Independent")}</span>
                             <span>${c.votes} Votes (${percent}%)</span>
                         </div>
                         <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
@@ -792,7 +888,7 @@
                 const totalWards = db.panchayats[pKey].totalWards;
                 for (let i = 1; i <= totalWards; i++) {
                     const w = db.panchayats[pKey].wardsData[i];
-                    report += `  Ward ${i} | Post/Reservation: ${w.reservation}\n`;
+                    report += `  Ward ${i} | Reservation: ${w.reservation}\n`;
                     if (w.candidates.length === 0) {
                         report += `    - No candidates registered\n`;
                     } else {
@@ -846,7 +942,7 @@
                 resultsContainer.innerHTML += `
                     <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[11px]">
                         <div class="font-semibold text-slate-800">${escapeHtml(m.candidate.name)} (${escapeHtml(m.candidate.partyName || "")})</div>
-                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward}</div>
+                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward} (Cat: ${escapeHtml(m.candidate.candidateCategory)})</div>
                     </div>
                 `;
             });
@@ -857,17 +953,16 @@
             const p = db.panchayats[pKey];
             const d1 = document.getElementById("compare-ward-1");
             const d2 = document.getElementById("compare-ward-2");
+            if (!d1 || !d2) return;
             d1.innerHTML = "";
             d2.innerHTML = "";
 
-            if (p && p.totalWards) {
-                for (let i = 1; i <= p.totalWards; i++) {
-                    d1.innerHTML += `<option value="${i}">Ward ${i}</option>`;
-                    d2.innerHTML += `<option value="${i}">Ward ${i}</option>`;
-                }
-                if (p.totalWards > 1) {
-                    d2.value = "2";
-                }
+            for (let i = 1; i <= p.totalWards; i++) {
+                d1.innerHTML += `<option value="${i}">Ward ${i}</option>`;
+                d2.innerHTML += `<option value="${i}">Ward ${i}</option>`;
+            }
+            if (p.totalWards > 1) {
+                d2.value = "2";
             }
         }
 
@@ -889,8 +984,8 @@
             const total2 = ward2.candidates.reduce((sum, c) => sum + (ward2.votes[c.id] || 0), 0);
 
             out.innerHTML = `
-                <div><b>Ward ${w1}</b>: ${total1} votes, Post/Res: ${escapeHtml(ward1.reservation)}</div>
-                <div><b>Ward ${w2}</b>: ${total2} votes, Post/Res: ${escapeHtml(ward2.reservation)}</div>
+                <div><b>Ward ${w1}</b>: ${total1} total votes, reservation: ${escapeHtml(ward1.reservation)}</div>
+                <div><b>Ward ${w2}</b>: ${total2} total votes, reservation: ${escapeHtml(ward2.reservation)}</div>
             `;
         }
 
@@ -968,6 +1063,15 @@
             document.documentElement.classList.toggle("text-sm", !enabled);
         }
 
+        function sharePortalLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Link copied to clipboard.");
+            }).catch(() => {
+                prompt("Copy this link:", url);
+            });
+        }
+
         function setRating(stars) {
             db.ratings.push({ stars, date: new Date().toISOString() });
             persistDB();
@@ -975,10 +1079,10 @@
         }
 
         // =========================
-        // ADMIN FEATURES (30 Tools)
+        // ADMIN FEATURES (Fully Functional 30 Admin Tools)
         // =========================
         const adminFeaturesList = [
-            "1. Update Ward Reservation & Post",
+            "1. Update Ward Reservation (Lottery)",
             "2. Add Accepted Nomination to Ward (Gallery Upload)",
             "3. Remove Nomination from Ward",
             "4. Edit Nomination Details & Gallery Images",
@@ -1066,8 +1170,8 @@
                             </select>
                         </div>
                         <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Select Ward Number</label><select id="adm-lot-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Post / Reservation Category</label><input type="text" id="adm-lot-val" placeholder="e.g., General / Ward Member / Sarpanch" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                        <button onclick="executeAdminUpdateLottery()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Save Post & Reservation</button>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Reservation Category</label><input type="text" id="adm-lot-val" placeholder="e.g., General" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="executeAdminUpdateLottery()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Save Reservation</button>
                     </div>`;
                 renderAdminLotteryWards();
             } else if (idx === 1) {
@@ -1219,6 +1323,7 @@
         function renderAdminLotteryWards() {
             const p = document.getElementById("adm-lot-p").value;
             const wSel = document.getElementById("adm-lot-w");
+            if (!wSel) return;
             wSel.innerHTML = "";
             for (let i = 1; i <= db.panchayats[p].totalWards; i++) {
                 wSel.innerHTML += `<option value="${i}">Ward ${i} (${escapeHtml(db.panchayats[p].wardsData[i].reservation)})</option>`;
@@ -1229,7 +1334,7 @@
             const p = document.getElementById("adm-lot-p").value;
             const w = document.getElementById("adm-lot-w").value;
             const val = document.getElementById("adm-lot-val").value.trim();
-            if (!val) return alert("Enter post/reservation.");
+            if (!val) return alert("Enter reservation.");
             db.panchayats[p].wardsData[w].reservation = val;
             persistDB();
             alert("Updated successfully.");
@@ -1239,6 +1344,7 @@
         function renderAdminAddCandWards() {
             const p = document.getElementById("adm-ac-p").value;
             const wSel = document.getElementById("adm-ac-w");
+            if (!wSel) return;
             wSel.innerHTML = "";
             for (let i = 1; i <= db.panchayats[p].totalWards; i++) {
                 wSel.innerHTML += `<option value="${i}">Ward ${i}</option>`;
@@ -1274,9 +1380,9 @@
                     personImage: personImageBase64, 
                     votingSign: votingSignBase64
                 });
-                db.panchayats[p].wardsData[w].votes[cId] = 0; 
+                db.panchayats[p].wardsData[w].votes[cId] = 0;
                 persistDB();
-                alert("Nomination successfully added! Votes initialized at 0.");
+                alert("Nomination successfully added with gallery photos! Votes initialized at 0.");
                 loadAdminToolContent(1);
             };
 
@@ -1312,6 +1418,7 @@
         function renderAdminRemoveCandidates() {
             const p = document.getElementById("adm-rc-p").value;
             const wSel = document.getElementById("adm-rc-w");
+            if (!wSel) return;
             wSel.innerHTML = "";
             for (let i = 1; i <= db.panchayats[p].totalWards; i++) {
                 wSel.innerHTML += `<option value="${i}">Ward ${i}</option>`;
@@ -1323,6 +1430,7 @@
             const p = document.getElementById("adm-rc-p").value;
             const w = document.getElementById("adm-rc-w").value;
             const cSel = document.getElementById("adm-rc-id");
+            if (!cSel) return;
             cSel.innerHTML = "";
             const wardObj = db.panchayats[p].wardsData[w];
             if (!wardObj.candidates || wardObj.candidates.length === 0) {
@@ -1342,13 +1450,14 @@
             db.panchayats[p].wardsData[w].candidates = db.panchayats[p].wardsData[w].candidates.filter(c => c.id !== cId);
             delete db.panchayats[p].wardsData[w].votes[cId];
             persistDB();
-            alert("Nomination deleted successfully.");
+            alert("Nomination and image deleted successfully.");
             renderAdminRemoveCandidates();
         }
 
         function renderAdminEditCandidates() {
             const p = document.getElementById("adm-ec-p").value;
             const wSel = document.getElementById("adm-ec-w");
+            if (!wSel) return;
             wSel.innerHTML = "";
             for (let i = 1; i <= db.panchayats[p].totalWards; i++) {
                 wSel.innerHTML += `<option value="${i}">Ward ${i}</option>`;
@@ -1360,6 +1469,7 @@
             const p = document.getElementById("adm-ec-p").value;
             const w = document.getElementById("adm-ec-w").value;
             const container = document.getElementById("adm-ec-container");
+            if (!container) return;
             container.innerHTML = "";
             const wardObj = db.panchayats[p].wardsData[w];
             if (!wardObj.candidates || wardObj.candidates.length === 0) {
@@ -1427,6 +1537,7 @@
         function renderAdminResetWards() {
             const p = document.getElementById("adm-rv-p").value;
             const wSel = document.getElementById("adm-rv-w");
+            if (!wSel) return;
             wSel.innerHTML = "";
             for (let i = 1; i <= db.panchayats[p].totalWards; i++) {
                 wSel.innerHTML += `<option value="${i}">Ward ${i}</option>`;
@@ -1526,7 +1637,7 @@
             if (simulatedCount === 0) {
                 alert("Cannot simulate votes because no candidates have been added to wards yet! Add candidates via Admin Tool #2 first.");
             } else {
-                alert(`Successfully simulated votes across candidates.`);
+                alert(`Successfully simulated votes across wards with active candidates.`);
             }
         }
 
