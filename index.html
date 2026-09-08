@@ -58,9 +58,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 h-full flex flex-col selection:bg-blue-500 selection:text-white">
 
-    <!-- =========================
-         TOP HEADER
-         ========================= -->
+    <!-- TOP HEADER -->
     <header class="glass-header text-white sticky top-0 z-40 border-b border-slate-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -91,9 +89,7 @@
         </div>
     </header>
 
-    <!-- =========================
-         MAIN CONTENT
-         ========================= -->
+    <!-- MAIN CONTENT -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
 
         <!-- Gov Notification Ticker -->
@@ -119,14 +115,14 @@
                 <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
                     <h2 class="text-lg font-bold text-slate-900 flex items-center">
                         <i class="fa-solid fa-box-archive text-blue-600 mr-2"></i>
-                        Public Opinion Voting Booth – Accepted Nominations (With Photo & Sign)
+                        Public Opinion Voting Booth – Accepted Nominations (Gallery Photos & Signs)
                     </h2>
                     <span id="voting-badge-status" class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">
                         Voting Open
                     </span>
                 </div>
 
-                <!-- Step 1: Village / Panchayat Selector -->
+                <!-- Step 1: Village Selector -->
                 <div class="mb-4">
                     <label class="block text-xs font-semibold text-slate-700 mb-1.5">
                         1. Select Village / Gram Panchayat (ग्राम पंचायत चुनें) - <span class="text-blue-600">Rule: Only 1 vote allowed per person in this entire village</span>
@@ -138,7 +134,7 @@
                     </select>
                 </div>
 
-                <!-- Step 2: Ward Number Selector -->
+                <!-- Step 2: Ward Selector -->
                 <div class="mb-4">
                     <label class="block text-xs font-semibold text-slate-700 mb-1.5">
                         2. Select Ward Number (वार्ड चुनें)
@@ -148,7 +144,7 @@
                     </select>
                 </div>
 
-                <!-- Lottery / Reservation Status Box -->
+                <!-- Lottery Status Box -->
                 <div id="user-lottery-box" class="hidden mb-4 bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-start space-x-2.5">
                     <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 text-sm"></i>
                     <div>
@@ -161,10 +157,10 @@
                     </div>
                 </div>
 
-                <!-- Step 3: Candidate Selection Grid -->
+                <!-- Step 3: Candidate Grid -->
                 <div id="user-candidates-wrapper" class="hidden">
                     <label class="block text-xs font-semibold text-slate-700 mb-2">
-                        3. Choose Person / Accepted Nomination with Image & Voting Sign/Poster (उम्मीदवार चुनें)
+                        3. Choose Person / Accepted Nomination (उम्मीदवार चुनें)
                     </label>
                     <div id="user-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Injected via JS -->
@@ -372,9 +368,7 @@
         </section>
     </main>
 
-    <!-- =========================
-         FOOTER
-         ========================= -->
+    <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-[11px] space-y-3 md:space-y-0">
             <p>&copy; 2026 Gram Panchayat Digital Portal. Rule: One Person, One Vote per Village.</p>
@@ -385,9 +379,7 @@
         </div>
     </footer>
 
-    <!-- =========================
-         ADMIN LOGIN MODAL
-         ========================= -->
+    <!-- ADMIN LOGIN MODAL -->
     <div id="admin-login-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200">
             <div class="flex items-center justify-between mb-5">
@@ -416,9 +408,7 @@
         </div>
     </div>
 
-    <!-- =========================
-         ADMIN DASHBOARD CONTAINER
-         ========================= -->
+    <!-- ADMIN DASHBOARD CONTAINER -->
     <div id="admin-dashboard-container" class="fixed inset-0 bg-slate-900 z-50 hidden flex flex-col text-slate-100 overflow-hidden">
         <div class="bg-slate-950 px-5 py-3 border-b border-slate-800 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -457,9 +447,7 @@
         </div>
     </div>
 
-    <!-- =========================
-         WARD DIRECTORY MODAL
-         ========================= -->
+    <!-- WARD DIRECTORY MODAL -->
     <div id="directory-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 max-h-[85vh] flex flex-col">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
@@ -475,11 +463,9 @@
         </div>
     </div>
 
-    <!-- =========================
-         JAVASCRIPT ENGINE (MERGED & ENHANCED)
-         ========================= -->
+    <!-- JAVASCRIPT ENGINE -->
     <script>
-        const STORAGE_KEY = "MORSEEM_UNIFIED_DB_FINAL_v7";
+        const STORAGE_KEY = "MORSEEM_UNIFIED_DB_CLEAN_v8";
 
         function getDeviceFingerprint() {
             let fp = localStorage.getItem("MORSEEM_DEVICE_FP");
@@ -490,6 +476,7 @@
             return fp;
         }
 
+        // Clean default database structure with ZERO fake candidates and ZERO fake votes
         const defaultDatabase = {
             settings: {
                 masterPassword: "sarpanch2026",
@@ -527,50 +514,21 @@
             }
         };
 
+        // Initialize empty wards with 0 candidates and 0 votes
         for (let i = 1; i <= 13; i++) {
             defaultDatabase.panchayats.Morseem.wardsData[i] = {
                 wardNo: i,
                 reservation: "Pending Lottery (17–18 Sep)",
-                candidates: [
-                    { 
-                        id: `m_${i}_1`, srNo: "1", districtName: "Jalore", ulbName: "Morseem", wardNo: i, wardReservation: "General", 
-                        name: `Candidate Alpha (Ward ${i})`, gender: "Male", age: "38", candidateCategory: "General", partyName: "Independent", 
-                        symbol: "🌾 Wheat", pledge: "Clean drinking water & road connectivity.",
-                        personImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-                        votingSign: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=150&auto=format&fit=crop&q=80"
-                    },
-                    { 
-                        id: `m_${i}_2`, srNo: "2", districtName: "Jalore", ulbName: "Morseem", wardNo: i, wardReservation: "General", 
-                        name: `Candidate Beta (Ward ${i})`, gender: "Female", age: "42", candidateCategory: "OBC", partyName: "Party Symbol", 
-                        symbol: "☀️ Sun", pledge: "Street lights and digital e-gram center.",
-                        personImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
-                        votingSign: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&auto=format&fit=crop&q=80"
-                    }
-                ],
-                votes: { [`m_${i}_1`]: 12, [`m_${i}_2`]: 9 }
+                candidates: [],
+                votes: {}
             };
         }
         for (let i = 1; i <= 11; i++) {
             defaultDatabase.panchayats.NayaMorseem.wardsData[i] = {
                 wardNo: i,
                 reservation: "Pending Lottery (17–18 Sep)",
-                candidates: [
-                    { 
-                        id: `nm_${i}_1`, srNo: "1", districtName: "Jalore", ulbName: "Naya Morseem", wardNo: i, wardReservation: "General", 
-                        name: `Candidate X (Ward ${i})`, gender: "Male", age: "45", candidateCategory: "SC", partyName: "Independent", 
-                        symbol: "🚜 Tractor", pledge: "Better drainage and school renovation.",
-                        personImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-                        votingSign: "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80"
-                    },
-                    { 
-                        id: `nm_${i}_2`, srNo: "2", districtName: "Jalore", ulbName: "Naya Morseem", wardNo: i, wardReservation: "General", 
-                        name: `Candidate Y (Ward ${i})`, gender: "Female", age: "35", candidateCategory: "General", partyName: "Party Symbol", 
-                        symbol: "🪷 Lotus", pledge: "Transparent governance and youth welfare.",
-                        personImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
-                        votingSign: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80"
-                    }
-                ],
-                votes: { [`nm_${i}_1`]: 15, [`nm_${i}_2`]: 14 }
+                candidates: [],
+                votes: {}
             };
         }
 
@@ -675,7 +633,7 @@
 
             candidatesGrid.innerHTML = "";
             if (!wardObj.candidates || wardObj.candidates.length === 0) {
-                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-4">No accepted nominations registered for this ward yet.</div>`;
+                candidatesGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300"><i class="fa-solid fa-triangle-exclamation text-amber-500 mb-1 text-base block"></i> No candidate registered from this ward yet.</div>`;
             } else {
                 wardObj.candidates.forEach((c, index) => {
                     const avatarUrl = c.personImage ? c.personImage : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
@@ -690,10 +648,10 @@
                                     <i class="fa-regular fa-circle text-slate-400 select-icon text-lg" id="icon-${c.id}"></i>
                                 </div>
 
-                                <!-- Person Image & Voting Sign / Poster Display -->
+                                <!-- Gallery Person Image & Voting Sign / Poster Display -->
                                 <div class="flex items-center space-x-3 mb-3 bg-white p-2.5 rounded-xl border border-slate-200">
                                     <div class="relative">
-                                        <img src="${escapeHtml(avatarUrl)}" alt="Candidate Image" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow-sm" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'" />
+                                        <img src="${escapeHtml(avatarUrl)}" alt="Candidate Image" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow-sm" />
                                     </div>
                                     <div class="flex-grow">
                                         <h4 class="font-bold text-slate-900 text-sm">${escapeHtml(c.name)}</h4>
@@ -701,7 +659,7 @@
                                     </div>
                                     <div class="text-center">
                                         <span class="text-[9px] font-bold uppercase text-slate-400 block mb-0.5">Sign / Poster</span>
-                                        <img src="${escapeHtml(signUrl)}" alt="Voting Sign" class="w-12 h-12 rounded-lg object-cover border border-amber-400 shadow-sm" onerror="this.src='https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&auto=format&fit=crop&q=80'" />
+                                        <img src="${escapeHtml(signUrl)}" alt="Voting Sign" class="w-12 h-12 rounded-lg object-cover border border-amber-400 shadow-sm" />
                                     </div>
                                 </div>
 
@@ -818,7 +776,7 @@
             counter.innerText = `Total Votes: ${totalVotes}`;
 
             if (totalVotes === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No votes recorded for Ward ${wNo} yet.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No votes recorded for Ward ${wNo} yet (Starts at 0).</p>`;
                 return;
             }
 
@@ -900,9 +858,13 @@
                 for (let i = 1; i <= totalWards; i++) {
                     const w = db.panchayats[pKey].wardsData[i];
                     report += `  Ward ${i} | Reservation: ${w.reservation}\n`;
-                    w.candidates.forEach(c => {
-                        report += `    - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Cat: ${c.candidateCategory}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
-                    });
+                    if (w.candidates.length === 0) {
+                        report += `    - No candidates registered\n`;
+                    } else {
+                        w.candidates.forEach(c => {
+                            report += `    - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Cat: ${c.candidateCategory}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
+                        });
+                    }
                 }
                 report += "\n";
             }
@@ -1089,9 +1051,9 @@
         // =========================
         const adminFeaturesList = [
             "1. Update Ward Reservation (Lottery)",
-            "2. Add Accepted Nomination to Ward (With Photo & Sign)",
+            "2. Add Accepted Nomination to Ward (Gallery Upload)",
             "3. Remove Nomination from Ward",
-            "4. Edit Nomination Details & Images",
+            "4. Edit Nomination Details & Gallery Images",
             "5. Publish Government Notification",
             "6. Delete Government Notification",
             "7. Master Live Vote Audit Table",
@@ -1181,6 +1143,7 @@
                     </div>`;
                 renderAdminLotteryWards();
             } else if (idx === 1) {
+                // Tool #2: Direct Gallery File Upload for Person Image & Voting Sign
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-ac-p" onchange="renderAdminAddCandWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
@@ -1192,13 +1155,19 @@
                         <div class="grid grid-cols-3 gap-2">
                             <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Gender</label><input type="text" id="adm-ac-gender" value="Male" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
                             <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Age</label><input type="text" id="adm-ac-age" value="35" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Party</label><input type="text" id="adm-ac-party" value="Independent" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Party / Symbol</label><input type="text" id="adm-ac-party" value="Independent" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Person Image URL</label><input type="text" id="adm-ac-image" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Voting Sign / Poster URL</label><input type="text" id="adm-ac-sign" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <div class="grid grid-cols-2 gap-3 bg-slate-900 p-3 rounded-xl border border-slate-800">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-amber-400 mb-1">Person Photo (Gallery / File)</label>
+                                <input type="file" id="adm-ac-img-file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-amber-400 mb-1">Voting Sign / Poster (Gallery / File)</label>
+                                <input type="file" id="adm-ac-sign-file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-slate-950 hover:file:bg-amber-500">
+                            </div>
                         </div>
-                        <button onclick="executeAdminAddCandidate()" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Add Nomination with Photo & Sign</button>
+                        <button onclick="executeAdminAddCandidateFromFile()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs transition">Add Nomination (Votes Start at 0)</button>
                     </div>`;
                 renderAdminAddCandWards();
             } else if (idx === 2) {
@@ -1240,6 +1209,7 @@
                     for (let i = 1; i <= db.panchayats[pKey].totalWards; i++) {
                         const w = db.panchayats[pKey].wardsData[i];
                         audit += `<div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-[11px] mb-1"><b>Ward ${i}:</b> `;
+                        if (w.candidates.length === 0) audit += `<span class="text-slate-500 ml-2">No candidates</span>`;
                         w.candidates.forEach(c => { audit += `<span class="ml-2 bg-slate-800 px-1.5 py-0.5 rounded">${escapeHtml(c.name)}: <b>${w.votes[c.id] || 0}</b></span>`; });
                         audit += `</div>`;
                     }
@@ -1251,7 +1221,7 @@
                     <div class="space-y-3">
                         <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-rv-p" onchange="renderAdminResetWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
                         <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward Number</label><select id="adm-rv-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <button onclick="executeAdminResetWardVotes()" class="bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Reset Ward Votes</button>
+                        <button onclick="executeAdminResetWardVotes()" class="bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Reset Ward Votes to 0</button>
                     </div>`;
                 renderAdminResetWards();
             } else if (idx === 8) {
@@ -1311,9 +1281,9 @@
                 body.innerHTML = `<p class="text-xs text-emerald-400">Current Storage Size: ${Math.round((raw.length * 2) / 1024)} KB</p>`;
             } else if (idx === 27) {
                 simulateRandomVotes();
-                body.innerHTML = `<p class="text-xs text-emerald-400">100 random votes simulated successfully.</p>`;
+                body.innerHTML = `<p class="text-xs text-emerald-400">100 random test votes simulated successfully.</p>`;
             } else if (idx === 28) {
-                if (confirm("Restore default demo database?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+                if (confirm("Restore empty clean database?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
             } else if (idx === 29) {
                 body.innerHTML = `<div class="space-y-2 text-xs"><p class="text-emerald-400 font-bold">System Health: 100% Operational</p><p>Voters logged: ${Object.keys(db.votersLog).length}</p></div>`;
             }
@@ -1348,24 +1318,69 @@
             }
         }
 
-        function executeAdminAddCandidate() {
+        // Convert local gallery file upload to permanent Base64 string for storage
+        function executeAdminAddCandidateFromFile() {
             const p = document.getElementById("adm-ac-p").value;
             const w = document.getElementById("adm-ac-w").value;
             const name = document.getElementById("adm-ac-name").value.trim();
             if (!name) return alert("Enter candidate name.");
-            
-            const cId = `c_${Date.now()}`;
-            const personImage = document.getElementById("adm-ac-image").value.trim() || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80";
-            const votingSign = document.getElementById("adm-ac-sign").value.trim() || "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&auto=format&fit=crop&q=80";
 
-            db.panchayats[p].wardsData[w].candidates.push({
-                id: cId, srNo: document.getElementById("adm-ac-srno").value, districtName: "Jalore", ulbName: p, wardNo: w,
-                name, gender: document.getElementById("adm-ac-gender").value, age: document.getElementById("adm-ac-age").value, 
-                partyName: document.getElementById("adm-ac-party").value, pledge: "Local development.", personImage, votingSign
-            });
-            db.panchayats[p].wardsData[w].votes[cId] = 0;
-            persistDB();
-            alert("Nomination with Image & Voting Sign added successfully!");
+            const imgFile = document.getElementById("adm-ac-img-file").files[0];
+            const signFile = document.getElementById("adm-ac-sign-file").files[0];
+
+            let pendingImages = 2;
+            let personImageBase64 = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
+            let votingSignBase64 = 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&auto=format&fit=crop&q=80';
+
+            const finalizeCandidateAdd = () => {
+                const cId = `c_${Date.now()}`;
+                db.panchayats[p].wardsData[w].candidates.push({
+                    id: cId, 
+                    srNo: document.getElementById("adm-ac-srno").value, 
+                    districtName: "Jalore", 
+                    ulbName: p, 
+                    wardNo: w,
+                    name, 
+                    gender: document.getElementById("adm-ac-gender").value, 
+                    age: document.getElementById("adm-ac-age").value, 
+                    partyName: document.getElementById("adm-ac-party").value, 
+                    pledge: "Local development.", 
+                    personImage: personImageBase64, 
+                    votingSign: votingSignBase64
+                });
+                db.panchayats[p].wardsData[w].votes[cId] = 0; // Strictly starts at 0
+                persistDB();
+                alert("Nomination successfully added with gallery photos! Votes initialized at 0.");
+                loadAdminToolContent(1);
+            };
+
+            if (imgFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    personImageBase64 = e.target.result;
+                    pendingImages--;
+                    if (pendingImages === 0) finalizeCandidateAdd();
+                };
+                reader.readAsDataURL(imgFile);
+            } else {
+                pendingImages--;
+            }
+
+            if (signFile) {
+                const reader2 = new FileReader();
+                reader2.onload = function(e) {
+                    votingSignBase64 = e.target.result;
+                    pendingImages--;
+                    if (pendingImages === 0) finalizeCandidateAdd();
+                };
+                reader2.readAsDataURL(signFile);
+            } else {
+                pendingImages--;
+            }
+
+            if (pendingImages === 2) {
+                finalizeCandidateAdd();
+            }
         }
 
         function renderAdminRemoveCandidates() {
@@ -1383,7 +1398,12 @@
             const w = document.getElementById("adm-rc-w").value;
             const cSel = document.getElementById("adm-rc-id");
             cSel.innerHTML = "";
-            db.panchayats[p].wardsData[w].candidates.forEach(c => {
+            const wardObj = db.panchayats[p].wardsData[w];
+            if (!wardObj.candidates || wardObj.candidates.length === 0) {
+                cSel.innerHTML = `<option value="">No candidates in this ward</option>`;
+                return;
+            }
+            wardObj.candidates.forEach(c => {
                 cSel.innerHTML += `<option value="${c.id}">${escapeHtml(c.name)} (${escapeHtml(c.partyName || "")})</option>`;
             });
         }
@@ -1396,7 +1416,7 @@
             db.panchayats[p].wardsData[w].candidates = db.panchayats[p].wardsData[w].candidates.filter(c => c.id !== cId);
             delete db.panchayats[p].wardsData[w].votes[cId];
             persistDB();
-            alert("Nomination removed.");
+            alert("Nomination and image deleted successfully.");
             renderAdminRemoveCandidates();
         }
 
@@ -1415,16 +1435,22 @@
             const w = document.getElementById("adm-ec-w").value;
             const container = document.getElementById("adm-ec-container");
             container.innerHTML = "";
-            db.panchayats[p].wardsData[w].candidates.forEach(c => {
+            const wardObj = db.panchayats[p].wardsData[w];
+            if (!wardObj.candidates || wardObj.candidates.length === 0) {
+                container.innerHTML = `<p class="text-slate-400 text-xs">No candidates in this ward.</p>`;
+                return;
+            }
+            wardObj.candidates.forEach(c => {
                 container.innerHTML += `
                     <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
                         <div class="grid grid-cols-2 gap-2">
                             <input type="text" id="edit-name-${c.id}" value="${escapeHtml(c.name)}" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
                             <input type="text" id="edit-party-${c.id}" value="${escapeHtml(c.partyName || "")}" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="edit-img-${c.id}" value="${escapeHtml(c.personImage || "")}" placeholder="Person Image URL" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
-                            <input type="text" id="edit-sign-${c.id}" value="${escapeHtml(c.votingSign || "")}" placeholder="Voting Sign URL" class="bg-slate-900 border border-slate-700 rounded p-1 text-white text-xs">
+                        <div class="flex items-center space-x-3 bg-slate-900 p-2 rounded">
+                            <img src="${escapeHtml(c.personImage)}" class="w-10 h-10 rounded-full object-cover">
+                            <span class="text-[10px] text-slate-300">Update Photo via Gallery:</span>
+                            <input type="file" id="edit-img-file-${c.id}" accept="image/*" class="text-[10px] text-slate-300">
                         </div>
                         <button onclick="saveEditedCandidate('${p}', '${w}', '${c.id}')" class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold">Save Nomination Changes</button>
                     </div>`;
@@ -1436,10 +1462,21 @@
             if (cObj) {
                 cObj.name = document.getElementById(`edit-name-${cId}`).value;
                 cObj.partyName = document.getElementById(`edit-party-${cId}`).value;
-                cObj.personImage = document.getElementById(`edit-img-${cId}`).value;
-                cObj.votingSign = document.getElementById(`edit-sign-${cId}`).value;
-                persistDB();
-                alert("Nomination details & images updated successfully.");
+                
+                const fileInput = document.getElementById(`edit-img-file-${cId}`);
+                if (fileInput && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        cObj.personImage = e.target.result;
+                        persistDB();
+                        alert("Nomination details & new gallery photo updated successfully.");
+                        renderAdminEditCandidatesList();
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    persistDB();
+                    alert("Nomination details updated successfully.");
+                }
             }
         }
 
@@ -1548,6 +1585,7 @@
 
         function simulateRandomVotes() {
             const pKeys = ["Morseem", "NayaMorseem"];
+            let simulatedCount = 0;
             for (let i = 0; i < 100; i++) {
                 const pKey = pKeys[Math.floor(Math.random() * pKeys.length)];
                 const wNo = Math.floor(Math.random() * db.panchayats[pKey].totalWards) + 1;
@@ -1556,8 +1594,14 @@
                 const c = ward.candidates[Math.floor(Math.random() * ward.candidates.length)];
                 if (!ward.votes[c.id]) ward.votes[c.id] = 0;
                 ward.votes[c.id]++;
+                simulatedCount++;
             }
             persistDB();
+            if (simulatedCount === 0) {
+                alert("Cannot simulate votes because no candidates have been added to wards yet! Add candidates via Admin Tool #2 first.");
+            } else {
+                alert(`Successfully simulated votes across wards with active candidates.`);
+            }
         }
 
         function escapeHtml(str) {
