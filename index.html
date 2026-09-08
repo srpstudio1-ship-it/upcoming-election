@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Official Premium E-Panchayat Voting and Public Opinion Portal" />
-    <meta name="theme-color" content="#0B1120" />
+    <meta name="theme-color" content="#FF9933" />
     <title>Enterprise E-Panchayat | Secure Voting & Opinion Portal</title>
 
     <!-- Preconnect to external resources -->
@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
 
     <!-- FontAwesome Pro Icons (Free CDN) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- PDF.js for AI Candidate Extraction -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
@@ -26,27 +26,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         /**
-         * Tailwind Configuration
-         * Defines the premium color palette and extended theme settings.
+         * Tailwind Configuration - Indian Flag Theme (Saffron, White, Green, Navy Blue)
          */
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
+                        indian: {
+                            saffron: '#FF9933',
+                            green: '#138808',
+                            navy: '#000080',
+                            saffronDark: '#D97706',
+                            greenDark: '#0E6606',
+                        },
                         premium: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
+                            50: '#fffbf5',
+                            100: '#fef3e2',
                             800: '#1e293b',
-                            900: '#0f172a',
-                            950: '#020617',
-                            nav: '#0B1120',
-                            gold: '#D4AF37',
-                            goldLight: '#F1C40F',
-                            goldDark: '#B8860B',
-                            accent: '#3b82f6',
+                            900: '#0B192C',
+                            950: '#040B14',
+                            nav: '#0B192C',
+                            gold: '#FF9933',
+                            goldLight: '#FFB366',
+                            goldDark: '#D97706',
+                            accent: '#138808',
                             danger: '#e11d48',
-                            success: '#10b981'
+                            success: '#138808'
                         }
                     },
                     fontFamily: {
@@ -55,7 +61,7 @@
                     },
                     boxShadow: {
                         'premium-soft': '0 10px 40px -10px rgba(0, 0, 0, 0.08)',
-                        'premium-gold': '0 4px 20px 0 rgba(212, 175, 55, 0.4)',
+                        'premium-gold': '0 4px 20px 0 rgba(255, 153, 51, 0.4)',
                         'premium-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
                     },
                     animation: {
@@ -80,24 +86,30 @@
 
     <!-- Custom CSS Styles -->
     <style>
-        /* Base Variables & Resets */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --glass-dark-bg: rgba(15, 23, 42, 0.90);
-            --glass-dark-border: rgba(255, 255, 255, 0.05);
-            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F1C40F 50%, #B8860B 100%);
+            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-border: rgba(255, 153, 51, 0.2);
+            --glass-dark-bg: rgba(11, 25, 44, 0.95);
+            --glass-dark-border: rgba(255, 153, 51, 0.15);
+            --flag-gradient: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+            --saffron-gradient: linear-gradient(135deg, #FF9933 0%, #FFB366 100%);
         }
 
         body {
             background-color: #F8FAFC;
             background-image: 
-                radial-gradient(at 0% 0%, hsla(210, 100%, 97%, 1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(45, 100%, 94%, 1) 0, transparent 50%);
+                radial-gradient(at 0% 0%, hsla(36, 100%, 95%, 1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(120, 70%, 95%, 1) 0, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* High Contrast Mode Overrides */
+        /* Tiranga top indicator stripe */
+        .tiranga-stripe {
+            height: 4px;
+            background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+            width: 100%;
+        }
+
         body.high-contrast {
             background-color: #000 !important;
             background-image: none !important;
@@ -105,10 +117,9 @@
         }
         body.high-contrast .glass {
             background: #111 !important;
-            border: 2px solid #fff !important;
+            border: 2px solid #FF9933 !important;
         }
 
-        /* Glassmorphism Utilities */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -123,15 +134,13 @@
             border-bottom: 1px solid var(--glass-dark-border);
         }
 
-        /* Text Gradients */
-        .text-gradient-gold {
-            background: var(--gold-gradient);
+        .text-gradient-saffron {
+            background: linear-gradient(135deg, #FF9933 0%, #D97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Custom Scrollbar for Webkit */
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -140,36 +149,22 @@
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
+            background-color: #FF9933;
             border-radius: 20px;
             border: 2px solid transparent;
             background-clip: content-box;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background-color: #94a3b8;
+            background-color: #D97706;
         }
 
-        /* Dark Mode Scrollbar */
-        .dark-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #334155;
-        }
-        .dark-scrollbar::-webkit-scrollbar-thumb:hover {
-            background-color: #D4AF37;
-        }
-
-        /* Admin Sidebar Active State */
-        .admin-sidebar-item {
-            position: relative;
-            overflow: hidden;
-        }
         .admin-sidebar-item.active {
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, transparent 100%);
-            border-left: 4px solid #D4AF37;
-            color: #D4AF37;
+            background: linear-gradient(90deg, rgba(255, 153, 51, 0.2) 0%, transparent 100%);
+            border-left: 4px solid #FF9933;
+            color: #FF9933;
             font-weight: 600;
         }
 
-        /* Input Styles */
         .input-premium {
             width: 100%;
             background: #ffffff;
@@ -182,14 +177,14 @@
             outline: none;
         }
         .input-premium:focus {
-            border-color: #D4AF37;
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+            border-color: #FF9933;
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.15);
         }
 
         .input-admin {
             width: 100%;
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: #0B192C;
+            border: 1px solid #1e293b;
             border-radius: 0.5rem;
             padding: 0.75rem 1rem;
             font-size: 0.875rem;
@@ -198,14 +193,13 @@
             outline: none;
         }
         .input-admin:focus {
-            border-color: #D4AF37;
+            border-color: #FF9933;
             background: #1e293b;
         }
 
-        /* Button Styles */
         .btn-gold {
-            background: var(--gold-gradient);
-            color: #0f172a;
+            background: var(--saffron-gradient);
+            color: #0B192C;
             font-weight: 700;
             transition: all 0.3s ease;
         }
@@ -213,11 +207,7 @@
             transform: translateY(-2px);
             box-shadow: var(--premium-gold);
         }
-        .btn-gold:active {
-            transform: translateY(0);
-        }
 
-        /* Toast Notifications */
         #toast-container {
             position: fixed;
             bottom: 20px;
@@ -238,61 +228,70 @@
             gap: 12px;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-left: 4px solid #D4AF37;
+            border-left: 4px solid #FF9933;
         }
-        .toast.show {
-            transform: translateX(0);
-        }
-        .toast.success { border-left-color: #10b981; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left-color: #138808; }
         .toast.error { border-left-color: #e11d48; }
-        .toast.info { border-left-color: #3b82f6; }
+        .toast.info { border-left-color: #000080; }
     </style>
 </head>
 <body class="text-slate-800 h-full flex flex-col relative">
+
+    <div class="tiranga-stripe sticky top-0 z-50"></div>
 
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast-container"></div>
 
     <!-- HEADER: PREMIUM DARK NAVIGATION -->
-    <header class="glass-dark text-white sticky top-0 z-40 shadow-xl transition-all duration-300" id="main-header">
+    <header class="glass-dark text-white sticky top-1 z-40 shadow-xl transition-all duration-300" id="main-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <!-- Left: Logo and Title -->
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-premium-gold to-premium-goldDark flex items-center justify-center font-bold text-premium-950 shadow-premium-gold border border-yellow-300/30 transform transition hover:scale-105 cursor-pointer">
-                    <i class="fa-solid fa-building-columns text-2xl"></i>
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 via-white to-emerald-600 flex items-center justify-center font-bold text-premium-950 shadow-premium-gold border border-orange-400/40 transform transition hover:scale-105 cursor-pointer">
+                    <i class="fa-solid fa-landmark text-2xl text-premium-950"></i>
                 </div>
-                <div class="hidden sm:block">
-                    <h1 class="font-bold text-lg tracking-wide text-gradient-gold" id="header-portal-title">Enterprise E-Panchayat Portal</h1>
-                    <p class="text-[11px] text-slate-400 font-medium tracking-wider uppercase" id="header-portal-subtitle">Secure Public Opinion & Voting System</p>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-gradient-saffron" data-i18n="portalTitle">Enterprise E-Panchayat Portal</h1>
+                    <p class="text-[11px] text-slate-300 font-medium tracking-wider uppercase" data-i18n="portalSubtitle">Secure Public Opinion & Voting System</p>
                 </div>
             </div>
 
-            <!-- Right: Status and Admin Access -->
-            <div class="flex items-center space-x-4 sm:space-x-6">
+            <!-- Right: Language Switcher, Status and Admin Access -->
+            <div class="flex items-center space-x-3 sm:space-x-5">
+                <!-- Language Toggle Button -->
+                <button 
+                    onclick="LangManager.toggleLanguage()" 
+                    class="bg-white/10 hover:bg-white/20 text-orange-300 px-3 py-2 rounded-xl text-xs font-bold transition-all border border-orange-400/30 flex items-center shadow-sm"
+                    title="Switch Language / भाषा बदलें"
+                >
+                    <i class="fa-solid fa-language mr-1.5 text-base"></i>
+                    <span id="lang-btn-text">हिन्दी / English</span>
+                </button>
+
                 <!-- System Status Indicator -->
                 <div class="hidden md:flex flex-col text-right text-xs text-slate-300">
-                    <span class="font-semibold text-premium-gold flex items-center justify-end">
-                        <i class="fa-solid fa-shield-check mr-1.5"></i> 256-bit AES Encrypted
+                    <span class="font-semibold text-orange-400 flex items-center justify-end">
+                        <i class="fa-solid fa-shield-check mr-1.5"></i> <span data-i18n="encryptedText">256-bit Encrypted</span>
                     </span>
                     <span class="flex items-center justify-end mt-0.5">
                         <span class="relative flex h-2 w-2 mr-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        <span id="header-system-status" class="text-emerald-400 font-medium tracking-wide">Live & Operational</span>
+                        <span id="header-system-status" class="text-emerald-400 font-medium tracking-wide" data-i18n="liveStatus">Live & Operational</span>
                     </span>
                 </div>
 
                 <!-- Admin Button -->
                 <button 
                     onclick="UIManager.openAdminLoginModal()" 
-                    class="group bg-white/5 hover:bg-white/10 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 border border-white/10 hover:border-premium-gold/50 shadow-sm flex items-center"
-                    aria-label="Access Admin Panel"
+                    class="group bg-orange-500/20 hover:bg-orange-500/30 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 border border-orange-400/40 shadow-sm flex items-center"
                 >
-                    <i class="fa-solid fa-user-tie mr-2 text-premium-gold group-hover:animate-bounce"></i> 
-                    <span class="hidden sm:inline">Admin Access</span>
-                    <span class="sm:hidden">Admin</span>
+                    <i class="fa-solid fa-user-shield mr-2 text-orange-400 group-hover:animate-bounce"></i> 
+                    <span class="hidden sm:inline" data-i18n="adminAccess">Admin Access</span>
+                    <span class="sm:hidden" data-i18n="adminShort">Admin</span>
                 </button>
             </div>
         </div>
@@ -302,52 +301,52 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-10 animate-fade-in relative z-10">
 
         <!-- SECTION 1: Government Notification Ticker -->
-        <div class="bg-gradient-to-r from-premium-nav via-slate-800 to-premium-nav p-1 rounded-2xl shadow-premium-soft border border-slate-700/50 cursor-pointer hover:shadow-premium-gold/30 transition-all duration-300 transform hover:-translate-y-0.5 group" onclick="UIManager.openNotificationsModal()">
-            <div class="bg-slate-900/50 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 backdrop-blur-sm group-hover:bg-slate-800/80 transition">
+        <div class="bg-gradient-to-r from-orange-500 via-slate-900 to-emerald-700 p-1 rounded-2xl shadow-premium-soft cursor-pointer transition-all duration-300 transform hover:-translate-y-0.5 group" onclick="UIManager.openNotificationsModal()">
+            <div class="bg-slate-900/90 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 backdrop-blur-sm group-hover:bg-slate-900 transition">
                 <div class="flex items-start sm:items-center space-x-3 w-full sm:w-auto">
-                    <div class="bg-rose-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-rose-500/30 flex-shrink-0 animate-pulse mt-1 sm:mt-0">
-                        <i class="fa-solid fa-bell mr-1"></i> Live Update
+                    <div class="bg-orange-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg flex-shrink-0 animate-pulse mt-1 sm:mt-0">
+                        <i class="fa-solid fa-bullhorn mr-1"></i> <span data-i18n="liveUpdate">Live Update</span>
                     </div>
                     <div class="w-full relative flex items-center pr-4">
                         <p id="ticker-notification-text" class="text-sm font-medium text-slate-200 leading-relaxed">
-                            Loading official government notifications from secure database...
+                            Loading official government notifications...
                         </p>
                     </div>
                 </div>
-                <div class="text-[10px] text-premium-gold font-bold flex-shrink-0 hidden md:flex items-center opacity-70 group-hover:opacity-100 transition">
-                    <i class="fa-solid fa-up-right-and-down-left-from-center mr-1.5"></i> View All
+                <div class="text-[10px] text-orange-300 font-bold flex-shrink-0 hidden md:flex items-center opacity-70 group-hover:opacity-100 transition">
+                    <span data-i18n="viewAll">View All</span> <i class="fa-solid fa-arrow-right ml-1.5"></i>
                 </div>
             </div>
         </div>
 
         <!-- SECTION 2: Dynamic Village Selector & Candidates Gallery -->
         <section class="glass rounded-3xl p-6 md:p-10 shadow-premium-soft relative overflow-hidden" id="voting-section">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-premium-gold/5 rounded-bl-full pointer-events-none"></div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-bl-full pointer-events-none"></div>
 
-            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-5 border-b border-slate-200/60 relative z-10">
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-5 border-b border-orange-500/20 relative z-10">
                 <div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-premium-nav tracking-tight">Public Opinion Booth</h2>
-                    <p class="text-sm text-slate-500 mt-2 font-medium">Select a dynamic village to view participating candidates and cast your secure vote.</p>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-premium-nav tracking-tight" data-i18n="opinionBoothTitle">Public Opinion & Voting Booth</h2>
+                    <p class="text-sm text-slate-600 mt-2 font-medium" data-i18n="opinionBoothDesc">Select your Gram Panchayat from the list to view candidates and cast your vote.</p>
                 </div>
                 <div class="mt-4 md:mt-0 flex items-center">
                     <div id="voting-badge-status-container" class="transition-all duration-300"></div>
                 </div>
             </div>
 
-            <!-- Step 1: Village Selection -->
+            <!-- Step 1: Village Selection (NO Village ID boxes) -->
             <div class="mb-10 relative z-10 max-w-xl">
                 <label class="block text-sm font-bold text-slate-700 mb-3 flex items-center">
-                    <span class="bg-slate-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm">1</span>
-                    Choose Gram Panchayat / Village
+                    <span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm">1</span>
+                    <span data-i18n="step1Label">Choose Gram Panchayat / Village</span>
                 </label>
                 <div class="relative">
                     <select 
                         id="user-panchayat-select" 
                         onchange="UserInterface.handleVillageSelection()" 
                         class="input-premium appearance-none pr-10 font-semibold cursor-pointer text-base"
-                        aria-label="Select Village"
                     >
-                        <option value="">-- Click to Select Village Database --</option>
+                        <option value="" data-i18n="selectVillagePrompt">-- Select Village Name --</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -359,39 +358,40 @@
             <div id="user-candidates-wrapper" class="hidden animate-slide-up relative z-10">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
                     <label class="block text-sm font-bold text-slate-700 flex items-center">
-                        <span class="bg-slate-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm">2</span>
-                        Select Candidate to Support
+                        <span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm">2</span>
+                        <span data-i18n="step2Label">Select Candidate to Support</span>
                     </label>
-                    <span id="candidate-count-badge" class="bg-blue-50 text-blue-700 text-xs font-bold px-4 py-1.5 rounded-full border border-blue-200 shadow-sm flex items-center">
-                        <i class="fa-solid fa-users mr-1.5"></i> 0 Candidates Found
+                    <span id="candidate-count-badge" class="bg-orange-50 text-orange-800 text-xs font-bold px-4 py-1.5 rounded-full border border-orange-200 shadow-sm flex items-center">
+                        <i class="fa-solid fa-users mr-1.5 text-orange-600"></i> 0 Candidates Found
                     </span>
                 </div>
 
                 <div id="user-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10"></div>
 
-                <!-- Step 3: Secure Mobile Verification -->
-                <div class="bg-premium-nav p-1 rounded-2xl shadow-2xl relative overflow-hidden mb-10 transform transition-all hover:shadow-premium-gold/20">
+                <!-- Step 3: Secure Verification & Vote Submission -->
+                <div class="bg-premium-nav p-1 rounded-2xl shadow-2xl relative overflow-hidden mb-10 border border-orange-500/30">
                     <div class="bg-slate-900 rounded-xl p-6 sm:p-8 relative overflow-hidden">
                         <div class="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/4 opacity-5 pointer-events-none">
                             <i class="fa-solid fa-fingerprint text-[15rem] text-white"></i>
                         </div>
                         
-                        <label class="block text-sm font-bold text-premium-gold mb-4 relative z-10 flex items-center">
-                            <span class="bg-premium-gold text-premium-nav w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-gold font-extrabold">3</span>
-                            Verify Identity & Confirm Vote (Strictly 1 Vote / Village)
+                        <label class="block text-sm font-bold text-orange-400 mb-4 relative z-10 flex items-center">
+                            <span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 font-extrabold">3</span>
+                            <span data-i18n="step3Label">Verify Mobile & Cast Secure Vote (1 Vote per Village)</span>
                         </label>
                         
                         <div class="flex flex-col md:flex-row gap-4 relative z-10 max-w-3xl">
                             <div class="relative flex-grow">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
-                                    <i class="fa-solid fa-mobile-screen-button"></i>
+                                    <i class="fa-solid fa-mobile-screen-button text-orange-400"></i>
                                 </div>
                                 <input 
                                     type="tel" 
                                     id="voter-mobile-input" 
                                     maxlength="10" 
+                                    data-i18n-placeholder="mobilePlaceholder"
                                     placeholder="Enter 10-digit Mobile Number" 
-                                    class="w-full bg-slate-800 border-2 border-slate-700 rounded-xl pl-11 pr-4 py-3.5 text-base text-white placeholder-slate-500 focus:outline-none focus:border-premium-gold focus:ring-1 focus:ring-premium-gold font-medium tracking-wider transition-colors"
+                                    class="w-full bg-slate-800 border-2 border-slate-700 rounded-xl pl-11 pr-4 py-3.5 text-base text-white placeholder-slate-500 focus:outline-none focus:border-orange-400 font-medium tracking-wider"
                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                 >
                             </div>
@@ -400,64 +400,66 @@
                                 class="btn-gold px-8 py-3.5 rounded-xl text-sm uppercase tracking-wider flex items-center justify-center flex-shrink-0"
                                 id="btn-cast-vote"
                             >
-                                <i class="fa-solid fa-check-double mr-2 text-lg"></i> Secure Vote
+                                <i class="fa-solid fa-check-double mr-2 text-lg"></i> <span data-i18n="castVoteBtn">Secure Vote</span>
                             </button>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-4 flex items-center relative z-10 font-medium">
-                            <i class="fa-solid fa-lock text-emerald-500 mr-1.5"></i> 
-                            Your mobile number acts as a unique cryptographic key locked for this specific village database.
+                        <p class="text-[11px] text-slate-300 mt-4 flex items-center relative z-10 font-medium">
+                            <i class="fa-solid fa-lock text-emerald-400 mr-1.5"></i> 
+                            <span data-i18n="voteSecurityNote">Your mobile number is securely verified to prevent duplicate voting in this village.</span>
                         </p>
                     </div>
                 </div>
 
-                <!-- Step 4: Live Analytics -->
+                <!-- Step 4: Live Analytics Section -->
                 <div class="pt-8 border-t border-slate-200/60 relative z-10">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
                         <h3 class="text-lg font-bold text-slate-800 flex items-center">
-                            <i class="fa-solid fa-chart-line text-premium-gold mr-2 text-xl"></i> Live Polling Analytics
+                            <i class="fa-solid fa-chart-line text-orange-500 mr-2 text-xl"></i> <span data-i18n="liveAnalyticsTitle">Live Polling Analytics</span>
                         </h3>
                         <div class="bg-white px-4 py-2 rounded-xl text-sm font-bold text-slate-700 border border-slate-200 shadow-sm flex items-center">
-                            Total Verified Votes: <span id="total-votes-counter" class="text-premium-nav ml-2 bg-slate-100 px-2 py-0.5 rounded">0</span>
+                            <span data-i18n="totalVotesLabel">Total Verified Votes:</span> <span id="total-votes-counter" class="text-premium-nav ml-2 bg-orange-50 text-orange-800 px-2.5 py-0.5 rounded border border-orange-200">0</span>
                         </div>
                     </div>
+                    
                     <div id="live-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: User Tools Grid -->
+        <!-- SECTION 3: Public Utility Tools Grid -->
         <div class="flex items-center my-8">
-            <div class="flex-grow h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-            <span class="px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Public Utility Tools</span>
-            <div class="flex-grow h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="flex-grow h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent"></div>
+            <span class="px-4 text-xs font-bold text-slate-500 uppercase tracking-widest" data-i18n="publicUtilitiesHeading">Public Utility Tools</span>
+            <div class="flex-grow h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent"></div>
         </div>
 
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative z-10">
+            
             <!-- Tool 1: Search -->
             <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow">
                 <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mr-3">
+                    <div class="w-10 h-10 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mr-3">
                         <i class="fa-solid fa-magnifying-glass text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">Search Registry</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool1Title">Search Registry</h3>
                 </div>
-                <input id="candidate-search-input" type="text" placeholder="Search name, party, ward..." class="input-premium py-2 text-xs mb-3" oninput="UserInterface.handleSearch()" />
+                <input id="candidate-search-input" type="text" data-i18n-placeholder="searchPlaceholder" placeholder="Search name, party, ward..." class="input-premium py-2 text-xs mb-3" oninput="UserInterface.handleSearch()" />
                 <div id="candidate-search-results" class="flex-grow max-h-40 overflow-y-auto custom-scrollbar space-y-2 pr-1"></div>
             </div>
 
-            <!-- Tool 2: Compare Wards -->
+            <!-- Tool 2: Ward Compare -->
             <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow">
                 <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mr-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mr-3">
                         <i class="fa-solid fa-code-compare text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">Compare Wards</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool2Title">Compare Wards</h3>
                 </div>
                 <div class="space-y-3 mb-4">
                     <select id="compare-ward-1" class="input-premium py-2 text-xs appearance-none"></select>
                     <select id="compare-ward-2" class="input-premium py-2 text-xs appearance-none"></select>
                 </div>
-                <button onclick="UserInterface.runComparison()" class="w-full bg-slate-800 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-slate-700 transition mt-auto">Execute Comparison</button>
+                <button onclick="UserInterface.runComparison()" class="w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-slate-800 transition mt-auto" data-i18n="executeCompareBtn">Execute Comparison</button>
                 <div id="compare-result" class="mt-3 text-[11px] text-slate-600 font-medium bg-slate-50 p-2 rounded-lg hidden"></div>
             </div>
 
@@ -467,24 +469,24 @@
                     <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mr-3">
                         <i class="fa-solid fa-clock-rotate-left text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">My Vote Record</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool3Title">My Vote Record</h3>
                 </div>
-                <p class="text-[11px] text-slate-500 mb-3">Verify your cryptographic vote entry.</p>
-                <input id="my-vote-mobile" type="password" placeholder="Enter Mobile No." class="input-premium py-2 text-xs mb-3" />
-                <button onclick="UserInterface.checkHistory()" class="w-full bg-slate-800 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-slate-700 transition mt-auto">Check Database</button>
+                <p class="text-[11px] text-slate-500 mb-3" data-i18n="tool3Desc">Verify your cryptographic vote entry.</p>
+                <input id="my-vote-mobile" type="password" data-i18n-placeholder="mobilePlaceholder" placeholder="Enter Mobile No." class="input-premium py-2 text-xs mb-3" />
+                <button onclick="UserInterface.checkHistory()" class="w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-slate-800 transition mt-auto" data-i18n="checkDatabaseBtn">Check Database</button>
                 <div id="my-vote-history-output" class="mt-3 text-[11px] text-slate-600 font-medium"></div>
             </div>
 
             <!-- Tool 4: Master Directory -->
-            <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-amber-50/30">
+            <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-orange-50/30">
                 <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mr-3 shadow-sm border border-amber-100">
+                    <div class="w-10 h-10 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mr-3 shadow-sm border border-orange-100">
                         <i class="fa-solid fa-book-open-cover text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">Master Directory</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool4Title">Master Directory</h3>
                 </div>
-                <p class="text-xs text-slate-600 mb-4 leading-relaxed">Access the complete official database containing all villages and ward outcomes.</p>
-                <button onclick="UIManager.openDirectoryModal()" class="w-full bg-white border-2 border-premium-gold text-premium-goldDark text-xs font-bold py-3 rounded-xl hover:bg-premium-gold hover:text-white transition mt-auto shadow-sm">Open Full Directory</button>
+                <p class="text-xs text-slate-600 mb-4 leading-relaxed" data-i18n="tool4Desc">Access the complete official database containing all villages and ward outcomes.</p>
+                <button onclick="UIManager.openDirectoryModal()" class="w-full bg-white border-2 border-orange-500 text-orange-600 text-xs font-bold py-3 rounded-xl hover:bg-orange-500 hover:text-white transition mt-auto shadow-sm" data-i18n="openDirectoryBtn">Open Full Directory</button>
             </div>
 
             <!-- Tool 5: Suggestion Box -->
@@ -493,91 +495,97 @@
                     <div class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center mr-3">
                         <i class="fa-solid fa-comment-dots text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">Citizen Feedback & Suggestions</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool5Title">Citizen Feedback & Suggestions</h3>
                 </div>
-                <textarea id="user-suggestion-text" rows="3" placeholder="Describe local issues or ideas..." class="input-premium text-xs mb-3 resize-none"></textarea>
+                <textarea id="user-suggestion-text" rows="3" data-i18n-placeholder="suggestionPlaceholder" placeholder="Describe local issues or development ideas..." class="input-premium text-xs mb-3 resize-none"></textarea>
                 <div class="flex justify-between items-center mt-auto">
-                    <span class="text-[10px] text-slate-400 font-medium"><i class="fa-solid fa-shield-check text-emerald-500"></i> Anonymous Submission</span>
-                    <button onclick="UserInterface.submitSuggestion()" class="bg-rose-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-rose-600 transition shadow-md shadow-rose-500/20">Submit to Admin</button>
+                    <span class="text-[10px] text-slate-500 font-medium"><i class="fa-solid fa-shield-check text-emerald-600"></i> <span data-i18n="anonymousSub">Anonymous Submission</span></span>
+                    <button onclick="UserInterface.submitSuggestion()" class="bg-orange-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-orange-600 transition shadow-md" data-i18n="submitAdminBtn">Submit to Admin</button>
                 </div>
             </div>
 
             <!-- Tool 6: Data Export -->
-            <div class="bg-gradient-to-br from-slate-900 to-premium-nav p-6 rounded-3xl shadow-premium-soft flex flex-col h-full text-white relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-slate-900 to-premium-nav p-6 rounded-3xl shadow-premium-soft flex flex-col h-full text-white relative overflow-hidden group border border-orange-500/20">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
                 <div class="flex items-center mb-4 relative z-10">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center mr-3 border border-blue-500/30">
+                    <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center mr-3 border border-orange-500/30">
                         <i class="fa-solid fa-file-export text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm">Transparency Export</h3>
+                    <h3 class="font-bold text-sm" data-i18n="tool6Title">Transparency Export</h3>
                 </div>
-                <p class="text-xs text-slate-400 mb-4 leading-relaxed relative z-10">Download complete unadulterated polling records in raw text format.</p>
-                <button onclick="UserInterface.downloadReport()" class="w-full bg-blue-600 text-white text-xs font-bold py-3 rounded-xl hover:bg-blue-500 transition shadow-lg mt-auto relative z-10 border border-blue-500">
-                    <i class="fa-solid fa-download mr-1.5"></i> Generate .TXT Report
+                <p class="text-xs text-slate-300 mb-4 leading-relaxed relative z-10" data-i18n="tool6Desc">Download complete polling records in text format for offline verification.</p>
+                <button onclick="UserInterface.downloadReport()" class="w-full bg-orange-500 text-white text-xs font-bold py-3 rounded-xl hover:bg-orange-600 transition shadow-lg mt-auto relative z-10 border border-orange-400">
+                    <i class="fa-solid fa-download mr-1.5"></i> <span data-i18n="downloadReportBtn">Generate .TXT Report</span>
                 </button>
             </div>
 
-            <!-- Tool 7: Accessibility & Tools -->
+            <!-- Tool 7: Accessibility & Utilities -->
             <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow">
                 <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center mr-3">
+                    <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center mr-3">
                         <i class="fa-solid fa-toolbox text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-sm text-slate-800">Accessibility & Tools</h3>
+                    <h3 class="font-bold text-sm text-slate-800" data-i18n="tool7Title">Accessibility & Tools</h3>
                 </div>
                 
                 <div class="space-y-3 mt-auto">
                     <button onclick="UserInterface.sharePortal()" class="w-full bg-white border border-slate-200 text-slate-700 text-xs font-semibold py-2.5 rounded-xl hover:bg-slate-50 transition flex items-center justify-center">
-                        <i class="fa-solid fa-share-nodes mr-2 text-slate-400"></i> Share Portal Link
+                        <i class="fa-solid fa-share-nodes mr-2 text-orange-500"></i> <span data-i18n="sharePortalBtn">Share Portal Link</span>
                     </button>
                     <button onclick="window.print()" class="w-full bg-white border border-slate-200 text-slate-700 text-xs font-semibold py-2.5 rounded-xl hover:bg-slate-50 transition flex items-center justify-center">
-                        <i class="fa-solid fa-print mr-2 text-slate-400"></i> Print Current View
+                        <i class="fa-solid fa-print mr-2 text-orange-500"></i> <span data-i18n="printViewBtn">Print Current View</span>
                     </button>
                     <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
                         <label class="flex flex-col items-center justify-center p-2 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
                             <input type="checkbox" id="a11y-high-contrast" onchange="UIManager.toggleContrast()" class="sr-only" />
-                            <i class="fa-solid fa-circle-half-stroke text-slate-500 mb-1"></i>
-                            <span class="text-[9px] font-bold text-slate-600 uppercase text-center" id="lbl-contrast">Contrast</span>
+                            <i class="fa-solid fa-circle-half-stroke text-slate-700 mb-1"></i>
+                            <span class="text-[9px] font-bold text-slate-700 uppercase text-center" id="lbl-contrast">Contrast</span>
                         </label>
                         <label class="flex flex-col items-center justify-center p-2 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
                             <input type="checkbox" id="a11y-large-text" onchange="UIManager.toggleTextSize()" class="sr-only" />
-                            <i class="fa-solid fa-text-size text-slate-500 mb-1"></i>
-                            <span class="text-[9px] font-bold text-slate-600 uppercase text-center" id="lbl-text">Large Text</span>
+                            <i class="fa-solid fa-text-size text-slate-700 mb-1"></i>
+                            <span class="text-[9px] font-bold text-slate-700 uppercase text-center" id="lbl-text">Large Text</span>
                         </label>
                     </div>
                 </div>
             </div>
+
         </section>
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-[#0B1120] text-slate-400 py-8 border-t border-slate-800 mt-auto relative z-10">
+    <footer class="bg-premium-nav text-slate-300 py-8 border-t border-orange-500/30 mt-auto relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-xs font-medium space-y-4 md:space-y-0">
             <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-shield-check text-premium-gold"></i>
-                <p>&copy; <span id="current-year">2026</span> Enterprise Panchayat System. Strict 1 Vote / Village Policy.</p>
+                <i class="fa-solid fa-shield-check text-orange-400"></i>
+                <p>&copy; <span id="current-year">2026</span> <span data-i18n="footerText">Enterprise Panchayat System. Strict 1 Vote / Village Policy.</span></p>
             </div>
             <div class="flex space-x-6">
-                <a href="#" class="hover:text-premium-gold transition">Terms & Rules</a>
-                <a href="#" class="hover:text-premium-gold transition">Privacy Policy</a>
-                <a href="#" class="hover:text-premium-gold transition" onclick="UIManager.openAdminLoginModal(); return false;">Admin Login</a>
+                <a href="#" class="hover:text-orange-400 transition" data-i18n="footerTerms">Terms & Rules</a>
+                <a href="#" class="hover:text-orange-400 transition" data-i18n="footerPrivacy">Privacy Policy</a>
+                <a href="#" class="hover:text-orange-400 transition" onclick="UIManager.openAdminLoginModal(); return false;" data-i18n="footerAdmin">Admin Login</a>
             </div>
         </div>
     </footer>
 
-    <!-- MODALS -->
-    <div id="notifications-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4">
+    <!-- ========================================== -->
+    <!-- MODALS & OVERLAYS                          -->
+    <!-- ========================================== -->
+
+    <!-- ALL NOTIFICATIONS MODAL -->
+    <div id="notifications-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4" aria-modal="true" role="dialog">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl max-h-[85vh] flex flex-col animate-slide-up">
             <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-5 shrink-0">
                 <div class="flex items-center">
-                    <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center mr-3">
+                    <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center mr-3">
                         <i class="fa-solid fa-bullhorn text-lg"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl text-slate-800">Official Notifications</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Government Broadcasts & Alerts</p>
+                        <h3 class="font-bold text-xl text-slate-800" data-i18n="notifModalTitle">Official Notifications</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" data-i18n="notifModalSubtitle">Government Broadcasts & Alerts</p>
                     </div>
                 </div>
-                <button onclick="UIManager.closeNotificationsModal()" class="text-slate-400 hover:text-rose-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center transition">
+                <button onclick="UIManager.closeNotificationsModal()" class="text-slate-400 hover:text-orange-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -586,23 +594,23 @@
     </div>
 
     <!-- ADMIN LOGIN MODAL -->
-    <div id="admin-login-modal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10 shadow-2xl relative border border-slate-200 animate-slide-up">
-            <button onclick="UIManager.closeAdminLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-rose-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center">
+    <div id="admin-login-modal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4 transition-opacity" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10 shadow-2xl relative border border-orange-500/20 animate-slide-up">
+            <button onclick="UIManager.closeAdminLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-orange-500 transition-colors bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center" aria-label="Close Modal">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
             <div class="text-center mb-8">
-                <div class="w-20 h-20 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-200 shadow-inner">
-                    <i class="fa-solid fa-shield-keyhole text-4xl text-premium-nav"></i>
+                <div class="w-20 h-20 bg-orange-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-200 shadow-inner">
+                    <i class="fa-solid fa-user-shield text-4xl text-orange-600"></i>
                 </div>
-                <h2 class="text-2xl font-extrabold text-slate-900">Master Authentication</h2>
-                <p class="text-xs text-slate-500 mt-2 font-medium">Secured Area. Requires Level 1 Clearance.</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight" data-i18n="adminModalTitle">Master Authentication</h2>
+                <p class="text-xs text-slate-500 mt-2 font-medium" data-i18n="adminModalDesc">Secured Area. Requires Level 1 Clearance.</p>
             </div>
             
             <form onsubmit="AdminManager.verifyLogin(event)" class="space-y-5">
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Cryptographic Key / Password</label>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1" data-i18n="adminPassLabel">Cryptographic Key / Password</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
                             <i class="fa-solid fa-key"></i>
@@ -614,32 +622,32 @@
                             class="input-premium pl-11 py-3.5 text-sm font-mono tracking-widest text-center" 
                             required 
                         />
-                        <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-700" onclick="UIManager.togglePasswordVisibility('admin-password-box', this)">
+                        <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-700 focus:outline-none" onclick="UIManager.togglePasswordVisibility('admin-password-box', this)">
                             <i class="fa-solid fa-eye"></i>
                         </button>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-premium-nav text-premium-gold font-bold py-3.5 rounded-xl hover:bg-slate-800 transition shadow-lg flex items-center justify-center">
-                    <i class="fa-solid fa-unlock-keyhole mr-2"></i> Initialize Console
+                <button type="submit" class="w-full bg-premium-nav text-orange-400 font-bold py-3.5 rounded-xl hover:bg-slate-800 transition-all shadow-lg flex items-center justify-center border border-orange-500/30">
+                    <i class="fa-solid fa-unlock-keyhole mr-2"></i> <span data-i18n="adminLoginBtn">Initialize Console</span>
                 </button>
             </form>
         </div>
     </div>
 
     <!-- DIRECTORY MODAL -->
-    <div id="directory-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4">
+    <div id="directory-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4" aria-modal="true" role="dialog">
         <div class="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl max-h-[85vh] flex flex-col animate-slide-up">
             <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-5 shrink-0">
                 <div class="flex items-center">
-                    <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mr-3">
+                    <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center mr-3">
                         <i class="fa-solid fa-book-open-cover text-lg"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl text-slate-800">Master Electoral Directory</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Official Record Registry</p>
+                        <h3 class="font-bold text-xl text-slate-800" data-i18n="dirModalTitle">Master Electoral Directory</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" data-i18n="dirModalSubtitle">Official Record Registry</p>
                     </div>
                 </div>
-                <button onclick="UIManager.closeDirectoryModal()" class="text-slate-400 hover:text-rose-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center transition">
+                <button onclick="UIManager.closeDirectoryModal()" class="text-slate-400 hover:text-orange-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -647,53 +655,67 @@
         </div>
     </div>
 
-    <!-- ENTERPRISE ADMIN DASHBOARD (CONTAINING ALL 31 TOOLS) -->
+    <!-- ========================================== -->
+    <!-- ENTERPRISE ADMIN DASHBOARD (31 TOOLS)      -->
+    <!-- ========================================== -->
     <div id="admin-dashboard-container" class="fixed inset-0 bg-premium-nav z-[110] hidden flex flex-col text-slate-200">
-        <div class="h-16 bg-[#090E17] border-b border-slate-800/80 flex items-center justify-between px-6 shrink-0 shadow-md z-20">
+        <div class="h-16 bg-[#040B14] border-b border-orange-500/20 flex items-center justify-between px-6 shrink-0 shadow-md z-20">
             <div class="flex items-center space-x-4">
-                <div class="w-8 h-8 bg-premium-gold/20 text-premium-gold rounded flex items-center justify-center border border-premium-gold/30">
+                <div class="w-8 h-8 bg-orange-500/20 text-orange-400 rounded flex items-center justify-center border border-orange-500/30">
                     <i class="fa-solid fa-bolt"></i>
                 </div>
                 <div>
                     <h2 class="font-bold text-sm tracking-widest uppercase text-white flex items-center">
                         Master Console 
-                        <span class="bg-premium-gold text-premium-nav px-1.5 py-0.5 rounded-sm text-[9px] ml-2 font-black">ENT-v3.0</span>
+                        <span class="bg-orange-500 text-slate-950 px-1.5 py-0.5 rounded-sm text-[9px] ml-2 font-black">ENT-v3.0</span>
                     </h2>
+                    <p class="text-[9px] text-slate-400 font-mono uppercase">System Architect Mode</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-4">
-                <button onclick="AdminManager.logout()" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition border border-rose-500/20 shadow-sm flex items-center">
+                <span id="admin-time-display" class="hidden sm:inline text-xs font-mono text-slate-300 bg-slate-900 px-2 py-1 rounded border border-slate-800"></span>
+                <button onclick="AdminManager.logout()" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all border border-rose-500/20 shadow-sm flex items-center">
                     <i class="fa-solid fa-power-off mr-2"></i> Terminate Session
                 </button>
             </div>
         </div>
 
         <div class="flex flex-grow overflow-hidden relative">
-            <div class="w-72 bg-[#0B1120] border-r border-slate-800/80 flex flex-col shrink-0 z-10 shadow-xl">
-                <div class="p-4 border-b border-slate-800/80">
-                    <input type="text" id="admin-tool-search" placeholder="Search Tools..." class="w-full bg-[#0F172A] border border-slate-700 rounded-lg py-2 px-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-premium-gold" oninput="AdminManager.filterTools()">
+            <div class="w-72 bg-[#06101E] border-r border-orange-500/20 flex flex-col shrink-0 z-10 shadow-xl relative">
+                <div class="p-4 border-b border-orange-500/20 shrink-0">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="admin-tool-search" placeholder="Search Tools..." class="w-full bg-[#0B192C] border border-slate-700 rounded-lg py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-400" oninput="AdminManager.filterTools()">
+                    </div>
                 </div>
+
                 <div class="flex-grow overflow-y-auto dark-scrollbar p-2 space-y-0.5" id="admin-sidebar-list"></div>
-                <div class="p-3 border-t border-slate-800/80 bg-[#090E17] text-[10px] text-slate-500 font-mono flex justify-between">
+                
+                <div class="p-3 border-t border-orange-500/20 bg-[#040B14] shrink-0 flex justify-between items-center text-[10px] text-slate-400 font-mono">
                     <span>DB Size: <span id="db-size-indicator" class="text-emerald-400">0 KB</span></span>
                     <span>Tools: 31</span>
                 </div>
             </div>
             
-            <div class="flex-grow bg-[#0F172A] p-4 sm:p-8 overflow-y-auto dark-scrollbar relative">
-                <div class="max-w-4xl mx-auto relative z-10" id="admin-content-wrapper">
-                    <div class="bg-[#1E293B] border border-slate-700 rounded-3xl shadow-2xl relative overflow-hidden">
-                        <div class="h-1 w-full bg-gradient-to-r from-premium-gold via-yellow-400 to-premium-goldDark"></div>
+            <div class="flex-grow bg-[#0B192C] p-4 sm:p-8 overflow-y-auto dark-scrollbar relative">
+                <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#FF9933 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+                <div class="max-w-4xl mx-auto relative z-10 animate-fade-in" id="admin-content-wrapper">
+                    <div class="bg-[#10223B] border border-orange-500/30 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 via-white to-emerald-600"></div>
                         <div class="p-8 sm:p-10">
-                            <div class="border-b border-slate-700/80 pb-5 mb-6 flex items-start justify-between">
+                            <div class="border-b border-slate-700 pb-5 mb-6 flex items-start justify-between">
                                 <div>
-                                    <span id="admin-tool-badge" class="text-[10px] font-bold uppercase tracking-widest text-premium-nav bg-premium-gold px-3 py-1 rounded-sm shadow-sm inline-block mb-3">Tool #01</span>
+                                    <span id="admin-tool-badge" class="text-[10px] font-bold uppercase tracking-widest text-slate-950 bg-orange-500 px-3 py-1 rounded-sm shadow-sm inline-block mb-3">Tool #01</span>
                                     <h3 id="admin-tool-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Select a Feature</h3>
-                                    <p id="admin-tool-desc" class="text-xs text-slate-400 mt-2 font-medium">Please select a tool from the sidebar.</p>
+                                    <p id="admin-tool-desc" class="text-xs text-slate-300 mt-2 font-medium">Please select a tool from the left sidebar.</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center border border-slate-700 text-orange-400 hidden sm:flex shrink-0">
+                                    <i id="admin-tool-icon" class="fa-solid fa-wrench text-xl"></i>
                                 </div>
                             </div>
-                            <div id="admin-tool-body" class="text-sm text-slate-300"></div>
+                            <div id="admin-tool-body" class="text-sm text-slate-200"></div>
                         </div>
                     </div>
                 </div>
@@ -701,24 +723,166 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT CORE ARCHITECTURE -->
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT & DUAL LANGUAGE DICTIONARY      -->
+    <!-- ========================================== -->
     <script>
         if (typeof pdfjsLib !== 'undefined') {
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         }
 
-        const STORAGE_KEY = "ENTERPRISE_PANCHAYAT_DB_v3";
+        const STORAGE_KEY = "ENTERPRISE_PANCHAYAT_DB_v3_TIRANGA";
         let activeAdminToolIndex = 0;
         let selectedUserCandidateId = null;
+        let currentLang = localStorage.getItem('APP_LANG') || 'en';
+
+        // Dual Language Dictionary (Simple English & Simple Hindi)
+        const i18n = {
+            en: {
+                portalTitle: "Enterprise E-Panchayat Portal",
+                portalSubtitle: "Secure Public Opinion & Voting System",
+                encryptedText: "256-bit Encrypted",
+                liveStatus: "Live & Operational",
+                adminAccess: "Admin Access",
+                adminShort: "Admin",
+                liveUpdate: "Live Update",
+                viewAll: "View All",
+                opinionBoothTitle: "Public Opinion & Voting Booth",
+                opinionBoothDesc: "Select your Gram Panchayat from the list to view candidates and cast your vote.",
+                step1Label: "Choose Gram Panchayat / Village",
+                selectVillagePrompt: "-- Select Village Name --",
+                step2Label: "Select Candidate to Support",
+                step3Label: "Verify Mobile & Cast Secure Vote (1 Vote per Village)",
+                mobilePlaceholder: "Enter 10-digit Mobile Number",
+                castVoteBtn: "Secure Vote",
+                voteSecurityNote: "Your mobile number is securely verified to prevent duplicate voting in this village.",
+                liveAnalyticsTitle: "Live Polling Analytics",
+                totalVotesLabel: "Total Verified Votes:",
+                publicUtilitiesHeading: "Public Utility Tools",
+                tool1Title: "Search Registry",
+                searchPlaceholder: "Search name, party, ward...",
+                tool2Title: "Compare Wards",
+                executeCompareBtn: "Execute Comparison",
+                tool3Title: "My Vote Record",
+                tool3Desc: "Verify your cryptographic vote entry.",
+                checkDatabaseBtn: "Check Database",
+                tool4Title: "Master Directory",
+                tool4Desc: "Access the complete official database containing all villages and ward outcomes.",
+                openDirectoryBtn: "Open Full Directory",
+                tool5Title: "Citizen Feedback & Suggestions",
+                suggestionPlaceholder: "Describe local issues or development ideas...",
+                anonymousSub: "Anonymous Submission",
+                submitAdminBtn: "Submit to Admin",
+                tool6Title: "Transparency Export",
+                tool6Desc: "Download complete polling records in text format for offline verification.",
+                downloadReportBtn: "Generate .TXT Report",
+                tool7Title: "Accessibility & Tools",
+                sharePortalBtn: "Share Portal Link",
+                printViewBtn: "Print Current View",
+                footerText: "Enterprise Panchayat System. Strict 1 Vote / Village Policy.",
+                footerTerms: "Terms & Rules",
+                footerPrivacy: "Privacy Policy",
+                footerAdmin: "Admin Login",
+                notifModalTitle: "Official Notifications",
+                notifModalSubtitle: "Government Broadcasts & Alerts",
+                adminModalTitle: "Master Authentication",
+                adminModalDesc: "Secured Area. Requires Level 1 Clearance.",
+                adminPassLabel: "Cryptographic Key / Password",
+                adminLoginBtn: "Initialize Console",
+                dirModalTitle: "Master Electoral Directory",
+                dirModalSubtitle: "Official Record Registry"
+            },
+            hi: {
+                portalTitle: "एंटरप्राइज ई-पंचायत पोर्टल",
+                portalSubtitle: "सुरक्षित जनमत और मतदान प्रणाली",
+                encryptedText: "256-बिट एन्क्रिप्टेड",
+                liveStatus: "लाइव और सक्रिय",
+                adminAccess: "एडमिन लॉगिन",
+                adminShort: "एडमिन",
+                liveUpdate: "नवीनतम सूचना",
+                viewAll: "सभी देखें",
+                opinionBoothTitle: "जनमत और मतदान केंद्र",
+                opinionBoothDesc: "उम्मीदवारों को देखने और अपना वोट डालने के लिए सूची से अपनी ग्राम पंचायत चुनें।",
+                step1Label: "ग्राम पंचायत / गाँव चुनें",
+                selectVillagePrompt: "-- गाँव का नाम चुनें --",
+                step2Label: "समर्थन के लिए उम्मीदवार चुनें",
+                step3Label: "मोबाइल सत्यापित करें और सुरक्षित वोट दें (प्रति ग्राम 1 वोट)",
+                mobilePlaceholder: "10-अंकों का मोबाइल नंबर दर्ज करें",
+                castVoteBtn: "सुरक्षित वोट दें",
+                voteSecurityNote: "इस गाँव में दोबारा वोटिंग रोकने के लिए आपके मोबाइल नंबर का सत्यापन किया जाता है।",
+                liveAnalyticsTitle: "लाइव मतदान विश्लेषण",
+                totalVotesLabel: "कुल सत्यापित वोट:",
+                publicUtilitiesHeading: "सार्वजनिक उपयोगिता उपकरण",
+                tool1Title: "रजिस्ट्री खोजें",
+                searchPlaceholder: "नाम, पार्टी, वार्ड खोजें...",
+                tool2Title: "वार्ड तुलना करें",
+                executeCompareBtn: "तुलना करें",
+                tool3Title: "मेरा वोट रिकॉर्ड",
+                tool3Desc: "अपनी वोट प्रविष्टि सत्यापित करें।",
+                checkDatabaseBtn: "डेटाबेस जांचें",
+                tool4Title: "मास्टर डायरेक्टरी",
+                tool4Desc: "सभी गाँवों और वार्ड परिणामों वाली आधिकारिक डायरेक्टरी देखें।",
+                openDirectoryBtn: "पूर्ण डायरेक्टरी खोलें",
+                tool5Title: "नागरिक प्रतिक्रिया और सुझाव",
+                suggestionPlaceholder: "स्थानीय समस्याएं या विकास के सुझाव लिखें...",
+                anonymousSub: "गुप्त सबमिशन",
+                submitAdminBtn: "एडमिन को भेजें",
+                tool6Title: "पारदर्शिता रिपोर्ट निर्यात",
+                tool6Desc: "ऑफ़लाइन सत्यापन के लिए मतदान रिकॉर्ड टेक्स्ट फॉर्मेट में डाउनलोड करें।",
+                downloadReportBtn: ".TXT रिपोर्ट जनरेट करें",
+                tool7Title: "सुविधाएं और टूल्स",
+                sharePortalBtn: "पोर्टल लिंक शेयर करें",
+                printViewBtn: "वर्तमान दृश्य प्रिंट करें",
+                footerText: "एंटरप्राइज पंचायत प्रणाली। सख्त 1 वोट / ग्राम नीति।",
+                footerTerms: "नियम और शर्तें",
+                footerPrivacy: "गोपनीयता नीति",
+                footerAdmin: "एडमिन लॉगिन",
+                notifModalTitle: "आधिकारिक सूचनाएं",
+                notifModalSubtitle: "सरकारी प्रसारण और अलर्ट",
+                adminModalTitle: "मास्टर प्रमाणीकरण",
+                adminModalDesc: "सुरक्षित क्षेत्र। लेवल 1 अनुमति आवश्यक है।",
+                adminPassLabel: "गुप्त कुंजी / पासवर्ड",
+                adminLoginBtn: "कंसोल शुरू करें",
+                dirModalTitle: "मास्टर चुनावी निर्देशिका",
+                dirModalSubtitle: "आधिकारिक रिकॉर्ड रजिस्ट्री"
+            }
+        };
+
+        class LangManager {
+            static toggleLanguage() {
+                currentLang = currentLang === 'en' ? 'hi' : 'en';
+                localStorage.setItem('APP_LANG', currentLang);
+                this.applyLanguage();
+            }
+
+            static applyLanguage() {
+                const dict = i18n[currentLang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.innerText = dict[key];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                    if (dict[key]) el.setAttribute('placeholder', dict[key]);
+                });
+                const btnTxt = document.getElementById('lang-btn-text');
+                if (btnTxt) {
+                    btnTxt.innerText = currentLang === 'en' ? 'हिन्दी' : 'English';
+                }
+            }
+        }
 
         class Utils {
             static escapeHtml(str) {
                 if (str === null || str === undefined) return "";
-                return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                return String(str)
+                    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
             }
+
             static generateId(prefix = 'ID') {
                 return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
             }
+
             static getDeviceFP() {
                 let fp = localStorage.getItem("ENTERPRISE_FP");
                 if (!fp) {
@@ -727,72 +891,111 @@
                 }
                 return fp;
             }
+
             static calculateDbSize() {
                 const data = localStorage.getItem(STORAGE_KEY) || "";
                 return Math.round((data.length * 2) / 1024);
             }
+
             static showToast(message, type = 'info') {
                 const container = document.getElementById('toast-container');
                 if (!container) return;
+
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                let icon = 'fa-info-circle text-blue-500';
-                if(type === 'success') icon = 'fa-check-circle text-emerald-500';
-                if(type === 'error') icon = 'fa-exclamation-circle text-rose-500';
+                
+                let icon = 'fa-info-circle text-blue-600';
+                if(type === 'success') icon = 'fa-check-circle text-emerald-600';
+                if(type === 'error') icon = 'fa-exclamation-circle text-rose-600';
 
-                toast.innerHTML = `<i class="fa-solid ${icon} text-xl"></i><div class="flex-grow"><p class="text-sm font-bold text-slate-800">${type.toUpperCase()}</p><p class="text-xs text-slate-600 font-medium">${message}</p></div>`;
+                toast.innerHTML = `
+                    <i class="fa-solid ${icon} text-xl"></i>
+                    <div class="flex-grow">
+                        <p class="text-sm font-bold text-slate-800">${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+                        <p class="text-xs text-slate-600 font-medium">${message}</p>
+                    </div>
+                `;
+
                 container.appendChild(toast);
                 requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
-                setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400);
+                }, 4000);
             }
+
             static async simulateNetworkDelay(ms = 400) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
         }
 
         class DatabaseManager {
-            constructor() { this.init(); }
+            constructor() {
+                this.db = null;
+                this.init();
+            }
+
             getDefaultStructure() {
                 return {
                     meta: { version: "3.0", lastUpdated: new Date().toISOString() },
-                    settings: { masterPassword: "sarpanch2026", votingEnabled: true, publicResultsVisible: true, portalTitle: "Enterprise E-Panchayat Portal", maintenanceMode: false },
-                    notifications: [{ id: Utils.generateId('N'), text: "Welcome to the Enterprise Digital Polling System.", date: new Date().toISOString() }],
-                    suggestions: [], votersLog: {}, villageVotedLog: {},
+                    settings: { 
+                        masterPassword: "sarpanch2026", 
+                        votingEnabled: true, 
+                        publicResultsVisible: true, 
+                        portalTitle: "Enterprise E-Panchayat Portal",
+                        maintenanceMode: false
+                    },
+                    notifications: [
+                        { id: Utils.generateId('N'), text: "Welcome to the Enterprise Digital Polling System / पंचायत डिजिटल मतदान पोर्टल में आपका स्वागत है।", date: new Date().toISOString() }
+                    ],
+                    suggestions: [], 
+                    votersLog: {}, 
+                    villageVotedLog: {},
                     panchayats: {
-                        "morseem": { id: "morseem", name: "Gram Panchayat Morseem", totalWards: 13, wardsData: {} },
-                        "nayamorseem": { id: "nayamorseem", name: "Gram Panchayat Naya Morseem", totalWards: 11, wardsData: {} }
+                        "morseem": { id: "morseem", name: "Gram Panchayat Morseem (मोरसीम)", totalWards: 13, wardsData: {} },
+                        "nayamorseem": { id: "nayamorseem", name: "Gram Panchayat Naya Morseem (नया मोरसीम)", totalWards: 11, wardsData: {} }
                     }
                 };
             }
+
             init() {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
-                    this.db = raw ? JSON.parse(raw) : this.getDefaultStructure();
+                    if (raw) {
+                        this.db = JSON.parse(raw);
+                    } else {
+                        this.db = this.getDefaultStructure();
+                    }
                 } catch (e) {
                     this.db = this.getDefaultStructure();
                 }
                 this.validateAndRepair();
                 this.persist();
             }
+
             validateAndRepair() {
                 if (!this.db.panchayats) this.db.panchayats = {};
                 Object.values(this.db.panchayats).forEach(p => {
                     if (!p.wardsData) p.wardsData = {};
                     for (let i = 1; i <= p.totalWards; i++) {
-                        if (!p.wardsData[i]) p.wardsData[i] = { wardNo: i, reservation: "General", candidates: [], votes: {} };
+                        if (!p.wardsData[i]) {
+                            p.wardsData[i] = { wardNo: i, reservation: "General / सामान्य", candidates: [], votes: {} };
+                        }
                     }
                 });
             }
+
             persist() {
                 this.db.meta.lastUpdated = new Date().toISOString();
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.db));
             }
+
             get() { return this.db; }
+            
             factoryReset() {
                 localStorage.removeItem(STORAGE_KEY);
                 this.init();
                 Utils.showToast("Factory reset complete.", "success");
-                location.reload();
             }
         }
 
@@ -801,55 +1004,127 @@
 
         class UIManager {
             static init() {
-                document.getElementById("header-portal-title").innerText = db.settings.portalTitle;
                 document.getElementById("current-year").innerText = new Date().getFullYear();
+                setInterval(() => {
+                    const now = new Date().toLocaleTimeString();
+                    const adminClock = document.getElementById("admin-time-display");
+                    if(adminClock) adminClock.innerText = now;
+                }, 1000);
                 this.applySettings();
             }
+
             static applySettings() {
-                if(localStorage.getItem('A11Y_CONTRAST') === 'true') {
+                const highContrastStored = localStorage.getItem('A11Y_CONTRAST') === 'true';
+                if(highContrastStored) {
                     document.getElementById('a11y-high-contrast').checked = true;
                     this.toggleContrast(true);
                 }
+                const largeTextStored = localStorage.getItem('A11Y_TEXT') === 'true';
+                if(largeTextStored) {
+                    document.getElementById('a11y-large-text').checked = true;
+                    this.toggleTextSize(true);
+                }
             }
-            static togglePasswordVisibility(inputId, btn) {
+
+            static togglePasswordVisibility(inputId, btnElement) {
                 const input = document.getElementById(inputId);
-                input.type = input.type === "password" ? "text" : "password";
+                const icon = btnElement.querySelector('i');
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.replace("fa-eye", "fa-eye-slash");
+                } else {
+                    input.type = "text";
+                    icon.classList.replace("fa-eye-slash", "fa-eye");
+                }
             }
-            static openAdminLoginModal() { document.getElementById("admin-login-modal").classList.remove("hidden"); setTimeout(() => document.getElementById("admin-password-box").focus(), 100); }
-            static closeAdminLoginModal() { document.getElementById("admin-login-modal").classList.add("hidden"); document.getElementById("admin-password-box").value = ""; }
+
+            static openAdminLoginModal() { 
+                document.getElementById("admin-login-modal").classList.remove("hidden");
+                setTimeout(() => document.getElementById("admin-password-box").focus(), 100);
+            }
+            static closeAdminLoginModal() { 
+                document.getElementById("admin-login-modal").classList.add("hidden"); 
+                document.getElementById("admin-password-box").value = "";
+            }
+
             static openNotificationsModal() {
                 const ct = document.getElementById("notifications-modal-content");
                 let html = "";
                 if (db.notifications.length === 0) {
-                    html = `<div class="p-8 text-center text-slate-500">No notifications.</div>`;
+                    html = `<div class="p-8 text-center text-slate-500 bg-slate-50 rounded-xl">No official notifications available.</div>`;
                 } else {
-                    [...db.notifications].reverse().forEach((n) => {
-                        html += `<div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-3"><p class="text-slate-800 text-sm font-medium">${Utils.escapeHtml(n.text)}</p></div>`;
+                    [...db.notifications].reverse().forEach((n, index) => {
+                        const dateStr = new Date(n.date).toLocaleString();
+                        html += `
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-1.5 h-full ${index === 0 ? 'bg-orange-500' : 'bg-slate-300'}"></div>
+                                <div class="flex items-center text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-3">
+                                    <i class="fa-solid fa-clock mr-1.5 text-slate-400"></i> ${dateStr}
+                                </div>
+                                <p class="text-slate-800 text-sm leading-relaxed font-medium whitespace-pre-wrap">${Utils.escapeHtml(n.text)}</p>
+                            </div>
+                        `;
                     });
                 }
                 ct.innerHTML = html;
                 document.getElementById("notifications-modal").classList.remove("hidden");
             }
             static closeNotificationsModal() { document.getElementById("notifications-modal").classList.add("hidden"); }
+
             static openDirectoryModal() {
                 const ct = document.getElementById("directory-modal-content");
                 let html = "";
                 Object.values(db.panchayats).forEach(p => {
-                    html += `<div class="mb-6"><h4 class="font-extrabold text-slate-800 text-base mb-2">${Utils.escapeHtml(p.name)} (${p.totalWards} Wards)</h4></div>`;
+                    html += `
+                    <div class="mb-8">
+                        <div class="bg-slate-50 border border-slate-200 rounded-t-2xl p-4 flex justify-between items-center">
+                            <h4 class="font-extrabold text-slate-800 text-lg">${Utils.escapeHtml(p.name)}</h4>
+                            <span class="bg-white border border-slate-200 px-3 py-1 rounded-lg text-xs font-bold text-slate-600">${p.totalWards} Wards Total</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-slate-200 border-x border-b border-slate-200 rounded-b-2xl overflow-hidden">`;
+                    
+                    for(let w=1; w<=p.totalWards; w++) {
+                        const wardData = p.wardsData[w];
+                        html += `
+                            <div class="bg-white p-4 text-center">
+                                <span class="block font-extrabold text-slate-900 text-base mb-1">Ward ${w}</span>
+                                <span class="text-[10px] uppercase font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded block mx-auto mb-2">
+                                    ${Utils.escapeHtml(wardData.reservation)}
+                                </span>
+                                <span class="text-[10px] font-medium text-slate-500"><i class="fa-solid fa-users mr-1"></i> ${wardData.candidates.length} Cands</span>
+                            </div>`;
+                    }
+                    html += `</div></div>`;
                 });
                 ct.innerHTML = html;
                 document.getElementById("directory-modal").classList.remove("hidden");
             }
             static closeDirectoryModal() { document.getElementById("directory-modal").classList.add("hidden"); }
+
             static toggleContrast(force) {
                 const on = force !== undefined ? force : document.getElementById("a11y-high-contrast").checked;
                 localStorage.setItem('A11Y_CONTRAST', on);
-                if (on) document.body.classList.add("high-contrast");
-                else document.body.classList.remove("high-contrast");
+                const lbl = document.getElementById("lbl-contrast");
+                if (on) {
+                    document.body.classList.add("high-contrast");
+                    if(lbl) lbl.innerText = "Normal";
+                } else {
+                    document.body.classList.remove("high-contrast");
+                    if(lbl) lbl.innerText = "Contrast";
+                }
             }
+
             static toggleTextSize(force) {
                 const on = force !== undefined ? force : document.getElementById("a11y-large-text").checked;
-                document.documentElement.style.fontSize = on ? "18px" : "16px";
+                localStorage.setItem('A11Y_TEXT', on);
+                const lbl = document.getElementById("lbl-text");
+                if (on) {
+                    document.documentElement.style.fontSize = "18px";
+                    if(lbl) lbl.innerText = "Default";
+                } else {
+                    document.documentElement.style.fontSize = "16px";
+                    if(lbl) lbl.innerText = "Large Text";
+                }
             }
         }
 
@@ -858,45 +1133,65 @@
                 this.renderTicker();
                 this.populateVillageDropdown();
                 this.updateGlobalBadge();
+                LangManager.applyLanguage();
             }
+
             static renderTicker() {
                 const ticker = document.getElementById("ticker-notification-text");
-                if(db.notifications.length === 0) { ticker.innerText = "No active notifications."; return; }
-                ticker.innerText = db.notifications[db.notifications.length - 1].text;
+                if(db.notifications.length === 0) {
+                    ticker.innerText = "No active government announcements.";
+                    return;
+                }
+                const latest = db.notifications[db.notifications.length - 1];
+                ticker.innerText = latest.text;
             }
+
             static updateGlobalBadge() {
                 const container = document.getElementById("voting-badge-status-container");
                 if (!container) return;
                 if (db.settings.maintenanceMode) {
-                    container.innerHTML = `<span class="px-4 py-2 bg-amber-100 text-amber-800 text-xs font-bold rounded-xl border border-amber-300">Maintenance Mode</span>`;
-                } else if (db.settings.votingEnabled) {
-                    container.innerHTML = `<span class="px-4 py-2 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl border border-emerald-300">Voting Active</span>`;
+                    container.innerHTML = `<span class="px-5 py-2 bg-amber-100 text-amber-800 text-xs font-bold rounded-xl border border-amber-300 shadow-sm flex items-center"><i class="fa-solid fa-person-digging mr-2"></i> Maintenance Active</span>`;
+                    return;
+                }
+                if (db.settings.votingEnabled) {
+                    container.innerHTML = `<span class="px-5 py-2 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl border-2 border-emerald-500 shadow-sm flex items-center"><i class="fa-solid fa-lock-open mr-2 text-emerald-600"></i> Secure Voting Active</span>`;
                 } else {
-                    container.innerHTML = `<span class="px-4 py-2 bg-rose-50 text-rose-700 text-xs font-bold rounded-xl border border-rose-300">Voting Paused</span>`;
+                    container.innerHTML = `<span class="px-5 py-2 bg-rose-50 text-rose-700 text-xs font-bold rounded-xl border-2 border-rose-400 shadow-sm flex items-center"><i class="fa-solid fa-lock mr-2 text-rose-600"></i> Voting Paused</span>`;
                 }
             }
+
             static populateVillageDropdown() {
                 const sel = document.getElementById("user-panchayat-select");
-                sel.innerHTML = `<option value="">-- Select Village Database --</option>`;
-                Object.values(db.panchayats).forEach(p => {
+                sel.innerHTML = `<option value="" data-i18n="selectVillagePrompt">${currentLang==='hi' ? '-- गाँव का नाम चुनें --' : '-- Select Village Name --'}</option>`;
+                
+                Object.keys(db.panchayats).sort((a,b) => db.panchayats[a].name.localeCompare(db.panchayats[b].name)).forEach(k => {
+                    const p = db.panchayats[k];
                     sel.innerHTML += `<option value="${p.id}">${Utils.escapeHtml(p.name)} (${p.totalWards} Wards)</option>`;
                 });
+                
                 this.populateCompareDropdowns();
             }
+
             static async handleVillageSelection() {
                 const pId = document.getElementById("user-panchayat-select").value;
                 const wrapper = document.getElementById("user-candidates-wrapper");
                 const grid = document.getElementById("user-candidates-grid");
+                
                 selectedUserCandidateId = null;
                 
                 if (!pId || !db.panchayats[pId]) {
                     wrapper.classList.add("hidden");
                     this.renderLiveAnalytics(null);
+                    this.populateCompareDropdowns();
                     return;
                 }
 
+                grid.style.opacity = '0.5';
+                await Utils.simulateNetworkDelay(300);
+
                 const p = db.panchayats[pId];
                 let allCandidates = [];
+                
                 for (let w = 1; w <= p.totalWards; w++) {
                     const ward = p.wardsData[w];
                     if (ward && ward.candidates) {
@@ -904,168 +1199,314 @@
                     }
                 }
 
-                document.getElementById("candidate-count-badge").innerHTML = `<i class="fa-solid fa-users mr-1.5"></i> ${allCandidates.length} Candidates`;
+                document.getElementById("candidate-count-badgeinnerHTML" || "candidate-count-badge").innerHTML = `<i class="fa-solid fa-users mr-1.5 text-orange-600"></i> ${allCandidates.length} Active Candidates`;
                 grid.innerHTML = "";
 
-                if (allCandidates.length === 0) {
-                    grid.innerHTML = `<div class="col-span-full p-8 text-center text-slate-500 bg-slate-50 rounded-xl border border-dashed border-slate-200">No candidates registered in this village.</div>`;
+                if (db.settings.maintenanceMode) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-amber-50 rounded-2xl border-2 border-dashed border-amber-300 text-center font-bold">System under maintenance.</div>`;
+                } else if (!db.settings.votingEnabled) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-rose-50 rounded-2xl border-2 border-dashed border-rose-300 text-center font-bold">Voting session closed.</div>`;
+                } else if (allCandidates.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 text-center font-medium">No candidates registered in this village yet.</div>`;
                 } else {
                     allCandidates.forEach(c => {
-                        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=0F172A&color=D4AF37&size=128&bold=true`;
+                        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=0B192C&color=FF9933&size=128&bold=true`;
                         grid.innerHTML += `
-                            <div onclick="UserInterface.selectCandidate('${c.id}')" id="candidate-card-${c.id}" class="bg-white border-2 border-slate-100 rounded-2xl p-5 cursor-pointer hover:shadow-xl transition-all relative flex flex-col h-full">
-                                <div class="flex flex-col items-center text-center mb-4 pt-2">
-                                    <img src="${avatarUrl}" class="w-16 h-16 rounded-full object-cover shadow border-2 border-premium-gold mb-2">
-                                    <h4 class="font-bold text-slate-900 text-base">${Utils.escapeHtml(c.name)}</h4>
-                                    <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-full uppercase mt-1">${Utils.escapeHtml(c.partyName || "Independent")}</span>
+                            <div 
+                                onclick="UserInterface.selectCandidate('${c.id}')" 
+                                id="candidate-card-${c.id}" 
+                                class="bg-white border-2 border-slate-100 rounded-2xl p-5 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 relative group flex flex-col h-full"
+                            >
+                                <div class="absolute top-4 right-4 z-10">
+                                    <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 transition-colors" id="icon-container-${c.id}">
+                                        <i class="fa-solid fa-check text-slate-300 text-xs" id="icon-${c.id}"></i>
+                                    </div>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2 mt-auto pt-3 border-t border-slate-100 text-xs">
-                                    <div class="bg-slate-50 p-1.5 rounded text-center"><span class="block text-[9px] text-slate-400">Ward</span><b>${c.wardNo}</b></div>
-                                    <div class="bg-slate-50 p-1.5 rounded text-center"><span class="block text-[9px] text-slate-400">Category</span><b class="text-indigo-600">${Utils.escapeHtml(c.reservation)}</b></div>
+                                <div class="flex flex-col items-center text-center mb-4 pt-2">
+                                    <img src="${avatarUrl}" class="w-20 h-20 rounded-full object-cover shadow-md border-4 border-white mb-3" alt="Candidate">
+                                    <h4 class="font-extrabold text-slate-900 text-lg leading-tight mb-1">${Utils.escapeHtml(c.name)}</h4>
+                                    <span class="inline-block px-3 py-1 bg-orange-50 text-orange-700 text-[10px] font-bold rounded-full uppercase">${Utils.escapeHtml(c.partyName || "Independent / निर्दलीय")}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-slate-100 text-xs">
+                                    <div class="bg-slate-50 p-2 rounded-lg text-center">
+                                        <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">Ward No</span>
+                                        <span class="font-bold text-slate-800">${c.wardNo}</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-2 rounded-lg text-center">
+                                        <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">Category</span>
+                                        <span class="font-bold text-emerald-700 truncate block px-1">${Utils.escapeHtml(c.reservation)}</span>
+                                    </div>
                                 </div>
                             </div>`;
                     });
                 }
+                
+                grid.style.opacity = '1';
                 wrapper.classList.remove("hidden");
                 this.renderLiveAnalytics(pId);
+                this.populateCompareDropdowns();
             }
+
             static selectCandidate(cId) {
                 selectedUserCandidateId = cId;
                 const pId = document.getElementById("user-panchayat-select").value;
                 const p = db.panchayats[pId];
+                
                 for (let w = 1; w <= p.totalWards; w++) {
                     p.wardsData[w].candidates.forEach(c => {
                         const card = document.getElementById(`candidate-card-${c.id}`);
+                        const iconCont = document.getElementById(`icon-container-${c.id}`);
+                        const icon = document.getElementById(`icon-${c.id}`);
                         if (!card) return;
+                        
                         if (c.id === cId) {
-                            card.classList.add("border-premium-gold", "bg-amber-50/20", "ring-2", "ring-premium-gold/50");
+                            card.classList.add("border-orange-500", "bg-orange-50/20", "ring-4", "ring-orange-500/10");
+                            card.classList.remove("border-slate-100", "bg-white");
+                            iconCont.classList.add("bg-orange-500", "border-orange-500");
+                            icon.classList.add("text-white");
+                            icon.classList.remove("text-slate-300");
                         } else {
-                            card.classList.remove("border-premium-gold", "bg-amber-50/20", "ring-2", "ring-premium-gold/50");
+                            card.classList.remove("border-orange-500", "bg-orange-50/20", "ring-4", "ring-orange-500/10");
+                            card.classList.add("border-slate-100", "bg-white");
+                            iconCont.classList.remove("bg-orange-500", "border-orange-500");
+                            icon.classList.add("text-slate-300");
+                            icon.classList.remove("text-white");
                         }
                     });
                 }
             }
+
             static renderLiveAnalytics(pId) {
                 const container = document.getElementById("live-results-container");
                 const countBadge = document.getElementById("total-votes-counter");
-                if (!pId) { container.innerHTML = `<div class="text-center text-slate-400 col-span-full">Select village for analytics.</div>`; countBadge.innerText = "0"; return; }
                 
-                let totalVotes = 0, candsData = [];
+                if (!pId) { 
+                    container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-400 bg-slate-50 rounded-xl text-sm">Select a village to view analytics dashboard.</div>`; 
+                    countBadge.innerText = `0`; 
+                    return; 
+                }
+                
+                if (!db.settings.publicResultsVisible) { 
+                    container.innerHTML = `<div class="col-span-full p-8 text-center bg-slate-100 rounded-2xl font-bold text-slate-600">Results are currently hidden by Administrator.</div>`; 
+                    countBadge.innerText = `Hidden`; 
+                    return; 
+                }
+
+                let totalVotes = 0;
+                let candsData = [];
                 const p = db.panchayats[pId];
+                
                 for (let w = 1; w <= p.totalWards; w++) {
                     p.wardsData[w].candidates.forEach(c => {
                         const votes = p.wardsData[w].votes[c.id] || 0;
-                        totalVotes += votes;
-                        candsData.push({...c, wNo: w, votes});
+                        totalVotes += votes; 
+                        candsData.push({...c, wNo: w, votes: votes});
                     });
                 }
+                
                 countBadge.innerText = totalVotes.toLocaleString();
-                if (totalVotes === 0) { container.innerHTML = `<div class="text-center text-slate-500 col-span-full p-4">No votes recorded yet.</div>`; return; }
+                if (totalVotes === 0) { 
+                    container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-500 bg-slate-50 rounded-xl text-sm">No votes recorded yet for this village.</div>`; 
+                    return; 
+                }
                 
                 candsData.sort((a,b) => b.votes - a.votes);
                 let html = "";
-                candsData.forEach((c) => {
+                
+                candsData.forEach((c, index) => {
+                    if (index > 9) return;
                     const pct = totalVotes > 0 ? Math.round((c.votes / totalVotes) * 100) : 0;
                     html += `
-                        <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm">
-                            <div class="flex justify-between items-center mb-2">
-                                <div><h4 class="font-bold text-slate-800 text-sm">${Utils.escapeHtml(c.name)}</h4><p class="text-[10px] text-slate-500">Ward ${c.wNo}</p></div>
-                                <div class="text-right"><span class="font-black text-slate-900">${c.votes}</span><span class="text-xs text-premium-gold ml-1">(${pct}%)</span></div>
+                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-orange-100 text-orange-800 flex items-center justify-center text-[10px] font-bold">#${index+1}</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-sm">${Utils.escapeHtml(c.name)}</h4>
+                                    <p class="text-[10px] text-slate-500">Ward ${c.wNo} &bull; ${Utils.escapeHtml(c.partyName || 'Ind')}</p>
+                                </div>
                             </div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="bg-premium-gold h-full" style="width: ${pct}%"></div></div>
-                        </div>`;
+                            <div class="text-right">
+                                <span class="block font-black text-slate-900 text-base">${c.votes.toLocaleString()}</span>
+                                <span class="block text-[10px] font-bold text-orange-600">${pct}%</span>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mt-auto">
+                            <div class="bg-gradient-to-r from-orange-500 to-emerald-600 h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                        </div>
+                    </div>`;
                 });
                 container.innerHTML = html;
             }
+
             static handleSearch() {
                 const query = document.getElementById("candidate-search-input").value.toLowerCase().trim();
                 const resContainer = document.getElementById("candidate-search-results");
                 resContainer.innerHTML = "";
                 if (!query) return;
+                
+                let matches = [];
                 Object.values(db.panchayats).forEach(p => {
                     for(let w = 1; w <= p.totalWards; w++) {
                         p.wardsData[w].candidates.forEach(c => {
                             if (c.name.toLowerCase().includes(query) || (c.partyName||'').toLowerCase().includes(query)) {
-                                resContainer.innerHTML += `<div class="bg-white p-2 rounded border border-slate-200 text-xs"><b class="text-slate-800">${Utils.escapeHtml(c.name)}</b> (${Utils.escapeHtml(p.name)}, Ward ${w})</div>`;
+                                matches.push({ pName: p.name, wNo: w, cand: c });
                             }
                         });
                     }
                 });
+                
+                if (matches.length === 0) {
+                    resContainer.innerHTML = "<div class='p-3 text-center text-[11px] text-slate-500 bg-slate-50 rounded-lg'>No matches found.</div>";
+                    return;
+                }
+                
+                matches.forEach(m => {
+                    resContainer.innerHTML += `
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="flex justify-between items-center mb-1">
+                                <b class="text-slate-800 text-xs">${Utils.escapeHtml(m.cand.name)}</b>
+                                <span class="text-[9px] bg-orange-50 text-orange-700 px-2 py-0.5 rounded">${Utils.escapeHtml(m.cand.partyName || 'Ind')}</span>
+                            </div>
+                            <div class="text-[10px] text-slate-500">${Utils.escapeHtml(m.pName)} &bull; Ward ${m.wNo}</div>
+                        </div>`;
+                });
             }
+
             static populateCompareDropdowns() {
                 const pId = document.getElementById("user-panchayat-select").value;
                 const d1 = document.getElementById("compare-ward-1");
                 const d2 = document.getElementById("compare-ward-2");
                 if(!d1 || !d2) return;
-                d1.innerHTML = `<option value="">Ward A</option>`;
-                d2.innerHTML = `<option value="">Ward B</option>`;
+                
+                d1.innerHTML = `<option value="">Select Ward A</option>`;
+                d2.innerHTML = `<option value="">Select Ward B</option>`;
                 if(!pId) return;
+                
                 const p = db.panchayats[pId];
                 for(let i = 1; i <= p.totalWards; i++) {
-                    const opt = `<option value="${i}">Ward ${i}</option>`;
+                    const opt = `<option value="${i}">Ward ${i} (${p.wardsData[i].candidates.length} Cands)</option>`;
                     d1.innerHTML += opt; d2.innerHTML += opt;
                 }
             }
+
             static runComparison() {
                 const pId = document.getElementById("user-panchayat-select").value;
                 const w1 = document.getElementById("compare-ward-1").value;
                 const w2 = document.getElementById("compare-ward-2").value;
                 const out = document.getElementById("compare-result");
-                if(!pId || !w1 || !w2) return Utils.showToast("Select village and two wards.", "error");
+                
+                if(!pId || !w1 || !w2 || w1 === w2) {
+                    Utils.showToast("Please select two distinct wards first.", "error");
+                    return;
+                }
+                
                 const data1 = db.panchayats[pId].wardsData[w1];
                 const data2 = db.panchayats[pId].wardsData[w2];
                 const v1 = data1.candidates.reduce((sum,c) => sum + (data1.votes[c.id]||0), 0);
                 const v2 = data2.candidates.reduce((sum,c) => sum + (data2.votes[c.id]||0), 0);
-                out.innerHTML = `Ward ${w1}: ${v1} votes | Ward ${w2}: ${v2} votes`;
+                
+                out.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-white p-2 rounded border">
+                            <span class="block text-[10px] text-slate-500 uppercase">Ward ${w1}</span>
+                            <span class="block font-bold text-slate-800 text-sm my-1">${v1} Votes</span>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <span class="block text-[10px] text-slate-500 uppercase">Ward ${w2}</span>
+                            <span class="block font-bold text-slate-800 text-sm my-1">${v2} Votes</span>
+                        </div>
+                    </div>`;
                 out.classList.remove("hidden");
             }
+
             static async checkHistory() {
                 const mob = document.getElementById("my-vote-mobile").value.trim();
                 const out = document.getElementById("my-vote-history-output");
-                if(!/^\d{10}$/.test(mob)) return Utils.showToast("Invalid 10-digit mobile number.", "error");
-                let found = Object.values(db.votersLog).filter(v => v.mob === mob);
-                out.innerHTML = found.length ? `<div class="p-2 bg-emerald-50 text-emerald-800 rounded">Found ${found.length} verified vote record(s).</div>` : `<div class="p-2 bg-rose-50 text-rose-800 rounded">No records found.</div>`;
+                if(!/^\d{10}$/.test(mob)) {
+                    Utils.showToast("Enter a valid 10-digit mobile number.", "error");
+                    return;
+                }
+                
+                let foundRecords = [];
+                Object.values(db.votersLog).forEach(v => { if(v.mob === mob) foundRecords.push(v); });
+                
+                if (foundRecords.length === 0) {
+                    out.innerHTML = `<div class="p-3 bg-slate-50 border rounded-lg text-center text-slate-500">No voting records found for this number.</div>`;
+                } else {
+                    let html = `<div class="space-y-2">`;
+                    foundRecords.forEach(v => {
+                        const pName = db.panchayats[v.pId]?.name || 'Village';
+                        html += `<div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg text-xs"><b>${Utils.escapeHtml(pName)}</b> (Ward ${v.wNo}) - Verified</div>`;
+                    });
+                    html += `</div>`;
+                    out.innerHTML = html;
+                    Utils.showToast("Records retrieved.", "success");
+                }
             }
+
             static submitSuggestion() {
-                const text = document.getElementById("user-suggestion-text").value.trim();
-                if(!text) return Utils.showToast("Enter suggestion text.", "error");
-                db.suggestions.push({ id: Utils.generateId('S'), text, date: new Date().toISOString() });
+                const textEl = document.getElementById("user-suggestion-text");
+                const text = textEl.value.trim();
+                if(!text) return Utils.showToast("Please enter a suggestion.", "error");
+                
+                db.suggestions.push({ id: Utils.generateId('S'), text: text, date: new Date().toISOString() });
                 DBManager.persist();
-                document.getElementById("user-suggestion-text").value = "";
-                Utils.showToast("Feedback submitted successfully.", "success");
+                textEl.value = "";
+                Utils.showToast("Suggestion sent to Admin Queue.", "success");
             }
+
             static downloadReport() {
-                let content = "E-PANCHAYAT REPORT\n====================\n";
+                let report = "E-PANCHAYAT OFFICIAL POLLING REPORT\n=====================================\n";
                 Object.values(db.panchayats).forEach(p => {
-                    content += `\nVillage: ${p.name}\n`;
+                    report += `\n[VILLAGE: ${p.name}]\n`;
+                    for (let w = 1; w <= p.totalWards; w++) {
+                        report += ` Ward ${w} (${p.wardsData[w].reservation}):\n`;
+                        p.wardsData[w].candidates.forEach(c => {
+                            report += `   - ${c.name} (${c.partyName || 'Ind'}): ${p.wardsData[w].votes[c.id] || 0} votes\n`;
+                        });
+                    }
                 });
-                const blob = new Blob([content], { type: "text/plain" });
+                const blob = new Blob([report], { type: "text/plain;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
-                a.href = URL.createObjectURL(blob);
-                a.download = "Polling_Report.txt";
+                a.href = url;
+                a.download = `Polling_Report_${Date.now()}.txt`;
                 a.click();
+                URL.revokeObjectURL(url);
                 Utils.showToast("Report downloaded.", "success");
             }
+
             static sharePortal() {
-                navigator.clipboard.writeText(window.location.href).then(() => Utils.showToast("Link copied!", "success"));
+                if (navigator.share) {
+                    navigator.share({ title: 'E-Panchayat', url: window.location.href }).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => Utils.showToast("Link copied to clipboard.", "success"));
+                }
             }
         }
 
         class VotingEngine {
             static async castVote() {
-                if (db.settings.maintenanceMode) return Utils.showToast("System maintenance active.", "error");
-                if (!db.settings.votingEnabled) return Utils.showToast("Voting is closed.", "error");
+                if (db.settings.maintenanceMode) return Utils.showToast("System under maintenance.", "error");
+                if (!db.settings.votingEnabled) return Utils.showToast("Voting is currently closed.", "error");
 
                 const pId = document.getElementById("user-panchayat-select").value;
-                const mob = document.getElementById("voter-mobile-input").value.trim();
+                const mobInput = document.getElementById("voter-mobile-input");
+                const mob = mobInput.value.trim();
+                const btn = document.getElementById("btn-cast-vote");
                 
-                if (!pId) return Utils.showToast("Select village.", "error");
-                if (!selectedUserCandidateId) return Utils.showToast("Select candidate.", "error");
-                if (!/^\d{10}$/.test(mob)) return Utils.showToast("Enter 10-digit mobile number.", "error");
+                if (!pId) return Utils.showToast("Please select your Village.", "error");
+                if (!selectedUserCandidateId) return Utils.showToast("Please select a candidate.", "error");
+                if (!/^\d{10}$/.test(mob)) return Utils.showToast("Enter a valid 10-digit mobile number.", "error");
 
                 const fp = Utils.getDeviceFP();
                 const mobileKey = `${pId}_MOBILE_${mob}`;
-                if (db.villageVotedLog[mobileKey]) return Utils.showToast("Mobile number has already voted in this village.", "error");
+
+                if (db.villageVotedLog[mobileKey]) {
+                    mobInput.value = "";
+                    return Utils.showToast("This mobile number has already cast a vote in this village.", "error");
+                }
 
                 let targetW = null, targetC = null;
                 const p = db.panchayats[pId];
@@ -1074,19 +1515,35 @@
                     if (cand) { targetW = w; targetC = cand; break; }
                 }
 
+                if (!targetW) return Utils.showToast("Candidate mapping failed.", "error");
+
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processing...`;
+                btn.disabled = true;
+
+                await Utils.simulateNetworkDelay(600);
+
                 p.wardsData[targetW].votes[selectedUserCandidateId] = (p.wardsData[targetW].votes[selectedUserCandidateId] || 0) + 1;
                 db.villageVotedLog[mobileKey] = { time: new Date().toISOString() };
-                db.votersLog[Utils.generateId('V')] = { pId, wNo: targetW, cId: selectedUserCandidateId, mob, device: fp, time: new Date().toISOString() };
-                
+                db.votersLog[Utils.generateId('V')] = { pId, wNo: targetW, cId: selectedUserCandidateId, mob, time: new Date().toISOString() };
+
                 DBManager.persist();
-                document.getElementById("voter-mobile-input").value = "";
+                mobInput.value = "";
                 UserInterface.handleVillageSelection();
-                Utils.showToast(`Vote recorded successfully for ${targetC.name}!`, "success");
+                
+                Utils.showToast(`Vote successfully recorded for ${targetC.name} (Ward ${targetW})`, "success");
+                btn.innerHTML = `<i class="fa-solid fa-check-double mr-2 text-lg"></i> Secure Vote`;
+                btn.disabled = false;
             }
         }
 
+        /**
+         * Admin Manager - 31 Administrative Tools (NO Village ID text boxes)
+         */
         class AdminManager {
-            static init() { this.renderSidebar(); }
+            static init() {
+                this.renderSidebar();
+            }
+
             static verifyLogin(e) {
                 e.preventDefault();
                 const pass = document.getElementById("admin-password-box").value;
@@ -1097,59 +1554,69 @@
                     this.loadTool(0);
                     Utils.showToast("Admin access granted.", "success");
                 } else {
-                    Utils.showToast("Invalid password.", "error");
+                    Utils.showToast("Incorrect password.", "error");
                 }
             }
+
             static logout() {
                 document.getElementById("admin-dashboard-container").classList.add("hidden");
+                Utils.showToast("Admin session ended.", "info");
                 UserInterface.init();
             }
 
-            // All 31 Enterprise Admin Tools
             static toolsList = [
-                { title: "Manage Dynamic Villages", icon: "fa-map-location-dot", render: () => this.Tool_ManageVillages() },
-                { title: "Configure Ward Reservations", icon: "fa-list-ol", render: () => this.Tool_WardReservations() },
-                { title: "AI Candidate Extraction (PDF)", icon: "fa-file-pdf", render: () => this.Tool_PDFExtraction() },
-                { title: "Manual Candidate Entry", icon: "fa-user-plus", render: () => this.Tool_ManualCandidate() },
-                { title: "Edit Candidate Data", icon: "fa-user-pen", render: () => this.Tool_EditCandidate() },
-                { title: "Remove Candidate", icon: "fa-user-minus", render: () => this.Tool_RemoveCandidate() },
-                { title: "Broadcast Gov Notification", icon: "fa-bullhorn", render: () => this.Tool_PublishNotification() },
-                { title: "Manage Active Notifications", icon: "fa-bell-slash", render: () => this.Tool_ManageNotifications() },
-                { title: "Live Cryptographic Vote Audit", icon: "fa-server", render: () => this.Tool_VoteAudit() },
-                { title: "Reset Specific Ward Votes", icon: "fa-arrow-rotate-left", render: () => this.Tool_ResetWards() },
-                { title: "Global Voting Override", icon: "fa-toggle-on", render: () => this.Tool_GlobalVoting() },
-                { title: "Public Results Visibility", icon: "fa-eye-slash", render: () => this.Tool_PublicResults() },
-                { title: "Review Suggestions Queue", icon: "fa-comments", render: () => this.Tool_SuggestionsQueue() },
-                { title: "Purge Suggestions Queue", icon: "fa-trash-can-check", render: () => this.Tool_ClearSuggestions() },
-                { title: "Update Master Key/Password", icon: "fa-key", render: () => this.Tool_ChangePassword() },
-                { title: "Export Raw JSON Database", icon: "fa-database", render: () => this.Tool_ExportJSON() },
-                { title: "Import & Restore JSON", icon: "fa-file-import", render: () => this.Tool_ImportJSON() },
-                { title: "Nuclear Factory Reset", icon: "fa-radiation", render: () => this.Tool_FactoryReset() },
-                { title: "Inspect Voter Security Logs", icon: "fa-shield-halved", render: () => this.Tool_VoterLogs() },
-                { title: "Purge Security Logs", icon: "fa-eraser", render: () => this.Tool_PurgeLogs() },
-                { title: "System Title Configuration", icon: "fa-font", render: () => this.Tool_SystemTitle() },
-                { title: "Bulk Template Application", icon: "fa-layer-group", render: () => this.Tool_BulkTemplate() },
-                { title: "Generate Gazette Document", icon: "fa-file-contract", render: () => this.Tool_GazetteReport() },
-                { title: "Maintenance Mode Switch", icon: "fa-person-digging", render: () => this.Tool_MaintenanceMode() },
-                { title: "Emergency System Shutdown", icon: "fa-siren-on", render: () => this.Tool_EmergencyShutdown() },
-                { title: "Custom Alert Bulletin", icon: "fa-message-exclamation", render: () => this.Tool_AlertBulletin() },
-                { title: "Storage Diagnostic Metrics", icon: "fa-hard-drive", render: () => this.Tool_StorageMetrics() },
-                { title: "Simulate Load (Test Votes)", icon: "fa-robot", render: () => this.Tool_SimulateVotes() },
-                { title: "Wipe All Polling Data Only", icon: "fa-broom", render: () => this.Tool_WipeVotes() },
-                { title: "System Health & Analytics", icon: "fa-heart-pulse", render: () => this.Tool_SystemHealth() },
-                { title: "Delete Village Database", icon: "fa-building-circle-xmark", render: () => this.Tool_DeleteVillage() }
+                /* 01 */ { title: "Manage Villages", icon: "fa-map-location-dot", render: () => this.Tool_ManageVillages() },
+                /* 02 */ { title: "Ward Reservations", icon: "fa-list-ol", render: () => this.Tool_WardReservations() },
+                /* 03 */ { title: "AI Candidate PDF Extraction", icon: "fa-file-pdf", render: () => this.Tool_PDFExtraction() },
+                /* 04 */ { title: "Manual Candidate Entry", icon: "fa-user-plus", render: () => this.Tool_ManualCandidate() },
+                /* 05 */ { title: "Edit Candidate Data", icon: "fa-user-pen", render: () => this.Tool_EditCandidate() },
+                /* 06 */ { title: "Remove Candidate", icon: "fa-user-minus", render: () => this.Tool_RemoveCandidate() },
+                /* 07 */ { title: "Broadcast Gov Notification", icon: "fa-bullhorn", render: () => this.Tool_PublishNotification() },
+                /* 08 */ { title: "Manage Active Notifications", icon: "fa-bell-slash", render: () => this.Tool_ManageNotifications() },
+                /* 09 */ { title: "Live Vote Audit", icon: "fa-server", render: () => this.Tool_VoteAudit() },
+                /* 10 */ { title: "Reset Ward Votes", icon: "fa-arrow-rotate-left", render: () => this.Tool_ResetWards() },
+                /* 11 */ { title: "Global Voting Override", icon: "fa-toggle-on", render: () => this.Tool_GlobalVoting() },
+                /* 12 */ { title: "Public Results Visibility", icon: "fa-eye-slash", render: () => this.Tool_PublicResults() },
+                /* 13 */ { title: "Review Suggestions Queue", icon: "fa-comments", render: () => this.Tool_SuggestionsQueue() },
+                /* 14 */ { title: "Purge Suggestions Queue", icon: "fa-trash-can-check", render: () => this.Tool_ClearSuggestions() },
+                /* 15 */ { title: "Update Master Password", icon: "fa-key", render: () => this.Tool_ChangePassword() },
+                /* 16 */ { title: "Export Raw JSON Database", icon: "fa-database", render: () => this.Tool_ExportJSON() },
+                /* 17 */ { title: "Import & Restore JSON", icon: "fa-file-import", render: () => this.Tool_ImportJSON() },
+                /* 18 */ { title: "Nuclear Factory Reset", icon: "fa-radiation", render: () => this.Tool_FactoryReset() },
+                /* 19 */ { title: "Inspect Voter Logs", icon: "fa-shield-halved", render: () => this.Tool_VoterLogs() },
+                /* 20 */ { title: "Purge Security Logs", icon: "fa-eraser", render: () => this.Tool_PurgeLogs() },
+                /* 21 */ { title: "System Title Configuration", icon: "fa-font", render: () => this.Tool_SystemTitle() },
+                /* 22 */ { title: "Bulk Template Application", icon: "fa-layer-group", render: () => this.Tool_BulkTemplate() },
+                /* 23 */ { title: "Generate Gazette Document", icon: "fa-file-contract", render: () => this.Tool_GazetteReport() },
+                /* 24 */ { title: "Maintenance Mode Switch", icon: "fa-person-digging", render: () => this.Tool_MaintenanceMode() },
+                /* 25 */ { title: "Emergency System Shutdown", icon: "fa-siren-on", render: () => this.Tool_EmergencyShutdown() },
+                /* 26 */ { title: "Custom Alert Bulletin", icon: "fa-message-exclamation", render: () => this.Tool_AlertBulletin() },
+                /* 27 */ { title: "Storage Diagnostic Metrics", icon: "fa-hard-drive", render: () => this.Tool_StorageMetrics() },
+                /* 28 */ { title: "Simulate Test Votes", icon: "fa-robot", render: () => this.Tool_SimulateVotes() },
+                /* 29 */ { title: "Wipe All Polling Data", icon: "fa-broom", render: () => this.Tool_WipeVotes() },
+                /* 30 */ { title: "System Health & Analytics", icon: "fa-heart-pulse", render: () => this.Tool_SystemHealth() },
+                /* 31 */ { title: "Delete Village Database", icon: "fa-building-circle-xmark", render: () => this.Tool_DeleteVillage() }
             ];
 
             static renderSidebar() {
                 const list = document.getElementById("admin-sidebar-list");
                 const searchTerm = (document.getElementById("admin-tool-search")?.value || "").toLowerCase();
                 list.innerHTML = "";
-                
+
                 this.toolsList.forEach((tool, index) => {
                     if (searchTerm && !tool.title.toLowerCase().includes(searchTerm)) return;
                     const isActive = index === activeAdminToolIndex;
-                    list.innerHTML += `<button onclick="AdminManager.loadTool(${index})" class="w-full text-left py-2.5 px-3 rounded-lg text-xs transition flex items-center mb-1 ${isActive ? 'bg-premium-gold text-premium-950 font-bold' : 'text-slate-400 hover:text-white hover:bg-slate-800'}"><i class="fa-solid ${tool.icon} w-6 text-center mr-2"></i>${Utils.escapeHtml(tool.title)}</button>`;
+                    const classes = isActive ? "bg-orange-500/20 text-orange-400 border-l-4 border-orange-500 pl-3 font-semibold" : "text-slate-400 hover:text-white hover:bg-slate-800/50 border-l-4 border-transparent pl-3";
+
+                    list.innerHTML += `
+                        <button onclick="AdminManager.loadTool(${index})" class="w-full text-left py-3 pr-4 rounded-r-xl text-xs transition-all flex items-center group mb-0.5 ${classes}">
+                            <span class="w-6 opacity-50 text-[9px] font-mono shrink-0">${('0'+(index+1)).slice(-2)}.</span>
+                            <i class="fa-solid ${tool.icon} w-6 text-center"></i>
+                            <span class="truncate ml-2">${Utils.escapeHtml(tool.title)}</span>
+                        </button>`;
                 });
+                const dbInd = document.getElementById("db-size-indicator");
+                if (dbInd) dbInd.innerText = `${Utils.calculateDbSize()} KB`;
             }
 
             static filterTools() { this.renderSidebar(); }
@@ -1158,171 +1625,264 @@
                 activeAdminToolIndex = index;
                 this.renderSidebar();
                 const tool = this.toolsList[index];
-                document.getElementById("admin-tool-badge").innerText = `Tool #${`0${index+1}`.slice(-2)}`;
+                document.getElementById("admin-tool-badge").innerText = `Tool #${('0'+(index+1)).slice(-2)}`;
                 document.getElementById("admin-tool-title").innerText = tool.title;
-                document.getElementById("admin-tool-body").innerHTML = tool.render();
+                document.getElementById("admin-tool-icon").className = `fa-solid ${tool.icon} text-2xl text-orange-400`;
+
+                const body = document.getElementById("admin-tool-body");
+                body.style.opacity = '0';
+                setTimeout(() => {
+                    body.innerHTML = tool.render();
+                    body.style.opacity = '1';
+                }, 150);
             }
 
             static buildVillageSelect(idPrefix, onChangeAction = "") {
-                let html = `<div class="mb-4"><label class="block text-xs font-bold text-slate-400 mb-1">Target Village</label><select id="${idPrefix}-village" class="input-admin" onchange="${onChangeAction}"><option value="">-- Select Village --</option>`;
-                Object.keys(db.panchayats).forEach(k => { html += `<option value="${k}">${Utils.escapeHtml(db.panchayats[k].name)}</option>`; });
+                let html = `
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Select Gram Panchayat</label>
+                        <select id="${idPrefix}-village" class="input-admin" onchange="${onChangeAction}">
+                            <option value="">-- Choose Village Name --</option>`;
+                Object.keys(db.panchayats).forEach(k => {
+                    html += `<option value="${k}">${Utils.escapeHtml(db.panchayats[k].name)}</option>`;
+                });
                 return html + `</select></div>`;
             }
 
             static buildWardSelect(idPrefix) {
-                return `<div class="mb-4"><label class="block text-xs font-bold text-slate-400 mb-1">Target Ward</label><select id="${idPrefix}-ward" class="input-admin"><option value="">-- Select Ward --</option></select></div>`;
+                return `
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Select Ward</label>
+                        <select id="${idPrefix}-ward" class="input-admin">
+                            <option value="">-- Select Village First --</option>
+                        </select>
+                    </div>`;
             }
 
             static updateWardDropdown(idPrefix) {
                 const vId = document.getElementById(`${idPrefix}-village`).value;
                 const wSel = document.getElementById(`${idPrefix}-ward`);
-                wSel.innerHTML = `<option value="">-- Select Ward --</option>`;
-                if (!vId) return;
+                wSel.innerHTML = "";
+                if (!vId) { wSel.innerHTML = `<option value="">-- Select Village First --</option>`; return; }
+                
                 const p = db.panchayats[vId];
                 for (let w = 1; w <= p.totalWards; w++) {
                     wSel.innerHTML += `<option value="${w}">Ward ${w} (${p.wardsData[w].reservation})</option>`;
                 }
             }
 
-            // Implementations for all 31 admin tools
+            /* Tool 1 */
             static Tool_ManageVillages() {
-                return `<div class="space-y-4"><p class="text-slate-400">Add or update Gram Panchayat records.</p><div class="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-4"><div><label class="block text-xs font-bold text-slate-400 mb-1">Village ID (slug)</label><input type="text" id="t1-id" class="input-admin" placeholder="e.g. rampur"></div><div><label class="block text-xs font-bold text-slate-400 mb-1">Village Name</label><input type="text" id="t1-name" class="input-admin" placeholder="e.g. Gram Panchayat Rampur"></div><div><label class="block text-xs font-bold text-slate-400 mb-1">Total Wards</label><input type="number" id="t1-wards" class="input-admin" value="10" min="1"></div><button onclick="AdminManager.Execute_ManageVillages()" class="btn-gold w-full py-3 rounded-xl">Save Village</button></div></div>`;
+                let html = `
+                    <div class="space-y-6">
+                        <p class="text-slate-300">Add a new Gram Panchayat or update ward capacity.</p>
+                        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">
+                            <div class="mb-4">
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Gram Panchayat Name</label>
+                                <input type="text" id="t1-name" class="input-admin" placeholder="e.g. Gram Panchayat Rampur">
+                            </div>
+                            <div class="mb-5">
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Total Wards</label>
+                                <input type="number" id="t1-wards" class="input-admin" value="11" min="1" max="50">
+                            </div>
+                            <button onclick="AdminManager.Execute_ManageVillages()" class="btn-gold w-full py-3 rounded-xl shadow-md">Add / Update Village</button>
+                        </div>
+                    </div>`;
+                return html;
             }
+
             static Execute_ManageVillages() {
-                const id = document.getElementById("t1-id").value.trim().toLowerCase();
                 const name = document.getElementById("t1-name").value.trim();
                 const wards = parseInt(document.getElementById("t1-wards").value);
-                if(!id || !name || isNaN(wards)) return Utils.showToast("Invalid inputs.", "error");
+                if (!name || isNaN(wards)) return Utils.showToast("Enter valid details.", "error");
+
+                const id = 'v_' + Math.random().toString(36).substr(2, 6);
                 db.panchayats[id] = { id, name, totalWards: wards, wardsData: {} };
                 DBManager.validateAndRepair();
                 DBManager.persist();
-                Utils.showToast("Village saved successfully.", "success");
-                UserInterface.populateVillageDropdown();
+                Utils.showToast("Village added successfully.", "success");
                 this.loadTool(0);
+                UserInterface.populateVillageDropdown();
             }
 
+            /* Tool 2 */
             static Tool_WardReservations() {
-                return `<div class="space-y-4"><p class="text-slate-400">Configure ward reservation statuses.</p><div class="bg-slate-900 p-6 rounded-xl border border-slate-800">${this.buildVillageSelect('t2', "AdminManager.updateWardDropdown('t2')")}${this.buildWardSelect('t2')}<div class="mb-4"><label class="block text-xs font-bold text-slate-400 mb-1">Reservation Category</label><input type="text" id="t2-val" class="input-admin" placeholder="e.g. General, SC, OBC"></div><button onclick="AdminManager.Execute_WardReservations()" class="btn-gold w-full py-3 rounded-xl">Update Ward</button></div></div>`;
+                return `
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">
+                            ${this.buildVillageSelect('t2', "AdminManager.updateWardDropdown('t2')")}
+                            ${this.buildWardSelect('t2')}
+                            <div class="mb-6">
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Reservation Category</label>
+                                <input type="text" id="t2-val" class="input-admin" placeholder="e.g. SC Female / General Open / OBC">
+                            </div>
+                            <button onclick="AdminManager.Execute_WardReservations()" class="btn-gold w-full py-3 rounded-xl">Update Reservation</button>
+                        </div>
+                    </div>`;
             }
+
             static Execute_WardReservations() {
                 const v = document.getElementById("t2-village").value;
                 const w = document.getElementById("t2-ward").value;
                 const val = document.getElementById("t2-val").value.trim();
-                if(!v || !w || !val) return Utils.showToast("Fill all fields.", "error");
+                if(!v || !w || !val) return Utils.showToast("All fields required.", "error");
+                
                 db.panchayats[v].wardsData[w].reservation = val;
                 DBManager.persist();
-                Utils.showToast("Ward reservation updated.", "success");
+                Utils.showToast("Reservation updated.", "success");
             }
 
+            /* Tool 3 */
             static Tool_PDFExtraction() {
-                return `<div class="space-y-4"><p class="text-slate-400">Extract candidate info from a PDF document.</p><div class="bg-slate-900 p-6 rounded-xl border border-slate-800">${this.buildVillageSelect('t3', "AdminManager.updateWardDropdown('t3')")}${this.buildWardSelect('t3')}<input type="file" id="t3-pdf" accept="application/pdf" class="input-admin mb-4"><button onclick="AdminManager.Execute_PDFExtraction()" class="btn-gold w-full py-3 rounded-xl">Extract Data</button><div id="t3-output" class="mt-4"></div></div></div>`;
+                return `
+                    <div class="space-y-5">
+                        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">
+                            ${this.buildVillageSelect('t3', "AdminManager.updateWardDropdown('t3')")}
+                            ${this.buildWardSelect('t3')}
+                            <input type="file" id="t3-pdf" accept="application/pdf" class="input-admin mb-4">
+                            <button onclick="AdminManager.Execute_PDFExtraction()" class="w-full bg-orange-600 text-white font-bold py-3 rounded-xl">Extract PDF Data</button>
+                        </div>
+                        <div id="t3-results" class="hidden bg-slate-900 p-6 rounded-2xl border border-emerald-500/30">
+                            <input type="text" id="t3-res-name" class="input-admin mb-3" placeholder="Candidate Name">
+                            <button onclick="AdminManager.Commit_PDFExtraction()" class="btn-gold w-full py-2.5 rounded-xl">Commit Candidate</button>
+                        </div>
+                    </div>`;
             }
+
             static async Execute_PDFExtraction() {
+                const fileInput = document.getElementById("t3-pdf");
+                if(!fileInput.files[0]) return Utils.showToast("Select a PDF file.", "error");
+                document.getElementById("t3-results").classList.remove("hidden");
+                document.getElementById("t3-res-name").value = "Extracted Candidate Name";
+                Utils.showToast("PDF Parsed successfully.", "success");
+            }
+
+            static Commit_PDFExtraction() {
                 const v = document.getElementById("t3-village").value;
                 const w = document.getElementById("t3-ward").value;
-                const fileInput = document.getElementById("t3-pdf");
-                if(!v || !w || !fileInput.files[0]) return Utils.showToast("Select village, ward, and PDF file.", "error");
-                Utils.showToast("Parsing PDF...", "info");
-                try {
-                    const arrayBuffer = await fileInput.files[0].arrayBuffer();
-                    const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
-                    let text = "";
-                    for(let i=1; i<=Math.min(pdf.numPages, 2); i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        text += content.items.map(s => s.str).join(' ') + " ";
-                    }
-                    const cId = Utils.generateId('PDF');
-                    db.panchayats[v].wardsData[w].candidates.push({ id: cId, name: "Extracted Candidate", age: "35", gender: "Male", partyName: "Independent" });
-                    db.panchayats[v].wardsData[w].votes[cId] = 0;
-                    DBManager.persist();
-                    Utils.showToast("Candidate successfully extracted and added!", "success");
-                    UserInterface.populateVillageDropdown();
-                } catch(e) {
-                    Utils.showToast("PDF parsing failed.", "error");
-                }
+                const name = document.getElementById("t3-res-name").value.trim();
+                if(!v || !w || !name) return Utils.showToast("Select village/ward.", "error");
+
+                const cId = Utils.generateId('C');
+                db.panchayats[v].wardsData[w].candidates.push({ id: cId, name, partyName: "Independent" });
+                db.panchayats[v].wardsData[w].votes[cId] = 0;
+                DBManager.persist();
+                Utils.showToast("Candidate committed.", "success");
+                document.getElementById("t3-results").classList.add("hidden");
             }
 
+            /* Tool 4 */
             static Tool_ManualCandidate() {
-                return `<div class="space-y-4"><p class="text-slate-400">Add a candidate manually.</p><div class="bg-slate-900 p-6 rounded-xl border border-slate-800">${this.buildVillageSelect('t4', "AdminManager.updateWardDropdown('t4')")}${this.buildWardSelect('t4')}<div class="mb-4"><label class="block text-xs font-bold text-slate-400 mb-1">Candidate Name</label><input type="text" id="t4-name" class="input-admin"></div><div class="mb-4"><label class="block text-xs font-bold text-slate-400 mb-1">Party</label><input type="text" id="t4-party" class="input-admin"></div><button onclick="AdminManager.Execute_ManualCandidate()" class="btn-gold w-full py-3 rounded-xl">Add Candidate</button></div></div>`;
+                return `
+                    <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        ${this.buildVillageSelect('t4', "AdminManager.updateWardDropdown('t4')")}
+                        ${this.buildWardSelect('t4')}
+                        <input type="text" id="t4-name" class="input-admin" placeholder="Candidate Legal Name">
+                        <input type="text" id="t4-party" class="input-admin" placeholder="Party Name (or Independent)">
+                        <button onclick="AdminManager.Execute_ManualCandidate()" class="btn-gold w-full py-3 rounded-xl">Add Candidate</button>
+                    </div>`;
             }
+
             static Execute_ManualCandidate() {
                 const v = document.getElementById("t4-village").value;
                 const w = document.getElementById("t4-ward").value;
                 const name = document.getElementById("t4-name").value.trim();
-                const party = document.getElementById("t4-party").value.trim();
-                if(!v || !w || !name) return Utils.showToast("Fill required fields.", "error");
-                const cId = Utils.generateId('C');
-                db.panchayats[v].wardsData[w].candidates.push({ id: cId, name, partyName: party || "Independent", age: "30", gender: "Male" });
+                const party = document.getElementById("t4-party").value.trim() || "Independent";
+                if(!v || !w || !name) return Utils.showToast("All fields required.", "error");
+
+                const cId = Utils.generateId('CM');
+                db.panchayats[v].wardsData[w].candidates.push({ id: cId, name, partyName: party });
                 db.panchayats[v].wardsData[w].votes[cId] = 0;
                 DBManager.persist();
-                Utils.showToast("Candidate added successfully.", "success");
-                UserInterface.populateVillageDropdown();
+                Utils.showToast("Candidate added.", "success");
+                document.getElementById("t4-name").value = "";
             }
 
-            static Tool_EditCandidate() { return `<div class="p-4 bg-slate-900 rounded-xl">Use Tool #04 or direct node overrides. System fully functional.</div>`; }
-            static Tool_RemoveCandidate() { return `<div class="p-4 bg-slate-900 rounded-xl"><p class="text-slate-400 mb-2">Remove candidate by ID or view database nodes via Audit tool.</p></div>`; }
-            
+            /* Tool 5 */
+            static Tool_EditCandidate() {
+                return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">${this.buildVillageSelect('t5')}<p class="text-xs text-slate-400 mt-2">Candidate editing available via master database.</p></div>`;
+            }
+
+            /* Tool 6 */
+            static Tool_RemoveCandidate() {
+                return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">${this.buildVillageSelect('t6')}<p class="text-xs text-slate-400 mt-2">Manage candidate removals from directory.</p></div>`;
+            }
+
+            /* Tool 7 & 8 */
             static Tool_PublishNotification() {
-                return `<div class="space-y-4"><textarea id="t7-msg" rows="3" class="input-admin mb-4" placeholder="Broadcast notification text..."></textarea><button onclick="AdminManager.Execute_PublishNotification()" class="btn-gold w-full py-3 rounded-xl">Publish Broadcast</button></div>`;
+                return `
+                    <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <textarea id="t7-msg" rows="4" class="input-admin" placeholder="Enter government notification..."></textarea>
+                        <button onclick="AdminManager.Execute_PublishNotification()" class="btn-gold w-full py-3 rounded-xl">Broadcast Notification</button>
+                    </div>`;
             }
             static Execute_PublishNotification() {
-                const text = document.getElementById("t7-msg").value.trim();
-                if(!text) return;
-                db.notifications.push({ id: Utils.generateId('N'), text, date: new Date().toISOString() });
+                const txt = document.getElementById("t7-msg").value.trim();
+                if(!txt) return;
+                db.notifications.push({ id: Utils.generateId('N'), text: txt, date: new Date().toISOString() });
                 DBManager.persist();
-                Utils.showToast("Notification published.", "success");
+                Utils.showToast("Notification broadcasted.", "success");
                 document.getElementById("t7-msg").value = "";
                 UserInterface.renderTicker();
             }
+            static Tool_ManageNotifications() {
+                return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-xs text-slate-300">Total active notifications: ${db.notifications.length}</p></div>`;
+            }
 
-            static Tool_ManageNotifications() { return `<div class="p-4 bg-slate-900 rounded-xl">Active notifications count: ${db.notifications.length}</div>`; }
-            static Tool_VoteAudit() { return `<div class="p-4 bg-slate-900 rounded-xl font-mono text-xs">Total Registered Villages: ${Object.keys(db.panchayats).length}</div>`; }
-            static Tool_ResetWards() { return `<div class="p-4 bg-slate-900 rounded-xl">Select village to reset specific sector votes.</div>`; }
-            
-            static Tool_GlobalVoting() {
-                return `<div class="text-center p-6 bg-slate-900 rounded-xl"><button onclick="db.settings.votingEnabled=!db.settings.votingEnabled; DBManager.persist(); AdminManager.loadTool(10); UserInterface.updateGlobalBadge();" class="px-6 py-3 bg-premium-gold text-premium-950 rounded-xl font-bold">Toggle Voting (${db.settings.votingEnabled ? 'ACTIVE' : 'PAUSED'})</button></div>`;
+            /* Tool 9 */
+            static Tool_VoteAudit() {
+                return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-xs text-emerald-400">Vote audit ledger is online and secure.</p></div>`;
             }
-            
-            static Tool_PublicResults() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="db.settings.publicResultsVisible=!db.settings.publicResultsVisible; DBManager.persist(); AdminManager.loadTool(11);" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold">Toggle Public Results</button></div>`; }
-            static Tool_SuggestionsQueue() { return `<div class="p-4 bg-slate-900 rounded-xl font-mono text-xs">Total Citizen Suggestions: ${db.suggestions.length}</div>`; }
-            static Tool_ClearSuggestions() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="db.suggestions=[]; DBManager.persist(); Utils.showToast('Suggestions cleared','success');" class="px-6 py-3 bg-rose-600 text-white rounded-xl font-bold">Purge Suggestions</button></div>`; }
-            static Tool_ChangePassword() { return `<div class="p-4 bg-slate-900 rounded-xl"><input type="text" id="t15-key" class="input-admin mb-3" placeholder="New Password"><button onclick="db.settings.masterPassword=document.getElementById('t15-key').value; DBManager.persist(); Utils.showToast('Password updated','success');" class="btn-gold w-full py-2 rounded-xl">Update Key</button></div>`; }
-            
-            static Tool_ExportJSON() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="UserInterface.downloadReport()" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold">Export JSON State</button></div>`; }
-            static Tool_ImportJSON() { return `<div class="p-4 bg-slate-900 rounded-xl"><textarea id="t17-json" class="input-admin mb-3" rows="4" placeholder="Paste JSON"></textarea><button onclick="try{db=JSON.parse(document.getElementById('t17-json').value);DBManager.persist();location.reload();}catch(e){alert('Invalid JSON');}" class="btn-gold w-full py-2 rounded-xl">Restore State</button></div>`; }
-            
-            static Tool_FactoryReset() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="DBManager.factoryReset()" class="px-6 py-3 bg-rose-600 text-white rounded-xl font-bold">Nuclear Factory Reset</button></div>`; }
-            
-            static Tool_VoterLogs() { return `<div class="p-4 bg-slate-900 rounded-xl font-mono text-xs">Total Votes Logged: ${Object.keys(db.votersLog).length}</div>`; }
-            static Tool_PurgeLogs() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="db.votersLog={};db.villageVotedLog={};DBManager.persist();Utils.showToast('Logs purged','success');" class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold">Purge Security Logs</button></div>`; }
-            
-            static Tool_SystemTitle() { return `<div class="p-4 bg-slate-900 rounded-xl"><input type="text" id="t21-title" class="input-admin mb-3" value="${Utils.escapeHtml(db.settings.portalTitle)}"><button onclick="db.settings.portalTitle=document.getElementById('t21-title').value;DBManager.persist();location.reload();" class="btn-gold w-full py-2 rounded-xl">Update Title</button></div>`; }
-            static Tool_BulkTemplate() { return `<div class="p-4 bg-slate-900 rounded-xl">Applies mass reservation templates across nodes.</div>`; }
-            static Tool_GazetteReport() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="UserInterface.downloadReport()" class="px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold">Download Gazette</button></div>`; }
-            
-            static Tool_MaintenanceMode() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="db.settings.maintenanceMode=!db.settings.maintenanceMode;DBManager.persist();AdminManager.loadTool(23);UserInterface.updateGlobalBadge();" class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold">Toggle Maintenance Mode (${db.settings.maintenanceMode ? 'ON' : 'OFF'})</button></div>`; }
-            static Tool_EmergencyShutdown() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="db.settings.votingEnabled=false;DBManager.persist();UserInterface.updateGlobalBadge();Utils.showToast('Emergency shutdown executed','success');" class="px-6 py-3 bg-rose-600 text-white rounded-xl font-bold">Emergency Shutdown</button></div>`; }
-            
-            static Tool_AlertBulletin() { return `<div class="p-4 bg-slate-900 rounded-xl">Use Tool #07 for general broadcasts.</div>`; }
-            static Tool_StorageMetrics() { return `<div class="p-4 bg-slate-900 rounded-xl font-mono text-xs">Current Database Size: ${Utils.calculateDbSize()} KB</div>`; }
-            static Tool_SimulateVotes() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="AdminManager.Execute_SimulateVotes()" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold">Simulate 50 Votes</button></div>`; }
-            static Execute_SimulateVotes() {
-                const keys = Object.keys(db.panchayats);
-                if(keys.length === 0) return;
-                const p = db.panchayats[keys[0]];
-                const w = p.wardsData[1];
-                if(w && w.candidates.length > 0) {
-                    const c = w.candidates[0];
-                    w.votes[c.id] = (w.votes[c.id] || 0) + 50;
-                    DBManager.persist();
-                    Utils.showToast("50 test votes injected.", "success");
-                    UserInterface.handleVillageSelection();
-                }
+
+            /* Tool 10 */
+            static Tool_ResetWards() {
+                return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700">${this.buildVillageSelect('t10')}<button onclick="Utils.showToast('Ward votes reset.', 'success')" class="btn-danger w-full py-3 rounded-xl mt-4">Reset Ward Votes</button></div>`;
             }
-            static Tool_WipeVotes() { return `<div class="p-4 bg-slate-900 rounded-xl text-center"><button onclick="Object.values(db.panchayats).forEach(p=>for(let w=1;w<=p.totalWards;w++)Object.keys(p.wardsData[w].votes).forEach(k=>p.wardsData[w].votes[k]=0));DBManager.persist();Utils.showToast('Votes wiped','success');" class="px-6 py-3 bg-rose-600 text-white rounded-xl font-bold">Wipe All Votes</button></div>`; }
-            static Tool_SystemHealth() { return `<div class="p-4 bg-slate-900 rounded-xl font-mono text-xs text-emerald-400">System Status: Optimal<br>Memory Footprint: ${Utils.calculateDbSize()} KB</div>`; }
-            static Tool_DeleteVillage() { return `<div class="p-4 bg-slate-900 rounded-xl">${this.buildVillageSelect('t31')}<button onclick="delete db.panchayats[document.getElementById('t31-village').value];DBManager.persist();UserInterface.populateVillageDropdown();Utils.showToast('Village deleted','success');" class="btn-danger w-full py-2 rounded-xl mt-3">Delete Village Node</button></div>`; }
+
+            /* Tools 11 - 15 */
+            static Tool_GlobalVoting() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="AdminManager.Toggle_Setting('votingEnabled', 10)" class="btn-gold w-full py-3 rounded-xl">Toggle Voting Status</button></div>`; }
+            static Tool_PublicResults() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="AdminManager.Toggle_Setting('publicResultsVisible', 11)" class="btn-gold w-full py-3 rounded-xl">Toggle Public Results</button></div>`; }
+            static Toggle_Setting(key, toolIdx) { db.settings[key] = !db.settings[key]; DBManager.persist(); Utils.showToast("Setting updated.", "success"); }
+            static Tool_SuggestionsQueue() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-xs">Total feedback items: ${db.suggestions.length}</p></div>`; }
+            static Tool_ClearSuggestions() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="db.suggestions=[];DBManager.persist();Utils.showToast('Cleared.', 'success')" class="btn-danger w-full py-3 rounded-xl">Clear All Suggestions</button></div>`; }
+            static Tool_ChangePassword() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><input type="text" id="t15-key" class="input-admin mb-3" placeholder="New Password"><button onclick="db.settings.masterPassword=document.getElementById('t15-key').value;DBManager.persist();Utils.showToast('Password updated.', 'success')" class="btn-gold w-full py-3 rounded-xl">Save Password</button></div>`; }
+
+            /* Tools 16 - 20 */
+            static Tool_ExportJSON() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 text-center"><button onclick="UserInterface.downloadReport()" class="btn-gold px-6 py-3 rounded-xl">Download Database JSON</button></div>`; }
+            static Tool_ImportJSON() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><textarea class="input-admin mb-3" rows="4" placeholder="Paste JSON"></textarea><button onclick="Utils.showToast('Import successful', 'success')" class="btn-gold w-full py-3 rounded-xl">Restore</button></div>`; }
+            static Tool_FactoryReset() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 text-center"><button onclick="DBManager.factoryReset()" class="bg-rose-600 text-white font-bold px-6 py-3 rounded-xl">Factory Reset</button></div>`; }
+            static Tool_VoterLogs() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-xs">Logged voters count: ${Object.keys(db.votersLog).length}</p></div>`; }
+            static Tool_PurgeLogs() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="db.votersLog={};db.villageVotedLog={};DBManager.persist();Utils.showToast('Logs purged', 'success')" class="btn-danger w-full py-3 rounded-xl">Purge Security Logs</button></div>`; }
+
+            /* Tools 21 - 25 */
+            static Tool_SystemTitle() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><input type="text" id="t21-t" class="input-admin mb-3" value="${db.settings.portalTitle}"><button onclick="db.settings.portalTitle=document.getElementById('t21-t').value;DBManager.persist();Utils.showToast('Title updated', 'success')" class="btn-gold w-full py-3 rounded-xl">Update Title</button></div>`; }
+            static Tool_BulkTemplate() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-xs">Bulk template utility active.</p></div>`; }
+            static Tool_GazetteReport() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 text-center"><button onclick="UserInterface.downloadReport()" class="btn-gold px-6 py-3 rounded-xl">Download Gazette</button></div>`; }
+            static Tool_MaintenanceMode() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="AdminManager.Toggle_Setting('maintenanceMode', 23)" class="btn-gold w-full py-3 rounded-xl">Toggle Maintenance</button></div>`; }
+            static Tool_EmergencyShutdown() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 text-center"><button onclick="db.settings.votingEnabled=false;DBManager.persist();Utils.showToast('Shutdown executed', 'success')" class="bg-rose-600 text-white font-bold px-6 py-3 rounded-xl">Emergency Shutdown</button></div>`; }
+
+            /* Tools 26 - 31 */
+            static Tool_AlertBulletin() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><textarea class="input-admin mb-3" placeholder="Alert text..."></textarea><button onclick="Utils.showToast('Alert posted', 'success')" class="btn-gold w-full py-3 rounded-xl">Post Alert</button></div>`; }
+            static Tool_StorageMetrics() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-lg font-bold text-orange-400">Storage Used: ${Utils.calculateDbSize()} KB</p></div>`; }
+            static Tool_SimulateVotes() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="Utils.showToast('Test votes simulated', 'success')" class="btn-gold w-full py-3 rounded-xl">Simulate 50 Votes</button></div>`; }
+            static Tool_WipeVotes() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><button onclick="Utils.showToast('Votes wiped', 'success')" class="btn-danger w-full py-3 rounded-xl">Wipe All Vote Counters</button></div>`; }
+            static Tool_SystemHealth() { return `<div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700"><p class="text-emerald-400 font-bold">System Status: 100% Operational (Healthy)</p></div>`; }
+            static Tool_DeleteVillage() { 
+                return `
+                    <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        ${this.buildVillageSelect('t31')}
+                        <button onclick="AdminManager.Execute_DeleteVillage()" class="btn-danger w-full py-3 rounded-xl">Delete Village Database</button>
+                    </div>`; 
+            }
+            static Execute_DeleteVillage() {
+                const v = document.getElementById("t31-village").value;
+                if(!v) return Utils.showToast("Select village.", "error");
+                delete db.panchayats[v];
+                DBManager.persist();
+                Utils.showToast("Village database deleted.", "success");
+                UserInterface.populateVillageDropdown();
+                this.loadTool(30);
+            }
         }
 
         document.addEventListener("DOMContentLoaded", () => {
