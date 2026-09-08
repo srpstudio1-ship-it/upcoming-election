@@ -332,20 +332,21 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-10 animate-fade-in relative z-10">
 
         <!-- SECTION 1: Government Notification Ticker -->
-        <div class="bg-gradient-to-r from-premium-nav via-slate-800 to-premium-nav p-1 rounded-2xl shadow-premium-soft border border-slate-700/50">
-            <div class="bg-slate-900/50 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 backdrop-blur-sm">
-                <div class="flex items-center space-x-3 w-full sm:w-auto">
-                    <div class="bg-rose-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-rose-500/30 flex-shrink-0 animate-pulse">
+        <div class="bg-gradient-to-r from-premium-nav via-slate-800 to-premium-nav p-1 rounded-2xl shadow-premium-soft border border-slate-700/50 cursor-pointer hover:shadow-premium-gold/30 transition-all duration-300 transform hover:-translate-y-0.5 group" onclick="UIManager.openNotificationsModal()">
+            <div class="bg-slate-900/50 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 backdrop-blur-sm group-hover:bg-slate-800/80 transition">
+                <div class="flex items-start sm:items-center space-x-3 w-full sm:w-auto">
+                    <div class="bg-rose-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-rose-500/30 flex-shrink-0 animate-pulse mt-1 sm:mt-0">
                         <i class="fa-solid fa-bell mr-1"></i> Live Update
                     </div>
-                    <div class="overflow-hidden w-full relative h-6 flex items-center">
-                        <p id="ticker-notification-text" class="text-sm font-medium text-slate-200 whitespace-nowrap overflow-ellipsis">
+                    <!-- Text wrapping enabled here -->
+                    <div class="w-full relative flex items-center pr-4">
+                        <p id="ticker-notification-text" class="text-sm font-medium text-slate-200 leading-relaxed">
                             Loading official government notifications from secure database...
                         </p>
                     </div>
                 </div>
-                <div class="text-[10px] text-slate-400 font-mono flex-shrink-0 hidden lg:block">
-                    <i class="fa-solid fa-clock mr-1"></i> <span id="current-time-display"></span>
+                <div class="text-[10px] text-premium-gold font-bold flex-shrink-0 hidden md:flex items-center opacity-70 group-hover:opacity-100 transition">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center mr-1.5"></i> View All
                 </div>
             </div>
         </div>
@@ -616,7 +617,28 @@
     <!-- ========================================== -->
     <!-- MODALS & OVERLAYS                          -->
     <!-- ========================================== -->
-
+<!-- ALL NOTIFICATIONS MODAL -->
+    <div id="notifications-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl max-h-[85vh] flex flex-col animate-slide-up">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-5 shrink-0">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-bullhorn text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl text-slate-800">Official Notifications</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Government Broadcasts & Alerts</p>
+                    </div>
+                </div>
+                <button onclick="UIManager.closeNotificationsModal()" class="text-slate-400 hover:text-rose-500 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="notifications-modal-content" class="overflow-y-auto custom-scrollbar flex-grow pr-2 space-y-4">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
     <!-- ADMIN LOGIN MODAL -->
     <div id="admin-login-modal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4 transition-opacity" aria-modal="true" role="dialog">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10 shadow-2xl relative border border-slate-200 animate-slide-up">
@@ -960,7 +982,38 @@
                         setTimeout(() => loader.remove(), 500);
                     }
                 }, 800);
+static openNotificationsModal() {
+                const ct = document.getElementById("notifications-modal-content");
+                let html = "";
+                
+                if (db.notifications.length === 0) {
+                    html = `<div class="p-8 text-center text-slate-500 bg-slate-50 rounded-xl border border-dashed border-slate-200">No official notifications available at this time.</div>`;
+                } else {
+                    // Reverse array to show the newest notifications at the top
+                    [...db.notifications].reverse().forEach((n, index) => {
+                        const dateStr = new Date(n.date).toLocaleString();
+                        // Add a special "Latest" badge to the first one
+                        const badge = index === 0 ? `<span class="bg-rose-100 text-rose-600 text-[9px] px-2 py-0.5 rounded uppercase ml-2">Latest</span>` : "";
+                        
+                        html += `
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 hover:border-premium-gold/50 transition relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1.5 h-full ${index === 0 ? 'bg-rose-500' : 'bg-slate-300'}"></div>
+                                <div class="flex items-center text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-3">
+                                    <i class="fa-solid fa-clock mr-1.5 text-slate-400"></i> ${dateStr} ${badge}
+                                </div>
+                                <p class="text-slate-800 text-sm leading-relaxed font-medium whitespace-pre-wrap">${Utils.escapeHtml(n.text)}</p>
+                            </div>
+                        `;
+                    });
+                }
+                
+                ct.innerHTML = html;
+                document.getElementById("notifications-modal").classList.remove("hidden");
+            }
 
+            static closeNotificationsModal() { 
+                document.getElementById("notifications-modal").classList.add("hidden"); 
+            }
                 // Set initial text
                 document.getElementById("header-portal-title").innerText = db.settings.portalTitle;
                 document.getElementById("current-year").innerText = new Date().getFullYear();
