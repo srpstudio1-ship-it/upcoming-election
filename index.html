@@ -5,470 +5,1403 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morseem & Naya Morseem - Public Opinion Voting</title>
     <style>
-        /* GitHub-inspired UI & Reset */
+        /* CSS Reset & Variables */
         :root {
-            --bg-color: #f6f8fa;
-            --text-main: #24292f;
-            --text-muted: #57606a;
-            --border-color: #d0d7de;
-            --primary-blue: #0969da;
-            --primary-hover: #0353a4;
-            --success-green: #2da44e;
-            --danger-red: #cf222e;
-            --box-bg: #ffffff;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --color-canvas-default: #ffffff;
+            --color-canvas-subtle: #f6f8fa;
+            --color-border-default: #d0d7de;
+            --color-border-muted: hsla(210,18%,87%,1);
+            --color-fg-default: #24292f;
+            --color-fg-muted: #57606a;
+            --color-accent-fg: #0969da;
+            --color-accent-emphasis: #0969da;
+            --color-success-fg: #1a7f37;
+            --color-success-emphasis: #2da44e;
+            --color-danger-fg: #cf222e;
+            --color-danger-emphasis: #cf222e;
+            --color-attention-fg: #9a6700;
+            --color-attention-subtle: #fff8c5;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-main); line-height: 1.5; }
-        
-        /* Layout */
-        .container { max-width: 1012px; margin: 0 auto; padding: 20px; }
-        header { background-color: #24292f; color: white; padding: 16px 20px; text-align: center; border-bottom: 1px solid var(--border-color); }
-        header h1 { font-size: 24px; font-weight: 600; }
-        header p { color: #8c959f; font-size: 14px; margin-top: 5px; }
-        
-        /* Cards & Sections */
-        .card { background: var(--box-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-        .card-title { font-size: 18px; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; }
-        
-        /* Notifications */
-        .alert { background-color: #ddf4ff; color: #0969da; border: 1px solid rgba(9,105,218,0.2); padding: 12px 16px; border-radius: 6px; margin-bottom: 10px; font-weight: 500; }
-        .alert-warning { background-color: #fff8c5; color: #9a6700; border-color: rgba(212,167,44,0.4); }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--color-canvas-subtle);
+            color: var(--color-fg-default);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        a {
+            color: var(--color-accent-fg);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        a:hover { text-decoration: underline; }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; margin-bottom: 10px; }
+        h1 { font-size: 24px; }
+        h2 { font-size: 20px; border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px; }
+        h3 { font-size: 16px; }
+
+        /* Layout Container */
+        .container {
+            max-width: 1012px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header */
+        .header {
+            background-color: #24292f;
+            color: #ffffff;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+        }
+        .header-brand h1 { margin: 0; color: #ffffff; font-size: 20px;}
+        .header-brand span { color: #8c959f; font-size: 12px; }
+        .header-actions button {
+            background: transparent;
+            border: 1px solid #8c959f;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .header-actions button:hover { background: #32383f; }
+
+        /* Box / Cards */
+        .box {
+            background-color: var(--color-canvas-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(27,31,36,0.04);
+        }
+        .box-header {
+            padding: 16px;
+            background-color: var(--color-canvas-subtle);
+            border-bottom: 1px solid var(--color-border-default);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            font-weight: 600;
+        }
+        .box-body { padding: 16px; }
+        .box-footer {
+            padding: 16px;
+            border-top: 1px solid var(--color-border-default);
+            background-color: var(--color-canvas-subtle);
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        /* Notifications (Alerts) */
+        .flash {
+            padding: 12px 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .flash-info { color: var(--color-accent-fg); background-color: #ddf4ff; border-color: rgba(9,105,218,0.2); }
+        .flash-warn { color: var(--color-attention-fg); background-color: var(--color-attention-subtle); border-color: rgba(212,167,44,0.4); }
+        .flash-error { color: var(--color-danger-fg); background-color: #FFEBE9; border-color: rgba(207,34,46,0.2); }
+        .flash-success { color: var(--color-success-fg); background-color: #dafbe1; border-color: rgba(45,164,78,0.2); }
 
         /* Forms & Inputs */
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
-        select, input[type="text"], input[type="password"] { width: 100%; padding: 8px 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--bg-color); font-size: 14px; }
-        select:focus, input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(9,105,218,0.3); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
+        .form-control {
+            width: 100%;
+            padding: 5px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--color-fg-default);
+            background-color: var(--color-canvas-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            box-shadow: inset 0 1px 0 rgba(208,215,222,0.2);
+            transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .form-control:focus {
+            border-color: var(--color-accent-emphasis);
+            outline: none;
+            box-shadow: inset 0 1px 0 rgba(208,215,222,0.2), 0 0 0 3px rgba(9,105,218,0.3);
+        }
+        select.form-control { cursor: pointer; }
         
         /* Buttons */
-        .btn { display: inline-block; padding: 8px 16px; font-size: 14px; font-weight: 600; text-align: center; border-radius: 6px; cursor: pointer; border: 1px solid; transition: 0.2s; }
-        .btn-primary { color: #ffffff; background-color: var(--primary-blue); border-color: rgba(27,31,36,0.15); }
-        .btn-primary:hover { background-color: var(--primary-hover); }
-        .btn-success { color: #ffffff; background-color: var(--success-green); border-color: rgba(27,31,36,0.15); }
-        .btn-danger { color: #ffffff; background-color: var(--danger-red); border-color: rgba(27,31,36,0.15); }
-        
-        /* Admin Grid Layout */
-        .admin-layout { display: grid; grid-template-columns: 250px 1fr; gap: 20px; }
-        .sidebar { background: var(--box-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; height: fit-content; }
-        .sidebar button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 10px; font-size: 14px; color: var(--primary-blue); cursor: pointer; border-radius: 6px; }
-        .sidebar button:hover { background: var(--bg-color); }
-        .sidebar button.active { font-weight: bold; background: #ddf4ff; }
-        
-        /* Candidates Grid */
-        .candidates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .candidate-card { border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .candidate-card:hover { border-color: var(--primary-blue); background-color: #f3f9ff; }
-        .candidate-card.selected { border-color: var(--success-green); background-color: #dcffe4; border-width: 2px; }
-        
-        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 12px; }
-        footer a { color: var(--text-muted); text-decoration: none; cursor: pointer; }
+        .btn {
+            position: relative;
+            display: inline-block;
+            padding: 5px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            appearance: none;
+            background-color: var(--color-canvas-subtle);
+            color: var(--color-fg-default);
+            transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        }
+        .btn:hover { background-color: #f3f4f6; border-color: var(--color-border-default); transition-duration: 0.1s; }
+        .btn-primary { color: #fff; background-color: var(--color-success-emphasis); border-color: rgba(27,31,36,0.15); }
+        .btn-primary:hover { background-color: #2c974b; border-color: rgba(27,31,36,0.15); }
+        .btn-danger { color: #cf222e; background-color: var(--color-canvas-default); }
+        .btn-danger:hover { background-color: var(--color-danger-emphasis); color: #fff; border-color: rgba(27,31,36,0.15); }
+        .btn-blue { color: #fff; background-color: var(--color-accent-emphasis); border-color: rgba(27,31,36,0.15); }
+        .btn-blue:hover { background-color: #0353a4; }
+        .btn-block { display: block; width: 100%; text-align: center; }
 
-        /* Hiding blocks */
+        /* Tables */
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: 8px 12px; border: 1px solid var(--color-border-default); text-align: left; }
+        th { background-color: var(--color-canvas-subtle); font-weight: 600; }
+        tbody tr:nth-child(even) { background-color: rgba(246,248,250,0.5); }
+
+        /* Grids & Cards */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+        
+        .candidate-card {
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            background: var(--color-canvas-default);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .candidate-card:hover { border-color: var(--color-accent-fg); box-shadow: 0 0 0 1px var(--color-accent-fg); }
+        .candidate-card.selected {
+            border-color: var(--color-success-emphasis);
+            background-color: #f4fdf6;
+            box-shadow: 0 0 0 2px var(--color-success-emphasis);
+        }
+        .candidate-symbol { font-size: 40px; margin-bottom: 10px; }
+        .candidate-name { font-weight: 600; font-size: 16px; }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; background-color: var(--color-border-default); border-radius: 6px; overflow: hidden; margin-top: 5px; height: 12px; }
+        .progress-bar { height: 100%; background-color: var(--color-accent-emphasis); width: 0%; transition: width 0.5s ease-in-out; }
+        .progress-bar.winner { background-color: var(--color-success-emphasis); }
+
+        /* Admin Layout */
+        .admin-layout { display: flex; gap: 24px; }
+        .admin-sidebar { width: 250px; flex-shrink: 0; border: 1px solid var(--color-border-default); border-radius: 6px; background: var(--color-canvas-default); overflow: hidden; }
+        .admin-content { flex-grow: 1; min-width: 0; }
+        
+        .menu-item {
+            display: block;
+            padding: 8px 16px;
+            color: var(--color-fg-default);
+            border-bottom: 1px solid var(--color-border-muted);
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+            background: none;
+            width: 100%;
+            text-align: left;
+            border-left: 3px solid transparent;
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:hover { background-color: var(--color-canvas-subtle); }
+        .menu-item.selected {
+            background-color: var(--color-canvas-default);
+            font-weight: 600;
+            border-left-color: #fd8c73; /* GitHub orange accent */
+        }
+
+        /* Utilities */
         .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--color-fg-muted); }
+        .mt-2 { margin-top: 8px; }
+        .mt-4 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-4 { margin-bottom: 16px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        
+        footer { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid var(--color-border-default); color: var(--color-fg-muted); }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(36,41,47,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 100;
+        }
+        .modal-content {
+            background: var(--color-canvas-default);
+            padding: 24px;
+            border-radius: 6px;
+            width: 400px;
+            box-shadow: 0 8px 24px rgba(140,149,159,0.2);
+        }
         
         @media (max-width: 768px) {
-            .admin-layout { grid-template-columns: 1fr; }
+            .admin-layout { flex-direction: column; }
+            .admin-sidebar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Morseem & Naya Morseem</h1>
-        <p>Gram Panchayat Public Opinion Voting Portal</p>
-    </header>
-
-    <div class="container" id="villager-view">
-        <!-- Notifications Section -->
-        <div id="notification-area"></div>
-
-        <!-- Voting Section -->
-        <div class="card">
-            <h2 class="card-title">Vote for your Ward (वार्ड के लिए वोट करें)</h2>
-            
-            <label for="panchayat-select">Select Gram Panchayat (ग्राम पंचायत चुनें)</label>
-            <select id="panchayat-select" onchange="updateWards()">
-                <option value="">-- Select --</option>
-                <option value="Morseem">Morseem (मोरसीम)</option>
-                <option value="NayaMorseem">Naya Morseem (नया मोरसीम)</option>
-            </select>
-
-            <label for="ward-select">Select Ward (वार्ड चुनें)</label>
-            <select id="ward-select" onchange="showCandidates()" disabled>
-                <option value="">-- Select Panchayat First --</option>
-            </select>
-            
-            <div id="ward-status" class="alert alert-warning hidden" style="margin-top:10px;"></div>
-
-            <div id="candidates-area" class="hidden" style="margin-top: 20px;">
-                <label>Select Your Candidate (उम्मीदवार चुनें)</label>
-                <div class="candidates-grid" id="candidates-grid"></div>
-                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="submitVote()">Submit Vote (वोट दर्ज करें)</button>
-            </div>
+    <div class="header">
+        <div class="header-brand">
+            <h1>Gram Panchayat Portal</h1>
+            <span>Morseem & Naya Morseem - Official Voting Platform</span>
         </div>
-
-        <div class="card" id="public-results-card">
-            <h2 class="card-title">Live Results Overview</h2>
-            <p>Select a ward above to see the public trend (if allowed by admin).</p>
-            <div id="public-results-area"></div>
+        <div class="header-actions">
+            <button id="nav-btn-admin" onclick="Portal.toggleView('login')">Admin Login</button>
+            <button id="nav-btn-home" class="hidden" onclick="Portal.toggleView('public')">Back to Home</button>
+            <span id="user-badge" style="font-size: 12px; margin-left: 10px; color:#8c959f;"></span>
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
-    <div class="container hidden" id="admin-view">
-        <div class="card">
-            <h2>Admin Control Panel (20 Premium Features)</h2>
-            <p style="margin-bottom: 20px; color: var(--text-muted);">Manage Sept 17/18 lotteries, wards, and candidates permanently.</p>
-            
-            <div class="admin-layout">
-                <div class="sidebar" id="admin-sidebar">
-                    <!-- 20 Features Generated via JS -->
+    <div class="container" id="view-public">
+        <!-- Live Notifications Area -->
+        <div id="public-notifications"></div>
+
+        <!-- System Status Banner -->
+        <div id="voting-status-banner" class="flash flash-warn hidden">
+            <strong>Notice:</strong> Voting is currently closed by the administration.
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                Cast Your Vote (अपना वोट डालें)
+            </div>
+            <div class="box-body">
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="select-panchayat">Select Gram Panchayat (ग्राम पंचायत चुनें)</label>
+                        <select id="select-panchayat" class="form-control" onchange="Portal.onPanchayatChange()">
+                            <option value="">-- Select Option --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-ward">Select Ward (वार्ड चुनें)</label>
+                        <select id="select-ward" class="form-control" onchange="Portal.onWardChange()" disabled>
+                            <option value="">-- Select Panchayat First --</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="admin-content card" id="admin-content-area">
-                    <h3 id="admin-feature-title" class="card-title">Welcome Admin</h3>
-                    <div id="admin-feature-body">Select a tool from the sidebar to begin.</div>
+
+                <div id="ward-info-area" class="flash flash-info hidden mt-2 mb-4">
+                    <strong>Ward Reservation Status (लॉटरी स्थिति):</strong> <span id="ward-reservation-text">Loading...</span>
+                </div>
+
+                <div id="candidates-section" class="hidden mt-4">
+                    <h3 class="mb-2">Select Your Candidate (अपना उम्मीदवार चुनें)</h3>
+                    <div id="candidates-grid" class="grid-3 mb-4">
+                        <!-- Candidates loaded dynamically -->
+                    </div>
+                    
+                    <button id="btn-submit-vote" class="btn btn-primary btn-block" style="font-size: 16px; padding: 10px;" onclick="Portal.submitVote()">
+                        Confirm & Submit Vote (वोट दर्ज करें)
+                    </button>
                 </div>
             </div>
-            <button class="btn btn-danger" style="margin-top:20px;" onclick="logoutAdmin()">Logout Admin</button>
+        </div>
+
+        <div class="box" id="public-results-box">
+            <div class="box-header">Live Ward Results (वार्ड के परिणाम)</div>
+            <div class="box-body">
+                <p class="text-muted mb-4">Select a ward above to view current polling trends.</p>
+                <div id="public-results-content">
+                    <!-- Results rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="view-login">
+        <div class="box" style="max-width: 400px; margin: 40px auto;">
+            <div class="box-header text-center">Admin Authentication</div>
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" id="input-admin-password" class="form-control" placeholder="Enter password (sarpanch2026)">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="Portal.loginAdmin()">Secure Login</button>
+                <p id="login-error" class="text-danger mt-2 hidden text-center" style="font-size:12px; color:var(--color-danger-fg)">Invalid Password</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="view-admin">
+        <div class="flash flash-success mb-4 flex-between">
+            <span><strong>Admin System Active</strong> - You have full access to 20 management modules.</span>
+            <button class="btn btn-danger" onclick="Portal.logoutAdmin()">End Session</button>
+        </div>
+
+        <div class="admin-layout">
+            <div class="admin-sidebar" id="admin-sidebar">
+                <!-- Auto-generated 20 feature menu -->
+            </div>
+            <div class="admin-content">
+                <div class="box" style="min-height: 500px;">
+                    <div class="box-header" id="admin-module-title">Welcome Admin</div>
+                    <div class="box-body" id="admin-module-body">
+                        Select a module from the left sidebar to begin managing the platform. All changes are saved permanently.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 Gram Panchayat Election Portal | <a onclick="promptAdmin()">Admin Access</a>
+        <p>&copy; 2026 Gram Panchayat Election Portal | Built for Morseem & Naya Morseem</p>
     </footer>
 
+    <!-- Global Modal for critical actions -->
+    <div id="global-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-body" class="mb-4">Are you sure?</p>
+            <div class="flex-between">
+                <button class="btn" onclick="Portal.closeModal()">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- 1. DEFAULT DATA & LOCAL STORAGE SETUP ---
-        const defaultData = {
-            notifications: [
-                { id: 1, text: "ग्राम पंचायत लॉटरी 17 और 18 सितंबर को निकलेगी। तब तक आरक्षण की स्थिति यहाँ अपडेट की जाएगी।", type: "alert-warning" }
-            ],
-            settings: {
-                votingOpen: true,
-                showResultsPublicly: true,
-                password: "sarpanch2026"
-            },
-            panchayats: {
-                "Morseem": { wards: 13, reservations: {}, candidates: {}, votes: {} },
-                "NayaMorseem": { wards: 11, reservations: {}, candidates: {}, votes: {} }
+        /**
+         * Portal Engine
+         * Handles all logic, local storage, UI rendering, and admin functions.
+         */
+        const Portal = (function() {
+            // --- Database Setup & Management ---
+            let db = {};
+            let currentUserId = null;
+            let currentSelectedCandidate = null;
+
+            const DEFAULT_DB = {
+                metadata: {
+                    version: "1.0",
+                    lastUpdated: new Date().toISOString()
+                },
+                settings: {
+                    adminPassword: "sarpanch2026",
+                    votingOpen: true,
+                    showPublicResults: true
+                },
+                panchayats: {
+                    "morseem": { id: "morseem", name: "Morseem (मोरसीम)", wardCount: 13 },
+                    "naya_morseem": { id: "naya_morseem", name: "Naya Morseem (नया मोरसीम)", wardCount: 11 }
+                },
+                wards: {
+                    // Structure: { panchayatId_wardNum: { reservation: "", candidates: [{id, name, symbol, votes}] } }
+                },
+                voters: {
+                    // Structure: { voterId: { hasVoted: boolean, votedFor: { panchayat, ward, candidateId }, isBlocked: boolean } }
+                },
+                notifications: [
+                    { id: Date.now(), text: "ग्राम पंचायत लॉटरी 17 और 18 सितंबर को निकलेगी। आरक्षण की स्थिति यहाँ अपडेट की जाएगी।", type: "flash-warn" }
+                ],
+                logs: []
+            };
+
+            const SYMBOLS = [
+                { id: 'sym1', icon: '👤', label: 'Default Person' },
+                { id: 'sym2', icon: '🚜', label: 'Tractor' },
+                { id: 'sym3', icon: '🌾', label: 'Crops' },
+                { id: 'sym4', icon: '🏠', label: 'House' },
+                { id: 'sym5', icon: '⚖️', label: 'Scales' },
+                { id: 'sym6', icon: '🚲', label: 'Bicycle' },
+                { id: 'sym7', icon: '🐘', label: 'Elephant' },
+                { id: 'sym8', icon: '🦁', label: 'Lion' },
+                { id: 'sym9', icon: '☀️', label: 'Sun' }
+            ];
+
+            // 20 Core Admin Features definitions
+            const ADMIN_FEATURES = [
+                { id: 'f1', title: "1. Update Ward Reservation", method: "renderF1" },
+                { id: 'f2', title: "2. Add Candidate", method: "renderF2" },
+                { id: 'f3', title: "3. Remove Candidate", method: "renderF3" },
+                { id: 'f4', title: "4. Edit Candidate Details", method: "renderF4" },
+                { id: 'f5', title: "5. Add Gov Notification", method: "renderF5" },
+                { id: 'f6', title: "6. Remove Notification", method: "renderF6" },
+                { id: 'f7', title: "7. Live Results Dashboard", method: "renderF7" },
+                { id: 'f8', title: "8. Reset Ward Votes", method: "renderF8" },
+                { id: 'f9', title: "9. Export Data (CSV)", method: "renderF9" },
+                { id: 'f10', title: "10. Toggle Voting Status", method: "renderF10" },
+                { id: 'f11', title: "11. Toggle Public Results", method: "renderF11" },
+                { id: 'f12', title: "12. Manage Panchayat Setup", method: "renderF12" },
+                { id: 'f13', title: "13. Admin Password Reset", method: "renderF13" },
+                { id: 'f14', title: "14. System Logs", method: "renderF14" },
+                { id: 'f15', title: "15. Manage Ward List", method: "renderF15" },
+                { id: 'f16', title: "16. Upload/Assign Symbols", method: "renderF16" },
+                { id: 'f17', title: "17. Data Backup (JSON)", method: "renderF17" },
+                { id: 'f18', title: "18. Data Restore (JSON)", method: "renderF18" },
+                { id: 'f19', title: "19. Block/Unblock Users", method: "renderF19" },
+                { id: 'f20', title: "20. Factory Reset", method: "renderF20" }
+            ];
+
+            // --- Core DB Logic ---
+            function loadDB() {
+                try {
+                    const saved = localStorage.getItem('panchayatDbData_v1');
+                    if (saved) {
+                        db = JSON.parse(saved);
+                    } else {
+                        buildDefaultWards();
+                    }
+                    verifyUser();
+                } catch(e) {
+                    console.error("DB Load Error", e);
+                    buildDefaultWards();
+                }
             }
-        };
 
-        // Initialize Wards & Candidates logic for default data
-        for(let i=1; i<=13; i++) {
-            defaultData.panchayats["Morseem"].reservations[i] = "Pending Lottery (17-18 Sep)";
-            defaultData.panchayats["Morseem"].candidates[i] = [{id: 'm1', name: 'Candidate A'}, {id: 'm2', name: 'Candidate B'}];
-            defaultData.panchayats["Morseem"].votes[i] = { 'm1': 0, 'm2': 0 };
-        }
-        for(let i=1; i<=11; i++) {
-            defaultData.panchayats["NayaMorseem"].reservations[i] = "Pending Lottery (17-18 Sep)";
-            defaultData.panchayats["NayaMorseem"].candidates[i] = [{id: 'nm1', name: 'Candidate X'}, {id: 'nm2', name: 'Candidate Y'}];
-            defaultData.panchayats["NayaMorseem"].votes[i] = { 'nm1': 0, 'nm2': 0 };
-        }
+            function saveDB() {
+                db.metadata.lastUpdated = new Date().toISOString();
+                localStorage.setItem('panchayatDbData_v1', JSON.stringify(db));
+            }
 
-        // Load or Set Database
-        let db = JSON.parse(localStorage.getItem('votingDB'));
-        if (!db) {
-            db = defaultData;
-            saveDB();
-        }
+            function buildDefaultWards() {
+                db = JSON.parse(JSON.stringify(DEFAULT_DB));
+                Object.values(db.panchayats).forEach(p => {
+                    for(let i=1; i<=p.wardCount; i++) {
+                        db.wards[`${p.id}_${i}`] = {
+                            reservation: "Pending Lottery Result (17-18 Sep)",
+                            candidates: []
+                        };
+                    }
+                });
+                saveDB();
+                sysLog("System Initialization", "Factory DB created.");
+            }
 
-        let selectedCandidateId = null;
+            function verifyUser() {
+                let uid = localStorage.getItem('panchayat_voter_id');
+                if (!uid) {
+                    uid = 'VOTER_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                    localStorage.setItem('panchayat_voter_id', uid);
+                }
+                currentUserId = uid;
+                
+                if(!db.voters[currentUserId]) {
+                    db.voters[currentUserId] = { hasVoted: false, isBlocked: false, votedFor: null };
+                    saveDB();
+                }
+                document.getElementById('user-badge').innerText = `ID: ${currentUserId}`;
+            }
 
-        function saveDB() {
-            localStorage.setItem('votingDB', JSON.stringify(db));
-        }
+            function sysLog(action, details) {
+                db.logs.unshift({ time: new Date().toLocaleString(), user: currentUserId || 'System', action, details });
+                if(db.logs.length > 500) db.logs.pop(); // limit log size
+                saveDB();
+            }
 
-        // --- 2. VILLAGER UI LOGIC ---
-        function renderNotifications() {
-            const area = document.getElementById('notification-area');
-            area.innerHTML = '';
-            db.notifications.forEach(n => {
-                area.innerHTML += `<div class="alert ${n.type}">${n.text}</div>`;
-            });
-        }
+            // --- Public UI Logic ---
+            function initPublicUI() {
+                // Populate Panchayats
+                const pSelect = document.getElementById('select-panchayat');
+                pSelect.innerHTML = '<option value="">-- Select Panchayat --</option>';
+                Object.values(db.panchayats).forEach(p => {
+                    pSelect.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                });
 
-        function updateWards() {
-            const p = document.getElementById('panchayat-select').value;
-            const wSelect = document.getElementById('ward-select');
-            const statusArea = document.getElementById('ward-status');
-            const candidatesArea = document.getElementById('candidates-area');
-            
-            wSelect.innerHTML = '<option value="">-- Select Ward --</option>';
-            statusArea.classList.add('hidden');
-            candidatesArea.classList.add('hidden');
+                // Status Banner
+                const banner = document.getElementById('voting-status-banner');
+                if(!db.settings.votingOpen) {
+                    banner.classList.remove('hidden');
+                } else {
+                    banner.classList.add('hidden');
+                }
 
-            if (p) {
+                // Public Results
+                const resultsBox = document.getElementById('public-results-box');
+                if(!db.settings.showPublicResults) {
+                    resultsBox.classList.add('hidden');
+                } else {
+                    resultsBox.classList.remove('hidden');
+                }
+
+                renderNotifications();
+            }
+
+            function renderNotifications() {
+                const area = document.getElementById('public-notifications');
+                area.innerHTML = '';
+                db.notifications.forEach(n => {
+                    area.innerHTML += `<div class="flash ${n.type}"><span>${n.text}</span></div>`;
+                });
+            }
+
+            function onPanchayatChange() {
+                const pid = document.getElementById('select-panchayat').value;
+                const wSelect = document.getElementById('select-ward');
+                
+                document.getElementById('ward-info-area').classList.add('hidden');
+                document.getElementById('candidates-section').classList.add('hidden');
+                document.getElementById('public-results-content').innerHTML = '';
+
+                if(!pid) {
+                    wSelect.disabled = true;
+                    wSelect.innerHTML = '<option value="">-- Select Panchayat First --</option>';
+                    return;
+                }
+
+                const pData = db.panchayats[pid];
                 wSelect.disabled = false;
-                const totalWards = db.panchayats[p].wards;
-                for (let i = 1; i <= totalWards; i++) {
+                wSelect.innerHTML = '<option value="">-- Select Ward --</option>';
+                for(let i=1; i<=pData.wardCount; i++) {
                     wSelect.innerHTML += `<option value="${i}">Ward ${i}</option>`;
                 }
-            } else {
-                wSelect.disabled = true;
-            }
-        }
-
-        function showCandidates() {
-            const p = document.getElementById('panchayat-select').value;
-            const w = document.getElementById('ward-select').value;
-            const statusArea = document.getElementById('ward-status');
-            const candidatesArea = document.getElementById('candidates-area');
-            const grid = document.getElementById('candidates-grid');
-            const resultsArea = document.getElementById('public-results-area');
-            
-            selectedCandidateId = null;
-
-            if (!p || !w) {
-                statusArea.classList.add('hidden');
-                candidatesArea.classList.add('hidden');
-                return;
             }
 
-            // Show Lottery/Reservation Status
-            const reservation = db.panchayats[p].reservations[w] || "General";
-            statusArea.innerText = `Ward ${w} Reservation Status: ${reservation}`;
-            statusArea.classList.remove('hidden');
+            function onWardChange() {
+                const pid = document.getElementById('select-panchayat').value;
+                const wid = document.getElementById('select-ward').value;
+                const infoArea = document.getElementById('ward-info-area');
+                const candSec = document.getElementById('candidates-section');
+                const grid = document.getElementById('candidates-grid');
+                
+                currentSelectedCandidate = null;
 
-            if (!db.settings.votingOpen) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; color: red;">Voting is currently closed by Admin.</div>`;
-                candidatesArea.classList.remove('hidden');
-                return;
+                if(!pid || !wid) {
+                    infoArea.classList.add('hidden');
+                    candSec.classList.add('hidden');
+                    return;
+                }
+
+                const wardKey = `${pid}_${wid}`;
+                const wardData = db.wards[wardKey];
+
+                // Check Database sync issue
+                if(!wardData) {
+                    alert("Database Error: Ward data missing. Admin needs to rebuild wards.");
+                    return;
+                }
+
+                // Show Info
+                document.getElementById('ward-reservation-text').innerText = wardData.reservation;
+                infoArea.classList.remove('hidden');
+
+                // Check Blocking / Voted Status / Global Status
+                const voter = db.voters[currentUserId];
+                if(voter.isBlocked) {
+                    candSec.classList.remove('hidden');
+                    grid.innerHTML = `<div class="flash flash-error" style="grid-column: 1/-1;">Your account is blocked by the Admin.</div>`;
+                    document.getElementById('btn-submit-vote').classList.add('hidden');
+                    return;
+                }
+
+                if(!db.settings.votingOpen) {
+                    candSec.classList.remove('hidden');
+                    grid.innerHTML = `<div class="flash flash-warn" style="grid-column: 1/-1;">Voting is closed.</div>`;
+                    document.getElementById('btn-submit-vote').classList.add('hidden');
+                    return;
+                }
+
+                if(voter.hasVoted) {
+                    candSec.classList.remove('hidden');
+                    grid.innerHTML = `<div class="flash flash-success" style="grid-column: 1/-1;">You have already successfully cast your vote. Multiple voting is not allowed.</div>`;
+                    document.getElementById('btn-submit-vote').classList.add('hidden');
+                    renderPublicResults(wardKey);
+                    return;
+                }
+
+                // Show Candidates
+                document.getElementById('btn-submit-vote').classList.remove('hidden');
+                candSec.classList.remove('hidden');
+                
+                if(wardData.candidates.length === 0) {
+                    grid.innerHTML = `<div style="grid-column: 1/-1;" class="text-muted text-center p-4">No candidates nominated yet for this ward.</div>`;
+                    document.getElementById('btn-submit-vote').classList.add('hidden');
+                } else {
+                    grid.innerHTML = '';
+                    wardData.candidates.forEach(c => {
+                        const sym = SYMBOLS.find(s => s.id === c.symbol) || SYMBOLS[0];
+                        grid.innerHTML += `
+                            <div class="candidate-card" id="card-${c.id}" onclick="Portal.selectCandidate('${c.id}')">
+                                <div class="candidate-symbol">${sym.icon}</div>
+                                <div class="candidate-name">${c.name}</div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                renderPublicResults(wardKey);
             }
 
-            // Render Candidates
-            const candidates = db.panchayats[p].candidates[w] || [];
-            if (candidates.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1;">No candidates registered for this ward yet.</div>`;
-            } else {
-                grid.innerHTML = '';
-                candidates.forEach(c => {
-                    grid.innerHTML += `
-                        <div class="candidate-card" id="card-${c.id}" onclick="selectCandidate('${c.id}')">
-                            <h3>${c.name}</h3>
+            function selectCandidate(cid) {
+                currentSelectedCandidate = cid;
+                document.querySelectorAll('.candidate-card').forEach(el => el.classList.remove('selected'));
+                document.getElementById(`card-${cid}`).classList.add('selected');
+            }
+
+            function submitVote() {
+                if(!currentSelectedCandidate) return alert("कृपया पहले अपना उम्मीदवार चुनें (Please select a candidate).");
+                
+                const pid = document.getElementById('select-panchayat').value;
+                const wid = document.getElementById('select-ward').value;
+                const wardKey = `${pid}_${wid}`;
+                const wardData = db.wards[wardKey];
+
+                const candIndex = wardData.candidates.findIndex(c => c.id === currentSelectedCandidate);
+                if(candIndex > -1) {
+                    wardData.candidates[candIndex].votes = (wardData.candidates[candIndex].votes || 0) + 1;
+                    
+                    // Update Voter
+                    db.voters[currentUserId].hasVoted = true;
+                    db.voters[currentUserId].votedFor = { panchayat: pid, ward: wid, candidateId: currentSelectedCandidate };
+                    
+                    sysLog("Vote Cast", `Voter ${currentUserId} voted in ${wardKey}`);
+                    saveDB();
+                    
+                    alert("Your vote has been recorded successfully! धन्यवाद।");
+                    onWardChange(); // Refresh view
+                }
+            }
+
+            function renderPublicResults(wardKey) {
+                const resultsArea = document.getElementById('public-results-content');
+                if(!db.settings.showPublicResults) {
+                    resultsArea.innerHTML = '<p class="text-muted">Results are kept hidden by the election administration.</p>';
+                    return;
+                }
+                
+                const data = db.wards[wardKey];
+                if(!data || data.candidates.length === 0) {
+                    resultsArea.innerHTML = '<p class="text-muted">No data available.</p>';
+                    return;
+                }
+
+                // Sort by votes
+                const sorted = [...data.candidates].sort((a,b) => (b.votes||0) - (a.votes||0));
+                const maxVotes = sorted[0].votes || 1; // prevent div by zero
+                let html = '';
+
+                sorted.forEach((c, idx) => {
+                    const v = c.votes || 0;
+                    const pct = ((v / Math.max(1, getTotalVotes(wardKey))) * 100).toFixed(1);
+                    const barWidth = ((v / maxVotes) * 100).toFixed(1);
+                    const isWinner = idx === 0 && v > 0;
+                    
+                    html += `
+                        <div class="mb-2">
+                            <div class="flex-between">
+                                <strong>${c.name}</strong>
+                                <span>${v} votes (${pct}%)</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar ${isWinner ? 'winner' : ''}" style="width: ${barWidth}%"></div>
+                            </div>
                         </div>
                     `;
                 });
+                resultsArea.innerHTML = html;
             }
-            candidatesArea.classList.remove('hidden');
 
-            // Render Public Results if enabled
-            if (db.settings.showResultsPublicly) {
-                const votes = db.panchayats[p].votes[w] || {};
-                let resHTML = `<ul>`;
-                candidates.forEach(c => {
-                    resHTML += `<li>${c.name}: <strong>${votes[c.id] || 0} votes</strong></li>`;
+            function getTotalVotes(wardKey) {
+                const data = db.wards[wardKey];
+                if(!data) return 0;
+                return data.candidates.reduce((sum, c) => sum + (c.votes||0), 0);
+            }
+
+            // --- Navigation Logic ---
+            function toggleView(viewName) {
+                document.getElementById('view-public').classList.add('hidden');
+                document.getElementById('view-login').classList.add('hidden');
+                document.getElementById('view-admin').classList.add('hidden');
+                
+                document.getElementById('nav-btn-admin').classList.add('hidden');
+                document.getElementById('nav-btn-home').classList.add('hidden');
+
+                if(viewName === 'public') {
+                    document.getElementById('view-public').classList.remove('hidden');
+                    document.getElementById('nav-btn-admin').classList.remove('hidden');
+                    initPublicUI();
+                } else if(viewName === 'login') {
+                    document.getElementById('view-login').classList.remove('hidden');
+                    document.getElementById('nav-btn-home').classList.remove('hidden');
+                } else if(viewName === 'admin') {
+                    document.getElementById('view-admin').classList.remove('hidden');
+                    document.getElementById('nav-btn-home').classList.remove('hidden');
+                    buildAdminSidebar();
+                }
+            }
+
+            // --- Admin Logic ---
+            function loginAdmin() {
+                const input = document.getElementById('input-admin-password').value;
+                const err = document.getElementById('login-error');
+                if(input === db.settings.adminPassword) {
+                    err.classList.add('hidden');
+                    document.getElementById('input-admin-password').value = '';
+                    sysLog("Admin Login", `Admin logged in successfully.`);
+                    toggleView('admin');
+                } else {
+                    err.classList.remove('hidden');
+                    sysLog("Failed Login", `Failed admin login attempt.`);
+                }
+            }
+
+            function logoutAdmin() {
+                sysLog("Admin Logout", `Admin logged out.`);
+                toggleView('public');
+            }
+
+            function buildAdminSidebar() {
+                const sidebar = document.getElementById('admin-sidebar');
+                sidebar.innerHTML = '';
+                ADMIN_FEATURES.forEach((f, idx) => {
+                    sidebar.innerHTML += `
+                        <button class="menu-item" id="menu-${f.id}" onclick="Portal.loadAdminModule('${f.id}', '${f.method}')">
+                            ${f.title}
+                        </button>
+                    `;
                 });
-                resHTML += `</ul>`;
-                resultsArea.innerHTML = resHTML;
-            } else {
-                resultsArea.innerHTML = "Results are hidden by Admin until election ends.";
+                // Load first feature by default
+                loadAdminModule(ADMIN_FEATURES[0].id, ADMIN_FEATURES[0].method);
             }
-        }
 
-        function selectCandidate(id) {
-            selectedCandidateId = id;
-            document.querySelectorAll('.candidate-card').forEach(el => el.classList.remove('selected'));
-            document.getElementById(`card-${id}`).classList.add('selected');
-        }
-
-        function submitVote() {
-            if (!selectedCandidateId) return alert("Please select a candidate first.");
-            const p = document.getElementById('panchayat-select').value;
-            const w = document.getElementById('ward-select').value;
-            
-            if (!db.panchayats[p].votes[w]) db.panchayats[p].votes[w] = {};
-            if (!db.panchayats[p].votes[w][selectedCandidateId]) db.panchayats[p].votes[w][selectedCandidateId] = 0;
-            
-            db.panchayats[p].votes[w][selectedCandidateId]++;
-            saveDB();
-            
-            alert("Your vote has been successfully recorded!");
-            showCandidates(); // refresh
-        }
-
-        // --- 3. ADMIN PANEL LOGIC ---
-        const adminFeatures = [
-            "1. Update Ward Reservation (Lottery)",
-            "2. Add Candidate",
-            "3. Remove Candidate",
-            "4. Edit Candidate Details",
-            "5. Add Gov Notification",
-            "6. Remove Notification",
-            "7. Live Results Dashboard",
-            "8. Reset Ward Votes",
-            "9. Export Data (CSV)",
-            "10. Toggle Voting Status",
-            "11. Toggle Public Results",
-            "12. Manage Panchayat Setup",
-            "13. Admin Password Reset",
-            "14. System Logs",
-            "15. Manage Ward List",
-            "16. Upload Symbols (Coming Soon)",
-            "17. Data Backup (JSON)",
-            "18. Data Restore",
-            "19. Block/Unblock IP (Mock)",
-            "20. Factory Reset"
-        ];
-
-        function promptAdmin() {
-            const pass = prompt("Enter Admin Password:");
-            if (pass === db.settings.password) {
-                document.getElementById('villager-view').classList.add('hidden');
-                document.getElementById('admin-view').classList.remove('hidden');
-                loadAdminSidebar();
-            } else if (pass !== null) {
-                alert("Incorrect password.");
+            function loadAdminModule(featureId, method) {
+                // UI Highlight
+                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('selected'));
+                document.getElementById(`menu-${featureId}`).classList.add('selected');
+                
+                // Get Feature Details
+                const feature = ADMIN_FEATURES.find(f => f.id === featureId);
+                document.getElementById('admin-module-title').innerText = feature.title;
+                
+                // Execute Render Method Dynamically
+                const body = document.getElementById('admin-module-body');
+                body.innerHTML = ''; // clear
+                if(typeof AdminEngine[method] === 'function') {
+                    AdminEngine[method](body);
+                } else {
+                    body.innerHTML = `<p class="text-danger">Module ${method} not implemented yet.</p>`;
+                }
             }
-        }
 
-        function logoutAdmin() {
-            document.getElementById('admin-view').classList.add('hidden');
-            document.getElementById('villager-view').classList.remove('hidden');
-            renderNotifications();
-        }
-
-        function loadAdminSidebar() {
-            const sidebar = document.getElementById('admin-sidebar');
-            sidebar.innerHTML = '';
-            adminFeatures.forEach((f, index) => {
-                sidebar.innerHTML += `<button onclick="loadAdminTool(${index})" id="tool-btn-${index}">${f}</button>`;
+            // Modal Utility
+            let modalConfirmCallback = null;
+            function showModal(title, bodyText, confirmCallback) {
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-body').innerText = bodyText;
+                modalConfirmCallback = confirmCallback;
+                document.getElementById('global-modal').classList.remove('hidden');
+            }
+            function closeModal() {
+                document.getElementById('global-modal').classList.add('hidden');
+                modalConfirmCallback = null;
+            }
+            document.getElementById('modal-confirm-btn').addEventListener('click', () => {
+                if(modalConfirmCallback) modalConfirmCallback();
+                closeModal();
             });
-            loadAdminTool(0); // Load first tool
-        }
 
-        function loadAdminTool(index) {
-            document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tool-btn-${index}`).classList.add('active');
-            
-            const title = document.getElementById('admin-feature-title');
-            const body = document.getElementById('admin-feature-body');
-            title.innerText = adminFeatures[index];
-            body.innerHTML = ''; // clear
+            /**
+             * Dedicated Sub-module for Admin rendering to keep code organized.
+             */
+            const AdminEngine = {
+                // Utility for Ward Selection Dropdown in Admin
+                getWardSelectHTML(idPrefix) {
+                    let opts = `<option value="">-- Select Panchayat --</option>`;
+                    Object.values(db.panchayats).forEach(p => opts += `<option value="${p.id}">${p.name}</option>`);
+                    
+                    return `
+                        <div class="grid-2 mb-4">
+                            <div class="form-group">
+                                <label>Panchayat</label>
+                                <select id="${idPrefix}-p" class="form-control" onchange="Portal.AdminEngine.updateAdminWardSelect('${idPrefix}')">${opts}</select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ward</label>
+                                <select id="${idPrefix}-w" class="form-control"><option value="">-- Select Panchayat First --</option></select>
+                            </div>
+                        </div>
+                    `;
+                },
+                updateAdminWardSelect(idPrefix) {
+                    const pid = document.getElementById(`${idPrefix}-p`).value;
+                    const wSel = document.getElementById(`${idPrefix}-w`);
+                    if(!pid) { wSel.innerHTML = '<option value="">-- Select Panchayat First --</option>'; return; }
+                    let opts = '<option value="">-- Select Ward --</option>';
+                    for(let i=1; i<=db.panchayats[pid].wardCount; i++) opts += `<option value="${i}">Ward ${i}</option>`;
+                    wSel.innerHTML = opts;
+                },
 
-            // Feature 1: Update Lottery
-            if (index === 0) {
-                body.innerHTML = `
-                    <p>Update reservations post Sept 17/18 lottery results.</p>
-                    <label>Panchayat:</label> <select id="a-panchayat" onchange="renderAdminWardSelect()"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select>
-                    <label>Ward:</label> <select id="a-ward"></select>
-                    <label>New Reservation (e.g. SC Female, OBC, General):</label>
-                    <input type="text" id="a-res-val" placeholder="e.g., SC Woman">
-                    <button class="btn btn-primary" onclick="adminUpdateLottery()">Update Reservation permanently</button>
-                `;
-                renderAdminWardSelect();
-            }
-            // Feature 2: Add Candidate
-            else if (index === 1) {
-                body.innerHTML = `
-                    <label>Panchayat:</label> <select id="a-panchayat" onchange="renderAdminWardSelect()"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select>
-                    <label>Ward:</label> <select id="a-ward"></select>
-                    <label>Candidate Name:</label>
-                    <input type="text" id="a-cand-name" placeholder="Full Name">
-                    <button class="btn btn-primary" onclick="adminAddCandidate()">Add Candidate</button>
-                `;
-                renderAdminWardSelect();
-            }
-            // Feature 5: Add Notification
-            else if (index === 4) {
-                body.innerHTML = `
-                    <label>Notification Text:</label>
-                    <input type="text" id="a-notif-text" placeholder="Government update...">
-                    <button class="btn btn-primary" onclick="adminAddNotif()">Publish to Homepage</button>
-                `;
-            }
-            // Feature 7: Live Results
-            else if (index === 6) {
-                let html = `<h4>Morseem Votes</h4><ul>`;
-                for(let w=1; w<=13; w++){
-                    html += `<li>Ward ${w}: ` + JSON.stringify(db.panchayats["Morseem"].votes[w]||{}) + `</li>`;
+                // Feature 1: Update Lottery
+                renderF1(container) {
+                    container.innerHTML = `
+                        <p class="text-muted mb-4">Set the permanent reservation status (e.g., "SC Female", "OBC", "General") announced on Sept 17/18.</p>
+                        ${this.getWardSelectHTML('f1')}
+                        <div class="form-group">
+                            <label>New Reservation Status</label>
+                            <input type="text" id="f1-val" class="form-control" placeholder="e.g. OBC Woman">
+                        </div>
+                        <button class="btn btn-primary" onclick="Portal.AdminActions.doF1()">Save Reservation Permanently</button>
+                    `;
+                },
+
+                // Feature 2: Add Candidate
+                renderF2(container) {
+                    let symOpts = '';
+                    SYMBOLS.forEach(s => symOpts += `<option value="${s.id}">${s.icon} ${s.label}</option>`);
+                    container.innerHTML = `
+                        ${this.getWardSelectHTML('f2')}
+                        <div class="form-group">
+                            <label>Candidate Full Name</label>
+                            <input type="text" id="f2-name" class="form-control" placeholder="Enter name">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>Assign Election Symbol</label>
+                            <select id="f2-sym" class="form-control">${symOpts}</select>
+                        </div>
+                        <button class="btn btn-primary" onclick="Portal.AdminActions.doF2()">Register Candidate</button>
+                    `;
+                },
+
+                // Feature 3: Remove Candidate
+                renderF3(container) {
+                    container.innerHTML = `
+                        ${this.getWardSelectHTML('f3')}
+                        <button class="btn mb-4" onclick="Portal.AdminActions.loadF3Candidates()">Load Candidates</button>
+                        <div id="f3-list"></div>
+                    `;
+                },
+
+                // Feature 4: Edit Candidate
+                renderF4(container) {
+                    container.innerHTML = `
+                        ${this.getWardSelectHTML('f4')}
+                        <button class="btn mb-4" onclick="Portal.AdminActions.loadF4Candidates()">Load Candidates</button>
+                        <div id="f4-editor"></div>
+                    `;
+                },
+
+                // Feature 5: Add Gov Notification
+                renderF5(container) {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>Notification Text</label>
+                            <input type="text" id="f5-text" class="form-control" placeholder="Enter latest news or update">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>Alert Type</label>
+                            <select id="f5-type" class="form-control">
+                                <option value="flash-info">Blue (Information)</option>
+                                <option value="flash-warn">Yellow (Warning/Lottery)</option>
+                                <option value="flash-error">Red (Urgent/Closed)</option>
+                                <option value="flash-success">Green (Success)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="Portal.AdminActions.doF5()">Publish Alert</button>
+                    `;
+                },
+
+                // Feature 6: Remove Notification
+                renderF6(container) {
+                    let html = '<table><thead><tr><th>Text</th><th>Type</th><th>Action</th></tr></thead><tbody>';
+                    db.notifications.forEach((n, i) => {
+                        html += `<tr><td>${n.text}</td><td>${n.type}</td><td><button class="btn btn-danger" onclick="Portal.AdminActions.doF6(${i})">Delete</button></td></tr>`;
+                    });
+                    if(db.notifications.length===0) html += '<tr><td colspan="3">No notifications.</td></tr>';
+                    html += '</tbody></table>';
+                    container.innerHTML = html;
+                },
+
+                // Feature 7: Live Results Dashboard
+                renderF7(container) {
+                    let html = '<p class="text-muted mb-4">Live master overview of all wards.</p>';
+                    Object.values(db.panchayats).forEach(p => {
+                        html += `<h3>${p.name}</h3><div class="grid-3 mb-4">`;
+                        for(let i=1; i<=p.wardCount; i++) {
+                            const wKey = `${p.id}_${i}`;
+                            const wData = db.wards[wKey];
+                            const total = getTotalVotes(wKey);
+                            html += `<div class="box p-2"><div class="box-body" style="padding:10px;">
+                                <strong>Ward ${i}</strong><br>
+                                <small>${wData.reservation}</small><hr style="margin:5px 0;">`;
+                            if(wData.candidates.length === 0) html += `<small class="text-muted">No candidates.</small>`;
+                            wData.candidates.sort((a,b)=>(b.votes||0)-(a.votes||0)).forEach(c => {
+                                html += `<div class="flex-between" style="font-size:12px;"><span>${c.name}</span><strong>${c.votes||0}</strong></div>`;
+                            });
+                            html += `</div></div>`;
+                        }
+                        html += `</div>`;
+                    });
+                    container.innerHTML = html;
+                },
+
+                // Feature 8: Reset Ward Votes
+                renderF8(container) {
+                    container.innerHTML = `
+                        <p class="text-danger mb-4">Warning: This will set all candidate votes to 0 in the selected ward.</p>
+                        ${this.getWardSelectHTML('f8')}
+                        <button class="btn btn-danger" onclick="Portal.AdminActions.doF8()">Reset Votes to Zero</button>
+                    `;
+                },
+
+                // Feature 9: Export Data (CSV)
+                renderF9(container) {
+                    container.innerHTML = `
+                        <p class="mb-4">Export voting results for offline analysis (Excel compatible).</p>
+                        <button class="btn btn-blue" onclick="Portal.AdminActions.doF9()">Download Full CSV Report</button>
+                    `;
+                },
+
+                // Feature 10: Toggle Voting Status
+                renderF10(container) {
+                    const status = db.settings.votingOpen;
+                    container.innerHTML = `
+                        <div class="flash ${status ? 'flash-success' : 'flash-error'} mb-4">
+                            Current Status: <strong>${status ? 'VOTING OPEN' : 'VOTING CLOSED'}</strong>
+                        </div>
+                        <button class="btn ${status ? 'btn-danger' : 'btn-primary'}" onclick="Portal.AdminActions.doF10()">
+                            ${status ? 'Close Voting Portal' : 'Open Voting Portal'}
+                        </button>
+                    `;
+                },
+
+                // Feature 11: Toggle Public Results
+                renderF11(container) {
+                    const status = db.settings.showPublicResults;
+                    container.innerHTML = `
+                        <div class="flash ${status ? 'flash-success' : 'flash-warn'} mb-4">
+                            Public Results Display: <strong>${status ? 'VISIBLE TO ALL' : 'HIDDEN FROM PUBLIC'}</strong>
+                        </div>
+                        <button class="btn ${status ? 'btn-danger' : 'btn-primary'}" onclick="Portal.AdminActions.doF11()">
+                            ${status ? 'Hide Results from Villagers' : 'Show Results to Villagers'}
+                        </button>
+                    `;
+                },
+
+                // Feature 12: Manage Panchayat Setup
+                renderF12(container) {
+                    container.innerHTML = `
+                        <p class="text-muted mb-4">Edit the names of the Gram Panchayats.</p>
+                        <div class="form-group">
+                            <label>Morseem Internal Name</label>
+                            <input type="text" id="f12-m" class="form-control" value="${db.panchayats['morseem'].name}">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>Naya Morseem Internal Name</label>
+                            <input type="text" id="f12-nm" class="form-control" value="${db.panchayats['naya_morseem'].name}">
+                        </div>
+                        <button class="btn btn-primary" onclick="Portal.AdminActions.doF12()">Save Names</button>
+                    `;
+                },
+
+                // Feature 13: Admin Password Reset
+                renderF13(container) {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="f13-old" class="form-control">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>New Password</label>
+                            <input type="password" id="f13-new" class="form-control">
+                        </div>
+                        <button class="btn btn-danger" onclick="Portal.AdminActions.doF13()">Update Password</button>
+                    `;
+                },
+
+                // Feature 14: System Logs
+                renderF14(container) {
+                    let html = '<div style="max-height: 400px; overflow-y:auto;"><table><thead><tr><th>Time</th><th>User/System</th><th>Action</th><th>Details</th></tr></thead><tbody>';
+                    db.logs.forEach(l => {
+                        html += `<tr><td style="font-size:11px;">${l.time}</td><td style="font-size:11px;">${l.user}</td><td>${l.action}</td><td style="font-size:11px;">${l.details}</td></tr>`;
+                    });
+                    if(db.logs.length === 0) html += '<tr><td colspan="4">No logs available.</td></tr>';
+                    html += '</tbody></table></div>';
+                    container.innerHTML = html;
+                },
+
+                // Feature 15: Manage Ward List (Add/Remove Ward structure)
+                renderF15(container) {
+                    container.innerHTML = `
+                        <p class="text-danger mb-4">Advanced: Changing total wards will rebuild ward structural data. Do not decrease count if votes exist in higher wards.</p>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Total Wards (Morseem) - Curr: ${db.panchayats['morseem'].wardCount}</label>
+                                <input type="number" id="f15-m" class="form-control" value="${db.panchayats['morseem'].wardCount}" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Wards (Naya Morseem) - Curr: ${db.panchayats['naya_morseem'].wardCount}</label>
+                                <input type="number" id="f15-nm" class="form-control" value="${db.panchayats['naya_morseem'].wardCount}" min="1">
+                            </div>
+                        </div>
+                        <button class="btn btn-danger mt-4" onclick="Portal.AdminActions.doF15()">Rebuild Structural Wards Array</button>
+                    `;
+                },
+
+                // Feature 16: Upload Symbols (Preview)
+                renderF16(container) {
+                    let html = '<p class="text-muted">Master Election Symbol Library available for assignment.</p><div class="grid-3">';
+                    SYMBOLS.forEach(s => {
+                        html += `<div class="box text-center p-2"><div style="font-size:32px;">${s.icon}</div><small>${s.label}</small></div>`;
+                    });
+                    html += `</div><p class="mt-4 text-muted"><em>Custom image upload feature via Base64 string processing is simulated here. Use standard defaults for best UI scaling on villager devices.</em></p>`;
+                    container.innerHTML = html;
+                },
+
+                // Feature 17: Data Backup (JSON Export)
+                renderF17(container) {
+                    container.innerHTML = `
+                        <p class="mb-4">Generate a complete snapshot of the entire database state (JSON).</p>
+                        <button class="btn btn-blue" onclick="Portal.AdminActions.doF17()">Download Backup.json</button>
+                    `;
+                },
+
+                // Feature 18: Data Restore (JSON Import)
+                renderF18(container) {
+                    container.innerHTML = `
+                        <p class="text-danger mb-4">Warning: Uploading a database file will completely overwrite current data.</p>
+                        <div class="form-group">
+                            <input type="file" id="f18-file" class="form-control" accept=".json">
+                        </div>
+                        <button class="btn btn-danger" onclick="Portal.AdminActions.doF18()">Restore Database Structure</button>
+                    `;
+                },
+
+                // Feature 19: Block/Unblock Users
+                renderF19(container) {
+                    let html = `
+                        <div class="flex-between mb-4">
+                            <p class="text-muted m-0">Manage fraudulent IDs</p>
+                            <button class="btn" onclick="Portal.loadAdminModule('f19', 'renderF19')">Refresh</button>
+                        </div>
+                        <table><thead><tr><th>Voter ID</th><th>Status</th><th>Action</th></tr></thead><tbody>
+                    `;
+                    Object.keys(db.voters).forEach(vid => {
+                        const v = db.voters[vid];
+                        html += `<tr>
+                            <td style="font-family:monospace;">${vid}</td>
+                            <td>${v.isBlocked ? '<span class="text-danger">Blocked</span>' : '<span class="text-success">Active</span>'}</td>
+                            <td>
+                                <button class="btn ${v.isBlocked ? 'btn-primary' : 'btn-danger'}" onclick="Portal.AdminActions.doF19('${vid}', ${!v.isBlocked})">
+                                    ${v.isBlocked ? 'Unblock' : 'Block'}
+                                </button>
+                            </td>
+                        </tr>`;
+                    });
+                    html += '</tbody></table>';
+                    container.innerHTML = html;
+                },
+
+                // Feature 20: Factory Reset
+                renderF20(container) {
+                    container.innerHTML = `
+                        <div class="flash flash-error mb-4">
+                            <strong>DANGER ZONE</strong><br>
+                            This will irrevocably delete ALL votes, ALL candidates, and revert settings to factory defaults.
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>Type "RESET" to enable button</label>
+                            <input type="text" id="f20-confirm" class="form-control" onkeyup="document.getElementById('f20-btn').disabled = (this.value !== 'RESET')">
+                        </div>
+                        <button id="f20-btn" class="btn btn-danger btn-block" disabled onclick="Portal.AdminActions.doF20()">WIPE ALL DATA PERMANENTLY</button>
+                    `;
                 }
-                html += `</ul><h4>Naya Morseem Votes</h4><ul>`;
-                for(let w=1; w<=11; w++){
-                    html += `<li>Ward ${w}: ` + JSON.stringify(db.panchayats["NayaMorseem"].votes[w]||{}) + `</li>`;
+            };
+
+            const AdminActions = {
+                getWardKey(pId, wId) {
+                    if(!pId || !wId) { alert("Please select both Panchayat and Ward."); return null; }
+                    return `${pId}_${wId}`;
+                },
+
+                doF1() {
+                    const key = this.getWardKey(document.getElementById('f1-p').value, document.getElementById('f1-w').value);
+                    if(!key) return;
+                    const val = document.getElementById('f1-val').value;
+                    if(!val) return alert("Enter reservation value.");
+                    db.wards[key].reservation = val;
+                    sysLog("Update Reservation", `Ward ${key} set to ${val}`);
+                    saveDB();
+                    alert("Reservation permanently updated.");
+                    document.getElementById('f1-val').value = '';
+                },
+
+                doF2() {
+                    const key = this.getWardKey(document.getElementById('f2-p').value, document.getElementById('f2-w').value);
+                    if(!key) return;
+                    const name = document.getElementById('f2-name').value;
+                    const sym = document.getElementById('f2-sym').value;
+                    if(!name) return alert("Enter candidate name.");
+                    
+                    const cid = 'cand_' + Date.now().toString(36);
+                    db.wards[key].candidates.push({ id: cid, name: name, symbol: sym, votes: 0 });
+                    sysLog("Add Candidate", `Added ${name} to ${key}`);
+                    saveDB();
+                    alert("Candidate Added Successfully!");
+                    document.getElementById('f2-name').value = '';
+                },
+
+                loadF3Candidates() {
+                    const key = this.getWardKey(document.getElementById('f3-p').value, document.getElementById('f3-w').value);
+                    if(!key) return;
+                    const cands = db.wards[key].candidates;
+                    let html = '<ul style="list-style:none; padding:0;">';
+                    cands.forEach(c => {
+                        html += `<li class="flex-between mb-2 p-2" style="border:1px solid #ccc; border-radius:4px;">
+                            <span>${c.name}</span>
+                            <button class="btn btn-danger" onclick="Portal.AdminActions.doF3('${key}', '${c.id}')">Remove</button>
+                        </li>`;
+                    });
+                    if(cands.length===0) html += '<li>No candidates found.</li>';
+                    html += '</ul>';
+                    document.getElementById('f3-list').innerHTML = html;
+                },
+
+                doF3(wardKey, candId) {
+                    showModal("Delete Candidate", "Are you sure? Their votes will be lost forever.", () => {
+                        db.wards[wardKey].candidates = db.wards[wardKey].candidates.filter(c => c.id !== candId);
+                        sysLog("Remove Candidate", `Removed candidate ${candId} from ${wardKey}`);
+                        saveDB();
+                        this.loadF3Candidates(); // Refresh
+                    });
+                },
+
+                loadF4Candidates() {
+                    const key = this.getWardKey(document.getElementById('f4-p').value, document.getElementById('f4-w').value);
+                    if(!key) return;
+                    const cands = db.wards[key].candidates;
+                    let html = '';
+                    cands.forEach(c => {
+                        html += `
+                        <div class="box p-2 mb-2">
+                            <div class="form-group"><input type="text" id="edit-n-${c.id}" class="form-control" value="${c.name}"></div>
+                            <div class="flex-between">
+                                <span>Current Votes: ${c.votes||0}</span>
+                                <button class="btn btn-primary" onclick="Portal.AdminActions.doF4('${key}', '${c.id}')">Save Changes</button>
+                            </div>
+                        </div>`;
+                    });
+                    if(cands.length===0) html += '<p>No candidates found.</p>';
+                    document.getElementById('f4-editor').innerHTML = html;
+                },
+
+                doF4(wardKey, candId) {
+                    const newName = document.getElementById(`edit-n-${candId}`).value;
+                    const cand = db.wards[wardKey].candidates.find(c => c.id === candId);
+                    if(cand) {
+                        cand.name = newName;
+                        sysLog("Edit Candidate", `Updated candidate ${candId} name to ${newName}`);
+                        saveDB();
+                        alert("Details updated.");
+                    }
+                },
+
+                doF5() {
+                    const txt = document.getElementById('f5-text').value;
+                    const type = document.getElementById('f5-type').value;
+                    if(!txt) return alert("Enter text");
+                    db.notifications.push({ id: Date.now(), text: txt, type: type });
+                    sysLog("Add Notification", `Published: ${txt.substring(0,20)}...`);
+                    saveDB();
+                    alert("Notification Published.");
+                    document.getElementById('f5-text').value = '';
+                },
+
+                doF6(index) {
+                    db.notifications.splice(index, 1);
+                    sysLog("Remove Notification", `Removed notification at idx ${index}`);
+                    saveDB();
+                    loadAdminModule('f6', 'renderF6');
+                },
+
+                doF8() {
+                    const key = this.getWardKey(document.getElementById('f8-p').value, document.getElementById('f8-w').value);
+                    if(!key) return;
+                    showModal("Reset Votes", `Set all votes for ${key} to 0?`, () => {
+                        db.wards[key].candidates.forEach(c => c.votes = 0);
+                        sysLog("Reset Votes", `Reset votes in ${key}`);
+                        saveDB();
+                        alert(`Votes for ${key} reset to 0.`);
+                    });
+                },
+
+                doF9() {
+                    let csv = "Panchayat,Ward,Candidate,Votes\n";
+                    Object.values(db.panchayats).forEach(p => {
+                        for(let i=1; i<=p.wardCount; i++) {
+                            const wKey = `${p.id}_${i}`;
+                            const wData = db.wards[wKey];
+                            if(wData && wData.candidates.length > 0) {
+                                wData.candidates.forEach(c => {
+                                    csv += `"${p.name}","Ward ${i}","${c.name}",${c.votes||0}\n`;
+                                });
+                            }
+                        }
+                    });
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Election_Data_${new Date().toISOString().split('T')[0]}.csv`;
+                    a.click();
+                    sysLog("Export CSV", "Admin downloaded CSV report.");
+                },
+
+                doF10() {
+                    db.settings.votingOpen = !db.settings.votingOpen;
+                    sysLog("Toggle Voting", `Voting set to ${db.settings.votingOpen}`);
+                    saveDB();
+                    loadAdminModule('f10', 'renderF10');
+                },
+
+                doF11() {
+                    db.settings.showPublicResults = !db.settings.showPublicResults;
+                    sysLog("Toggle Results", `Public results set to ${db.settings.showPublicResults}`);
+                    saveDB();
+                    loadAdminModule('f11', 'renderF11');
+                },
+
+                doF12() {
+                    const m = document.getElementById('f12-m').value;
+                    const nm = document.getElementById('f12-nm').value;
+                    db.panchayats['morseem'].name = m;
+                    db.panchayats['naya_morseem'].name = nm;
+                    sysLog("Manage Panchayat", "Updated panchayat names.");
+                    saveDB();
+                    alert("Names updated.");
+                },
+
+                doF13() {
+                    const oldP = document.getElementById('f13-old').value;
+                    const newP = document.getElementById('f13-new').value;
+                    if(oldP !== db.settings.adminPassword) return alert("Incorrect current password.");
+                    if(newP.length < 5) return alert("New password too short.");
+                    db.settings.adminPassword = newP;
+                    sysLog("Password Reset", "Admin password changed.");
+                    saveDB();
+                    alert("Password successfully updated. Do not forget it.");
+                    document.getElementById('f13-old').value = '';
+                    document.getElementById('f13-new').value = '';
+                },
+
+                doF15() {
+                    const mw = parseInt(document.getElementById('f15-m').value);
+                    const nmw = parseInt(document.getElementById('f15-nm').value);
+                    if(isNaN(mw) || isNaN(nmw) || mw < 1 || nmw < 1) return alert("Invalid numbers");
+                    
+                    showModal("Rebuild Wards Array", "This changes the structure. Continue?", () => {
+                        db.panchayats['morseem'].wardCount = mw;
+                        db.panchayats['naya_morseem'].wardCount = nmw;
+                        
+                        // Ensure entries exist
+                        Object.values(db.panchayats).forEach(p => {
+                            for(let i=1; i<=p.wardCount; i++) {
+                                const k = `${p.id}_${i}`;
+                                if(!db.wards[k]) db.wards[k] = { reservation: "Pending Lottery", candidates: [] };
+                            }
+                        });
+                        sysLog("Manage Wards", `Updated counts to M:${mw}, NM:${nmw}`);
+                        saveDB();
+                        alert("Structure updated.");
+                    });
+                },
+
+                doF17() {
+                    const dataStr = JSON.stringify(db, null, 2);
+                    const blob = new Blob([dataStr], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Backup_${new Date().getTime()}.json`;
+                    a.click();
+                    sysLog("Backup JSON", "Admin downloaded JSON backup.");
+                },
+
+                doF18() {
+                    const fileInput = document.getElementById('f18-file');
+                    if(fileInput.files.length === 0) return alert("Select a file.");
+                    
+                    const file = fileInput.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const newDb = JSON.parse(e.target.result);
+                            if(!newDb.settings || !newDb.wards) throw new Error("Invalid schema");
+                            showModal("Restore DB", "Overwrite current system state?", () => {
+                                db = newDb;
+                                saveDB();
+                                sysLog("Restore JSON", "Admin restored DB from file.");
+                                alert("Database successfully restored! Reloading...");
+                                location.reload();
+                            });
+                        } catch(err) {
+                            alert("Invalid JSON file or unsupported schema.");
+                        }
+                    };
+                    reader.readAsText(file);
+                },
+
+                doF19(voterId, blockStatus) {
+                    if(db.voters[voterId]) {
+                        db.voters[voterId].isBlocked = blockStatus;
+                        sysLog("Block User", `User ${voterId} block status: ${blockStatus}`);
+                        saveDB();
+                        loadAdminModule('f19', 'renderF19'); // refresh
+                    }
+                },
+
+                doF20() {
+                    showModal("FACTORY RESET", "THIS CANNOT BE UNDONE. ALL DATA WILL BE DELETED.", () => {
+                        localStorage.removeItem('panchayatDbData_v1');
+                        localStorage.removeItem('panchayat_voter_id');
+                        alert("System Reset Complete. Portal will now reload.");
+                        location.reload();
+                    });
                 }
-                html += `</ul>`;
-                body.innerHTML = html;
-            }
-            // Feature 10: Toggle Voting Status
-            else if (index === 9) {
-                body.innerHTML = `
-                    <p>Voting is currently: <b>${db.settings.votingOpen ? 'OPEN' : 'CLOSED'}</b></p>
-                    <button class="btn ${db.settings.votingOpen ? 'btn-danger' : 'btn-success'}" onclick="adminToggleVoting()">Toggle Status</button>
-                `;
-            }
-            // Feature 20: Factory Reset
-            else if (index === 19) {
-                body.innerHTML = `
-                    <p style="color:red">Warning: This will delete ALL candidates, votes, and settings permanently.</p>
-                    <button class="btn btn-danger" onclick="adminResetAll()">WIPE DATABASE</button>
-                `;
-            }
-            else {
-                body.innerHTML = `<p class="alert">Feature UI for "${adminFeatures[index]}" is structurally prepared in the backend. Select Lottery Update or Add Candidate to test core mechanics.</p>`;
-            }
-        }
+            };
 
-        // Admin Action Functions
-        function renderAdminWardSelect() {
-            const p = document.getElementById('a-panchayat').value;
-            const wSelect = document.getElementById('a-ward');
-            wSelect.innerHTML = '';
-            const total = db.panchayats[p].wards;
-            for (let i = 1; i <= total; i++) {
-                wSelect.innerHTML += `<option value="${i}">Ward ${i}</option>`;
-            }
-        }
+            // Public Exposure of internal structures for DOM events
+            return {
+                init: loadDB,
+                toggleView: toggleView,
+                onPanchayatChange: onPanchayatChange,
+                onWardChange: onWardChange,
+                selectCandidate: selectCandidate,
+                submitVote: submitVote,
+                loginAdmin: loginAdmin,
+                logoutAdmin: logoutAdmin,
+                loadAdminModule: loadAdminModule,
+                closeModal: closeModal,
+                AdminEngine: AdminEngine,
+                AdminActions: AdminActions
+            };
+        })();
 
-        function adminUpdateLottery() {
-            const p = document.getElementById('a-panchayat').value;
-            const w = document.getElementById('a-ward').value;
-            const val = document.getElementById('a-res-val').value;
-            if(!val) return alert("Enter reservation status.");
-            db.panchayats[p].reservations[w] = val;
-            saveDB();
-            alert(`Ward ${w} reservation saved as: ${val}`);
-        }
-
-        function adminAddCandidate() {
-            const p = document.getElementById('a-panchayat').value;
-            const w = document.getElementById('a-ward').value;
-            const name = document.getElementById('a-cand-name').value;
-            if(!name) return alert("Enter name.");
-            const id = 'c_' + Date.now();
-            if(!db.panchayats[p].candidates[w]) db.panchayats[p].candidates[w] = [];
-            db.panchayats[p].candidates[w].push({id: id, name: name});
-            if(!db.panchayats[p].votes[w]) db.panchayats[p].votes[w] = {};
-            db.panchayats[p].votes[w][id] = 0;
-            saveDB();
-            alert("Candidate added permanently.");
-            document.getElementById('a-cand-name').value = '';
-        }
-
-        function adminAddNotif() {
-            const text = document.getElementById('a-notif-text').value;
-            if(!text) return;
-            db.notifications.push({ id: Date.now(), text: text, type: "alert" });
-            saveDB();
-            alert("Notification published!");
-        }
-
-        function adminToggleVoting() {
-            db.settings.votingOpen = !db.settings.votingOpen;
-            saveDB();
-            loadAdminTool(9); // reload tab
-        }
-
-        function adminResetAll() {
-            if(confirm("Are you sure? This cannot be undone.")) {
-                localStorage.removeItem('votingDB');
-                alert("Database wiped. Reloading page...");
-                location.reload();
-            }
-        }
-
-        // Initialize App
-        renderNotifications();
+        // Bootstrap App
+        window.onload = () => {
+            Portal.init();
+            Portal.toggleView('public');
+        };
     </script>
 </body>
 </html>
