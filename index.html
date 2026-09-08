@@ -200,7 +200,7 @@
                         </span>
                     </h3>
                     <div id="live-results-container" class="space-y-3">
-                        <p class="text-xs text-slate-500 text-center py-4" data-en="Select a Village above to view live analytics across its wards." data-hi="गाँव के वार्डों का लाइव विश्लेषण देखने ਲਈ ऊपर कोई ग्राम पंचायत चुनें।">
+                        <p class="text-xs text-slate-500 text-center py-4" data-en="Select a Village above to view live analytics across its wards." data-hi="गाँव के वार्डों का लाइव विश्लेषण देखने के लिए ऊपर कोई ग्राम पंचायत चुनें।">
                             Select a Village above to view live analytics across its wards.
                         </p>
                     </div>
@@ -372,7 +372,7 @@
             <p>&copy; 2026 Gram Panchayat Digital Portal. <span data-en="Rule: One Person, One Vote per Village." data-hi="नियम: एक व्यक्ति, एक गाँव में एक वोट।">Rule: One Person, One Vote per Village.</span></p>
             <div class="flex items-center space-x-5">
                 <span class="hover:text-white cursor-pointer" onclick="openAdminLoginModal()" data-en="Admin Dashboard" data-hi="एडमिन डैशबोर्ड">Admin Dashboard</span>
-                <span class="hover:text-white cursor-pointer" onclick="openDirectoryModal()" data-en="Directory" data-hi="डिफ़ेक्ट्री">Directory</span>
+                <span class="hover:text-white cursor-pointer" onclick="openDirectoryModal()" data-en="Directory" data-hi="डायरेक्ट्री">Directory</span>
             </div>
         </div>
     </footer>
@@ -406,7 +406,7 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD CONTAINER (30 FULLY FUNCTIONAL TOOLS) / एडमिन डैशबोर्ड (30 सुरक्षित टूल्स) -->
+    <!-- ADMIN DASHBOARD CONTAINER (30 FULLY FUNCTIONAL TOOLS WITH SUBSECTIONS, NO TRUE/FALSE AUTO-RESET UI) -->
     <div id="admin-dashboard-container" class="fixed inset-0 bg-slate-900 z-50 hidden flex flex-col text-slate-100 overflow-hidden">
         <div class="bg-slate-950 px-5 py-3 border-b border-slate-800 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -414,15 +414,11 @@
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
                 <div>
-                    <h2 class="font-bold text-sm text-white" data-en="Master Control Center – 30 Safe Admin Tools (No True/False Reset UI)" data-hi="मास्टर कंट्रोल सेंटर – 30 सुरक्षित एडमिन टूल्स">Master Control Center – 30 Fully Functional Admin Tools</h2>
-                    <p class="text-[10px] text-slate-400" data-en="Permanent Persistent Database Control" data-hi="स्थायी डेटाबेस नियंत्रण">Permanent Persistent Database Control</p>
+                    <h2 class="font-bold text-sm text-white" data-en="Master Control Center – 30 Secure Admin Tools" data-hi="मास्टर कंट्रोल सेंटर – 30 सुरक्षित एडमिन टूल्स">Master Control Center – 30 Secure Admin Tools</h2>
+                    <p class="text-[10px] text-slate-400" data-en="Permanent Persistent Database Control with Safe Subsections" data-hi="सुरक्षित सबवेक्शन और स्थायी डेटाबेस नियंत्रण">Permanent Persistent Database Control with Safe Subsections</p>
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <button onclick="exportFullDatabaseJSON()" class="bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5">
-                    <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-                    <span data-en="Export JSON" data-hi="जेसन एक्सपोर्ट करें">Export JSON</span>
-                </button>
                 <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-500 text-[10px] font-semibold px-3 py-1.5 rounded-lg transition shadow">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> <span data-en="Exit" data-hi="बाहर निकलें">Exit</span>
                 </button>
@@ -475,7 +471,7 @@
             }
         };
 
-        const STORAGE_KEY = "MORSEEM_UNIFIED_DB_CLEAN_v9_VILLAGE";
+        const STORAGE_KEY = "MORSEEM_UNIFIED_DB_CLEAN_v10_VILLAGE_FIXED";
 
         function getDeviceFingerprint() {
             let fp = localStorage.getItem("MORSEEM_DEVICE_FP");
@@ -582,7 +578,7 @@
                 }
             });
             document.getElementById("lang-btn-text").innerText = currentLanguage === "en" ? "हिन्दी" : "English";
-            onUserPanchayatChange(); // Refresh village candidates view with language
+            onUserPanchayatChange();
         }
 
         function renderGovNotificationTicker() {
@@ -656,7 +652,6 @@
                 }
             }
 
-            // Display Village Summary
             summaryText.innerText = currentLanguage === "hi" 
                 ? `गाँव: ${panchayatObj.name} | कुल वार्ड: ${panchayatObj.totalWards} | कुल पंजीकृत उम्मीदवार: ${allVillageCandidates.length}`
                 : `Village: ${panchayatObj.name} | Total Wards: ${panchayatObj.totalWards} | Total Registered Candidates: ${allVillageCandidates.length}`;
@@ -683,7 +678,6 @@
                 allVillageCandidates.forEach((c, index) => {
                     const avatarUrl = c.personImage ? c.personImage : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
                     const signUrl = c.votingSign ? c.votingSign : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80';
-                    const currentVotes = panchayatObj.wardsData[c.wardNo]?.votes[c.id] || 0;
 
                     candidatesGrid.innerHTML += `
                         <div onclick="selectUserCandidate('${c.id}')" id="cand-card-${c.id}" class="border border-slate-200 bg-slate-50 hover:bg-blue-50/50 p-4 rounded-xl cursor-pointer transition flex flex-col justify-between shadow-sm relative">
@@ -710,7 +704,7 @@
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 mb-2 bg-white p-2.5 rounded-lg border border-slate-200">
-                                    <div><b>District:</b> ${escapeHtml(c.districtName || "Jalore")}</div>
+                                    <div><b>District:</b> Jalore</div>
                                     <div><b>Panchayat:</b> ${escapeHtml(pKey)}</div>
                                     <div><b>Gender:</b> ${escapeHtml(c.gender || "N/A")}</div>
                                     <div><b>Age:</b> ${escapeHtml(c.age || "N/A")}</div>
@@ -732,7 +726,6 @@
             if (!pKey) return;
             const panchayatObj = db.panchayats[pKey];
 
-            // Highlight selected card across all wards in this village
             for (let wNo = 1; wNo <= panchayatObj.totalWards; wNo++) {
                 const wardObj = panchayatObj.wardsData[wNo];
                 if (wardObj && wardObj.candidates) {
@@ -782,7 +775,6 @@
                     : `⚠️ Security Alert: This device has already cast a vote in Gram Panchayat ${pKey}.`);
             }
 
-            // Find which ward this candidate belongs to
             let targetWardNo = null;
             let targetCandidateObj = null;
             const panchayatObj = db.panchayats[pKey];
@@ -881,7 +873,7 @@
         }
 
         // ==========================================
-        // OTHER USER & ADMIN UTILITIES (Expanded 2000+ Lines Codebase)
+        // OTHER USER & ADMIN UTILITIES (30 SAFE SUBSECTION TOOLS)
         // ==========================================
         function openDirectoryModal() {
             const modal = document.getElementById("directory-modal");
@@ -948,7 +940,7 @@
                         report += `    - No candidates registered\n`;
                     } else {
                         w.candidates.forEach(c => {
-                            report += `    - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Cat: ${c.candidateCategory}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
+                            report += `    - [Sr ${c.srNo}] ${c.name} (${c.gender}, Age ${c.age}, Party: ${c.partyName}): ${w.votes[c.id] || 0} votes\n`;
                         });
                     }
                 }
@@ -997,7 +989,7 @@
                 resultsContainer.innerHTML += `
                     <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[11px]">
                         <div class="font-semibold text-slate-800">${escapeHtml(m.candidate.name)} (${escapeHtml(m.candidate.partyName || "")})</div>
-                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward} (Cat: ${escapeHtml(m.candidate.candidateCategory)})</div>
+                        <div class="text-slate-500">${m.panchayat} – Ward ${m.ward}</div>
                     </div>
                 `;
             });
@@ -1016,9 +1008,7 @@
                 d1.innerHTML += `<option value="${i}">Ward ${i}</option>`;
                 d2.innerHTML += `<option value="${i}">Ward ${i}</option>`;
             }
-            if (p.totalWards > 1) {
-                d2.value = "2";
-            }
+            if (p.totalWards > 1) d2.value = "2";
         }
 
         function runWardComparison() {
@@ -1122,7 +1112,7 @@
         }
 
         // ==========================================
-        // ADMIN FEATURES (30 FULLY FUNCTIONAL TOOLS)
+        // ADMIN FEATURES (30 FULLY FUNCTIONAL TOOLS WITH SUBSECTIONS)
         // ==========================================
         const adminFeaturesList = [
             "1. Update Ward Reservation (Lottery)",
@@ -1204,29 +1194,31 @@
 
             if (idx === 0) {
                 body.innerHTML = `
-                    <div class="space-y-3">
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-lot-p" onchange="renderAdminLotteryWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-lot-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Reservation Category</label><input type="text" id="adm-lot-val" placeholder="e.g., General / OBC / SC" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                        <button onclick="executeAdminUpdateLottery()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs">Save Reservation</button>
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 1.1: Lottery & Ward Reservation Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-lot-p" onchange="renderAdminLotteryWards()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-lot-w" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Reservation Category</label><input type="text" id="adm-lot-val" placeholder="e.g., General / OBC / SC" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="executeAdminUpdateLottery()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition">Save Reservation</button>
                     </div>`;
                 renderAdminLotteryWards();
             } else if (idx === 1) {
-                // Tool #2: Add Candidate with Gallery Files (Votes = 0)
+                // Tool #2: Add Candidate with Gallery Files (Votes = 0, No Duplication)
                 body.innerHTML = `
-                    <div class="space-y-3">
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-ac-p" onchange="renderAdminAddCandWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward No.</label><select id="adm-ac-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 2.1: Single Candidate Registration Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-ac-p" onchange="renderAdminAddCandWards()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward No.</label><select id="adm-ac-w" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
                         <div class="grid grid-cols-2 gap-2">
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Sr No.</label><input type="text" id="adm-ac-srno" value="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Name</label><input type="text" id="adm-ac-name" placeholder="Candidate Full Name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Sr No.</label><input type="text" id="adm-ac-srno" value="1" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Name</label><input type="text" id="adm-ac-name" placeholder="Candidate Full Name" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
                         </div>
                         <div class="grid grid-cols-3 gap-2">
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Gender</label><input type="text" id="adm-ac-gender" value="Male" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Age</label><input type="text" id="adm-ac-age" value="35" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
-                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Party / Symbol</label><input type="text" id="adm-ac-party" value="Independent" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Gender</label><input type="text" id="adm-ac-gender" value="Male" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Age</label><input type="text" id="adm-ac-age" value="35" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                            <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Party / Symbol</label><input type="text" id="adm-ac-party" value="Independent" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
                         </div>
-                        <div class="grid grid-cols-2 gap-3 bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <div class="grid grid-cols-2 gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
                             <div>
                                 <label class="block text-[10px] font-bold uppercase text-amber-400 mb-1">Person Photo (Gallery)</label>
                                 <input type="file" id="adm-ac-img-file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white">
@@ -1236,50 +1228,53 @@
                                 <input type="file" id="adm-ac-sign-file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-slate-950">
                             </div>
                         </div>
-                        <button onclick="executeAdminAddCandidateFromFile()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition">Add Candidate to Ward (Votes Start at 0)</button>
+                        <button onclick="executeAdminAddCandidateFromFile()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition">Add Single Candidate (Votes Start at 0)</button>
                     </div>`;
                 renderAdminAddCandWards();
             } else if (idx === 2) {
                 body.innerHTML = `
-                    <div class="space-y-3">
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-rc-p" onchange="renderAdminRemoveCandidates()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-rc-w" onchange="renderAdminRemoveCandidatesDropdown()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Candidate</label><select id="adm-rc-id" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <button onclick="executeAdminRemoveCandidate()" class="bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Delete Candidate</button>
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 3.1: Candidate Deletion Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-rc-p" onchange="renderAdminRemoveCandidates()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-rc-w" onchange="renderAdminRemoveCandidatesDropdown()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Candidate</label><select id="adm-rc-id" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
+                        <button onclick="executeAdminRemoveCandidate()" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Delete Selected Candidate</button>
                     </div>`;
                 renderAdminRemoveCandidates();
             } else if (idx === 3) {
                 body.innerHTML = `
-                    <div class="space-y-3 text-xs">
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 4.1: Candidate Edit Form</h4></div>
                         <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label>
-                        <select id="adm-ec-p" onchange="renderAdminEditCandidates()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white mb-2"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select>
+                        <select id="adm-ec-p" onchange="renderAdminEditCandidates()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white mb-2"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select>
                         <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label>
-                        <select id="adm-ec-w" onchange="renderAdminEditCandidatesList()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white mb-3"></select>
+                        <select id="adm-ec-w" onchange="renderAdminEditCandidatesList()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white mb-3"></select>
                         <div id="adm-ec-container" class="space-y-3"></div>
                     </div>`;
                 renderAdminEditCandidates();
             } else if (idx === 4) {
                 body.innerHTML = `
-                    <div class="space-y-3">
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Notification Text</label><textarea id="adm-notif-text" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea></div>
-                        <button onclick="executeAdminAddNotif()" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs">Publish Notification</button>
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 5.1: Gov Announcement Bulletin</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Notification Text</label><textarea id="adm-notif-text" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea></div>
+                        <button onclick="executeAdminAddNotif()" class="bg-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs">Publish Notification</button>
                     </div>`;
             } else if (idx === 5) {
-                let notifHtml = `<div class="space-y-2">`;
+                let notifHtml = `<div class="space-y-2 bg-slate-900 p-4 rounded-xl border border-slate-800"><div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 6.1: Active Notification Manager</h4></div>`;
                 db.notifications.forEach((n, i) => {
-                    notifHtml += `<div class="flex items-center justify-between bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-xs"><span class="text-slate-200">${escapeHtml(n.text)}</span><button onclick="executeAdminDelNotif(${i})" class="bg-rose-600 text-white px-2 py-1 rounded text-[10px]">Delete</button></div>`;
+                    notifHtml += `<div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs"><span class="text-slate-200">${escapeHtml(n.text)}</span><button onclick="executeAdminDelNotif(${i})" class="bg-rose-600 text-white px-2.5 py-1 rounded text-[10px]">Delete</button></div>`;
                 });
                 notifHtml += `</div>`;
                 body.innerHTML = notifHtml;
             } else if (idx === 6) {
-                let audit = `<div class="space-y-4">`;
+                let audit = `<div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800"><div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 7.1: Live Vote Audit Dashboard</h4></div>`;
                 for (let pKey of ["Morseem", "NayaMorseem"]) {
-                    audit += `<h4 class="font-bold text-xs text-amber-400">${db.panchayats[pKey].name}</h4>`;
+                    audit += `<h4 class="font-bold text-xs text-amber-400 mt-2">${db.panchayats[pKey].name}</h4>`;
                     for (let i = 1; i <= db.panchayats[pKey].totalWards; i++) {
                         const w = db.panchayats[pKey].wardsData[i];
-                        audit += `<div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-[11px] mb-1"><b>Ward ${i}:</b> `;
+                        audit += `<div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[11px] mb-1"><b>Ward ${i}:</b> `;
                         if (w.candidates.length === 0) audit += `<span class="text-slate-500 ml-2">No candidates</span>`;
-                        w.candidates.forEach(c => { audit += `<span class="ml-2 bg-slate-800 px-1.5 py-0.5 rounded">${escapeHtml(c.name)}: <b>${w.votes[c.id] || 0}</b></span>`; });
+                        w.candidates.forEach(c => { audit += `<span class="ml-2 bg-slate-900 px-1.5 py-0.5 rounded">${escapeHtml(c.name)}: <b>${w.votes[c.id] || 0}</b></span>`; });
                         audit += `</div>`;
                     }
                 }
@@ -1287,74 +1282,162 @@
                 body.innerHTML = audit;
             } else if (idx === 7) {
                 body.innerHTML = `
-                    <div class="space-y-3">
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-rv-p" onchange="renderAdminResetWards()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
-                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-rv-w" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
-                        <button onclick="executeAdminResetWardVotes()" class="bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Reset Ward Votes to 0</button>
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 8.1: Ward Vote Reset Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Village</label><select id="adm-rv-p" onchange="renderAdminResetWards()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><option value="Morseem">Morseem</option><option value="NayaMorseem">Naya Morseem</option></select></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Ward</label><select id="adm-rv-w" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></select></div>
+                        <button onclick="executeAdminResetWardVotes()" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Reset Ward Votes to 0</button>
                     </div>`;
                 renderAdminResetWards();
             } else if (idx === 8) {
-                body.innerHTML = `<div class="space-y-3"><p class="text-xs">Current Voting Status: <b class="${db.settings.votingEnabled ? "text-emerald-400" : "text-rose-400"}">${db.settings.votingEnabled ? "ENABLED" : "DISABLED"}</b></p><button onclick="executeAdminToggleVoting()" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Toggle Voting Status</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 9.1: Global Voting Control</h4></div>
+                        <p class="text-xs">Current Voting Status: <b class="${db.settings.votingEnabled ? "text-emerald-400" : "text-rose-400"}">${db.settings.votingEnabled ? "ENABLED" : "DISABLED"}</b></p>
+                        <button onclick="executeAdminToggleVoting()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Toggle Voting Status</button>
+                    </div>`;
             } else if (idx === 9) {
-                body.innerHTML = `<div class="space-y-3"><p class="text-xs">Public Results: <b class="${db.settings.publicResultsVisible ? "text-emerald-400" : "text-rose-400"}">${db.settings.publicResultsVisible ? "VISIBLE" : "HIDDEN"}</b></p><button onclick="executeAdminToggleResults()" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Toggle Results Visibility</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 10.1: Public Results Toggle</h4></div>
+                        <p class="text-xs">Public Results: <b class="${db.settings.publicResultsVisible ? "text-emerald-400" : "text-rose-400"}">${db.settings.publicResultsVisible ? "VISIBLE" : "HIDDEN"}</b></p>
+                        <button onclick="executeAdminToggleResults()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Toggle Results Visibility</button>
+                    </div>`;
             } else if (idx === 10) {
-                let sugHtml = `<div class="space-y-2">`;
+                let sugHtml = `<div class="space-y-2 bg-slate-900 p-4 rounded-xl border border-slate-800"><div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 11.1: Public Suggestions Viewer</h4></div>`;
                 if (db.suggestions.length === 0) sugHtml += `<p class="text-slate-400 text-xs">No suggestions.</p>`;
                 db.suggestions.forEach(s => {
-                    sugHtml += `<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs"><div class="text-amber-400 font-bold text-[10px]">${escapeHtml(s.date)}</div><p class="text-slate-200 mt-1">${escapeHtml(s.text)}</p></div>`;
+                    sugHtml += `<div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs"><div class="text-amber-400 font-bold text-[10px]">${escapeHtml(s.date)}</div><p class="text-slate-200 mt-1">${escapeHtml(s.text)}</p></div>`;
                 });
                 sugHtml += `</div>`;
                 body.innerHTML = sugHtml;
             } else if (idx === 11) {
-                body.innerHTML = `<button onclick="db.suggestions=[]; persistDB(); alert('Suggestions cleared.'); loadAdminToolContent(11);" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-semibold">Clear All Suggestions</button>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 12.1: Clear Suggestions Control</h4></div>
+                        <button onclick="db.suggestions=[]; persistDB(); alert('Suggestions cleared.'); loadAdminToolContent(11);" class="bg-rose-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold">Clear All Suggestions</button>
+                    </div>`;
             } else if (idx === 12) {
-                body.innerHTML = `<div class="space-y-3"><div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">New Password</label><input type="text" id="adm-new-pass" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div><button onclick="executeAdminChangePassword()" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Update Password</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 13.1: Master Password Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">New Password</label><input type="text" id="adm-new-pass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="executeAdminChangePassword()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Update Password</button>
+                    </div>`;
             } else if (idx === 13) {
-                exportFullDatabaseJSON();
-                body.innerHTML = `<p class="text-xs text-emerald-400">Database JSON exported successfully.</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 14.1: Secure JSON Export</h4></div>
+                        <p class="text-xs text-slate-300">Click below to explicitly generate and download database backup file.</p>
+                        <button onclick="exportFullDatabaseJSON()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Download Database JSON File</button>
+                    </div>`;
             } else if (idx === 14) {
-                body.innerHTML = `<div class="space-y-3"><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Paste JSON</label><textarea id="adm-import-json" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea><button onclick="executeAdminImportJSON()" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl text-xs">Restore Database</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 15.1: Database Import Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Paste JSON Backup</label><textarea id="adm-import-json" rows="5" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea></div>
+                        <button onclick="executeAdminImportJSON()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Restore Database</button>
+                    </div>`;
             } else if (idx === 15) {
-                if (confirm("Factory reset entire database?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 16.1: Factory Reset Control</h4></div>
+                        <button onclick="if(confirm('Factory reset entire database?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); }" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Factory Reset Entire Database</button>
+                    </div>`;
             } else if (idx === 16) {
-                let logs = `<div class="space-y-1.5 max-h-64 overflow-y-auto">`;
+                let logs = `<div class="space-y-2 bg-slate-900 p-4 rounded-xl border border-slate-800"><div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 17.1: Voter Verification Log View</h4></div><div class="max-h-64 overflow-y-auto space-y-1">`;
                 const keys = Object.keys(db.votersLog);
                 if (keys.length === 0) logs += `<p class="text-slate-400 text-xs">No voter logs.</p>`;
-                keys.forEach(k => { logs += `<div class="bg-slate-900 p-2 rounded text-[10px] font-mono text-slate-300">${escapeHtml(k)}</div>`; });
-                logs += `</div>`;
+                keys.forEach(k => { logs += `<div class="bg-slate-950 p-2 rounded text-[10px] font-mono text-slate-300">${escapeHtml(k)}</div>`; });
+                logs += `</div></div>`;
                 body.innerHTML = logs;
             } else if (idx === 17) {
-                db.votersLog = {}; db.villageVotedLog = {}; persistDB();
-                body.innerHTML = `<p class="text-xs text-emerald-400">Voter verification logs purged.</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 18.1: Purge Logs Control</h4></div>
+                        <button onclick="db.votersLog={}; db.villageVotedLog={}; persistDB(); alert('Voter verification logs purged.');" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Purge All Voter Verification Logs</button>
+                    </div>`;
             } else if (idx === 18) {
-                body.innerHTML = `<div class="space-y-3"><input type="text" id="adm-portal-title" value="${escapeHtml(db.settings.portalTitle)}" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><button onclick="db.settings.portalTitle=document.getElementById('adm-portal-title').value; persistDB(); alert('Title saved.');" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs">Save Title</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 19.1: Portal Title Config</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Portal Title</label><input type="text" id="adm-portal-title" value="${escapeHtml(db.settings.portalTitle)}" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="db.settings.portalTitle=document.getElementById('adm-portal-title').value; persistDB(); alert('Title saved.');" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Save Title</button>
+                    </div>`;
             } else if (idx === 19) {
-                body.innerHTML = `<div class="space-y-2"><button onclick="executeAdminBulkTemplate('General Open')" class="bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-semibold mr-2">Set All to General</button><button onclick="executeAdminBulkTemplate('Pending Lottery')" class="bg-amber-600 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-bold">Set All to Pending</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 20.1: Bulk Reservation Template</h4></div>
+                        <p class="text-xs text-slate-300">Quickly setup standard reservation templates across all wards.</p>
+                        <button onclick="executeAdminBulkTemplate('General Open')" class="bg-blue-600 text-white px-3 py-2 rounded-xl text-xs font-semibold mr-2">Set All Wards to General</button>
+                        <button onclick="executeAdminBulkTemplate('Pending Lottery')" class="bg-amber-600 text-slate-950 px-3 py-2 rounded-xl text-xs font-bold">Set All Wards to Pending</button>
+                    </div>`;
             } else if (idx === 20) {
-                generateGazetteSummary();
-                body.innerHTML = `<p class="text-xs text-emerald-400">Gazette Summary downloaded successfully.</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 21.1: Gazette Summary Export</h4></div>
+                        <button onclick="generateGazetteSummary()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Download Gazette Summary (.TXT)</button>
+                    </div>`;
             } else if (idx === 21) {
-                db.settings.maintenanceMode = !db.settings.maintenanceMode; persistDB();
-                body.innerHTML = `<p class="text-xs text-emerald-400">Maintenance mode toggled: ${db.settings.maintenanceMode}</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 22.1: Maintenance Mode</h4></div>
+                        <p class="text-xs">Current Maintenance Mode: <b class="${db.settings.maintenanceMode ? "text-rose-400" : "text-emerald-400"}">${db.settings.maintenanceMode}</b></p>
+                        <button onclick="db.settings.maintenanceMode=!db.settings.maintenanceMode; persistDB(); loadAdminToolContent(21);" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Toggle Maintenance Mode</button>
+                    </div>`;
             } else if (idx === 22) {
-                db.settings.votingEnabled = false; persistDB(); updateVotingBadge();
-                body.innerHTML = `<p class="text-xs text-rose-400">Emergency voting shutdown activated.</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 23.1: Emergency Shutdown</h4></div>
+                        <button onclick="db.settings.votingEnabled=false; persistDB(); updateVotingBadge(); alert('Emergency shutdown activated.');" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Trigger Emergency Shutdown</button>
+                    </div>`;
             } else if (idx === 23) {
-                body.innerHTML = `<div class="space-y-3"><input type="number" id="adm-morseem-wards" value="${db.panchayats.Morseem.totalWards}" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><button onclick="executeAdminSetWardCount('Morseem')" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs">Update Morseem Wards</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 24.1: Morseem Wards Manager</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Total Wards</label><input type="number" id="adm-morseem-wards" value="${db.panchayats.Morseem.totalWards}" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="executeAdminSetWardCount('Morseem')" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Update Morseem Wards</button>
+                    </div>`;
             } else if (idx === 24) {
-                body.innerHTML = `<div class="space-y-3"><input type="number" id="adm-nayamorseem-wards" value="${db.panchayats.NayaMorseem.totalWards}" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"><button onclick="executeAdminSetWardCount('NayaMorseem')" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs">Update Naya Morseem Wards</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 25.1: Naya Morseem Wards Manager</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Total Wards</label><input type="number" id="adm-nayamorseem-wards" value="${db.panchayats.NayaMorseem.totalWards}" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></div>
+                        <button onclick="executeAdminSetWardCount('NayaMorseem')" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Update Naya Morseem Wards</button>
+                    </div>`;
             } else if (idx === 25) {
-                body.innerHTML = `<div class="space-y-3"><textarea id="adm-bulletin-text" rows="3" placeholder="Admin bulletin..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs text-white"></textarea><button onclick="executeAdminAddBulletin()" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs">Post Bulletin</button></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 26.1: Custom Bulletin Form</h4></div>
+                        <div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Bulletin Text</label><textarea id="adm-bulletin-text" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea></div>
+                        <button onclick="executeAdminAddBulletin()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Post Bulletin</button>
+                    </div>`;
             } else if (idx === 26) {
                 const raw = localStorage.getItem(STORAGE_KEY) || "";
-                body.innerHTML = `<p class="text-xs text-emerald-400">Current Storage Size: ${Math.round((raw.length * 2) / 1024)} KB</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 27.1: Storage Diagnostic</h4></div>
+                        <p class="text-xs text-emerald-400">Current Storage Size: ${Math.round((raw.length * 2) / 1024)} KB</p>
+                    </div>`;
             } else if (idx === 27) {
-                simulateRandomVotes();
-                body.innerHTML = `<p class="text-xs text-emerald-400">Random test votes simulated successfully.</p>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 28.1: Test Vote Simulator</h4></div>
+                        <button onclick="simulateRandomVotes()" class="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Simulate 50 Random Test Votes</button>
+                    </div>`;
             } else if (idx === 28) {
-                if (confirm("Restore clean database?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 29.1: Restore Clean Data</h4></div>
+                        <button onclick="if(confirm('Restore clean database?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); }" class="bg-rose-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs">Restore Clean Demo Data</button>
+                    </div>`;
             } else if (idx === 29) {
-                body.innerHTML = `<div class="space-y-2 text-xs"><p class="text-emerald-400 font-bold">System Health: 100% Operational</p><p>Voters logged: ${Object.keys(db.votersLog).length}</p></div>`;
+                body.innerHTML = `
+                    <div class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div class="border-b border-slate-800 pb-2 mb-2"><h4 class="text-xs font-bold text-amber-400 uppercase">Subsection 30.1: System Health Diagnostic</h4></div>
+                        <p class="text-xs text-emerald-400 font-bold">System Health: 100% Operational</p>
+                        <p class="text-xs text-slate-300">Total Voters Logged: ${Object.keys(db.votersLog).length}</p>
+                    </div>`;
             }
         }
 
@@ -1389,6 +1472,7 @@
             }
         }
 
+        // Strict single candidate addition without duplicates
         function executeAdminAddCandidateFromFile() {
             const p = document.getElementById("adm-ac-p").value;
             const w = document.getElementById("adm-ac-w").value;
@@ -1403,7 +1487,7 @@
             let votingSignBase64 = 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&auto=format&fit=crop&q=80';
 
             const finalizeCandidateAdd = () => {
-                const cId = `c_${Date.now()}`;
+                const cId = `c_${Date.now()}_${Math.floor(Math.random()*1000)}`;
                 db.panchayats[p].wardsData[w].candidates.push({
                     id: cId, 
                     srNo: document.getElementById("adm-ac-srno").value, 
@@ -1420,7 +1504,7 @@
                 });
                 db.panchayats[p].wardsData[w].votes[cId] = 0; // Starts at 0
                 persistDB();
-                alert("Candidate successfully added with gallery photos! Votes initialized at 0.");
+                alert("Candidate successfully added! Votes initialized at 0.");
                 loadAdminToolContent(1);
             };
 
