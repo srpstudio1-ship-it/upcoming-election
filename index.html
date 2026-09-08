@@ -183,7 +183,7 @@
                             </button>
                         </div>
                         <p class="text-[10px] text-slate-500 mt-1">
-                            <i class="fa-solid fa-shield-halved text-blue-600"></i> Note: Voting in any ward locks this mobile number for the selected village. You cannot vote in other wards.
+                            <i class="fa-solid fa-shield-halved text-blue-600"></i> Anti-Fraud Active: One vote per device & mobile number for the whole village. Multi-ward voting is blocked.
                         </p>
                     </div>
                 </div>
@@ -476,11 +476,12 @@
     </div>
 
     <!-- =========================
-         JAVASCRIPT ENGINE (ONE VOTE PER VILLAGE PATCHED)
+         JAVASCRIPT ENGINE (FULLY MERGED & PATCHED)
          ========================= -->
     <script>
-        const STORAGE_KEY = "MORSEEM_PANCHAYAT_DB_ONE_VOTE_PER_VILLAGE_v6";
+        const STORAGE_KEY = "MORSEEM_PANCHAYAT_DB_ULTIMATE_v7";
 
+        // Hardware device fingerprinting to prevent multi-number voting spam from the same browser/device
         function getDeviceFingerprint() {
             let fp = localStorage.getItem("MORSEEM_DEVICE_FP");
             if (!fp) {
@@ -511,8 +512,8 @@
             suggestions: [],
             contactMessages: [],
             ratings: [],
-            votersLog: {}, // Tracks village-level votes per mobile/device
-            villageVotedLog: {}, // KEY: PanchayatName_Mobile OR PanchayatName_Device -> locks entire village!
+            votersLog: {}, 
+            villageVotedLog: {}, // Locks mobile & device per village so a person cannot vote in multiple wards
             panchayats: {
                 Morseem: {
                     name: "Morseem",
@@ -595,7 +596,7 @@
             const badge = document.getElementById("voting-badge-status");
             if (db.settings.votingEnabled) {
                 badge.className = "px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full";
-                badge.innerText = "Voting Open (One Vote per Village)";
+                badge.innerText = "Voting Open (One Person, One Vote)";
             } else {
                 badge.className = "px-2.5 py-0.5 bg-rose-100 text-rose-800 text-[10px] font-bold rounded-full";
                 badge.innerText = "Voting Closed";
@@ -705,7 +706,7 @@
         }
 
         // ========================================================
-        // STRICT RULE ENFORCEMENT: ONE VOTE PER VILLAGE (NO MULTI-WARD VOTING)
+        // STRICT RULE ENFORCEMENT: ONE VOTE PER VILLAGE (DEVICE + MOBILE LOCK)
         // ========================================================
         function castUserVote() {
             const pKey = document.getElementById("user-panchayat-select").value;
@@ -718,27 +719,25 @@
 
             const deviceFp = getDeviceFingerprint();
 
-            // Check if this mobile number has ALREADY voted anywhere in THIS village (across any ward)
+            // Check if this mobile or device has already voted in this village
             const villageMobileKey = `${pKey}_MOBILE_${mobile}`;
-            // Check if this device has ALREADY voted anywhere in THIS village (across any ward)
             const villageDeviceKey = `${pKey}_DEVICE_${deviceFp}`;
 
             if (db.villageVotedLog[villageMobileKey]) {
-                const existingVoteData = db.villageVotedLog[villageMobileKey];
-                return alert(`⚠️ Rule Violation: This mobile number has already cast a vote in Ward ${existingVoteData.ward} of Gram Panchayat ${pKey}. Under "One Person, One Vote per Village", you cannot vote in multiple wards.`);
+                const vData = db.villageVotedLog[villageMobileKey];
+                return alert(`⚠️ Rule Violation: This mobile number has already cast a vote in Ward ${vData.ward} of Gram Panchayat ${pKey}. One person, one vote per village rule applies.`);
             }
 
             if (db.villageVotedLog[villageDeviceKey]) {
-                const existingVoteData = db.villageVotedLog[villageDeviceKey];
-                return alert(`⚠️ Security Alert: This device has already cast a vote in Ward ${existingVoteData.ward} of Gram Panchayat ${pKey}. Multi-ward voting from the same device is blocked.`);
+                const vData = db.villageVotedLog[villageDeviceKey];
+                return alert(`⚠️ Security Alert: This device (phone/laptop/computer) has already cast a vote in Ward ${vData.ward} of Gram Panchayat ${pKey}. Multi-ward voting is blocked.`);
             }
 
-            // Record the vote in the specific ward
+            // Record Vote
             const wardObj = db.panchayats[pKey].wardsData[wNo];
             if (!wardObj.votes[selectedUserCandidateId]) wardObj.votes[selectedUserCandidateId] = 0;
             wardObj.votes[selectedUserCandidateId]++;
 
-            // Log vote globally
             const voteKey = `${pKey}_W${wNo}_${mobile}_${Date.now()}`;
             db.votersLog[voteKey] = {
                 time: new Date().toISOString(),
@@ -749,12 +748,12 @@
                 device: deviceFp
             };
 
-            // Lock this mobile number and device for the ENTIRE village
+            // Lock this mobile and device for the entire village
             db.villageVotedLog[villageMobileKey] = { ward: wNo, time: new Date().toISOString() };
             db.villageVotedLog[villageDeviceKey] = { ward: wNo, time: new Date().toISOString() };
 
             persistDB();
-            alert(`✅ Success! Your single vote for Gram Panchayat ${pKey} (Ward ${wNo}) has been securely recorded. Your number is now locked for this village.`);
+            alert(`✅ Success! Your single vote for Gram Panchayat ${pKey} (Ward ${wNo}) has been securely recorded.`);
             document.getElementById("voter-mobile-input").value = "";
             onUserWardChange();
         }
