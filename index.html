@@ -754,3 +754,565 @@
             </div>
         </div>
     </div>
+<!-- ========================================== -->
+    <!-- ENTERPRISE ADMIN DASHBOARD                 -->
+    <!-- ========================================== -->
+    <div id="admin-dashboard-container" class="fixed inset-0 bg-premium-nav z-[110] hidden flex flex-col text-slate-200">
+        
+        <!-- Admin Top Navigation Bar -->
+        <div class="h-16 bg-[#090E17] border-b border-slate-800/80 flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-md z-20">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <div class="w-8 h-8 bg-premium-gold/20 text-premium-gold rounded-lg flex items-center justify-center border border-premium-gold/30">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h2 class="font-bold text-sm tracking-widest uppercase text-white flex items-center">
+                        Master Console 
+                        <span class="bg-premium-gold text-premium-nav px-1.5 py-0.5 rounded-sm text-[9px] ml-2 font-black">ENT-v4.0</span>
+                    </h2>
+                    <p class="text-[9px] text-slate-500 font-mono uppercase">System Architect Mode</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <!-- Admin Gemini AI Button -->
+                <button onclick="UIManager.openAdminAiModal()" class="bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-lg text-xs font-bold transition-all border border-indigo-500/30 shadow-sm flex items-center shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+                    <i class="fa-solid fa-brain mr-2"></i> <span class="hidden sm:inline">Admin AI</span>
+                </button>
+
+                <span id="admin-time-display" class="hidden md:inline text-xs font-mono text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800"></span>
+                
+                <button onclick="AdminManager.logout()" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white px-3 py-2 rounded-lg text-xs font-bold transition-all border border-rose-500/20 shadow-sm flex items-center">
+                    <i class="fa-solid fa-power-off mr-1 sm:mr-2"></i> <span class="hidden sm:inline">Terminate</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex flex-grow overflow-hidden relative">
+            
+            <!-- Admin Sidebar (32+ Tools) -->
+            <div class="w-72 bg-[#0B1120] border-r border-slate-800/80 flex flex-col shrink-0 z-10 shadow-xl relative hidden md:flex transition-all" id="admin-sidebar">
+                
+                <!-- Sidebar Search -->
+                <div class="p-4 border-b border-slate-800/80 shrink-0">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 text-xs"></i>
+                        <input type="text" id="admin-tool-search" placeholder="Search 32+ Modules..." class="w-full bg-[#0F172A] border border-slate-700 rounded-lg py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-premium-gold transition" oninput="AdminManager.filterTools()">
+                    </div>
+                </div>
+
+                <!-- Tools List Container -->
+                <div class="flex-grow overflow-y-auto dark-scrollbar p-2 space-y-0.5" id="admin-sidebar-list">
+                    <!-- Populated via JavaScript -->
+                </div>
+                
+                <!-- Sidebar Footer -->
+                <div class="p-3 border-t border-slate-800/80 bg-[#090E17] shrink-0 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+                    <span>DB Size: <span id="db-size-indicator" class="text-emerald-400">0 KB</span></span>
+                    <span>Tools: 33</span>
+                </div>
+            </div>
+            
+            <!-- Main Admin Content Area -->
+            <div class="flex-grow bg-[#0F172A] p-4 sm:p-8 overflow-y-auto dark-scrollbar relative">
+                <!-- Decorative Background -->
+                <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="md:hidden mb-4 bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-bold border border-slate-700" onclick="document.getElementById('admin-sidebar').classList.toggle('hidden')">
+                    <i class="fa-solid fa-bars mr-2"></i> Toggle Tools Menu
+                </button>
+
+                <div class="max-w-4xl mx-auto relative z-10 animate-fade-in" id="admin-content-wrapper">
+                    
+                    <!-- Dynamic Tool Card -->
+                    <div class="bg-[#1E293B] border border-slate-700 rounded-3xl shadow-2xl relative overflow-hidden min-h-[60vh]">
+                        
+                        <!-- Top Accent Line -->
+                        <div class="h-1.5 w-full bg-gradient-to-r from-premium-gold via-yellow-400 to-premium-goldDark"></div>
+                        
+                        <div class="p-6 sm:p-10 flex flex-col h-full">
+                            <!-- Tool Header -->
+                            <div class="border-b border-slate-700/80 pb-5 mb-6 flex items-start justify-between shrink-0">
+                                <div>
+                                    <span id="admin-tool-badge" class="text-[10px] font-bold uppercase tracking-widest text-premium-nav bg-premium-gold px-3 py-1 rounded shadow-sm inline-block mb-3">Tool #01</span>
+                                    <h3 id="admin-tool-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Select a Feature</h3>
+                                    <p id="admin-tool-desc" class="text-xs text-slate-400 mt-2 font-medium">Please select a tool from the sidebar to begin administration.</p>
+                                </div>
+                                <div class="w-14 h-14 rounded-2xl bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-500 hidden sm:flex shrink-0 shadow-inner">
+                                    <i id="admin-tool-icon" class="fa-solid fa-wrench text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Tool Dynamic Body (Injected) -->
+                            <div id="admin-tool-body" class="text-sm text-slate-300 flex-grow">
+                                <!-- HTML blocks injected here by AdminManager JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN GEMINI AI MODAL -->
+    <div id="admin-ai-modal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[120] hidden flex items-center justify-center p-4">
+        <div class="bg-[#0F172A] rounded-3xl max-w-4xl w-full h-[85vh] shadow-[0_0_50px_rgba(99,102,241,0.15)] flex flex-col overflow-hidden animate-slide-up border border-indigo-500/30">
+            
+            <div class="bg-gradient-to-r from-slate-900 via-[#1e1b4b] to-slate-900 p-5 border-b border-indigo-500/30 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg border border-indigo-400 text-xl">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-lg tracking-wide">
+                            Gemini Admin Intelligence
+                        </h3>
+                        <p class="text-xs text-indigo-300">Data Analytics, Gazette Generation & Technical Support</p>
+                    </div>
+                </div>
+                <button onclick="UIManager.closeAdminAiModal()" class="text-slate-400 hover:text-white bg-slate-800 w-10 h-10 rounded-full flex items-center justify-center transition border border-slate-700">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div id="admin-ai-messages" class="flex-grow p-6 overflow-y-auto dark-scrollbar space-y-5 bg-[#0B1120]">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm shrink-0 border border-indigo-400">
+                        <i class="fa-solid fa-terminal"></i>
+                    </div>
+                    <div class="bg-[#1E293B] border border-slate-700 p-4 rounded-2xl shadow-sm text-sm text-slate-200 max-w-[85%] leading-relaxed font-mono">
+                        System Architect AI initialized. I have complete contextual awareness of the E-Panchayat structural parameters. <br><br>
+                        You can ask me to:<br>
+                        - Analyze current polling metrics.<br>
+                        - Draft an official Gazette notification.<br>
+                        - Explain any of the 32 administrative tools.<br>
+                        - Help format bulk data.
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 bg-[#0F172A] border-t border-slate-800 shrink-0">
+                <form onsubmit="AiManager.sendAdminAiMessage(event)" class="flex gap-3">
+                    <input 
+                        type="text" 
+                        id="admin-ai-input" 
+                        placeholder="Command Gemini AI..." 
+                        class="w-full bg-[#1E293B] border-2 border-slate-700 rounded-xl pl-4 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                    />
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-xl text-sm font-bold flex items-center shrink-0 transition shadow-lg shadow-indigo-600/30 border border-indigo-400">
+                        <i class="fa-solid fa-microchip-ai mr-2"></i> Execute
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT ARCHITECTURE (ENTERPRISE GRADE) -->
+    <!-- ========================================== -->
+    <script>
+        // --- CONSTANTS & GLOBALS ---
+        const STORAGE_KEY = "ENTERPRISE_PANCHAYAT_DB_v4";
+        let activeAdminToolIndex = 0;
+        let selectedUserCandidateId = null;
+
+        /**
+         * Utility Class
+         * Provides generic helpers, Base64 image conversions, and security functions.
+         */
+        class Utils {
+            static escapeHtml(str) {
+                if (str === null || str === undefined) return "";
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            static generateId(prefix = 'ID') {
+                return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+            }
+
+            static getDeviceFP() {
+                let fp = localStorage.getItem("ENTERPRISE_FP");
+                if (!fp) {
+                    fp = 'FP_' + Date.now() + '_' + navigator.userAgent.length + '_' + screen.width;
+                    localStorage.setItem("ENTERPRISE_FP", fp);
+                }
+                return fp;
+            }
+
+            static calculateDbSize() {
+                const data = localStorage.getItem(STORAGE_KEY) || "";
+                return Math.round((data.length * 2) / 1024); // Approximation in KB
+            }
+
+            // Direct image to Base64 converter for Gallery integration
+            static async fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+            }
+
+            // Image compressor before storing Base64 to save DB space
+            static async compressImage(base64Str, maxWidth = 400, quality = 0.7) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = base64Str;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                });
+            }
+
+            static showToast(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                if (!container) return;
+
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                let icon = 'fa-info-circle text-blue-500';
+                if(type === 'success') icon = 'fa-check-circle text-emerald-500';
+                if(type === 'error') icon = 'fa-triangle-exclamation text-rose-500';
+                if(type === 'ai') icon = 'fa-wand-magic-sparkles text-indigo-500';
+
+                toast.innerHTML = `
+                    <i class="fa-solid ${icon} text-2xl shrink-0"></i>
+                    <div class="flex-grow">
+                        <p class="text-sm font-bold text-slate-800">${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+                        <p class="text-xs text-slate-600 font-medium leading-tight mt-0.5">${message}</p>
+                    </div>
+                `;
+
+                container.appendChild(toast);
+                
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        toast.classList.add('show');
+                    });
+                });
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400); 
+                }, 4000);
+            }
+
+            static formatMarkdown(text) {
+                // Extremely basic markdown parser for AI responses (Bold and Newlines)
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n/g, '<br>');
+            }
+        }
+
+        /**
+         * Database Layer
+         * Handles initialization, persistence, and structure.
+         * Now includes extended fields (Image, Symbol, Post) and AI Configuration.
+         */
+        class DatabaseManager {
+            constructor() {
+                this.db = null;
+                this.init();
+            }
+
+            getDefaultStructure() {
+                return {
+                    meta: { version: "4.0", lastUpdated: new Date().toISOString() },
+                    settings: { 
+                        masterPassword: "sarpanch2026", 
+                        votingEnabled: true, 
+                        publicResultsVisible: true, 
+                        portalTitle: "Enterprise E-Panchayat Portal",
+                        maintenanceMode: false,
+                        geminiApiKey: "" // Stores the API key for both AI agents
+                    },
+                    notifications: [
+                        { id: Utils.generateId('N'), text: "Welcome to the new Enterprise AI-Powered E-Panchayat System.", date: new Date().toISOString() }
+                    ],
+                    suggestions: [], 
+                    votersLog: {}, 
+                    villageVotedLog: {},
+                    panchayats: {
+                        "morseem": { id: "morseem", name: "Gram Panchayat Morseem", totalWards: 13, wardsData: {} },
+                        "nayamorseem": { id: "nayamorseem", name: "Gram Panchayat Naya Morseem", totalWards: 11, wardsData: {} }
+                    }
+                };
+            }
+
+            init() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (raw) {
+                        this.db = JSON.parse(raw);
+                    } else {
+                        this.db = this.getDefaultStructure();
+                    }
+                } catch (e) {
+                    console.error("Database parsing error. Resetting.", e);
+                    this.db = this.getDefaultStructure();
+                }
+
+                this.validateAndRepair();
+                this.persist();
+            }
+
+            validateAndRepair() {
+                // Ensure AI key exists in settings
+                if (this.db.settings.geminiApiKey === undefined) this.db.settings.geminiApiKey = "";
+
+                if (!this.db.panchayats) this.db.panchayats = {};
+                Object.values(this.db.panchayats).forEach(p => {
+                    if (!p.wardsData) p.wardsData = {};
+                    for (let i = 1; i <= p.totalWards; i++) {
+                        if (!p.wardsData[i]) {
+                            p.wardsData[i] = { wardNo: i, reservation: "General", candidates: [], votes: {} };
+                        }
+                    }
+                });
+            }
+
+            persist() {
+                this.db.meta.lastUpdated = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.db));
+            }
+
+            get() { return this.db; }
+            
+            factoryReset() {
+                localStorage.removeItem(STORAGE_KEY);
+                this.init();
+                Utils.showToast("Factory reset complete. System rebuilt.", "success");
+            }
+        }
+
+        const DBManager = new DatabaseManager();
+        let db = DBManager.get();
+
+        /**
+         * Gemini AI API Manager
+         * Handles routing requests to the Google Gemini API for both User and Admin bots.
+         */
+        class AiManager {
+            
+            static async callGeminiAPI(promptText, systemContext = "") {
+                const apiKey = db.settings.geminiApiKey;
+                if (!apiKey || apiKey.trim() === "") {
+                    throw new Error("API_KEY_MISSING");
+                }
+
+                const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                
+                const fullPrompt = `${systemContext}\n\nUser Query: ${promptText}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: fullPrompt }] }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 500,
+                    }
+                };
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error("API_REQ_FAILED");
+                }
+
+                const data = await response.json();
+                if (data.candidates && data.candidates.length > 0) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                return "I'm sorry, I couldn't generate a response.";
+            }
+
+            // --- User AI Methods ---
+            static async sendUserAiMessage(e) {
+                e.preventDefault();
+                const inputEl = document.getElementById("user-ai-input");
+                const text = inputEl.value.trim();
+                if(!text) return;
+                
+                inputEl.value = "";
+                this.appendUiMessage("user-ai-messages", text, 'user');
+                
+                // Add loading indicator
+                const loadId = this.appendUiMessage("user-ai-messages", "<i class='fa-solid fa-ellipsis fa-fade'></i> Consulting database...", 'bot', true);
+                
+                try {
+                    // Inject basic context of the database for the user bot
+                    let context = "You are a helpful AI assistant for an Indian E-Panchayat voting portal. Base your answers on this current database state (summarized): ";
+                    Object.values(db.panchayats).forEach(p => {
+                        context += `Village: ${p.name}. `;
+                    });
+
+                    const reply = await this.callGeminiAPI(text, context);
+                    this.updateUiMessage(loadId, Utils.formatMarkdown(reply));
+                } catch (error) {
+                    if (error.message === "API_KEY_MISSING") {
+                        this.updateUiMessage(loadId, "The Administrator has not configured the Gemini API Key yet. AI is currently offline.");
+                    } else {
+                        this.updateUiMessage(loadId, "Error connecting to AI Neural Net. Please try again later.");
+                    }
+                }
+            }
+
+            // --- Admin AI Methods ---
+            static async sendAdminAiMessage(e) {
+                e.preventDefault();
+                const inputEl = document.getElementById("admin-ai-input");
+                const text = inputEl.value.trim();
+                if(!text) return;
+                
+                inputEl.value = "";
+                this.appendUiMessage("admin-ai-messages", text, 'admin-user');
+                
+                const loadId = this.appendUiMessage("admin-ai-messages", "<i class='fa-solid fa-circle-notch fa-spin'></i> Processing analytics...", 'admin-bot', true);
+                
+                try {
+                    // Inject full structural context for the admin
+                    let context = `You are the System Architect AI for this E-Panchayat software. You help the admin with formatting, drafting notices, and analyzing data. Here is the exact JSON state of the database: ${JSON.stringify(db.panchayats)}. Provide concise, professional administrative advice.`;
+
+                    const reply = await this.callGeminiAPI(text, context);
+                    this.updateUiMessage(loadId, Utils.formatMarkdown(reply));
+                } catch (error) {
+                    if (error.message === "API_KEY_MISSING") {
+                        this.updateUiMessage(loadId, "API Key Missing. Please go to Admin Tool: 'AI System Configuration' and enter your Google Gemini API Key.");
+                    } else {
+                        this.updateUiMessage(loadId, "API Communication Failure.");
+                    }
+                }
+            }
+
+            // --- Chat UI Helpers ---
+            static appendUiMessage(containerId, htmlContent, role, isLoading = false) {
+                const container = document.getElementById(containerId);
+                const msgId = Utils.generateId('MSG');
+                
+                const div = document.createElement('div');
+                div.id = msgId;
+                div.className = "flex items-start space-x-3 w-full";
+                
+                if (role === 'user' || role === 'admin-user') {
+                    div.classList.add('justify-end');
+                    div.innerHTML = `
+                        <div class="bg-indigo-600 text-white p-3 rounded-2xl rounded-tr-sm shadow-sm text-sm max-w-[85%] leading-relaxed">
+                            ${Utils.escapeHtml(htmlContent)}
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs shrink-0 mt-1">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    `;
+                } else if (role === 'admin-bot') {
+                    div.innerHTML = `
+                        <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm shrink-0 border border-indigo-400 mt-1">
+                            <i class="fa-solid fa-microchip-ai"></i>
+                        </div>
+                        <div class="bg-[#1E293B] border border-slate-700 p-4 rounded-2xl rounded-tl-sm shadow-sm text-sm text-slate-200 max-w-[85%] leading-relaxed">
+                            ${htmlContent}
+                        </div>
+                    `;
+                } else {
+                    // Regular user bot
+                    div.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs shrink-0 mt-1">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-sm shadow-sm text-xs text-slate-700 max-w-[85%] leading-relaxed">
+                            ${htmlContent}
+                        </div>
+                    `;
+                }
+                
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+                return msgId;
+            }
+
+            static updateUiMessage(msgId, newHtml) {
+                const msgEl = document.getElementById(msgId);
+                if (msgEl) {
+                    // The actual text container is the second child for bot, first for user
+                    const textContainer = msgEl.querySelector('div[class*="max-w"]');
+                    if (textContainer) {
+                        textContainer.innerHTML = newHtml;
+                    }
+                }
+            }
+        }
+        
+        // Expose to window for inline calls if needed
+        window.AiManager = AiManager;
+
+        /**
+         * UI Manager (Modal & Visual State Handlers)
+         */
+        class UIManager {
+            static init() {
+                setTimeout(() => {
+                    const loader = document.getElementById('global-loader');
+                    if(loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.remove(), 500);
+                    }
+                }, 800);
+
+                document.getElementById("current-year").innerText = new Date().getFullYear();
+                
+                setInterval(() => {
+                    const now = new Date().toLocaleTimeString();
+                    const topClock = document.getElementById("current-time-display");
+                    const adminClock = document.getElementById("admin-time-display");
+                    if(topClock) topClock.innerText = now;
+                    if(adminClock) adminClock.innerText = now;
+                }, 1000);
+            }
+
+            // Modal Toggles
+            static openAdminLoginModal() { document.getElementById("admin-login-modal").classList.remove("hidden"); }
+            static closeAdminLoginModal() { document.getElementById("admin-login-modal").classList.add("hidden"); }
+            static openUserAiModal() { document.getElementById("user-ai-modal").classList.remove("hidden"); }
+            static closeUserAiModal() { document.getElementById("user-ai-modal").classList.add("hidden"); }
+            static openAdminAiModal() { document.getElementById("admin-ai-modal").classList.remove("hidden"); }
+            static closeAdminAiModal() { document.getElementById("admin-ai-modal").classList.add("hidden"); }
+            
+            // Password toggle logic
+            static togglePasswordVisibility(inputId, btn) {
+                const input = document.getElementById(inputId);
+                const icon = btn.querySelector('i');
+                if(input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fa-solid fa-eye-slash text-premium-gold';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fa-solid fa-eye text-slate-400';
+                }
+            }
+        }
