@@ -268,7 +268,43 @@
 @media(max-width:620px){.ep-toolbar-inner{padding:8px 14px;flex-direction:column;align-items:stretch}.ep-lang-switch{justify-content:flex-end}}
 
 </style>
-</head>
+<style id="ep-final-polish-style">
+/* FINAL PROFESSIONAL WEBSITE POLISH */
+:root{--ep-navy:#0b2945;--ep-saffron:#f28c28;--ep-green:#0b7a42;--ep-line:#dce5ec;--ep-muted:#66788a}
+html{scroll-behavior:smooth} body{background:linear-gradient(180deg,#f4f8fa 0,#fff 28%,#f5f8fa 100%);color:#183047}
+#user-ai-section{display:none!important}
+main>div.flex.items-center.my-8,main>section.grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.xl\:grid-cols-4{display:none!important}
+.ep-main-shell{width:min(100% - 40px,1360px);margin:0 auto;padding-bottom:64px}
+.ep-section,.ep-home-section{width:100%;position:relative}
+.ep-section-head,.ep-section-title-row{max-width:1240px;margin:0 auto}
+.ep-notification-section{margin-top:18px}
+.ep-notification-section:before,.ep-results-section:before,.ep-stats-section:before,.public-features:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--ep-saffron) 0 33.33%,#fff 33.33% 66.66%,var(--ep-green) 66.66% 100%);border-radius:999px}
+.ep-notification-section{background:#fff;border:1px solid var(--ep-line);border-radius:22px;box-shadow:0 18px 45px rgba(20,50,75,.08);padding:28px;margin-bottom:24px}
+.ep-results-section,.ep-stats-section,.public-features{background:#fff;border:1px solid var(--ep-line);border-radius:22px;box-shadow:0 18px 45px rgba(20,50,75,.07);padding:30px;margin-top:24px}
+.ep-notification-grid{grid-template-columns:1.4fr .8fr .8fr}
+.ep-note{background:linear-gradient(180deg,#fff,#f9fbfc);border:1px solid var(--ep-line);border-radius:16px;padding:18px;display:flex;gap:13px;min-height:118px}
+.ep-note-icon{width:42px;height:42px;flex:none;border-radius:12px;background:#fff3e6;color:var(--ep-saffron);display:grid;place-items:center}
+.ep-feature-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.ep-feature{background:linear-gradient(180deg,#ffffff,#f9fbfc);border:1px solid var(--ep-line);border-radius:18px;padding:20px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 24px rgba(24,48,71,.05);transition:.2s ease}
+.ep-feature:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(24,48,71,.1);border-color:#c5d4df}
+.ep-feature .ico{width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,#fff4e7,#fff);color:var(--ep-saffron);display:grid;place-items:center;font-size:18px;margin-bottom:14px;border:1px solid #f4dcc2}
+.ep-feature h3{font-size:16px;font-weight:900;color:var(--ep-navy);margin:0 0 6px}.ep-feature p{font-size:12px;line-height:1.55;color:var(--ep-muted);margin:0}
+.ep-feature button{align-self:flex-start;margin-top:14px;background:#0b2945;color:#fff;border:0;border-radius:10px;padding:9px 13px;font-weight:800;font-size:11px;cursor:pointer}.ep-feature button:hover{background:#123c61}
+.ep-donut-card,.ep-ranking-panel{border:1px solid var(--ep-line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfcfd)}
+.ep-donut-card{padding:28px}.ep-ranking-panel{padding:22px}
+.ep-donut{box-shadow:inset 0 0 0 12px rgba(255,255,255,.95),0 10px 28px rgba(11,41,69,.09)}
+.ep-stat-card{border:1px solid var(--ep-line);box-shadow:0 10px 24px rgba(24,48,71,.05)}
+.ep-home-rail{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.ep-rail-card{background:#fff;border:1px solid var(--ep-line);border-radius:18px;padding:18px;box-shadow:0 10px 24px rgba(24,48,71,.05)}
+.ep-rail-card strong{display:block;color:var(--ep-navy);font-size:14px}.ep-rail-card span{display:block;color:var(--ep-muted);font-size:11px;line-height:1.55;margin-top:5px}
+.ep-final-analytics{margin-top:24px;background:#fff;border:1px solid var(--ep-line);border-radius:22px;padding:30px;box-shadow:0 18px 45px rgba(20,50,75,.07)}
+.ep-analytics-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px}.ep-analytics-card{border:1px solid var(--ep-line);border-radius:18px;padding:20px;background:#fbfcfd}.ep-analytics-row{display:grid;grid-template-columns:86px 1fr 60px;gap:10px;align-items:center;margin:12px 0}.ep-bar-track{height:10px;background:#e9eff3;border-radius:99px;overflow:hidden}.ep-bar{height:100%;background:linear-gradient(90deg,var(--ep-saffron),var(--ep-green));border-radius:99px}.ep-mini-list{display:grid;gap:10px}.ep-mini-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #e8eef2;font-size:11px}.ep-mini-item:last-child{border-bottom:0}.ep-mini-item strong{color:var(--ep-navy)}
+.ep-floating-ai{position:fixed;right:26px;bottom:26px;width:72px;height:72px;border-radius:50%;border:3px solid #fff;background:linear-gradient(145deg,var(--ep-saffron),#e56d18);box-shadow:0 18px 42px rgba(11,41,69,.22);color:#fff;z-index:250;cursor:grab;display:grid;place-items:center;font-size:25px;touch-action:none}.ep-floating-ai:active{cursor:grabbing}.ep-floating-ai .ep-ai-badge{position:absolute;right:-8px;top:-8px;background:#0b2945;color:#fff;border-radius:999px;padding:3px 6px;font-size:8px;font-weight:900;border:2px solid #fff}
+.ep-modal-backdrop{position:fixed;inset:0;background:rgba(7,25,42,.62);backdrop-filter:blur(5px);z-index:240;display:none;align-items:center;justify-content:center;padding:18px}.ep-modal{width:min(960px,96vw);max-height:90vh;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 35px 100px rgba(0,0,0,.32);display:flex;flex-direction:column}.ep-modal-head{padding:16px 20px;background:linear-gradient(90deg,#fff8ef,#f7fbf8);border-bottom:1px solid var(--ep-line);display:flex;align-items:center;justify-content:space-between}.ep-modal-body{padding:20px;overflow:auto}.ep-ai-log{height:430px;background:#f6f9fb;border:1px solid var(--ep-line);border-radius:14px;padding:14px;overflow:auto}.ep-bubble{max-width:84%;padding:11px 13px;border-radius:14px;margin:8px 0;font-size:12px;line-height:1.6;white-space:pre-wrap}.ep-bubble.user{margin-left:auto;background:#e9f2fb;color:#123756}.ep-bubble.assistant{background:#fff;border:1px solid var(--ep-line);color:#304456}
+@media(max-width:1050px){.ep-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ep-notification-grid{grid-template-columns:1fr}.ep-analytics-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.ep-main-shell{width:min(100% - 20px,1360px)}.ep-results-section,.ep-stats-section,.public-features,.ep-notification-section,.ep-final-analytics{padding:20px;border-radius:18px}.ep-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-home-rail{grid-template-columns:1fr}.ep-floating-ai{right:16px;bottom:18px}}
+@media(max-width:520px){.ep-feature-grid{grid-template-columns:1fr}.ep-floating-ai{width:62px;height:62px}}
+</style></head>
 <body class="text-slate-800 h-full flex flex-col relative">
 <!-- TOAST NOTIFICATION CONTAINER -->
 <div id="toast-container"></div>
@@ -311,7 +347,6 @@
 </div>
 </nav>
 </header>
-
 <!-- MAIN APPLICATION CONTENT -->
 <main class="ep-main-shell" id="home">
 <!-- SECTION 1: Government Notification Ticker -->
@@ -333,7 +368,14 @@
                 </div>
 </div>
 </div>
-
+<!-- PROFESSIONAL NOTIFICATION CENTER -->
+<section aria-labelledby="ep-notification-title" class="ep-section ep-notification-section" id="ep-notification-section">
+<div class="ep-section-head">
+<div><span class="ep-kicker">PUBLIC INFORMATION / सार्वजनिक सूचना</span><h2 data-en="Latest Notification" data-hi="अंतिम सूचना" id="ep-notification-title">अंतिम सूचना</h2><p data-en="See the latest portal notice here. Open the complete notification centre for all current and past updates." data-hi="पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।">पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।</p></div>
+<button class="ep-outline-btn" onclick="EPWebsite.openNotifications()" type="button"><i class="fa-solid fa-bell"></i><span data-en="Open All Notifications" data-hi="सभी सूचनाएँ">सभी सूचनाएँ</span></button>
+</div>
+<div class="ep-notification-grid" id="ep-notification-grid"></div>
+</section>
 <!-- PUBLIC OPINION DISCLAIMER -->
 <div class="ep-disclaimer"><i class="fa-solid fa-circle-info"></i><div data-en="This website is only for voluntary public-opinion voting. It is not an official election portal of the Government of India, Government of Rajasthan, Election Commission of India, or State Election Commission, and its figures are not official election results. Use official government sources for actual elections, voting and results." data-hi="यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।">यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।</div></div>
 <!-- SECTION 2: Dynamic Village Selector & Candidates Gallery -->
@@ -442,7 +484,7 @@
 <div class="ep-result-layout">
 <div class="ep-donut-card">
 <div aria-label="Recorded vote-share chart" class="ep-donut" id="ep-result-donut"><div class="ep-donut-center"><strong id="ep-result-top-pct">0%</strong><span data-en="Leading" data-hi="सबसे आगे">सबसे आगे</span></div></div>
-<div class="ep-donut-meta"><strong id="ep-result-top-name">—</strong><span id="ep-result-top-votes">0 votes</span><small data-en="Recorded public-opinion vote share" data-hi="रिकॉर्डेड जनमत वोट शेयर">रिकॉर्डेड जनमत वोट शेयर</small></div>
+<div class="ep-donut-meta"><strong id="ep-result-top-name">—</strong><span id="ep-result-top-votes">0 votes</span><small data-en="Recorded public-opinion vote share" data-hi="रिकॉर्डेड जनमत वोट शेयर">रिकॉर्डेड जनमत वोट शेयर</small><div class="ep-result-status" id="ep-result-status"></div><div class="ep-result-legend" id="ep-result-legend"></div></div>
 </div>
 <div class="ep-ranking-panel">
 <div class="ep-ranking-head"><span data-en="Candidate ranking" data-hi="उम्मीदवार रैंकिंग">उम्मीदवार रैंकिंग</span><span id="ep-result-total">0</span></div>
@@ -468,6 +510,18 @@
 <div class="ep-insight"><i class="fa-solid fa-crown"></i><div><small data-en="Current public-opinion leader" data-hi="वर्तमान जनमत में सबसे आगे">वर्तमान जनमत में सबसे आगे</small><strong id="ep-stat-leader">—</strong></div></div>
 <div class="ep-insight"><i class="fa-solid fa-clock"></i><div><small data-en="Last updated" data-hi="अंतिम अपडेट">अंतिम अपडेट</small><strong id="ep-stat-updated">—</strong></div></div>
 </div>
+</section><section aria-labelledby="ep-final-analytics-title" class="ep-final-analytics" id="ep-final-analytics">
+<div class="ep-section-title-row">
+<div><span class="ep-eyebrow" data-en="DETAILED ANALYTICS" data-hi="विस्तृत विश्लेषण">विस्तृत विश्लेषण</span>
+<h2 data-en="Village &amp; Ward Analytics" data-hi="गाँव और वार्ड विश्लेषण" id="ep-final-analytics-title">गाँव और वार्ड विश्लेषण</h2>
+<p data-en="See participation by ward and vote-share concentration without changing the underlying public-opinion records." data-hi="जनमत रिकॉर्ड बदले बिना वार्डवार भागीदारी और वोट शेयर की स्थिति देखें।" id="ep-final-analytics-subtitle">जनमत रिकॉर्ड बदले बिना वार्डवार भागीदारी और वोट शेयर की स्थिति देखें।</p></div>
+<button class="ep-primary-outline" id="ep-refresh-analytics" type="button"><i class="fa-solid fa-chart-line"></i><span data-en="Refresh Analytics" data-hi="विश्लेषण अपडेट करें">विश्लेषण अपडेट करें</span></button>
+</div>
+<div class="ep-analytics-grid" style="margin-top:18px">
+<div class="ep-analytics-card"><h3 data-en="Ward participation" data-hi="वार्ड भागीदारी" id="ep-ward-analytics-title">वार्ड भागीदारी</h3><div id="ep-ward-analytics"></div></div>
+<div class="ep-analytics-card"><h3 data-en="Party / candidate share" data-hi="पार्टी / उम्मीदवार हिस्सा" id="ep-party-analytics-title">पार्टी / उम्मीदवार हिस्सा</h3><div id="ep-party-analytics"></div></div>
+</div>
+<div class="ep-result-note" style="margin-top:14px"><i class="fa-solid fa-circle-info"></i><span data-en="Analytics reflect only votes currently recorded in this portal. They are not official government election statistics." data-hi="यह विश्लेषण केवल इस पोर्टल में अभी दर्ज वोटों पर आधारित है। यह सरकारी चुनाव आँकड़े नहीं हैं।">यह विश्लेषण केवल इस पोर्टल में अभी दर्ज वोटों पर आधारित है। यह सरकारी चुनाव आँकड़े नहीं हैं।</span></div>
 </section>
 <!-- SECTION 3: User Tools & Utilities Grid (12 Features) -->
 <!-- 15 PUBLIC FEATURES -->
@@ -476,6 +530,10 @@
 <div class="ep-home-rail-item"><i class="fa-solid fa-layer-group"></i><div><small data-en="All wards" data-hi="सभी वार्ड">सभी वार्ड</small><strong data-en="Whole village view" data-hi="पूरा गाँव एक साथ">पूरा गाँव एक साथ</strong></div></div>
 <div class="ep-home-rail-item"><i class="fa-solid fa-chart-pie"></i><div><small data-en="Percentage results" data-hi="प्रतिशत परिणाम">प्रतिशत परिणाम</small><strong data-en="See anytime" data-hi="जब चाहें देखें">जब चाहें देखें</strong></div></div>
 <div class="ep-home-rail-item"><i class="fa-solid fa-wand-magic-sparkles"></i><div><small data-en="Citizen AI" data-hi="नागरिक AI">नागरिक AI</small><strong data-en="Starts in simple Hindi" data-hi="सरल हिंदी से शुरुआत">सरल हिंदी से शुरुआत</strong></div></div>
+</div><div class="ep-home-rail" id="ep-home-rail">
+<div class="ep-rail-card"><strong>सम्पूर्ण गाँव एक साथ / Whole village in one view</strong><span>किसी एक वार्ड तक सीमित नहीं—चुने हुए गाँव के सभी वार्डों के उम्मीदवार और जनमत डेटा को साथ में देखा जा सकता है।</span></div>
+<div class="ep-rail-card"><strong>पारदर्शी जनमत / Transparent opinion</strong><span>नोटिस, उम्मीदवार, वोट शेयर, आँकड़े और अपडेट एक ही सार्वजनिक वेबसाइट पर रखे गए हैं।</span></div>
+<div class="ep-rail-card"><strong>गैर-सरकारी पोर्टल / Independent portal</strong><span>यह वेबसाइट केवल सार्वजनिक राय/जनमत के लिए है और किसी आधिकारिक सरकारी चुनाव परिणाम का विकल्प नहीं है।</span></div>
 </div><section aria-labelledby="ep-user-features-title" class="ep-section" id="public-features">
 <div class="ep-section-head"><div><span class="ep-kicker">CITIZEN SERVICES / नागरिक सेवाएँ</span><h2 data-en="20 Citizen Features" data-hi="20 नागरिक सुविधाएँ" id="ep-user-features-title">20 नागरिक सुविधाएँ</h2><p data-en="Practical tools for candidates, voting, results, statistics, notifications, transparency and citizen assistance — without duplicate tools." data-hi="एक ही जगह पर उम्मीदवार, मतदान, परिणाम, आँकड़े, सूचना, पारदर्शिता और सहायता के व्यावहारिक उपकरण।">एक ही जगह पर उम्मीदवार, मतदान, परिणाम, आँकड़े, सूचना, पारदर्शिता और सहायता के व्यावहारिक उपकरण।</p></div></div>
 <div class="ep-feature-grid" id="ep-public-feature-grid"></div>
@@ -516,9 +574,9 @@
 </div>
 <h3 class="font-bold text-sm text-slate-800">Search Registry</h3>
 </div>
-<input class="input-premium py-2 text-xs mb-3" id="candidate-search-input" oninput="UserInterface.handleSearch()" placeholder="Search name, party, ward..." type="text">
+<input class="input-premium py-2 text-xs mb-3" id="candidate-search-input" oninput="UserInterface.handleSearch()" placeholder="Search name, party, ward..." type="text"/>
 <div class="flex-grow max-h-40 overflow-y-auto custom-scrollbar space-y-2 pr-1" id="candidate-search-results"></div>
-</input></div>
+</div>
 <!-- Tool 2: Ward Compare -->
 <div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow">
 <div class="flex items-center mb-4">
@@ -847,7 +905,7 @@
         // --- CONSTANTS & GLOBALS ---
         const STORAGE_KEY = "ENTERPRISE_PANCHAYAT_DB_v4";
         const GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta";
-        const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
+        const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
         let activeAdminToolIndex = 0;
         let selectedUserCandidateId = null;
 
@@ -919,8 +977,9 @@
                 }, 4000);
             }
 
-            static async simulateNetworkDelay(ms = 600) {
-                return new Promise(resolve => setTimeout(resolve, ms));
+            static async simulateNetworkDelay(ms = 0) {
+                // Deliberately no artificial network delay: all data is local browser state.
+                return Promise.resolve();
             }
         }
 
@@ -945,7 +1004,7 @@
                         maintenanceMode: false,
                         userGeminiApiKey: "",
                         adminGeminiApiKey: "",
-                        geminiModel: "gemini-3.7-flash",
+                        geminiModel: "gemini-2.5-flash",
                         userAiEnabled: true,
                         adminAiEnabled: true
                     },
@@ -1039,9 +1098,9 @@
                     const loader = document.getElementById('global-loader');
                     if(loader) {
                         loader.style.opacity = '0';
-                        setTimeout(() => loader.remove(), 500);
+                        setTimeout(() => loader.remove(), 180);
                     }
-                }, 800);
+                }, 120);
 
                 // Set initial text and date metadata.
                 const titleEl = document.getElementById("header-portal-title");
@@ -1252,16 +1311,23 @@
             }
             static handleKeydown(event){if(event.ctrlKey&&event.key==='Enter'){event.preventDefault();this.send();}}
             static async send(){
-                const input=document.getElementById('user-ai-input'); const button=document.getElementById('user-ai-send'); const question=input?.value.trim();
+                const D=DBManager.get(); const input=document.getElementById('user-ai-input'); const button=document.getElementById('user-ai-send'); const question=input?.value.trim();
                 if(!question)return;
-                if(!db.settings.userAiEnabled)return Utils.showToast('User AI is disabled by Admin.','error');
-                const key=db.settings.userGeminiApiKey; if(!key)return Utils.showToast('User Gemini is not configured. Please contact the administrator.','error');
-                this.append('user',question); input.value=''; button.disabled=true; const pending=this.append('assistant','Gemini is thinking...');
+                if(D?.settings?.userAiEnabled===false)return Utils.showToast('User AI is disabled by Admin.','error');
+                this.append('user',question); input.value=''; button.disabled=true; const pending=this.append('assistant','Thinking...');
                 try{
-                    const snapshot=GeminiService.compactDatabaseSnapshot(db);
-                    const answer=await GeminiService.generate(key,db.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the public help assistant for an Indian village-election portal. Explain features clearly in simple language. Do not fabricate official facts, winners, legal rules, or candidate details. Use the portal snapshot only for database-specific information. Encourage users to follow official election authorities.\n\nPortal snapshot:\n${snapshot}\n\nCitizen question:\n${question}`);
+                    const key=String(D?.settings?.userGeminiApiKey||'').trim();
+                    if(!key){pending.textContent='Citizen AI is ready for basic portal help. Add a Gemini API key in Admin for detailed AI answers.';return;}
+                    const snapshot=GeminiService.compactDatabaseSnapshot(D);
+                    const answer=await GeminiService.generate(key,D.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the public help assistant for an independent Indian public-opinion portal. Reply only in the user-selected language. Never claim official election authority status or invent candidate data. Explain portal features simply.
+
+Portal snapshot:
+${snapshot}
+
+Question:
+${question}`);
                     pending.textContent=answer;
-                }catch(e){pending.textContent=`Gemini error: ${e.message}`;Utils.showToast('Gemini request failed.','error');}
+                }catch(e){pending.textContent=`AI service unavailable. Basic portal help remains available through the floating Citizen AI.`;}
                 finally{button.disabled=false;}
             }
         }
@@ -3294,320 +3360,8 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
 #ep-user-ai-launcher,#ep-admin-ai-launcher{position:fixed;right:24px;width:62px;height:62px;border-radius:50%;border:3px solid #fff;box-shadow:0 12px 35px rgba(13,36,64,.28);z-index:120;display:grid;place-items:center;cursor:grab;user-select:none}.ep-float-label{position:absolute;right:74px;background:#0d2440;color:#fff;padding:7px 10px;border-radius:8px;font-size:.65rem;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}.ep-float:hover .ep-float-label{opacity:1}.ep-float{position:fixed;z-index:120}.ep-float-user{background:linear-gradient(145deg,var(--ep-saffron),#ef6f24);bottom:108px}.ep-float-admin{background:linear-gradient(145deg,var(--ep-green),#0b6337);bottom:34px}.ep-float i{color:#fff;font-size:1.3rem}.ep-modal-backdrop{position:fixed;inset:0;background:rgba(3,16,29,.72);backdrop-filter:blur(7px);z-index:115;display:none;align-items:center;justify-content:center;padding:20px}.ep-modal{width:min(860px,100%);max-height:88vh;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.3);display:flex;flex-direction:column}.ep-modal-head{padding:16px 20px;background:linear-gradient(90deg,#fff7ef,#f5fbf7);border-bottom:1px solid var(--ep-line);display:flex;justify-content:space-between;align-items:center}.ep-modal-body{padding:18px;overflow:auto}.ep-ai-log{height:380px;background:#f7fafc;border:1px solid var(--ep-line);border-radius:14px;padding:14px;overflow:auto}.ep-bubble{max-width:82%;padding:11px 13px;border-radius:13px;margin:8px 0;font-size:.76rem;line-height:1.55;white-space:pre-wrap}.ep-bubble.user{margin-left:auto;background:#e7f1ff;color:#173653}.ep-bubble.assistant{background:#fff;border:1px solid var(--ep-line);color:#334255}
 @media(max-width:1150px){.ep-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ep-admin-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ep-notification-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.ep-section{padding:20px}.ep-section-head{flex-direction:column;align-items:flex-start}.ep-notification-grid,.ep-feature-grid,.ep-admin-feature-grid{grid-template-columns:1fr 1fr}.ep-float{right:16px!important}.ep-float-user{bottom:94px}.ep-float-admin{bottom:22px}}@media(max-width:520px){.ep-feature-grid,.ep-admin-feature-grid,.ep-notification-grid{grid-template-columns:1fr}.ep-float-user{bottom:92px}.ep-float-admin{bottom:18px}}
 </style>
-<script id="ep-professional-script">
-(function(){
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  const lang=()=>localStorage.getItem('EP_LANG')||'hi';
-  const setLang=l=>{localStorage.setItem('EP_LANG',l);document.documentElement.lang=l;renderLang();const h=document.getElementById('ep-lang-hi'),e=document.getElementById('ep-lang-en');h?.classList.toggle('active',l==='hi');e?.classList.toggle('active',l==='en');};
-  const hi={allNotifications:'सभी सूचनाएँ देखें',view:'देखें',search:'खोजें',open:'खोलें',save:'सहेजें',share:'साझा करें',print:'प्रिंट',compare:'तुलना करें'};
-  function renderLang(){document.querySelectorAll('[data-ep]').forEach(el=>{const k=el.getAttribute('data-ep'); const en=el.dataset.en||el.textContent.trim(); el.textContent=lang()==='hi'?(hi[k]||el.dataset.hi||en):en;});
-    const fixed={
-      'header-portal-title':['Enterprise E-Panchayat Portal','ई-पंचायत जनमत पोर्टल'],
-      'header-portal-subtitle':['Secure Public Opinion & Voting System','सुरक्षित सार्वजनिक जनमत और मतदान प्रणाली'],
-      'header-system-status':['Live & Operational','लाइव और सक्रिय'],
-      'ep-notification-title':['Notification Centre','सूचना केंद्र'],
-      'ep-user-features-title':['Public Portal Features','जनता के लिए पोर्टल सुविधाएँ']
-    };
-    Object.entries(fixed).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v[lang()==='hi'?1:0]});
-    // Keep the portal’s original controls understandable in the selected language.
-    const map={"Public Opinion Booth":"जनमत बूथ","Live Polling Analytics":"लाइव जनमत विश्लेषण","Secure Vote":"सुरक्षित वोट","Choose Gram Panchayat / Village":"ग्राम पंचायत / गाँव चुनें","Select Candidate to Support":"समर्थन के लिए उम्मीदवार चुनें","Enterprise E-Panchayat Portal":"ई-पंचायत जनमत पोर्टल","Admin Access":"प्रशासक प्रवेश","Candidate Directory":"उम्मीदवार निर्देशिका","Village Summary":"ग्राम सारांश","Ward Snapshot":"वार्ड स्थिति","Portal Help":"पोर्टल सहायता","Suggestion Box":"सुझाव बॉक्स","Generate .TXT Report":".TXT रिपोर्ट बनाएँ"};
-    if(lang()==='hi'){ $$('body *').forEach(el=>{if(el.children.length===0){const t=el.textContent.trim(); if(map[t]) el.textContent=map[t];}});}
-  }
-  function savePos(key,el){localStorage.setItem(key,JSON.stringify({right:el.style.right,bottom:el.style.bottom}));}
-  function drag(el,key){let sx=0,sy=0,sr=0,sb=0,move=false;const down=e=>{move=true;sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect();sr=innerWidth-r.right;sb=innerHeight-r.bottom;el.setPointerCapture(e.pointerId);el.style.cursor='grabbing'};const mv=e=>{if(!move)return;const nr=Math.max(8,Math.min(innerWidth-70,sr-(e.clientX-sx)));const nb=Math.max(8,Math.min(innerHeight-70,sb-(e.clientY-sy)));el.style.right=nr+'px';el.style.bottom=nb+'px'};const up=e=>{move=false;el.style.cursor='grab';savePos(key,el)};el.addEventListener('pointerdown',down);el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)}
-  function restore(key,el){try{const p=JSON.parse(localStorage.getItem(key)||'null'); if(p&&p.right&&p.bottom){el.style.right=p.right;el.style.bottom=p.bottom}}catch{} }
-  const featureData=[
-   ['fa-magnifying-glass','Candidate Search','Find candidates by name, party, post or ward.','search'],
-   ['fa-code-compare','Candidate Comparison','Compare two candidates side by side.','compare'],
-   ['fa-floppy-disk','Save Village','Remember your preferred village on this device.','save'],
-   ['fa-share-nodes','Share Village','Share the selected village portal view.','share'],
-   ['fa-print','Print Summary','Create a clean printable village summary.','print'],
-   ['fa-list-check','Voting Guide','See the steps for public-opinion voting.','guide'],
-   ['fa-users','Candidate Directory','Browse participating candidates across wards.','directory'],
-   ['fa-building','Village Summary','View village-level totals and coverage.','summary'],
-   ['fa-map-pin','Ward Snapshot','Review ward participation details.','snapshot'],
-   ['fa-comments','Suggestion Box','Send a suggestion for the portal team.','suggest'],
-   ['fa-file-export','Data Export','Export a personal-readable public summary.','export'],
-   ['fa-bell','Notification Centre','Read current and past portal notices.','notify'],
-   ['fa-shield-halved','Voting Rules','Review the portal’s public-opinion safeguards.','rules'],
-   ['fa-chart-pie','Live Analytics','View recorded vote-share analytics.','analytics'],
-   ['fa-circle-question','Portal Help','Learn how the portal’s services work.','help']
-  ];
-  const featureActions={
-    search:()=>EPWebsite.searchCandidates(),compare:()=>EPWebsite.compareCandidates(),save:()=>EPWebsite.saveVillage(),share:()=>EPWebsite.shareVillage(),print:()=>EPWebsite.printVillage(),
-    guide:()=>document.getElementById('voting-section')?.scrollIntoView({behavior:'smooth'}),directory:()=>UIManager.openDirectoryModal(),summary:()=>UIManager.openGenericModal?.('Village Summary',EPWebsite.villageSummary()),snapshot:()=>UIManager.openGenericModal?.('Ward Snapshot',EPWebsite.wardSnapshot()),
-    suggest:()=>{const b=$('#t5-suggestion')||$('#suggestion-text'); if(b) b.scrollIntoView({behavior:'smooth'}); else UIManager.openGenericModal?.('Suggestion Box','Use the existing suggestion form in the portal.');},
-    export:()=>EPWebsite.exportSummary(),notify:()=>EPWebsite.openNotifications(),rules:()=>UIManager.openGenericModal?.('Voting Rules',EPWebsite.rules()),analytics:()=>$('#live-results-container')?.scrollIntoView({behavior:'smooth'}),help:()=>UIManager.openGenericModal?.('Portal Help',EPWebsite.help())
-  };
-  function renderFeatures(){const g=$('#ep-public-feature-grid');if(!g)return;g.innerHTML=featureData.map(([ico,title,desc,key])=>`<article class="ep-feature"><div><div class="ico"><i class="fa-solid ${ico}"></i></div><h3>${esc(title)}</h3><p>${esc(desc)}</p></div><button type="button" data-action="${key}">${lang()==='hi'?(hi[key]||title):title}</button></article>`).join(''); g.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>featureActions[b.dataset.action]?.());}
-  function renderNotices(){const g=$('#ep-notification-grid');if(!g)return;let notes=[];try{notes=Object.values(db.notifications||{})}catch{} if(!Array.isArray(notes))notes=[]; notes=notes.slice().sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,6); if(!notes.length) notes=[{text:lang()==='hi'?'अभी कोई नई सूचना नहीं है।':'No new notifications available.',date:new Date().toISOString()}];g.innerHTML=notes.map(n=>`<div class="ep-note"><div class="ep-note-icon"><i class="fa-solid fa-bell"></i></div><div><h3>${esc(lang()==='hi'?'सार्वजनिक सूचना':'Portal Notice')}</h3><p>${esc(n.text||'')}</p><time>${esc(new Date(n.date||Date.now()).toLocaleString())}</time></div></div>`).join('');}
-  const EPWebsite={
-    openNotifications(){try{UIManager.openNotificationsModal();}catch(e){const m=$('#notifications-modal'); if(m)m.classList.remove('hidden')}},
-    selectedVillage(){const s=$('#user-panchayat-select');return s?.value||localStorage.getItem('EP_SAVED_VILLAGE')||Object.keys(db.panchayats||{})[0]||''},
-    saveVillage(){const v=this.selectedVillage();if(!v)return Utils.showToast?.('Select a village first.','error');localStorage.setItem('EP_SAVED_VILLAGE',v);Utils.showToast?.('Village saved on this device.','success');},
-    shareVillage(){const v=this.selectedVillage(),p=db.panchayats?.[v],url=location.href.split('#')[0];if(navigator.share){navigator.share({title:p?.name||'Panchayat Portal',text:`Public opinion portal — ${p?.name||v}`,url}).catch(()=>{})}else navigator.clipboard?.writeText(url).then(()=>Utils.showToast?.('Portal link copied.','success'))},
-    printVillage(){const v=this.selectedVillage(),p=db.panchayats?.[v];if(!p)return Utils.showToast?.('Select a village first.','error');let rows=[];for(let w=1;w<=p.totalWards;w++){const wd=p.wardsData?.[w];Object.values(wd?.candidates||{}).forEach(c=>rows.push({ward:w,c,...c,votes:(wd.votes||{})[c.id]||0}))}const win=window.open('','_blank','noopener');if(!win)return;win.document.write(`<html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial;padding:28px;color:#18283b}h1{margin-bottom:4px}table{border-collapse:collapse;width:100%;margin-top:20px}th,td{border:1px solid #d8e0e8;padding:8px;text-align:left;font-size:12px}</style></head><body><h1>${esc(p.name)}</h1><div>Public-opinion portal summary — not an official government result.</div><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(r=>`<tr><td>${r.ward}</td><td>${esc(r.name||r.candidateName||'')}</td><td>${esc(r.post||'')}</td><td>${esc(r.party||'')}</td><td>${r.votes}</td></tr>`).join('')}</table></body></html>`);win.document.close();win.print();},
-    exportSummary(){const v=this.selectedVillage(),p=db.panchayats?.[v];if(!p)return Utils.showToast?.('Select a village first.','error');const data={portal:'Public Opinion Portal',official:false,village:p.name,wards:p.totalWards};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${(p.name||v).replace(/\s+/g,'_')}_public_summary.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)},
-    villageSummary(){const v=this.selectedVillage(),p=db.panchayats?.[v];if(!p)return 'No village selected.';let total=0,c=0;for(let w=1;w<=p.totalWards;w++){const wd=p.wardsData?.[w]||{};c+=Object.keys(wd.candidates||{}).length;total+=Object.values(wd.votes||{}).reduce((a,x)=>a+(Number(x)||0),0)}return `Village: ${p.name}\nWards: ${p.totalWards}\nCandidates: ${c}\nRecorded public-opinion votes: ${total}`},
-    wardSnapshot(){const v=this.selectedVillage(),p=db.panchayats?.[v];if(!p)return 'No village selected.';return Array.from({length:p.totalWards},(_,i)=>{const w=i+1,wd=p.wardsData?.[w]||{};return `Ward ${w}: ${Object.keys(wd.candidates||{}).length} candidates, ${Object.values(wd.votes||{}).reduce((a,x)=>a+(Number(x)||0),0)} recorded votes`}).join('\n')},
-    rules(){return 'This portal is for voluntary public-opinion voting only. One device/mobile identifier may be restricted by the portal database. It is not an official election. Follow official election authorities for real voting and results.'},
-    help(){return 'Choose a village, review candidates across all wards, submit a public-opinion vote, and use the notification and directory tools. The floating Citizen AI can explain portal features in simple Hindi or English.'},
-    searchCandidates(){const wrap=document.createElement('div');wrap.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input id="ep-search-q" placeholder="Name / party / post / ward" style="padding:11px;border:1px solid #dfe7ef;border-radius:10px"><button id="ep-search-go" style="padding:11px;border:0;border-radius:10px;background:#0d2440;color:#fff;font-weight:700">Search</button></div><div id="ep-search-out" style="margin-top:14px"></div>`;this.modal('Candidate Search',wrap);$('#ep-search-go',wrap).onclick=()=>{const q=$('#ep-search-q',wrap).value.toLowerCase();let out=[];Object.values(db.panchayats||{}).forEach(p=>{for(let w=1;w<=p.totalWards;w++)Object.values(p.wardsData?.[w]?.candidates||{}).forEach(c=>{const hay=[p.name,w,c.name,c.party,c.post].join(' ').toLowerCase();if(hay.includes(q))out.push(`${p.name} · Ward ${w} · ${c.name||''} · ${c.party||''} · ${c.post||''}`)})});$('#ep-search-out',wrap).innerHTML=out.length?out.map(x=>`<div style="padding:8px 0;border-bottom:1px solid #e5ebf1;font-size:12px">${esc(x)}</div>`).join(''):'<div>No matching candidates.</div>'}},
-    compareCandidates(){let opts=[];Object.values(db.panchayats||{}).forEach(p=>{for(let w=1;w<=p.totalWards;w++)Object.values(p.wardsData?.[w]?.candidates||{}).forEach(c=>opts.push({id:`${p.id}|${w}|${c.id}`,p,w,c}))});const sel=opts.map((o,i)=>`<option value="${i}">${esc(o.c.name||'Candidate')} — ${esc(o.p.name)} W${o.w}</option>`).join('');const wrap=document.createElement('div');wrap.innerHTML=`<select id="ep-c1" style="padding:10px;border:1px solid #dfe7ef;border-radius:10px;width:100%;margin-bottom:9px">${sel}</select><select id="ep-c2" style="padding:10px;border:1px solid #dfe7ef;border-radius:10px;width:100%">${sel}</select><div id="ep-comp-out" style="margin-top:14px"></div>`;this.modal('Candidate Comparison',wrap);const render=()=>{const a=opts[Number($('#ep-c1',wrap).value)||0],b=opts[Number($('#ep-c2',wrap).value)||0];const v=o=>(o?.c?o.p?.wardsData?.[o.w]?.votes?.[o.c.id]||0:0);$('#ep-comp-out',wrap).innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div style="padding:14px;border:1px solid #dfe7ef;border-radius:12px"><b>${esc(a.c.name||'Candidate')}</b><br>Ward ${a.w}<br>${esc(a.c.party||'')}<br>${v(a)} votes</div><div style="padding:14px;border:1px solid #dfe7ef;border-radius:12px"><b>${esc(b.c.name||'Candidate')}</b><br>Ward ${b.w}<br>${esc(b.c.party||'')}<br>${v(b)} votes</div></div>`};$('#ep-c1',wrap).onchange=render;$('#ep-c2',wrap).onchange=render;render();},
-    modal(title,content){let b=$('#ep-modal-backdrop');if(!b){b=document.createElement('div');b.id='ep-modal-backdrop';b.className='ep-modal-backdrop';document.body.appendChild(b)}b.style.display='flex';b.innerHTML=`<div class="ep-modal"><div class="ep-modal-head"><div><b>${esc(title)}</b></div><button id="ep-modal-x" aria-label="Close" style="border:0;background:#edf2f6;width:34px;height:34px;border-radius:50%">✕</button></div><div class="ep-modal-body"></div></div>`;$('.ep-modal-body',b).appendChild(content.nodeType?content:(()=>{const d=document.createElement('div');d.textContent=String(content);return d})());$('#ep-modal-x',b).onclick=()=>b.style.display='none';b.onclick=e=>{if(e.target===b)b.style.display='none'};
-    },
-    openAI(){let b=$('#ep-ai-backdrop');if(!b){b=document.createElement('div');b.id='ep-ai-backdrop';b.className='ep-modal-backdrop';b.innerHTML=`<div class="ep-modal"><div class="ep-modal-head"><div><b>Citizen AI / नागरिक AI</b><div style="font-size:11px;color:#6a7785">Public portal assistance</div></div><div><select id="ep-ai-lang" style="padding:7px;border:1px solid #dfe7ef;border-radius:9px"><option value="hi">हिंदी</option><option value="en">English</option></select><button id="ep-ai-close" style="margin-left:8px;border:0;background:#edf2f6;width:34px;height:34px;border-radius:50%">✕</button></div></div><div class="ep-modal-body"><div id="ep-ai-log" class="ep-ai-log"></div><div style="display:flex;gap:8px;margin-top:10px"><textarea id="ep-ai-input" rows="2" placeholder="अपना सवाल लिखें..." style="flex:1;border:1px solid #dfe7ef;border-radius:11px;padding:10px"></textarea><button id="ep-ai-send" style="padding:0 18px;border:0;border-radius:11px;background:#0d2440;color:#fff;font-weight:750">भेजें</button></div><div style="font-size:10px;color:#7d8998;margin-top:8px">AI is informational. This portal is not a government election system.</div></div></div>`;document.body.appendChild(b);$('#ep-ai-close',b).onclick=()=>b.style.display='none';$('#ep-ai-lang',b).onchange=e=>{const l=e.target.value;$('#ep-ai-input',b).placeholder=l==='hi'?'अपना सवाल लिखें...':'Type your question...';$('#ep-ai-send',b).textContent=l==='hi'?'भेजें':'Send';localStorage.setItem('EP_AI_LANG',l)};$('#ep-ai-send',b).onclick=()=>this.askAI(b);$('#ep-ai-input',b).onkeydown=e=>{if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();this.askAI(b)}};}b.style.display='flex';const saved=localStorage.getItem('EP_AI_LANG')||'hi';$('#ep-ai-lang',b).value=saved;$('#ep-ai-lang',b).dispatchEvent(new Event('change'));const log=$('#ep-ai-log',b);if(!log.children.length){const msg=saved==='hi'?'नमस्ते। मैं नागरिक सहायता AI हूँ। मैं पोर्टल, उम्मीदवार, वार्ड, मतदान चरण और सूचनाओं के बारे में सरल भाषा में मदद कर सकता हूँ।':'Hello. I am the Citizen AI assistant. I can explain the portal, candidates, wards, voting steps and notifications.';this.bubble(log,'assistant',msg);}},
-    bubble(log,role,text){const d=document.createElement('div');d.className=`ep-bubble ${role}`;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight;return d},
-    async askAI(b){const inp=$('#ep-ai-input',b),q=inp.value.trim();if(!q)return;const log=$('#ep-ai-log',b);const l=$('#ep-ai-lang',b).value||'hi';this.bubble(log,'user',q);inp.value='';const p=this.bubble(log,'assistant',l==='hi'?'सोच रहा हूँ...':'Thinking...');try{if(db?.settings?.userAiEnabled===false)throw new Error(l==='hi'?'नागरिक AI अभी प्रशासन द्वारा बंद है।':'Citizen AI is currently disabled by the administrator.');const key=db?.settings?.userGeminiApiKey;if(!key)throw new Error(l==='hi'?'Citizen AI की कुंजी कॉन्फ़िगर नहीं है। Admin में User Gemini API key जोड़ें।':'Citizen AI key is not configured. Add the User Gemini API key in Admin.');const snap=GeminiService.compactDatabaseSnapshot(db);const prompt=`You are the Citizen AI for an independent Indian public-opinion portal. Reply only in ${l==='hi'?'simple Hindi':'simple English'}. Be concise and accurate. Never say this is a government election, never declare an official winner, and never invent candidate facts. Use this portal snapshot only for database-specific questions.\n\nSNAPSHOT:\n${snap}\n\nQUESTION:\n${q}`;p.textContent=await GeminiService.generate(key,db.settings?.geminiModel||'gemini-3.7-flash',prompt)}catch(e){p.textContent=(l==='hi'?'AI उपलब्ध नहीं है: ':'AI unavailable: ')+e.message}log.scrollTop=log.scrollHeight},
-    init(){const u=document.createElement('button');u.id='ep-user-ai-launcher';u.className='ep-float ep-float-user';u.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i><span class="ep-float-label">Citizen AI</span>';u.title='Citizen AI';u.onclick=()=>this.openAI();document.body.appendChild(u);restore('EP_FLOAT_USER',u);drag(u,'EP_FLOAT_USER');const a=document.createElement('button');a.id='ep-admin-ai-launcher';a.className='ep-float ep-float-admin';a.innerHTML='<i class="fa-solid fa-shield-halved"></i><span class="ep-float-label">Admin AI</span>';a.title='Admin AI';a.onclick=()=>{try{UIManager.openAdminLoginModal()}catch{}};document.body.appendChild(a);restore('EP_FLOAT_ADMIN',a);drag(a,'EP_FLOAT_ADMIN');renderFeatures();renderNotices();renderLang();}
-  };
-  EPWebsite.setLanguage=setLang;
-  function addAdminExtras(){
-    try{
-      if(!window.AdminManager||!Array.isArray(AdminManager.toolsList)) return;
-      const extras=[
-        {title:'Public Portal Preview',icon:'fa-globe',render:()=>`<div style='padding:18px'><h3 style='font-size:18px;font-weight:800'>Public Portal Preview</h3><p style='margin:8px 0;color:#64748b'>Open the public website in a clean new tab without changing the admin session.</p><button class='btn-gold px-5 py-3 rounded-xl' onclick='window.open(location.href.split("#")[0],"_blank")'>Open Public Portal</button></div>`},
-        {title:'Notification Centre Preview',icon:'fa-bell',render:()=>{EPWebsite.openNotifications();return `<div class='p-4 text-slate-500'>Notification centre opened.</div>`}},
-        {title:'Database Integrity Snapshot',icon:'fa-circle-check',render:()=>{let v=0,c=0,n=0;try{n=(db.notifications||[]).length;Object.values(db.panchayats||{}).forEach(p=>{for(let w=1;w<=p.totalWards;w++){const wd=p.wardsData?.[w]||{};c+=Object.keys(wd.candidates||{}).length;v+=Object.values(wd.votes||{}).reduce((a,x)=>a+(Number(x)||0),0)}})}catch{}return `<div class='space-y-4'><h3 class='text-lg font-extrabold'>Database Integrity Snapshot</h3><div class='grid grid-cols-3 gap-3'><div class='p-4 rounded-xl bg-slate-800'><b>${Object.keys(db.panchayats||{}).length}</b><div class='text-xs text-slate-400'>Villages</div></div><div class='p-4 rounded-xl bg-slate-800'><b>${c}</b><div class='text-xs text-slate-400'>Candidates</div></div><div class='p-4 rounded-xl bg-slate-800'><b>${v}</b><div class='text-xs text-slate-400'>Recorded Votes</div></div></div><p class='text-xs text-slate-400'>Notifications: ${n}. No data changes were made.</p></div>`}}
-      ];
-      extras.forEach(x=>{if(!AdminManager.toolsList.some(t=>t.title===x.title))AdminManager.toolsList.push(x)});
-    }catch(e){console.warn('Admin extras unavailable',e)}
-  }
-  function hideDuplicateAI(){
-    $$('button').forEach(b=>{const t=b.textContent.trim();if(t==='Ask AI'&&b.id!=='ep-ai-send')b.closest('#user-ai-section')?.setAttribute('data-legacy-ai','1');if(t==='Admin AI'&&b.id!=='ep-admin-ai-launcher'){b.style.display='none';}});
-  }
-  function initLangBar(){const h=$('#ep-lang-hi'),e=$('#ep-lang-en');h?.addEventListener('click',()=>setLang('hi'));e?.addEventListener('click',()=>setLang('en'));setLang(localStorage.getItem('EP_LANG')||'hi');}
-  window.EPWebsite=EPWebsite;
-  function init(){addAdminExtras();hideDuplicateAI();initLangBar();renderNotices();renderFeatures();renderLang();EPWebsite.init();setLang(localStorage.getItem('EP_LANG')||'hi');}
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,60)); else setTimeout(init,60);
-})();
-</script>
 
-<script id="ep-winning-v3-script">
-(function(){
-  'use strict';
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  const getLang=()=>localStorage.getItem('EP_LANG')||'hi';
-  const t=(hi,en)=>getLang()==='hi'?hi:en;
-
-  const featureDataV3=[
-    ['fa-magnifying-glass','उम्मीदवार खोज','Candidate Search','नाम, पार्टी, पद या वार्ड से खोजें','Find candidates by name, party, post or ward','search'],
-    ['fa-code-compare','उम्मीदवार तुलना','Candidate Comparison','दो उम्मीदवारों की जानकारी साथ देखें','Compare two candidates side by side','compare'],
-    ['fa-floppy-disk','गाँव सेव करें','Save Village','पसंदीदा गाँव इस डिवाइस पर याद रखें','Remember your preferred village on this device','save'],
-    ['fa-share-nodes','गाँव साझा करें','Share Village','चुने गए गाँव का लिंक साझा करें','Share the selected village portal view','share'],
-    ['fa-print','सारांश प्रिंट','Print Summary','गाँव की साफ प्रिंट कॉपी बनाएँ','Create a printable village summary','print'],
-    ['fa-list-check','मतदान मार्गदर्शिका','Voting Guide','मतदान के चरण सरल भाषा में देखें','See the voting steps in simple language','guide'],
-    ['fa-address-book','उम्मीदवार निर्देशिका','Candidate Directory','पूरे गाँव के सभी वार्डों के उम्मीदवार देखें','Browse all candidates across village wards','directory'],
-    ['fa-building','गाँव सारांश','Village Summary','वार्ड, उम्मीदवार और वोटों का सारांश देखें','View village-wide totals and coverage','summary'],
-    ['fa-map-location-dot','वार्ड स्थिति','Ward Snapshot','वार्डवार उम्मीदवार और वोट देखें','Review ward-by-ward candidate and vote data','snapshot'],
-    ['fa-comments','सुझाव बॉक्स','Suggestion Box','पोर्टल के लिए सुझाव या समस्या भेजें','Send a portal suggestion or issue','suggest'],
-    ['fa-file-export','पारदर्शिता निर्यात','Transparency Export','जनमत डेटा की रिपोर्ट डाउनलोड करें','Download a readable public-opinion report','export'],
-    ['fa-bell','सूचना केंद्र','Notification Centre','सभी वर्तमान और पुरानी सूचनाएँ देखें','Read current and past portal notices','notify'],
-    ['fa-shield-halved','जनमत नियम','Opinion Rules','इस पोर्टल के मतदान नियम समझें','Review the portal’s public-opinion rules','rules'],
-    ['fa-chart-pie','लाइव परिणाम','Live Results','राउंड प्रतिशत चार्ट और रैंकिंग देखें','View the round percentage chart and ranking','analytics'],
-    ['fa-circle-question','पोर्टल सहायता','Portal Help','वेबसाइट की सुविधाएँ समझें','Learn how the portal services work','help'],
-    ['fa-clock-rotate-left','मेरा वोट रिकॉर्ड','My Vote Record','अपने दर्ज जनमत वोट की स्थिति जाँचें','Check your recorded public-opinion vote','myvote'],
-    ['fa-universal-access','पहुंच और टेक्स्ट','Accessibility','कंट्रास्ट और बड़ा टेक्स्ट चालू करें','Toggle contrast and larger text','accessibility'],
-    ['fa-chart-column','गाँव आँकड़े','Village Statistics','चुने गाँव की विस्तृत सांख्यिकी देखें','View detailed village statistics','stats'],
-    ['fa-id-card','उम्मीदवार विवरण','Candidate Details','उम्मीदवार की पूरी जानकारी देखें','View complete candidate details','details'],
-    ['fa-landmark-flag','आधिकारिक जानकारी','Official Election Info','आधिकारिक चुनाव स्रोतों की जानकारी देखें','See guidance about official election sources','official']
-  ];
-
-  function renderFeatureGrid(){
-    const g=$('#ep-public-feature-grid'); if(!g)return;
-    g.innerHTML=featureDataV3.map(([ico,hiTitle,enTitle,hiDesc,enDesc,key],i)=>`
-      <article class="ep-pro-feature">
-        <div class="ep-pro-feature-top"><span class="ep-pro-number">${String(i+1).padStart(2,'0')}</span><span class="ep-pro-icon"><i class="fa-solid ${ico}"></i></span></div>
-        <div><h3>${esc(t(hiTitle,enTitle))}</h3><p>${esc(t(hiDesc,enDesc))}</p></div>
-        <button type="button" class="ep-pro-action" data-ep-action="${key}">${esc(t('खोलें','Open'))}<i class="fa-solid fa-arrow-right"></i></button>
-      </article>`).join('');
-    g.querySelectorAll('[data-ep-action]').forEach(b=>b.addEventListener('click',()=>runFeature(b.dataset.epAction)));
-  }
-
-  function selectedVillage(){
-    const s=$('#user-panchayat-select');
-    return s?.value || localStorage.getItem('EP_SAVED_VILLAGE') || Object.keys(window.db?.panchayats||{})[0] || '';
-  }
-  function villageData(){const v=selectedVillage(); return v&&window.db?.panchayats?.[v]?window.db.panchayats[v]:null;}
-  function allCandidates(p){const arr=[]; if(!p)return arr; for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w]; (wd?.candidates||[]).forEach(c=>arr.push({p,w,c,votes:Number(wd?.votes?.[c.id]||0)}));} return arr;}
-
-  function runFeature(key){
-    const api={
-      search:()=>window.EPWebsite.searchCandidates?.(),
-      compare:()=>window.EPWebsite.compareCandidates?.(),
-      save:()=>window.EPWebsite.saveVillage?.(),
-      share:()=>window.EPWebsite.shareVillage?.(),
-      print:()=>window.EPWebsite.printVillage?.(),
-      guide:()=>$('#voting-section')?.scrollIntoView({behavior:'smooth'}),
-      directory:()=>window.UIManager?.openDirectoryModal?.(),
-      summary:()=>openSimpleModal(t('गाँव सारांश','Village Summary'), villageSummaryHtml()),
-      snapshot:()=>openSimpleModal(t('वार्ड स्थिति','Ward Snapshot'), wardSnapshotHtml()),
-      suggest:()=>scrollToSuggestion(),
-      export:()=>window.EPWebsite.exportSummary?.(),
-      notify:()=>window.EPWebsite.openNotifications?.(),
-      rules:()=>openSimpleModal(t('जनमत नियम','Opinion Rules'), `<div class="ep-modal-copy"><p>${esc(t('यह पोर्टल स्वैच्छिक सार्वजनिक राय के लिए है। एक गाँव में एक दर्ज वोट नीति लागू हो सकती है। वास्तविक चुनाव के लिए आधिकारिक सरकारी स्रोत देखें।','This portal is for voluntary public opinion only. A one-vote-per-village policy may be applied. Use official government sources for real elections.'))}</p></div>`),
-      analytics:()=>$('#ep-results-section')?.scrollIntoView({behavior:'smooth'}),
-      help:()=>openSimpleModal(t('पोर्टल सहायता','Portal Help'), helpHtml()),
-      myvote:()=>openVoteRecordModal(),
-      accessibility:()=>toggleAccessibilityModal(),
-      stats:()=>$('#ep-stats-section')?.scrollIntoView({behavior:'smooth'}),
-      details:()=>candidateDetailsModal(),
-      official:()=>window.EPWebsite.openOfficialInfo?.()
-    };
-    try{api[key]?.();}catch(e){console.error(e);window.Utils?.showToast?.(t('यह सुविधा अभी उपलब्ध नहीं है।','This feature is temporarily unavailable.'),'error');}
-  }
-
-  function scrollToSuggestion(){
-    const s=$('#user-suggestion-text')||$('#t5-suggestion')||$('#suggestion-text');
-    if(s){s.scrollIntoView({behavior:'smooth',block:'center'});s.focus?.();} else openSimpleModal(t('सुझाव बॉक्स','Suggestion Box'),t('पुराना सुझाव क्षेत्र उपलब्ध नहीं मिला।','The legacy suggestion area is not available.'));
-  }
-  function villageSummaryHtml(){
-    const p=villageData(); if(!p)return `<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`;
-    const c=allCandidates(p), votes=c.reduce((a,x)=>a+x.votes,0), byWard={}; c.forEach(x=>(byWard[x.w]??=[]).push(x));
-    return `<div class="ep-modal-stat-grid"><div><b>${p.totalWards||0}</b><small>${esc(t('वार्ड','Wards'))}</small></div><div><b>${c.length}</b><small>${esc(t('उम्मीदवार','Candidates'))}</small></div><div><b>${votes}</b><small>${esc(t('जनमत वोट','Opinion votes'))}</small></div></div><div class="ep-modal-table">${Object.entries(byWard).map(([w,items])=>`<div class="ep-modal-row"><strong>Ward ${w}</strong><span>${items.length} ${t('उम्मीदवार','candidates')} · ${items.reduce((a,x)=>a+x.votes,0)} ${t('वोट','votes')}</span></div>`).join('')}</div>`;
-  }
-  function wardSnapshotHtml(){
-    const p=villageData(); if(!p)return `<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`;
-    return `<div class="ep-modal-table">${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,wd=p.wardsData?.[w]||{},cs=wd.candidates||[],votes=Object.values(wd.votes||{}).reduce((a,x)=>a+(Number(x)||0),0);return `<div class="ep-modal-row"><strong>Ward ${w}</strong><span>${cs.length} ${t('उम्मीदवार','candidates')} · ${votes} ${t('दर्ज वोट','recorded votes')}</span></div>`;}).join('')}</div>`;
-  }
-  function helpHtml(){return `<div class="ep-modal-copy"><ol><li>${esc(t('ऊपर से गाँव चुनें।','Choose a village from the voting section.'))}</li><li>${esc(t('गाँव के सभी वार्डों के उम्मीदवार देखें।','Review all candidates across the village wards.'))}</li><li>${esc(t('उम्मीदवार चुनें और मोबाइल सत्यापन के साथ जनमत वोट दर्ज करें।','Select a candidate and record your public-opinion vote with mobile verification.'))}</li><li>${esc(t('मतदान के बाद परिणाम और प्रतिशत चार्ट कभी भी देखें।','After voting, view the results and percentage chart anytime.'))}</li></ol></div>`}
-
-  function openSimpleModal(title,html){
-    let m=$('#ep-v3-modal'); if(!m){m=document.createElement('div');m.id='ep-v3-modal';m.className='ep-v3-modal';document.body.appendChild(m);} m.innerHTML=`<div class="ep-v3-dialog"><div class="ep-v3-dialog-head"><div><span class="ep-eyebrow">${esc(t('नागरिक सेवा','CITIZEN SERVICE'))}</span><h3>${esc(title)}</h3></div><button type="button" class="ep-v3-close" aria-label="Close">×</button></div><div class="ep-v3-dialog-body">${html}</div></div>`;m.style.display='flex';m.querySelector('.ep-v3-close').onclick=()=>m.style.display='none';m.onclick=e=>{if(e.target===m)m.style.display='none'};
-  }
-
-  function openVoteRecordModal(){
-    openSimpleModal(t('मेरा वोट रिकॉर्ड','My Vote Record'), `<p class="ep-small-note">${esc(t('यहाँ मोबाइल नंबर का उपयोग केवल इस स्थानीय डेमो डेटाबेस में दर्ज वोट की स्थिति देखने के लिए होता है।','The mobile number is used only to check the locally stored demo vote record.'))}</p><div class="ep-form-row"><input id="ep-vote-check-mobile" type="tel" maxlength="10" placeholder="${esc(t('10 अंकों का मोबाइल नंबर','10-digit mobile number'))}"><button id="ep-vote-check-btn" class="ep-primary-button">${esc(t('जाँचें','Check'))}</button></div><div id="ep-vote-check-output" class="ep-check-output"></div>`);
-    $('#ep-vote-check-btn').onclick=()=>{
-      const mob=$('#ep-vote-check-mobile').value.trim(),out=$('#ep-vote-check-output'); if(!/^\d{10}$/.test(mob)){out.textContent=t('कृपया 10 अंकों का मोबाइल नंबर दें।','Enter a valid 10-digit mobile number.');return;}
-      const logs=Object.values(window.db?.votersLog||{}).filter(x=>String(x.mob||'')===mob); out.innerHTML=logs.length?logs.map(x=>{const p=window.db?.panchayats?.[x.pId],wd=p?.wardsData?.[x.wNo],c=(wd?.candidates||[]).find(c=>c.id===x.cId);return `<div><strong>${esc(c?.name||'Candidate')}</strong><span>${esc(p?.name||'')} · Ward ${x.wNo} · ${new Date(x.time||Date.now()).toLocaleString()}</span></div>`}).join(''):`<div>${esc(t('इस नंबर से कोई दर्ज वोट नहीं मिला।','No recorded vote was found for this number.'))}</div>`;
-    };
-  }
-  function toggleAccessibilityModal(){
-    openSimpleModal(t('पहुंच और टेक्स्ट','Accessibility'),`<div class="ep-access-grid"><button id="ep-contrast-btn" class="ep-access-btn"><i class="fa-solid fa-circle-half-stroke"></i>${esc(t('कॉन्ट्रास्ट बदलें','Toggle Contrast'))}</button><button id="ep-text-btn" class="ep-access-btn"><i class="fa-solid fa-text-height"></i>${esc(t('बड़ा टेक्स्ट','Larger Text'))}</button></div><p class="ep-small-note">${esc(t('सेटिंग इस ब्राउज़र में याद रहेगी।','The setting is remembered in this browser.'))}</p>`);
-    $('#ep-contrast-btn').onclick=()=>window.UIManager?.toggleContrast?.(!document.body.classList.contains('high-contrast'));
-    $('#ep-text-btn').onclick=()=>window.UIManager?.toggleTextSize?.(getComputedStyle(document.documentElement).fontSize!=='18px');
-  }
-  function candidateDetailsModal(){
-    const p=villageData(),c=allCandidates(p); if(!p||!c.length){openSimpleModal(t('उम्मीदवार विवरण','Candidate Details'),t('पहले ऐसा गाँव चुनें जिसमें उम्मीदवार उपलब्ध हों।','Select a village with candidates first.'));return;}
-    openSimpleModal(t('उम्मीदवार विवरण','Candidate Details'),`<select id="ep-candidate-detail-select" class="ep-full-select">${c.map((x,i)=>`<option value="${i}">${esc(x.c.name||t('उम्मीदवार','Candidate'))} — Ward ${x.w}</option>`).join('')}</select><div id="ep-candidate-detail-output" class="ep-candidate-detail"></div>`);
-    const render=()=>{const x=c[Number($('#ep-candidate-detail-select').value)||0],d=x.c||{};$('#ep-candidate-detail-output').innerHTML=`<div class="ep-detail-head">${d.personImage?`<img src="${esc(d.personImage)}" alt="Candidate">`:''}<div><h4>${esc(d.name||'—')}</h4><span>${esc(d.partyName||'Independent')}</span></div></div><div class="ep-detail-grid"><div><small>${esc(t('वार्ड','Ward'))}</small><b>${x.w}</b></div><div><small>${esc(t('पद','Post'))}</small><b>${esc(d.post||'—')}</b></div><div><small>${esc(t('आयु','Age'))}</small><b>${esc(d.age||'—')}</b></div><div><small>${esc(t('लिंग','Gender'))}</small><b>${esc(d.gender||'—')}</b></div><div><small>${esc(t('श्रेणी','Category'))}</small><b>${esc(d.category||'—')}</b></div><div><small>${esc(t('दर्ज जनमत वोट','Recorded votes'))}</small><b>${x.votes}</b></div></div>`}; $('#ep-candidate-detail-select').onchange=render;render();
-  }
-
-  function renderLatestNotification(){
-    const g=$('#ep-notification-grid'); if(!g)return;
-    let notes=[]; try{notes=Object.values(window.db?.notifications||{}).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));}catch(e){}
-    const n=notes[0];
-    if(!n){g.innerHTML=`<article class="ep-last-notice"><div class="ep-last-icon"><i class="fa-solid fa-bell"></i></div><div><span>${esc(t('अभी कोई नई सूचना नहीं','No new notifications yet'))}</span><p>${esc(t('पूरी सूचना सूची खोलकर पोर्टल की जानकारी देखें।','Open the full notification centre for portal information.'))}</p></div></article>`;return;}
-    g.innerHTML=`<article class="ep-last-notice"><div class="ep-last-icon"><i class="fa-solid fa-bell"></i></div><div class="ep-last-content"><div class="ep-last-head"><span>${esc(t('सबसे नई सूचना','Latest notification'))}</span><time>${esc(new Date(n.date||Date.now()).toLocaleString(getLang()==='hi'?'hi-IN':'en-IN'))}</time></div><h3>${esc(n.title||t('पोर्टल सूचना','Portal Notice'))}</h3><p>${esc(n.text||'')}</p></div><button class="ep-last-open" type="button" onclick="EPWebsite.openNotifications()">${esc(t('सभी सूचनाएँ खोलें','Open All Notifications'))}<i class="fa-solid fa-arrow-right"></i></button></article>`;
-  }
-
-  function calcResults(){
-    const p=villageData(); if(!p)return {p:null,total:0,items:[]};
-    const items=allCandidates(p).sort((a,b)=>b.votes-a.votes || String(a.c.name||'').localeCompare(String(b.c.name||'')));
-    return {p,total:items.reduce((a,x)=>a+x.votes,0),items};
-  }
-  function renderResults(){
-    const {p,total,items}=calcResults();
-    const donut=$('#ep-result-donut'),ranking=$('#ep-result-ranking'); if(!donut||!ranking)return;
-    $('#ep-result-total').textContent=total.toLocaleString();
-    if(!p||!items.length){$('#ep-result-top-name').textContent='—';$('#ep-result-top-pct').textContent='0%';$('#ep-result-top-votes').textContent='0 '+t('वोट','votes');ranking.innerHTML=`<div class="ep-empty-state">${esc(t('गाँव चुनने पर यहाँ लाइव प्रतिशत परिणाम दिखेंगे।','Live percentage results will appear here after you select a village.'))}</div>`;donut.style.background='conic-gradient(#e6edf3 0 100%)';return;}
-    if(!window.db?.settings?.publicResultsVisible){ranking.innerHTML=`<div class="ep-empty-state">${esc(t('प्रशासन ने अभी सार्वजनिक परिणाम छिपाए हैं।','Public results are currently hidden by the administrator.'))}</div>`;donut.style.background='conic-gradient(#e6edf3 0 100%)';return;}
-    if(total===0){$('#ep-result-top-name').textContent=t('अभी कोई वोट नहीं','No votes yet');$('#ep-result-top-pct').textContent='0%';$('#ep-result-top-votes').textContent='0 '+t('वोट','votes');ranking.innerHTML=`<div class="ep-empty-state">${esc(t('अभी तक कोई जनमत वोट रिकॉर्ड नहीं हुआ।','No public-opinion votes have been recorded yet.'))}</div>`;donut.style.background='conic-gradient(#e6edf3 0 100%)';return;}
-    const palette=['#f28c28','#0b7a42','#0d2440','#2774a5','#8a5cf6','#a85d22','#39876b','#6b7280'];
-    let cumulative=0,parts=[];items.slice(0,8).forEach((x,i)=>{const pct=(x.votes/total)*100;parts.push(`${palette[i%palette.length]} ${cumulative}% ${cumulative+pct}%`);cumulative+=pct;});if(cumulative<100)parts.push(`#dfe7ef ${cumulative}% 100%`);donut.style.background=`conic-gradient(${parts.join(',')})`;
-    const top=items[0],topPct=Math.round(top.votes/total*100);$('#ep-result-top-name').textContent=top.c.name||'—';$('#ep-result-top-pct').textContent=topPct+'%';$('#ep-result-top-votes').textContent=top.votes.toLocaleString()+' '+t('वोट','votes');
-    ranking.innerHTML=items.slice(0,10).map((x,i)=>{const pct=total?Math.round(x.votes/total*100):0;return `<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><span>${esc(t('वार्ड ','Ward ')+x.w)}</span></div><div class="ep-rank-track"><span style="width:${pct}%"></span></div></div><div class="ep-rank-value"><strong>${pct}%</strong><small>${x.votes}</small></div></div>`}).join('');
-  }
-  function renderStats(){
-    let villages=0,wards=0,candidates=0,votes=0;try{villages=Object.keys(window.db?.panchayats||{}).length;for(const p of Object.values(window.db?.panchayats||{})){wards+=Number(p.totalWards||0);allCandidates(p).forEach(x=>{candidates++;votes+=x.votes;});}}catch(e){}
-    const p=villageData(),{total,items}=calcResults();
-    $('#ep-stat-villages').textContent=villages.toLocaleString();$('#ep-stat-wards').textContent=(p?.totalWards||wards).toLocaleString();$('#ep-stat-candidates').textContent=(p?allCandidates(p).length:candidates).toLocaleString();$('#ep-stat-votes').textContent=(p?total:votes).toLocaleString();$('#ep-stat-selected-village').textContent=p?.name||t('गाँव चुनें','Select a village');$('#ep-stat-leader').textContent=items[0]?.c?.name||t('कोई वोट नहीं','No votes yet');$('#ep-stat-updated').textContent=new Date().toLocaleTimeString(getLang()==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'});
-  }
-  function refreshAll(){renderLatestNotification();renderFeatureGrid();renderResults();renderStats();applyText();}
-
-  function applyText(){
-    const l=getLang();document.documentElement.lang=l;
-    $$('[data-hi][data-en]').forEach(el=>{if(el.dataset.epDynamic==='true')return;el.textContent=l==='hi'?el.dataset.hi:el.dataset.en;});
-    $('#ep-lang-hi')?.classList.toggle('active',l==='hi');$('#ep-lang-en')?.classList.toggle('active',l==='en');
-    // Keep the legacy portal comprehensible without duplicating AI or feature sections.
-    const exact={
-      'Public Opinion Booth':['जनमत बूथ','Public Opinion Booth'],'Live Polling Analytics':['लाइव जनमत विश्लेषण','Live Polling Analytics'],'Secure Vote':['सुरक्षित वोट','Secure Vote'],
-      'Choose Gram Panchayat / Village':['ग्राम पंचायत / गाँव चुनें','Choose Gram Panchayat / Village'],'Select Candidate to Support':['समर्थन के लिए उम्मीदवार चुनें','Select Candidate to Support'],
-      'Verify Identity & Confirm Vote (Strictly 1 Vote / Village)':['पहचान सत्यापित करें और जनमत दर्ज करें (गाँव में केवल 1 वोट)','Verify Identity & Confirm Vote (1 Vote / Village)'],
-      'Candidate Directory':['उम्मीदवार निर्देशिका','Candidate Directory'],'Village Summary':['गाँव सारांश','Village Summary'],'Ward Snapshot':['वार्ड स्थिति','Ward Snapshot'],'Portal Help':['पोर्टल सहायता','Portal Help']
-    };
-    $$('body *').forEach(el=>{if(el.children.length) return; const raw=el.textContent.trim(); const pair=exact[raw]; if(pair) el.textContent=l==='hi'?pair[0]:pair[1];});
-  }
-
-  function patchGemini(){
-    try{
-      if(window.GeminiService?.generate){
-        const original=window.GeminiService.generate.bind(window.GeminiService);
-        window.GeminiService.generate=async function(apiKey,model,prompt){
-          const key=String(apiKey||'').trim(); if(!key)throw new Error(t('Gemini API key कॉन्फ़िगर नहीं है।','Gemini API key is not configured.'));
-          const configured=String(model||window.DEFAULT_GEMINI_MODEL||'gemini-3.8-flash').trim();
-          const models=[configured,'gemini-3.8-flash','gemini-3.7-flash','gemini-2.5-flash'].filter((m,i,a)=>m&&a.indexOf(m)===i);
-          let last=null;
-          for(const m of models){try{return await original(key,m,prompt);}catch(e){last=e;if(!/404|not found|model/i.test(String(e.message||'')))throw e;}}
-          throw last||new Error('Gemini model unavailable');
-        };
-      }
-      // Fix the stale default used by the earlier build.
-      if(window.db?.settings){
-        if(!window.db.settings.geminiModel || /^gemini-3\.[67]-flash$/.test(window.db.settings.geminiModel)===false) window.db.settings.geminiModel='gemini-3.8-flash';
-      }
-    }catch(e){console.warn('Gemini patch:',e)}
-  }
-
-  function patchCitizenAI(){
-    // The legacy AI section is hidden; the floating AI is the single public Citizen AI interface.
-    const launcher=$('#ep-user-ai-launcher'); if(launcher)launcher.title=t('नागरिक AI खोलें','Open Citizen AI');
-    const old=window.EPWebsite?.askAI;
-    // Nothing else is needed: existing EPWebsite.openAI uses the corrected GeminiService.
-  }
-
-  if(window.EPWebsite){
-    const priorOpenOfficial=window.EPWebsite.openOfficialInfo;
-    window.EPWebsite.openOfficialInfo=function(){
-      openSimpleModal(t('आधिकारिक चुनाव जानकारी','Official Election Information'),`<div class="ep-modal-copy"><p>${esc(t('यह पोर्टल स्वतंत्र सार्वजनिक राय के लिए है। वास्तविक चुनाव, उम्मीदवार नामांकन, मतदान केंद्र, मतदाता सूची और आधिकारिक परिणाम के लिए संबंधित सरकारी चुनाव प्राधिकरण की आधिकारिक वेबसाइट या कार्यालय से जानकारी लें।','This portal is for independent public opinion. For real elections, nominations, polling stations, electoral rolls and official results, use the relevant government election authority’s official website or office.'))}</p><p><strong>${esc(t('महत्वपूर्ण:','Important:'))}</strong> ${esc(t('यहाँ दिखाया गया जनमत परिणाम कोई सरकारी परिणाम नहीं है।','Results shown here are not government election results.'))}</p></div>`);
-    };
-    window.EPWebsite.refreshResults=renderResults;
-    const oldSelected=window.EPWebsite.selectedVillage;
-  }
-
-  function bindVillageRefresh(){
-    const s=$('#user-panchayat-select'); if(s){s.addEventListener('change',()=>setTimeout(()=>{renderResults();renderStats();},80));}
-    const orig=window.UserInterface?.handleVillageSelection;
-    if(orig && !orig.__epWrapped){
-      const wrapped=function(){const r=orig.apply(this,arguments);setTimeout(()=>{renderResults();renderStats();},120);return r}; wrapped.__epWrapped=true; window.UserInterface.handleVillageSelection=wrapped;
-      if(s)s.setAttribute('onchange','UserInterface.handleVillageSelection()');
-    }
-  }
-
-  function hideLegacyDuplicates(){
-    $('#user-ai-section')?.setAttribute('hidden','hidden');
-    const sec=$('[data-legacy-utility]'); if(sec)sec.setAttribute('hidden','hidden');
-    const head=$('[data-legacy-utility-heading]'); if(head)head.setAttribute('hidden','hidden');
-    // Do not remove the floating admin AI: it remains the single admin AI launcher.
-  }
-
-  function init(){
-    patchGemini();patchCitizenAI();hideLegacyDuplicates();bindVillageRefresh();refreshAll();
-    // The requested default is Hindi whenever no user language choice exists.
-    if(!localStorage.getItem('EP_LANG'))localStorage.setItem('EP_LANG','hi');
-    $('#ep-lang-hi')?.addEventListener('click',()=>{localStorage.setItem('EP_LANG','hi');localStorage.setItem('EP_AI_LANG','hi');refreshAll();});
-    $('#ep-lang-en')?.addEventListener('click',()=>{localStorage.setItem('EP_LANG','en');localStorage.setItem('EP_AI_LANG','en');refreshAll();});
-    // Keep notifications and results fresh when the portal database persists changes.
-    setInterval(()=>{try{renderLatestNotification();renderResults();renderStats();}catch(e){}},5000);
-    setTimeout(()=>{renderResults();renderStats();applyText();},250);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,150));else setTimeout(init,150);
-})();
-</script>
 <style id="ep-winning-v3-style">
 :root{--tri-saffron:#f28c28;--tri-green:#138a3d;--tri-navy:#0b2945;--tri-ink:#12243a;--tri-muted:#66768a;--tri-line:#dfe7ee;--tri-bg:#f4f7fa;--tri-shadow:0 20px 55px rgba(14,38,63,.09)}
 *{scroll-behavior:smooth}body{background:linear-gradient(180deg,#f6f8fa 0,#eef3f7 100%)!important;color:var(--tri-ink)!important;font-family:Poppins,Arial,sans-serif}
@@ -3634,7 +3388,516 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
 @media(max-width:1100px){.ep-brand-copy strong{font-size:20px}.ep-nav-inner{gap:24px}.ep-result-layout{grid-template-columns:1fr}.ep-donut-card{min-height:300px}.ep-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ep-stat-grid{grid-template-columns:repeat(2,1fr)}.ep-home-rail{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.ep-container{width:min(100% - 24px,1280px)}.ep-statebar-inner{min-height:38px;font-size:11px}.ep-state-right{display:none}.ep-brand-inner{min-height:84px;align-items:flex-start;padding:10px 0}.ep-brand-mark{width:56px;height:56px;font-size:20px}.ep-brand-copy small{font-size:8px;letter-spacing:.16em}.ep-brand-copy strong{font-size:16px}.ep-brand-copy em{font-size:9px}.ep-brand-actions{gap:6px}.ep-language-switch button{padding:8px 9px;font-size:10px}.ep-admin-entry{padding:9px 10px;font-size:10px}.ep-admin-entry span{display:none}.ep-mainnav{overflow:auto}.ep-nav-inner{gap:18px;min-height:48px}.ep-nav-inner a,.ep-nav-inner button{font-size:11px;padding:14px 0}.ep-main-shell{width:min(100% - 14px,1320px);padding-top:16px}.ep-last-notice{grid-template-columns:auto 1fr}.ep-last-open{grid-column:2;justify-self:start}.ep-section-title-row{flex-direction:column;align-items:flex-start}.ep-section-title-row h2{font-size:22px}.ep-stat-grid,.ep-insight-row,.ep-home-rail{grid-template-columns:1fr}.ep-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-pro-feature{min-height:165px}.ep-donut{width:210px;height:210px}.ep-donut-center strong{font-size:28px}.ep-detail-grid{grid-template-columns:1fr 1fr}.ep-form-row{grid-template-columns:1fr}.ep-primary-button{padding:11px}.ep-result-layout{gap:13px}}
 @media(max-width:460px){.ep-brand-copy em{display:none}.ep-brand-actions{flex-direction:column;align-items:flex-end}.ep-feature-grid{grid-template-columns:1fr}.ep-last-notice{grid-template-columns:auto 1fr}.ep-donut{width:190px;height:190px}}
+<style id="ep-final-polish">
+.ep-result-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin-top:12px;max-height:78px;overflow:auto;justify-content:center}.ep-legend-item{font-size:9px;color:#68788a;display:inline-flex;align-items:center;gap:5px}.ep-legend-item i{width:8px;height:8px;border-radius:50%;display:inline-block;flex:0 0 auto}.ep-result-status{font-size:10px;color:#728297;margin-top:3px}.ep-analytics-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.ep-analytics-summary>div{border:1px solid #e0e7ed;background:#f8fafb;border-radius:12px;padding:10px}.ep-analytics-summary b{display:block;font-size:18px;color:#0b2945}.ep-analytics-summary span{font-size:9px;color:#7a8998}.ep-analytics-subtitle{font-size:9px;color:#7a8998;text-transform:uppercase;letter-spacing:.09em;font-weight:900;margin:10px 0 7px}.ep-ward-line{width:100%;display:grid;grid-template-columns:45px 1fr 34px;align-items:center;gap:8px;border:0;background:transparent;padding:5px 0;text-align:left;cursor:pointer;border-radius:8px}.ep-ward-line:hover{background:#f4f7f9}.ep-ward-line>span{font-size:10px;font-weight:800;color:#50657a}.ep-ward-line>div{min-width:0}.ep-ward-line small{font-size:8px;color:#8a97a6;display:block;margin-top:3px}.ep-ward-line>strong{text-align:right;font-size:10px;color:#53677d}.ep-party-line{padding:7px 0;border-bottom:1px solid #e8eef2}.ep-party-line:last-of-type{border-bottom:0}.ep-party-line>div:first-child{display:flex;justify-content:space-between;gap:8px;align-items:center}.ep-party-line strong{font-size:10px;color:#31455a}.ep-party-line small{font-size:8px;color:#8a97a6}.ep-party-line>div:last-child{display:grid;grid-template-columns:1fr 45px;gap:8px;align-items:center;margin-top:4px}.ep-party-line b{font-size:9px;color:#0b2945;text-align:right}.ep-bar.green{background:linear-gradient(90deg,#138a3d,#72bd91)!important}.ep-analytics-callout{display:flex;gap:9px;align-items:flex-start;border:1px solid #dfe7ed;background:linear-gradient(100deg,#fff9f1,#f5fbf7);border-radius:12px;padding:10px;margin-top:10px}.ep-analytics-callout i{color:#f28c28;margin-top:2px}.ep-analytics-callout strong{display:block;font-size:10px;color:#30455a}.ep-analytics-callout span{display:block;font-size:9px;color:#718294;margin-top:2px}
+@media(max-width:520px){.ep-analytics-summary{grid-template-columns:1fr}.ep-ward-line{grid-template-columns:42px 1fr 28px}}
 </style>
+<script id="ep-final-runtime">
+(function(){
+  'use strict';
+  // Classic-script classes/consts are global lexical bindings, not window properties.
+  // Expose the original portal services explicitly so this enhancement layer and
+  // inline HTML handlers always share the same live instances.
+  try {
+    window.Utils = Utils;
+    window.UIManager = UIManager;
+    window.UserAI = UserAI;
+    window.GeminiService = GeminiService;
+    window.DBManager = DBManager;
+    window.AdminManager = AdminManager;
+    window.VotingEngine = VotingEngine;
+    window.UserInterface = UserInterface;
+  } catch (bridgeError) { console.warn('Portal service bridge warning:', bridgeError); }
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const root=(key)=>{try{return localStorage.getItem(key)||''}catch{return''}};
+  const put=(key,val)=>{try{localStorage.setItem(key,val)}catch{}};
+  const lang=()=>root('EP_LANG')||'hi';
+  const t=(hi,en)=>lang()==='hi'?hi:en;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const toast=(msg,type='info')=>{try{window.Utils?.showToast?.(msg,type)}catch(e){console.warn(e)}};
+  const getDB=()=>{try{if(typeof DBManager!=='undefined'&&DBManager?.get)return DBManager.get();}catch{};try{if(typeof db!=='undefined'&&db)return db;}catch{};return window.__EP_DB__||window.db||null;};
+  const dbx=()=>getDB();
+  const candidatesFor=(p)=>{const out=[]; if(!p)return out; for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w]||{candidates:[],votes:{}}; for(const c of (Array.isArray(wd.candidates)?wd.candidates:Object.values(wd.candidates||{}))){out.push({p,w,wd,c,votes:Number(wd.votes?.[c.id]||0)})}} return out};
+  const villageId=()=>$('#user-panchayat-select')?.value || root('EP_SAVED_VILLAGE') || Object.keys(dbx()?.panchayats||{})[0] || '';
+  const village=()=>{const id=villageId();return id?dbx()?.panchayats?.[id]:null};
 
-</body>
+  function language(){
+    const l=lang(); document.documentElement.lang=l;
+    $('#ep-lang-hi')?.classList.toggle('active',l==='hi'); $('#ep-lang-en')?.classList.toggle('active',l==='en');
+    $$('[data-hi][data-en]').forEach(el=>{if(el.dataset.dynamic==='1')return; el.textContent=l==='hi'?el.dataset.hi:el.dataset.en});
+    const map={
+      'Public Opinion Booth':['जनमत बूथ','Public Opinion Booth'],
+      'Live Polling Analytics':['लाइव जनमत विश्लेषण','Live Polling Analytics'],
+      'Secure Vote':['सुरक्षित वोट','Secure Vote'],
+      'Choose Gram Panchayat / Village':['ग्राम पंचायत / गाँव चुनें','Choose Gram Panchayat / Village'],
+      'Select Candidate to Support':['समर्थन के लिए उम्मीदवार चुनें','Select Candidate to Support'],
+      'Candidate Directory':['उम्मीदवार निर्देशिका','Candidate Directory'],
+      'Village Summary':['गाँव सारांश','Village Summary'],
+      'Ward Snapshot':['वार्ड स्थिति','Ward Snapshot'],
+      'Portal Help':['पोर्टल सहायता','Portal Help']
+    };
+    $$('main *').forEach(el=>{if(el.children.length)return; const raw=el.textContent.trim(); const pair=map[raw]; if(pair)el.textContent=l==='hi'?pair[0]:pair[1]});
+    const ai=$('#ep-floating-ai'); if(ai)ai.title=t('नागरिक AI खोलें','Open Citizen AI');
+  }
+
+  function setLanguage(l){put('EP_LANG',l);put('EP_AI_LANG',l); if(typeof window.UserAI?.setLanguage==='function'){try{window.UserAI.setLanguage(l)}catch{}} language(); renderAll();}
+
+  const Modal={
+    open(title,body){let b=$('#ep-final-modal');if(!b){b=document.createElement('div');b.id='ep-final-modal';b.className='ep-modal-backdrop';document.body.appendChild(b)} b.style.display='flex';b.innerHTML=`<div class="ep-modal"><div class="ep-modal-head"><div><strong>${esc(title)}</strong></div><button type="button" id="ep-final-modal-close" aria-label="Close" style="border:0;background:#edf2f6;width:36px;height:36px;border-radius:50%;font-size:18px">×</button></div><div class="ep-modal-body" id="ep-final-modal-body"></div></div>`; $('#ep-final-modal-body',b).appendChild(body?.nodeType?body:(()=>{const d=document.createElement('div');d.innerHTML=String(body??'');return d})()); $('#ep-final-modal-close',b).onclick=()=>b.style.display='none'; b.onclick=e=>{if(e.target===b)b.style.display='none'};},
+    close(){const b=$('#ep-final-modal');if(b)b.style.display='none'}
+  };
+
+  function allNotifications(){try{return Array.isArray(dbx()?.notifications)?dbx().notifications.slice():Object.values(dbx()?.notifications||{})}catch{return[]}}
+  function openNotifications(){
+    try{window.UIManager?.openNotificationsModal?.();return}catch(e){}
+    const notes=allNotifications().sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+    const html=`<div>${notes.length?notes.map((n,i)=>`<article style="padding:14px 0;border-bottom:1px solid #e6edf1"><div style="font-size:10px;color:#788898;font-weight:800;text-transform:uppercase">${esc(new Date(n.date||Date.now()).toLocaleString())}${i===0?' · LATEST':''}</div><div style="font-size:13px;color:#22384d;line-height:1.6;margin-top:5px;white-space:pre-wrap">${esc(n.text||'')}</div></article>`).join(''):`<p>${esc(t('अभी कोई सूचना उपलब्ध नहीं है।','No notifications are available.'))}</p>`}</div>`;
+    Modal.open(t('सभी सूचनाएँ','All Notifications'),html);
+  }
+
+  function showHtml(title,html){Modal.open(t(title[0],title[1]),html)}
+  function searchCandidates(){
+    const d=document.createElement('div');d.innerHTML=`<div style="display:grid;grid-template-columns:1fr auto;gap:10px"><input id="ep-fs-q" placeholder="${esc(t('नाम / पार्टी / पद / वार्ड','Name / party / post / ward'))}" style="padding:11px;border:1px solid #dce5ec;border-radius:10px"><button id="ep-fs-go" style="padding:11px 16px;border:0;border-radius:10px;background:#0b2945;color:#fff;font-weight:800">${esc(t('खोजें','Search'))}</button></div><div id="ep-fs-out" style="margin-top:14px"></div>`;
+    Modal.open(t('उम्मीदवार खोज','Candidate Search'),d);
+    const out=$('#ep-fs-out',d);
+    function run(){const q=$('#ep-fs-q',d).value.trim().toLowerCase();const rows=[];Object.values(dbx()?.panchayats||{}).forEach(p=>candidatesFor(p).forEach(x=>{const hay=[p.name,x.w,x.c.name,x.c.partyName||x.c.party,x.c.post,x.c.category].join(' ').toLowerCase();if(!q||hay.includes(q))rows.push(x)}));out.innerHTML=rows.length?rows.map(x=>`<div style="padding:11px 0;border-bottom:1px solid #e8eef2"><strong>${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(x.p.name)} · Ward ${x.w} · ${esc(x.c.post||'—')} · ${esc(x.c.partyName||x.c.party||'Independent')}</div></div>`).join(''):`<p style="color:#687a8b;font-size:12px">${esc(t('कोई उम्मीदवार नहीं मिला।','No candidate matched the search.'))}</p>`}
+    $('#ep-fs-go',d).onclick=run; $('#ep-fs-q',d).onkeydown=e=>{if(e.key==='Enter')run()}; run();
+  }
+  function compareCandidates(){
+    const opts=[];Object.values(dbx()?.panchayats||{}).forEach(p=>candidatesFor(p).forEach(x=>opts.push(x)));
+    if(!opts.length)return toast(t('तुलना के लिए उम्मीदवार उपलब्ध नहीं हैं।','No candidates are available for comparison.'),'error');
+    const o=opts.map((x,i)=>`<option value="${i}">${esc(x.c.name||'Candidate')} — ${esc(x.p.name)} W${x.w}</option>`).join('');
+    const d=document.createElement('div');d.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label style="font-size:10px;font-weight:800">${esc(t('उम्मीदवार A','Candidate A'))}</label><select id="ep-cmp-a" style="width:100%;padding:10px;border:1px solid #dce5ec;border-radius:10px">${o}</select></div><div><label style="font-size:10px;font-weight:800">${esc(t('उम्मीदवार B','Candidate B'))}</label><select id="ep-cmp-b" style="width:100%;padding:10px;border:1px solid #dce5ec;border-radius:10px">${o}</select></div></div><div id="ep-cmp-out" style="margin-top:18px"></div>`;
+    Modal.open(t('उम्मीदवार तुलना','Candidate Comparison'),d); $('#ep-cmp-b',d).value=String(Math.min(1,opts.length-1));
+    const render=()=>{const a=opts[Number($('#ep-cmp-a',d).value)||0],b=opts[Number($('#ep-cmp-b',d).value)||0],card=x=>`<div style="border:1px solid #dce5ec;border-radius:14px;padding:16px"><strong style="font-size:15px;color:#0b2945">${esc(x.c.name||'Candidate')}</strong><div style="font-size:11px;color:#66788a;margin-top:8px;line-height:1.7">Village: ${esc(x.p.name)}<br>Ward: ${x.w}<br>Post: ${esc(x.c.post||'—')}<br>Party: ${esc(x.c.partyName||x.c.party||'Independent')}<br>Category: ${esc(x.c.category||'—')}<br>Recorded votes: <strong>${x.votes}</strong></div></div>`;$('#ep-cmp-out',d).innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${card(a)}${card(b)}</div>`};
+    $('#ep-cmp-a',d).onchange=render;$('#ep-cmp-b',d).onchange=render;render();
+  }
+  function saveVillage(){const v=villageId();if(!v)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');put('EP_SAVED_VILLAGE',v);toast(t('गाँव इस डिवाइस पर सेव हो गया।','Village saved on this device.'),'success')}
+  async function shareVillage(){const v=villageId(),p=dbx()?.panchayats?.[v],url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p?.name||'Panchayat Portal',text:`${p?.name||v} — ${t('सार्वजनिक जनमत पोर्टल','Public opinion portal')}`,url})}else if(navigator.clipboard){await navigator.clipboard.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(String(e?.name)!=='AbortError')toast(t('शेयर करना पूरा नहीं हो सका।','Sharing could not be completed.'),'error')}}
+  function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
+  function villageSummary(){const p=village();if(!p)return showHtml(['गाँव सारांश','Village Summary'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p);const total=rows.reduce((a,x)=>a+x.votes,0);showHtml(['गाँव सारांश','Village Summary'],`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div><strong>${p.totalWards}</strong><div style="font-size:11px;color:#687a8b">${esc(t('वार्ड','Wards'))}</div></div><div><strong>${rows.length}</strong><div style="font-size:11px;color:#687a8b">${esc(t('उम्मीदवार','Candidates'))}</div></div><div><strong>${total}</strong><div style="font-size:11px;color:#687a8b">${esc(t('दर्ज जनमत वोट','Recorded votes'))}</div></div></div>`)}
+  function wardSnapshot(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['वार्ड स्थिति','Ward Snapshot'],`<div>${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rows=candidatesFor(p).filter(x=>x.w===w),votes=rows.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>Ward ${w}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(wd.reservation||'General')} · ${rows.length} ${esc(t('उम्मीदवार','candidates'))} · ${votes} ${esc(t('वोट','votes'))}</div></div>`}).join('')}</div>`)}
+  function guide(){showHtml(['मतदान मार्गदर्शिका','Voting Guide'],`<div style="line-height:1.8;font-size:13px"><p><b>1.</b> ${esc(t('गाँव चुनें और पूरे गाँव के उम्मीदवार देखें।','Choose a village and review candidates across the whole village.'))}</p><p><b>2.</b> ${esc(t('उम्मीदवार की फोटो, नाम, पद, पार्टी और वार्ड जाँचें।','Review the candidate photo, name, post, party and ward.'))}</p><p><b>3.</b> ${esc(t('उम्मीदवार चुनें और अपना 10-अंकीय मोबाइल नंबर दर्ज करें।','Select a candidate and enter your 10-digit mobile number.'))}</p><p><b>4.</b> ${esc(t('यह केवल सार्वजनिक राय/जनमत रिकॉर्ड है।','This is only a public-opinion record.'))}</p><p><b>5.</b> ${esc(t('वास्तविक चुनाव के लिए संबंधित आधिकारिक चुनाव प्राधिकरण की जानकारी देखें।','For real elections, consult the relevant official election authority.'))}</p></div>`)}
+  function directory(){ const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['उम्मीदवार निर्देशिका','Candidate Directory'],`<div>${candidatesFor(p).map(x=>`<article style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>${esc(x.c.name||'Candidate')}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">Ward ${x.w} · ${esc(x.c.post||'—')} · ${esc(x.c.partyName||x.c.party||'Independent')} · ${esc(x.c.category||'—')}</div></article>`).join('')||`<p>${esc(t('कोई उम्मीदवार नहीं है।','No candidates are registered.'))}</p>`}</div>`)}
+  function suggestion(){const d=document.createElement('div');d.innerHTML=`<p style="font-size:12px;color:#687a8b">${esc(t('पोर्टल के बारे में अपना सुझाव या समस्या लिखें।','Write a suggestion or issue about the portal.'))}</p><textarea id="ep-suggestion-text" rows="6" style="width:100%;margin-top:10px;padding:12px;border:1px solid #dce5ec;border-radius:12px;resize:vertical"></textarea><button id="ep-suggestion-submit" style="margin-top:10px;padding:11px 16px;background:#0b2945;color:#fff;border:0;border-radius:10px;font-weight:800">${esc(t('सुझाव भेजें','Submit Suggestion'))}</button>`;Modal.open(t('सुझाव बॉक्स','Suggestion Box'),d);$('#ep-suggestion-submit',d).onclick=()=>{const v=$('#ep-suggestion-text',d).value.trim();if(!v)return toast(t('पहले सुझाव लिखें।','Please enter a suggestion first.'),'error');dbx().suggestions=dbx().suggestions||[];dbx().suggestions.push({id:Date.now().toString(36),text:v,date:new Date().toISOString(),status:'Pending'});window.DBManager?.persist?.();$('#ep-suggestion-text',d).value='';toast(t('सुझाव प्रशासन कतार में भेज दिया गया।','Suggestion added to the admin queue.'),'success');Modal.close()}}
+  function exportSummary(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const report={portal:'Independent Public Opinion Portal',official:false,generated:new Date().toISOString(),village:p.name,wards:p.totalWards,candidates:candidatesFor(p).map(x=>({ward:x.w,name:x.c.name,post:x.c.post||'',party:x.c.partyName||x.c.party||'Independent',category:x.c.category||'',votes:x.votes}))};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download=`${(p.name||'village').replace(/[^a-z0-9]+/gi,'_')}_public_opinion.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800);publicToast(t('जनमत डेटा निर्यात हो गया।','Public-opinion data exported.'),'success')}
+  function rules(){showHtml(['जनमत नियम','Opinion Rules'],`<ul style="line-height:1.8;font-size:13px;padding-left:20px"><li>${esc(t('यह सरकारी चुनाव पोर्टल नहीं है।','This is not a government election portal.'))}</li><li>${esc(t('यहाँ दिखाए गए वोट केवल सार्वजनिक राय को दर्शाते हैं।','Votes shown here represent public opinion only.'))}</li><li>${esc(t('एक गाँव में मोबाइल/डिवाइस के आधार पर एक वोट की सीमा लागू की जा सकती है।','The portal may restrict one vote per village by mobile/device.'))}</li><li>${esc(t('वास्तविक मतदान के लिए आधिकारिक चुनाव स्रोत का उपयोग करें।','Use official election sources for real elections.'))}</li></ul>`)}
+  function help(){showHtml(['पोर्टल सहायता','Portal Help'],`<div style="line-height:1.8;font-size:13px"><p>${esc(t('ऊपर गाँव चुनें, उम्मीदवार देखें, वोट दर्ज करें और नीचे परिणाम/आँकड़े देखें।','Choose a village above, review candidates, record an opinion vote, then see results and statistics below.'))}</p><p>${esc(t('सूचना केंद्र से सभी नोटिस देखे जा सकते हैं और तैरता हुआ नागरिक AI पोर्टल को समझने में मदद करता है।','The notification centre shows all notices and the floating Citizen AI explains the portal.'))}</p></div>`)}
+  function myVote(){const d=document.createElement('div');d.innerHTML=`<p style="font-size:12px;color:#687a8b">${esc(t('अपने दर्ज जनमत रिकॉर्ड को देखने के लिए वही मोबाइल नंबर डालें।','Enter the same mobile number to view your recorded public-opinion entry.'))}</p><input id="ep-mob" inputmode="numeric" maxlength="10" style="width:100%;margin-top:10px;padding:11px;border:1px solid #dce5ec;border-radius:10px" placeholder="10-digit mobile"><button id="ep-mob-go" style="margin-top:10px;padding:11px 16px;border:0;border-radius:10px;background:#0b2945;color:#fff;font-weight:800">${esc(t('जाँचें','Check'))}</button><div id="ep-mob-out" style="margin-top:14px"></div>`;Modal.open(t('मेरा वोट रिकॉर्ड','My Vote Record'),d);$('#ep-mob-go',d).onclick=()=>{const mob=$('#ep-mob',d).value.trim();if(!/^\d{10}$/.test(mob)){return publicToast(t('10 अंकों का मोबाइल नंबर दर्ज करें।','Enter a valid 10-digit mobile number.'),'error')}const selected=villageId();const logs=Object.values(dbx()?.votersLog||{}).filter(x=>String(x.mob||'')===mob && (!selected||x.pId===selected));const out=$('#ep-mob-out',d);out.innerHTML=logs.length?logs.map(x=>{const pp=dbx()?.panchayats?.[x.pId],wd=pp?.wardsData?.[x.wNo],c=(Array.isArray(wd?.candidates)?wd.candidates:[]).find(c=>c.id===x.cId);return `<div style="padding:12px;border:1px solid #dce5ec;border-radius:12px"><strong>${esc(c?.name||t('उम्मीदवार','Candidate'))}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(pp?.name||'')} · Ward ${x.wNo} · ${esc(new Date(x.time||Date.now()).toLocaleString())}</div><div style="font-size:9px;color:#8b98a5;margin-top:3px">${esc(t('स्थिति: रिकॉर्ड मौजूद है','Status: record found'))}</div></div>`}).join(''):`<p style="font-size:12px;color:#687a8b">${esc(t('इस गाँव और नंबर के लिए कोई दर्ज रिकॉर्ड नहीं मिला।','No recorded entry was found for this village and number.'))}</p>`}}
+  function accessibility(){
+    const d=document.createElement('div');
+    const currentContrast=root('A11Y_CONTRAST')==='true', currentText=root('A11Y_TEXT')==='true';
+    d.innerHTML=`<label style="display:flex;gap:10px;align-items:center;padding:12px 0"><input type="checkbox" id="ep-a11y-contrast" ${currentContrast?'checked':''}> <span>${esc(t('उच्च कॉन्ट्रास्ट','High contrast'))}</span></label><label style="display:flex;gap:10px;align-items:center;padding:12px 0"><input type="checkbox" id="ep-a11y-text" ${currentText?'checked':''}> <span>${esc(t('बड़ा टेक्स्ट','Large text'))}</span></label><p style="font-size:10px;color:#7b8997;line-height:1.6;margin-top:8px">${esc(t('चयन इस डिवाइस पर याद रखा जाएगा।','Your choices are remembered on this device.'))}</p>`;
+    Modal.open(t('पहुंच और टेक्स्ट','Accessibility'),d);
+    const applyContrast=on=>{put('A11Y_CONTRAST',on?'true':'false');document.body.classList.toggle('high-contrast',on)};
+    const applyText=on=>{put('A11Y_TEXT',on?'true':'false');document.documentElement.style.fontSize=on?'18px':'16px'};
+    const c=$('#ep-a11y-contrast',d),z=$('#ep-a11y-text',d);
+    applyContrast(currentContrast);applyText(currentText);
+    c.onchange=e=>applyContrast(e.target.checked);z.onchange=e=>applyText(e.target.checked);
+  }
+  function stats(){const p=village();if(!p)return showHtml(['गाँव आँकड़े','Village Statistics'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p),votes=rows.reduce((a,x)=>a+x.votes,0);const wards=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,a=rows.filter(x=>x.w===w),v=a.reduce((s,x)=>s+x.votes,0);return {w,c:a.length,v}});showHtml(['गाँव आँकड़े','Village Statistics'],`<div class="ep-stat-grid" style="margin-bottom:10px"><div class="ep-stat-card"><div><span>${p.totalWards}</span><small>${esc(t('कुल वार्ड','Total wards'))}</small></div></div><div class="ep-stat-card"><div><span>${rows.length}</span><small>${esc(t('उम्मीदवार','Candidates'))}</small></div></div><div class="ep-stat-card"><div><span>${votes}</span><small>${esc(t('दर्ज वोट','Recorded votes'))}</small></div></div></div><div>${wards.map(x=>`<div style="padding:8px 0;border-bottom:1px solid #e7edf1;font-size:12px">Ward ${x.w}: ${x.c} candidates · ${x.v} votes</div>`).join('')}</div>`)}
+  function details(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const d=document.createElement('div');d.innerHTML=`<select id="ep-cand-detail" style="width:100%;padding:10px;border:1px solid #dce5ec;border-radius:10px">${rows.map((x,i)=>`<option value="${i}">${esc(x.c.name||'Candidate')} — Ward ${x.w}</option>`).join('')}</select><div id="ep-cand-detail-out" style="margin-top:14px"></div>`;Modal.open(t('उम्मीदवार विवरण','Candidate Details'),d);const render=()=>{const x=rows[Number($('#ep-cand-detail',d).value)||0];$('#ep-cand-detail-out',d).innerHTML=x?`<div style="border:1px solid #dce5ec;border-radius:14px;padding:16px"><div style="display:grid;grid-template-columns:90px 1fr;gap:16px;align-items:start"><div style="width:90px;height:110px;border-radius:12px;background:#f2f5f7;overflow:hidden;display:grid;place-items:center">${(x.c.personImage||x.c.image)?`<img src="${esc(x.c.personImage||x.c.image)}" alt="" style="width:100%;height:100%;object-fit:cover">`:`<i class="fa-solid fa-user text-slate-300 text-2xl"></i>`}</div><div style="font-size:12px;line-height:1.9"><strong style="font-size:18px;color:#0b2945">${esc(x.c.name||'Candidate')}</strong><br>Age: ${esc(x.c.age||'—')} · Gender: ${esc(x.c.gender||'—')}<br>Post: ${esc(x.c.post||'—')} · Party: ${esc(x.c.partyName||x.c.party||'Independent')}<br>Village: ${esc(x.p.name)} · Ward: ${x.w}<br>Category: ${esc(x.c.category||'—')}<br>Recorded public-opinion votes: <strong>${x.votes}</strong></div></div></div>`:''};$('#ep-cand-detail',d).onchange=render;render()}
+  function official(){showHtml(['आधिकारिक चुनाव जानकारी','Official Election Information'],`<div style="font-size:13px;line-height:1.8"><p><strong>${esc(t('महत्वपूर्ण सूचना','Important notice'))}</strong></p><p>${esc(t('यह पोर्टल केवल स्वतंत्र सार्वजनिक राय/जनमत के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है।','This portal is only for independent public opinion. It is not an official election portal of the Government of India, Government of Rajasthan, Election Commission of India or a State Election Commission.'))}</p><p>${esc(t('वास्तविक चुनाव, मतदाता सूची, नामांकन, मतदान केंद्र और आधिकारिक परिणाम के लिए संबंधित सरकारी चुनाव प्राधिकरण की आधिकारिक जानकारी देखें।','For real elections, electoral rolls, nominations, polling stations and official results, use the relevant government election authority’s official information.'))}</p></div>`)}
+
+  const featureMap={
+    searchCandidates,compareCandidates,saveVillage,shareVillage,printVillage,guide,directory,villageSummary,wardSnapshot,suggestion,exportSummary,openNotifications,rules,results:()=>$('#ep-results-section')?.scrollIntoView({behavior:'smooth'}),help,myVote,accessibility,stats,details,official
+  };
+  const featureData=[
+    ['fa-magnifying-glass',['उम्मीदवार खोज','Candidate Search'],['नाम, पार्टी, पद या वार्ड से खोजें','Find candidates by name, party, post or ward'],'searchCandidates'],
+    ['fa-code-compare',['उम्मीदवार तुलना','Candidate Comparison'],['दो उम्मीदवारों की जानकारी साथ देखें','Compare two candidates side by side'],'compareCandidates'],
+    ['fa-floppy-disk',['गाँव सेव करें','Save Village'],['पसंदीदा गाँव को इस डिवाइस पर याद रखें','Remember your preferred village on this device'],'saveVillage'],
+    ['fa-share-nodes',['गाँव साझा करें','Share Village'],['चुने गाँव की वेबसाइट लिंक साझा करें','Share the selected village portal link'],'shareVillage'],
+    ['fa-print',['सारांश प्रिंट','Print Summary'],['गाँव की साफ प्रिंट कॉपी बनाएँ','Create a clean printable village summary'],'printVillage'],
+    ['fa-list-check',['मतदान मार्गदर्शिका','Voting Guide'],['जनमत मतदान के चरण सरल भाषा में देखें','See the public-opinion voting steps'],'guide'],
+    ['fa-address-book',['उम्मीदवार निर्देशिका','Candidate Directory'],['पूरे गाँव के सभी वार्डों के उम्मीदवार देखें','Browse all village candidates across wards'],'directory'],
+    ['fa-building',['गाँव सारांश','Village Summary'],['वार्ड, उम्मीदवार और वोटों का सारांश देखें','View village-wide totals and coverage'],'villageSummary'],
+    ['fa-map-location-dot',['वार्ड स्थिति','Ward Snapshot'],['हर वार्ड की भागीदारी और वोट देखें','Review each ward’s participation and votes'],'wardSnapshot'],
+    ['fa-comments',['सुझाव बॉक्स','Suggestion Box'],['पोर्टल के लिए सुझाव या समस्या भेजें','Send a suggestion or issue'],'suggestion'],
+    ['fa-file-export',['पारदर्शिता निर्यात','Transparency Export'],['पब्लिक जनमत डेटा का पढ़ने योग्य निर्यात लें','Export readable public-opinion data'],'exportSummary'],
+    ['fa-bell',['सूचना केंद्र','Notification Centre'],['सभी नई और पुरानी सूचनाएँ देखें','Read all current and past notices'],'openNotifications'],
+    ['fa-shield-halved',['जनमत नियम','Opinion Rules'],['इस स्वतंत्र जनमत पोर्टल के नियम पढ़ें','Review the portal’s opinion rules'],'rules'],
+    ['fa-chart-pie',['लाइव परिणाम','Live Results'],['प्रतिशत चार्ट और रैंकिंग देखें','View the percentage chart and ranking'],'results'],
+    ['fa-circle-question',['पोर्टल सहायता','Portal Help'],['सभी मुख्य सेवाओं का उपयोग समझें','Learn how the main services work'],'help'],
+    ['fa-clock-rotate-left',['मेरा वोट रिकॉर्ड','My Vote Record'],['दर्ज जनमत रिकॉर्ड की स्थिति देखें','Check your recorded public-opinion entry'],'myVote'],
+    ['fa-universal-access',['पहुंच और टेक्स्ट','Accessibility'],['कॉन्ट्रास्ट और बड़ा टेक्स्ट नियंत्रित करें','Control contrast and text size'],'accessibility'],
+    ['fa-chart-column',['गाँव आँकड़े','Village Statistics'],['चुने गाँव की विस्तृत सांख्यिकी देखें','View detailed village statistics'],'stats'],
+    ['fa-id-card',['उम्मीदवार विवरण','Candidate Details'],['उम्मीदवार की पूरी जानकारी देखें','View complete candidate details'],'details'],
+    ['fa-landmark-flag',['आधिकारिक चुनाव जानकारी','Official Election Info'],['वास्तविक चुनाव के आधिकारिक स्रोतों की जानकारी लें','Learn where to find official election information'],'official']
+  ];
+  function renderFeatures(){const g=$('#ep-public-feature-grid');if(!g)return;g.innerHTML=featureData.map((f,i)=>`<article class="ep-feature"><div><div class="ico"><i class="fa-solid ${f[0]}"></i></div><h3>${esc(t(f[1][0],f[1][1]))}</h3><p>${esc(t(f[2][0],f[2][1]))}</p></div><button type="button" data-f="${f[3]}">${esc(t('खोलें','Open'))}<i class="fa-solid fa-arrow-right" style="margin-left:6px"></i></button></article>`).join('');$$('[data-f]',g).forEach(b=>b.onclick=()=>featureMap[b.dataset.f]?.())}
+
+  function selectedRows(){const p=village();return candidatesFor(p)}
+  function renderResults(){const p=village(),donut=$('#ep-result-donut'),ranking=$('#ep-result-ranking');if(!donut||!ranking)return;const rows=selectedRows().sort((a,b)=>b.votes-a.votes||String(a.c.name||'').localeCompare(String(b.c.name||''))),total=rows.reduce((a,x)=>a+x.votes,0);$('#ep-result-total').textContent=total.toLocaleString();
+    if(!p||!rows.length){$('#ep-result-top-name').textContent='—';$('#ep-result-top-pct').textContent='0%';$('#ep-result-top-votes').textContent='0 '+t('वोट','votes');ranking.innerHTML=`<div class="ep-empty-state">${esc(t('गाँव चुनने पर यहाँ लाइव प्रतिशत परिणाम दिखेंगे।','Select a village to see live percentage results.'))}</div>`;donut.style.background='conic-gradient(#e5edf2 0 100%)';return}
+    if(dbx()?.settings?.publicResultsVisible===false){ranking.innerHTML=`<div class="ep-empty-state">${esc(t('प्रशासन ने अभी परिणाम छिपाए हैं।','Public results are currently hidden by the administrator.'))}</div>`;donut.style.background='conic-gradient(#e5edf2 0 100%)';return}
+    if(total===0){$('#ep-result-top-name').textContent=t('अभी कोई वोट नहीं','No votes yet');$('#ep-result-top-pct').textContent='0%';$('#ep-result-top-votes').textContent='0 '+t('वोट','votes');ranking.innerHTML=`<div class="ep-empty-state">${esc(t('अभी तक कोई जनमत वोट रिकॉर्ड नहीं हुआ।','No public-opinion votes have been recorded yet.'))}</div>`;donut.style.background='conic-gradient(#e5edf2 0 100%)';return}
+    const colors=['#f28c28','#0b7a42','#123c61','#2a7fb2','#8a5cf6','#b15d28','#4a9777','#6b7280'];let cum=0;const parts=[];rows.slice(0,8).forEach((x,i)=>{const pct=x.votes/total*100;parts.push(`${colors[i%colors.length]} ${cum}% ${cum+pct}%`);cum+=pct});if(cum<100)parts.push(`#e5edf2 ${cum}% 100%`);donut.style.background=`conic-gradient(${parts.join(',')})`;
+    const top=rows[0],pct=Math.round(top.votes/total*100);$('#ep-result-top-name').textContent=top.c.name||'—';$('#ep-result-top-pct').textContent=pct+'%';$('#ep-result-top-votes').textContent=`${top.votes.toLocaleString()} ${t('वोट','votes')}`;ranking.innerHTML=rows.slice(0,10).map((x,i)=>{const p2=Math.round(x.votes/total*100);return `<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><span>${esc(t('वार्ड ','Ward ')+x.w)}</span></div><div class="ep-rank-track"><span style="width:${p2}%"></span></div></div><div class="ep-rank-value"><strong>${p2}%</strong><small>${x.votes}</small></div></div>`}).join('')}
+  function renderStats(){const D=dbx(),ps=Object.values(D?.panchayats||{}),p=village(),rows=p?candidatesFor(p):[],total=rows.reduce((a,x)=>a+x.votes,0),all=ps.flatMap(candidatesFor),allVotes=all.reduce((a,x)=>a+x.votes,0);$('#ep-stat-villages').textContent=ps.length.toLocaleString();$('#ep-stat-wards').textContent=(p?.totalWards||ps.reduce((a,x)=>a+Number(x.totalWards||0),0)).toLocaleString();$('#ep-stat-candidates').textContent=(p?rows.length:all.length).toLocaleString();$('#ep-stat-votes').textContent=(p?total:allVotes).toLocaleString();$('#ep-stat-selected-village').textContent=p?.name||t('गाँव चुनें','Select a village');$('#ep-stat-leader').textContent=rows[0]?.c?.name||t('कोई वोट नहीं','No votes yet');$('#ep-stat-updated').textContent=new Date().toLocaleTimeString(lang()==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'})}
+  function renderAnalytics(){const p=village(),box=$('#ep-ward-analytics'),party=$('#ep-party-analytics');if(!box||!party)return;if(!p){box.innerHTML=`<p style="font-size:12px;color:#687a8b">${esc(t('गाँव चुनें।','Select a village.'))}</p>`;party.innerHTML='';return}const rows=candidatesFor(p);const wardRows=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,a=rows.filter(x=>x.w===w),v=a.reduce((s,x)=>s+x.votes,0);return {w,v,a}});const max=Math.max(1,...wardRows.map(x=>x.v));box.innerHTML=wardRows.map(x=>`<div class="ep-analytics-row"><span style="font-size:11px;font-weight:800;color:#53677a">Ward ${x.w}</span><div class="ep-bar-track"><div class="ep-bar" style="width:${Math.round(x.v/max*100)}%"></div></div><strong style="font-size:11px;text-align:right">${x.v}</strong></div>`).join('');const map={};rows.forEach(x=>{const key=x.c.partyName||x.c.party||'Independent';map[key]=(map[key]||0)+x.votes});const part=Object.entries(map).sort((a,b)=>b[1]-a[1]);party.innerHTML=part.length?part.map(([k,v])=>`<div class="ep-mini-item"><strong>${esc(k)}</strong><span>${v} ${esc(t('वोट','votes'))}</span></div>`).join(''):`<p style="font-size:12px;color:#687a8b">${esc(t('अभी कोई वोट नहीं।','No votes yet.'))}</p>`}
+  function renderLatest(){const grid=$('#ep-notification-grid');if(!grid)return;const notes=allNotifications().sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,3);grid.innerHTML=notes.length?notes.map((n,i)=>`<article class="ep-note"><div class="ep-note-icon"><i class="fa-solid ${i===0?'fa-bullhorn':'fa-bell'}"></i></div><div><h3 style="font-size:14px;font-weight:900;color:#0b2945">${esc(i===0?t('सबसे नई सूचना','Latest Notice'):t('पोर्टल सूचना','Portal Notice'))}</h3><p style="font-size:12px;color:#687a8b;line-height:1.55;margin-top:5px;white-space:pre-wrap">${esc(n.text||'')}</p><time style="display:block;font-size:10px;color:#8a98a5;margin-top:8px">${esc(new Date(n.date||Date.now()).toLocaleString(lang()==='hi'?'hi-IN':'en-IN'))}</time></div></article>`).join(''):`<article class="ep-note"><div class="ep-note-icon"><i class="fa-solid fa-bell-slash"></i></div><div><h3 style="font-size:14px;font-weight:900;color:#0b2945">${esc(t('कोई नई सूचना नहीं','No new notice'))}</h3><p style="font-size:12px;color:#687a8b">${esc(t('अभी तक कोई पोर्टल सूचना उपलब्ध नहीं है।','No portal notices are available yet.'))}</p></div></article>`}
+  function renderAll(){language();renderLatest();renderFeatures();renderResults();renderStats();renderAnalytics()}
+
+  function patchGemini(){
+    const D=dbx(); if(!D?.settings)return;
+    const valid=String(D.settings.geminiModel||'').trim(); if(!valid)D.settings.geminiModel='gemini-2.5-flash';
+    if(!window.GeminiService?.generate||window.GeminiService.generate.__epStable)return;
+    const original=window.GeminiService.generate.bind(window.GeminiService);
+    const wrapped=async function(key,model,prompt){
+      const D2=dbx(); const configured=String(model||D2?.settings?.geminiModel||'gemini-2.5-flash').trim();
+      const models=[configured,'gemini-2.5-flash','gemini-2.0-flash'].filter((m,i,a)=>m&&a.indexOf(m)===i);
+      let last=null;
+      for(const m of models){try{return await original(key,m,prompt)}catch(e){last=e;const msg=String(e?.message||'').toLowerCase();if(!(msg.includes('404')||msg.includes('not found')||msg.includes('model')||msg.includes('invalid_argument')))throw e}}
+      throw last||new Error('Gemini model unavailable');
+    };
+    wrapped.__epStable=true; window.GeminiService.generate=wrapped;
+  }
+
+  function citizenAI(){
+    let b=$('#ep-ai-backdrop'); if(!b){b=document.createElement('div');b.id='ep-ai-backdrop';b.className='ep-modal-backdrop';b.innerHTML=`<div class="ep-modal"><div class="ep-modal-head"><div><strong>${esc(t('नागरिक AI सहायता','Citizen AI Assistance'))}</strong><div style="font-size:10px;color:#778797;margin-top:3px">${esc(t('स्वतंत्र सार्वजनिक राय पोर्टल सहायता','Independent public-opinion portal assistance'))}</div></div><div style="display:flex;gap:8px;align-items:center"><select id="ep-ai-lang" style="padding:8px;border:1px solid #dce5ec;border-radius:9px"><option value="hi">हिंदी</option><option value="en">English</option></select><button id="ep-ai-close" type="button" style="border:0;background:#edf2f6;width:34px;height:34px;border-radius:50%">×</button></div></div><div class="ep-modal-body"><div id="ep-ai-log" class="ep-ai-log"></div><div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px"><textarea id="ep-ai-input" rows="3" style="border:1px solid #dce5ec;border-radius:12px;padding:11px;resize:vertical" placeholder="अपना सवाल लिखें..."></textarea><button id="ep-ai-send" type="button" style="min-width:100px;border:0;border-radius:12px;background:#0b2945;color:#fff;font-weight:900">भेजें</button></div><div style="font-size:10px;color:#7b8997;margin-top:8px">${esc(t('AI जानकारी के लिए है; यह पोर्टल सरकारी चुनाव प्रणाली नहीं है।','AI is informational; this portal is not a government election system.'))}</div></div></div>`;document.body.appendChild(b);$('#ep-ai-close',b).onclick=()=>b.style.display='none';$('#ep-ai-lang',b).onchange=e=>{put('EP_AI_LANG',e.target.value);const l=e.target.value;$('#ep-ai-input',b).placeholder=l==='hi'?'अपना सवाल लिखें...':'Type your question...';$('#ep-ai-send',b).textContent=l==='hi'?'भेजें':'Send'};$('#ep-ai-send',b).onclick=()=>askAI(b);$('#ep-ai-input',b).onkeydown=e=>{if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();askAI(b)}};}
+    b.style.display='flex';const saved=root('EP_AI_LANG')||lang()||'hi';$('#ep-ai-lang',b).value=saved;$('#ep-ai-lang',b).dispatchEvent(new Event('change'));const log=$('#ep-ai-log',b);if(!log.children.length){bubble(log,'assistant',saved==='hi'?'नमस्ते। मैं नागरिक सहायता AI हूँ। मैं इस पोर्टल, गाँव, वार्ड, उम्मीदवार, मतदान चरण, परिणाम और सूचनाओं को समझाने में मदद कर सकता हूँ।':'Hello. I am the Citizen AI assistant. I can explain this portal, villages, wards, candidates, voting steps, results and notices.')}}
+  function bubble(log,role,text){const d=document.createElement('div');d.className=`ep-bubble ${role}`;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+  function localCitizenAnswer(question,D,locale){
+    const q=String(question||'').toLowerCase();
+    const p=publicVillage();
+    const rows=p?publicRows(p):[];
+    const total=rows.reduce((a,x)=>a+x.votes,0);
+    const sorted=rows.slice().sort((a,b)=>b.votes-a.votes);
+    const hi=locale==='hi';
+    if(/result|परिणाम|जीत|leading|leader|अग्रणी/.test(q)){
+      if(!sorted.length) return hi?'चुने हुए गाँव में अभी कोई उम्मीदवार दर्ज नहीं है।':'No candidates are registered in the selected village.';
+      if(!total) return hi?'अभी कोई जनमत वोट दर्ज नहीं हुआ है।':'No public-opinion votes have been recorded yet.';
+      const top=sorted[0],share=(top.votes/total*100).toFixed(1);
+      return hi?`अभी ${top.c.name||'उम्मीदवार'} सबसे आगे हैं: ${share}% (${top.votes} वोट)। यह केवल दर्ज जनमत का वर्तमान आँकड़ा है, आधिकारिक चुनाव परिणाम नहीं।`:`${top.c.name||'Candidate'} is currently leading with ${share}% (${top.votes} votes). This is only the current recorded public-opinion share, not an official election result.`;
+    }
+    if(/vote|वोट|मतदान|कैसे|how/.test(q)) return hi?'गाँव चुनें → पूरे गाँव के सभी वार्डों के उम्मीदवार देखें → उम्मीदवार चुनें → 10 अंकों का मोबाइल नंबर दर्ज करें → सुरक्षित वोट दबाएँ। यह केवल सार्वजनिक राय/जनमत है।':'Choose a village → review candidates across all wards → select a candidate → enter a 10-digit mobile number → submit the vote. This is only public opinion.';
+    if(/notification|सूचना|notice|नोटिस/.test(q)) return hi?'ऊपर नवीनतम सूचना दिखाई जाती है। “सभी सूचनाएँ” से पूरा सूचना केंद्र खोला जा सकता है।':'The latest notice is shown near the top. “All Notifications” opens the complete notice centre.';
+    if(/candidate|उम्मीदवार/.test(q)) return hi?'उम्मीदवार निर्देशिका में चुने हुए गाँव के सभी वार्डों के उम्मीदवार, वार्ड, पद और पार्टी की जानकारी देख सकते हैं।':'Candidate Directory shows candidates from every ward of the selected village, including ward, post and party.';
+    if(/ward|वार्ड|village|गाँव|पंचायत/.test(q)) return hi?'गाँव बदलने पर वोटिंग, परिणाम, आँकड़े और वार्ड विश्लेषण उसी गाँव के अनुसार तुरंत अपडेट होते हैं।':'Changing the village updates voting, results, statistics and ward analytics for that village.';
+    if(/help|मदद|सहायता|feature|सेवा/.test(q)) return hi?'नागरिक सेवाओं में उम्मीदवार खोज, तुलना, गाँव सेव करना, साझा करना, प्रिंट, निर्देशिका, सारांश, वार्ड स्थिति, सुझाव, निर्यात, सूचनाएँ, परिणाम, वोट रिकॉर्ड, accessibility, आँकड़े और उम्मीदवार विवरण शामिल हैं।':'Citizen services include candidate search, comparison, save/share/print, directory, summary, ward snapshot, suggestions, export, notifications, results, vote record, accessibility, statistics and candidate details.';
+    if(/ai|gemini|कृत्रिम|एआई/.test(q)) return hi?'यह AI पोर्टल सहायता के लिए है। Gemini API key उपलब्ध होने पर विस्तृत उत्तर मिलेंगे; बिना key के भी सामान्य पोर्टल सहायता उपलब्ध रहती है।':'This AI is for portal assistance. With a Gemini API key it can provide richer answers; basic portal help remains available without a key.';
+    return hi?'मैं इस पोर्टल की सुविधाएँ, उम्मीदवार, गाँव, वार्ड, मतदान चरण, परिणाम और सूचनाएँ समझाने में मदद कर सकता हूँ। आप अपना सवाल सरल शब्दों में लिखें।':'I can explain this portal, candidates, villages, wards, voting steps, results and notices. Ask your question in simple words.';
+  }
+
+  async function askAI(b){
+    const D=dbx(),input=$('#ep-ai-input',b),q=input?.value.trim();if(!q)return;
+    const l=$('#ep-ai-lang',b).value||'hi';
+    bubble($('#ep-ai-log',b),'user',q); input.value='';
+    const pending=bubble($('#ep-ai-log',b),'assistant',l==='hi'?'सोच रहा हूँ...':'Thinking...');
+    try{
+      if(D?.settings?.userAiEnabled===false){pending.textContent=l==='hi'?'नागरिक AI अभी व्यवस्थापक द्वारा बंद है।':'Citizen AI is currently disabled by the administrator.';return;}
+      const key=String(D?.settings?.userGeminiApiKey||'').trim();
+      if(!key){pending.textContent=localCitizenAnswer(q,D,l);return;}
+      const snap=window.GeminiService?.compactDatabaseSnapshot?window.GeminiService.compactDatabaseSnapshot(D):JSON.stringify({villages:Object.values(D?.panchayats||{}).map(p=>({name:p.name,wards:p.totalWards,candidates:candidatesFor(p).map(x=>({name:x.c.name,ward:x.w,post:x.c.post,party:x.c.partyName||x.c.party,votes:x.votes}))}))});
+      const prompt=`You are Citizen AI for an independent Indian public-opinion portal. Reply only in ${l==='hi'?'simple Hindi':'simple English'}. Give concise, factual help. Never claim this is a government election or official result. Never invent candidate information. Use the snapshot only for portal-specific facts. Portal snapshot:\n${snap}\n\nQuestion:\n${q}`;
+      pending.textContent=await window.GeminiService.generate(key,D?.settings?.geminiModel||'gemini-2.5-flash',prompt);
+    }catch(e){
+      const fallback=localCitizenAnswer(q,D,l);
+      pending.textContent=(l==='hi'?'AI सेवा उपलब्ध नहीं हुई; पोर्टल सहायता: ':'AI service was unavailable; portal help: ')+fallback;
+    }
+    $('#ep-ai-log',b).scrollTop=$('#ep-ai-log',b).scrollHeight;
+  }
+
+  function aiDrag(el){let moving=false,sx=0,sy=0,left=0,top=0;el.addEventListener('pointerdown',e=>{moving=true;sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect();left=r.left;top=r.top;el.setPointerCapture(e.pointerId);e.preventDefault()});el.addEventListener('pointermove',e=>{if(!moving)return;const x=Math.max(6,Math.min(innerWidth-el.offsetWidth-6,left+e.clientX-sx)),y=Math.max(6,Math.min(innerHeight-el.offsetHeight-6,top+e.clientY-sy));el.style.left=x+'px';el.style.top=y+'px';el.style.right='auto';el.style.bottom='auto'});el.addEventListener('pointerup',()=>{if(!moving)return;moving=false;put('EP_FLOAT_AI',JSON.stringify({left:el.style.left,top:el.style.top}))})}
+  function launchAIButton(){let b=$('#ep-floating-ai');if(!b){b=document.createElement('button');b.id='ep-floating-ai';b.className='ep-floating-ai';b.type='button';b.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i><span class="ep-ai-badge">AI</span>';b.onclick=()=>citizenAI();document.body.appendChild(b);try{const p=JSON.parse(root('EP_FLOAT_AI')||'null');if(p?.left&&p?.top){b.style.left=p.left;b.style.top=p.top;b.style.right='auto';b.style.bottom='auto'}}catch{}aiDrag(b)}}
+
+  function addAdminExtras(){
+    const A=window.AdminManager;if(!A||!Array.isArray(A.toolsList))return;
+    const extras=[
+      {title:'Public Portal Preview',icon:'fa-globe',render:()=>`<div class="space-y-4"><h3 class="text-xl font-extrabold">Public Portal Preview</h3><p class="text-xs text-slate-400">Open the public-facing portal in a separate tab without leaving the admin session.</p><button class="btn-gold px-5 py-3 rounded-xl" onclick="window.open(location.href.split('#')[0], '_blank')">Open Public Portal</button></div>`},
+      {title:'Notification Broadcast Preview',icon:'fa-bullhorn',render:()=>`<div class="space-y-4"><h3 class="text-xl font-extrabold">Notification Broadcast Preview</h3><textarea id="ep-admin-preview-note" class="w-full bg-[#0F172A] border border-slate-700 rounded-xl p-3 text-xs text-white" rows="5" placeholder="Write a public-opinion portal notice..."></textarea><button class="btn-gold px-5 py-3 rounded-xl" onclick="window.EPAdminExtras.publishPreviewNotice()">Publish Preview Notice</button></div>`},
+      {title:'Database Integrity Snapshot',icon:'fa-circle-check',render:()=>{const D=dbx();let villages=0,c=0,v=0;try{villages=Object.keys(D?.panchayats||{}).length;Object.values(D?.panchayats||{}).forEach(p=>candidatesFor(p).forEach(x=>{c++;v+=x.votes}))}catch{}return `<div class="space-y-5"><h3 class="text-xl font-extrabold">Database Integrity Snapshot</h3><div class="grid grid-cols-3 gap-3"><div class="p-4 rounded-xl bg-slate-800"><b>${villages}</b><div class="text-xs text-slate-400">Villages</div></div><div class="p-4 rounded-xl bg-slate-800"><b>${c}</b><div class="text-xs text-slate-400">Candidates</div></div><div class="p-4 rounded-xl bg-slate-800"><b>${v}</b><div class="text-xs text-slate-400">Recorded Votes</div></div></div><p class="text-xs text-slate-400">No data changes were made by this diagnostic.</p></div>`}}
+    ];
+    extras.forEach(x=>{if(!A.toolsList.some(t=>t.title===x.title))A.toolsList.push(x)});
+    window.EPAdminExtras={publishPreviewNotice(){const text=$('#ep-admin-preview-note')?.value.trim();if(!text)return toast('Write a notice first.','error');const D=dbx();D.notifications=D.notifications||[];D.notifications.push({id:Date.now().toString(36),text,date:new Date().toISOString()});DBManager.persist();toast('Preview notice published.','success');renderLatest()}};
+  }
+
+  function hideLegacy(){
+    $('#user-ai-section')?.setAttribute('hidden','hidden');
+    const utility=mainUtilitySection(); utility?.setAttribute('hidden','hidden');
+    const sep=$('main>div.flex.items-center.my-8'); sep?.setAttribute('hidden','hidden');
+  }
+  function mainUtilitySection(){return $$('main>section').find(s=>s.querySelector('#candidate-search-input')&&s.querySelector('#compare-ward-1'))||null}
+
+  function boot(){
+    const D=dbx(); if(D)window.__EP_DB__=D;
+    if(!root('EP_LANG_USER_SET')){put('EP_LANG','hi');} if(!root('EP_AI_LANG_USER_SET')){put('EP_AI_LANG','hi');}
+    patchGemini();addAdminExtras();hideLegacy();launchAIButton();
+    $('#ep-lang-hi')?.addEventListener('click',()=>{put('EP_LANG_USER_SET','1');put('EP_AI_LANG_USER_SET','1');setLanguage('hi')});$('#ep-lang-en')?.addEventListener('click',()=>{put('EP_LANG_USER_SET','1');put('EP_AI_LANG_USER_SET','1');setLanguage('en')});$('#ep-refresh-analytics')?.addEventListener('click',renderAnalytics);
+    $('#user-panchayat-select')?.addEventListener('change',()=>setTimeout(renderAll,60));
+    // Make the existing header language controls work consistently even if their old handler changes only local state.
+    language();renderAll();
+    // Keep result/stat displays in sync after any database persistence.
+    const nativePersist=DBManager?.persist?.bind(DBManager);
+    if(nativePersist && !DBManager.persist.__epWrapped){
+      let refreshPending=false;
+      const scheduleRefresh=()=>{if(refreshPending)return;refreshPending=true;const run=()=>{refreshPending=false;try{renderAll()}catch(e){console.error(e)}};if(window.requestAnimationFrame)requestAnimationFrame(run);else setTimeout(run,0)};
+      window.EPRefreshDashboard=scheduleRefresh;
+      const wrapped=function(){const r=nativePersist();scheduleRefresh();return r};
+      wrapped.__epWrapped=true;
+      DBManager.persist=wrapped;
+    }
+  }
+
+  // ============================================================
+  // FINAL STABILITY / FEATURE INTEGRATION LAYER
+  // The original portal remains the data source. This layer only
+  // repairs integration points, improves result/analytics rendering,
+  // removes artificial waiting, and makes every public/admin launcher
+  // fail gracefully instead of breaking the page.
+  // ============================================================
+  function normalizeDbState(){
+    try{
+      if(window.DBManager?.get){ db=window.DBManager.get(); }
+      if(!db) return null;
+      db.settings=db.settings||{};
+      db.panchayats=db.panchayats||{};
+      db.notifications=Array.isArray(db.notifications)?db.notifications:[];
+      db.suggestions=Array.isArray(db.suggestions)?db.suggestions:[];
+      db.votersLog=db.votersLog||{};
+      db.villageVotedLog=db.villageVotedLog||{};
+      return db;
+    }catch{return db}
+  }
+
+  // The legacy UserInterface utilities originally wrote into hidden legacy
+  // containers. Route those handlers into the same professional modal used
+  // by the new public feature cards.
+  UserInterface.showVillageSummary = function(){ return villageSummary(); };
+  UserInterface.openCandidateDirectory = function(){ return directory(); };
+  UserInterface.showWardSnapshot = function(){ return wardSnapshot(); };
+  UserInterface.showPortalHelp = function(){ return help(); };
+  UserInterface.populateSnapshotWardDropdown = function(){
+    const sel=document.getElementById('snapshot-ward');
+    const id=document.getElementById('user-panchayat-select')?.value;
+    if(!sel) return;
+    const p=normalizeDbState()?.panchayats?.[id];
+    sel.innerHTML='<option value="">Select Ward</option>';
+    if(!p) return;
+    for(let w=1;w<=Number(p.totalWards||0);w++) sel.insertAdjacentHTML('beforeend',`<option value="${w}">Ward ${w}</option>`);
+  };
+
+  // Single AI language state. Fresh visits start in Hindi; changing the
+  // portal language also changes the citizen AI language.
+  UserAI.setLanguage = function(l){
+    const value=l==='en'?'en':'hi';
+    put('EP_AI_LANG',value);
+    const input=document.getElementById('user-ai-input');
+    const btn=document.getElementById('user-ai-send');
+    if(input) input.placeholder=value==='hi'?'अपना सवाल लिखें...':'Type your question...';
+    if(btn) btn.textContent=value==='hi'?'AI से पूछें':'Ask AI';
+    const box=document.getElementById('ep-ai-lang');
+    if(box) box.value=value;
+  };
+
+  function publicVillage(){
+    normalizeDbState();
+    const sel=document.getElementById('user-panchayat-select');
+    const explicit=sel?.value||'';
+    const saved=root('EP_SAVED_VILLAGE');
+    const first=Object.keys(db?.panchayats||{})[0]||'';
+    const id=(explicit && db?.panchayats?.[explicit] ? explicit : '') || (saved && db?.panchayats?.[saved] ? saved : '') || first;
+    return id && db?.panchayats?.[id] ? db.panchayats[id] : null;
+  }
+  function publicRows(p){
+    const rows=[]; if(!p) return rows;
+    for(let w=1;w<=Number(p.totalWards||0);w++){
+      const wd=p.wardsData?.[w]||{};
+      (Array.isArray(wd.candidates)?wd.candidates:[]).forEach(c=>rows.push({p,w,c,votes:Number(wd.votes?.[c.id]||0)}));
+    }
+    return rows;
+  }
+  function publicToast(h,e){try{toast(h,e||'info')}catch{try{Utils.showToast(h,e||'info')}catch{}}}
+
+  // Replace the notification route so "all notifications" is truly a
+  // full independent-public-opinion notice centre, not the legacy label.
+  openNotifications = function(){
+    const notes=allNotifications().sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+    const body=document.createElement('div');
+    body.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px"><div style="font-size:11px;color:#738295">${esc(t('स्वतंत्र सार्वजनिक राय पोर्टल की सभी सूचनाएँ','All notices from the independent public-opinion portal'))}</div><span style="font-size:10px;font-weight:800;color:#0b2945;background:#eef4f7;padding:6px 9px;border-radius:999px">${notes.length}</span></div>${notes.length?notes.map((n,i)=>`<article style="border:1px solid #e1e8ee;border-radius:14px;padding:14px;margin-bottom:10px;background:${i===0?'#fffaf3':'#fff'}"><div style="font-size:10px;color:#788898;font-weight:800;text-transform:uppercase">${i===0?esc(t('सबसे नई सूचना','Latest notice')):esc(t('पोर्टल सूचना','Portal notice'))} · ${esc(new Date(n.date||Date.now()).toLocaleString(lang()==='hi'?'hi-IN':'en-IN'))}</div><div style="font-size:13px;color:#22384d;line-height:1.65;margin-top:6px;white-space:pre-wrap">${esc(n.text||'')}</div></article>`).join(''):`<div class="ep-empty-state">${esc(t('अभी कोई सूचना उपलब्ध नहीं है।','No notifications are available yet.'))}</div>`}`;
+    Modal.open(t('सभी सूचनाएँ','All Notifications'),body);
+  };
+
+  // Better village summary, ward snapshot and directory: no dependency on
+  // hidden legacy DOM and no repeated feature panels.
+  villageSummary = function(){
+    const p=publicVillage(); if(!p) return publicToast(t('पहले गाँव चुनें।','Select a village first.'),'error');
+    const rows=publicRows(p), total=rows.reduce((a,x)=>a+x.votes,0), wardCount=rows.filter(x=>x.votes>0).reduce((m,x)=>m.add(x.w),new Set()).size;
+    const body=document.createElement('div');
+    body.innerHTML=`<div class="ep-stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px"><div class="ep-stat-card"><div><span>${p.totalWards||0}</span><small>${esc(t('कुल वार्ड','Total wards'))}</small></div></div><div class="ep-stat-card"><div><span>${rows.length}</span><small>${esc(t('उम्मीदवार','Candidates'))}</small></div></div><div class="ep-stat-card"><div><span>${total}</span><small>${esc(t('दर्ज जनमत','Recorded opinions'))}</small></div></div><div class="ep-stat-card"><div><span>${wardCount}/${p.totalWards||0}</span><small>${esc(t('सक्रिय वार्ड','Active wards'))}</small></div></div></div><div style="border:1px solid #dfe7ee;border-radius:14px;padding:14px"><strong style="color:#0b2945">${esc(p.name)}</strong><div style="margin-top:10px;font-size:11px;color:#65778a;line-height:1.8">${esc(t('यहाँ का कुल आँकड़ा वर्तमान ब्राउज़र में दर्ज सार्वजनिक राय पर आधारित है।','These totals reflect public-opinion entries recorded in this browser database.'))}</div></div>`;
+    Modal.open(t('गाँव सारांश','Village Summary'),body);
+  };
+  wardSnapshot = function(){
+    const p=publicVillage(); if(!p) return publicToast(t('पहले गाँव चुनें।','Select a village first.'),'error');
+    const body=document.createElement('div');
+    const rows=publicRows(p);
+    body.innerHTML=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rr=rows.filter(x=>x.w===w),votes=rr.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="display:grid;grid-template-columns:75px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #e8eef2"><strong style="color:#0b2945;font-size:12px">Ward ${w}</strong><div><div style="font-size:11px;color:#64768a">${esc(wd.reservation||'General')} · ${rr.length} ${esc(t('उम्मीदवार','candidates'))}</div><div style="height:7px;background:#edf2f5;border-radius:99px;overflow:hidden;margin-top:6px"><span style="display:block;width:${votes?Math.max(5,Math.min(100,votes/(Math.max(1,...Array.from({length:Number(p.totalWards||0)},(_,j)=>rows.filter(x=>x.w===j+1).reduce((a,x)=>a+x.votes,0))))*100)):0}%;height:100%;background:linear-gradient(90deg,#f28c28,#138a3d);border-radius:99px"></span></div></div><strong style="font-size:12px;color:#0b2945">${votes}</strong></div>`}).join('')||`<div class="ep-empty-state">${esc(t('कोई वार्ड डेटा उपलब्ध नहीं है।','No ward data is available.'))}</div>`;
+    Modal.open(t('वार्ड स्थिति','Ward Snapshot'),body);
+  };
+  directory = function(){
+    const p=publicVillage(); if(!p) return publicToast(t('पहले गाँव चुनें।','Select a village first.'),'error');
+    const rows=publicRows(p), body=document.createElement('div');
+    body.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div><strong style="font-size:13px;color:#0b2945">${esc(p.name)}</strong><div style="font-size:10px;color:#718194;margin-top:3px">${esc(t('सभी वार्डों की संयुक्त उम्मीदवार सूची','Combined candidate list across all wards'))}</div></div><span style="font-size:10px;font-weight:900;color:#0b2945;background:#eef4f7;padding:7px 9px;border-radius:999px">${rows.length}</span></div>${rows.length?rows.map(x=>`<article style="display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #e8eef2"><div style="width:52px;height:52px;border-radius:13px;background:#f2f5f7;overflow:hidden;display:grid;place-items:center;border:1px solid #e0e7ed">${(x.c.personImage||x.c.image)?`<img src="${esc(x.c.personImage||x.c.image)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'<i class="fa-solid fa-user" style="color:#aab6c1"></i>'}</div><div><strong style="font-size:12px;color:#0b2945">${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><div style="font-size:10px;color:#6d7d8f;margin-top:4px">${esc(t('वार्ड ','Ward ')+x.w)} · ${esc(x.c.post||'—')} · ${esc(x.c.partyName||x.c.party||'Independent')}</div><div style="font-size:9px;color:#8a97a5;margin-top:2px">${esc(t('श्रेणी: ','Category: ')+String(x.c.category||'—'))}</div></div><div style="text-align:right"><strong style="font-size:12px;color:#0b2945">${x.votes}</strong><small style="display:block;color:#8a98a6;font-size:9px">${esc(t('दर्ज वोट','recorded votes'))}</small></div></article>`).join(''):`<div class="ep-empty-state">${esc(t('इस गाँव में कोई उम्मीदवार दर्ज नहीं है।','No candidates are registered in this village.'))}</div>`}`;
+    Modal.open(t('उम्मीदवार निर्देशिका','Candidate Directory'),body);
+  };
+
+  // Safer share fallback for file://, desktop browsers and denied clipboard.
+  shareVillage = async function(){
+    const p=publicVillage(); if(!p) return publicToast(t('पहले गाँव चुनें।','Select a village first.'),'error');
+    const url=location.href.split('#')[0];
+    try{
+      if(navigator.share){await navigator.share({title:p.name,text:t('स्वतंत्र सार्वजनिक राय पोर्टल','Independent public-opinion portal'),url});return;}
+      if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);publicToast(t('लिंक कॉपी हो गया।','Link copied.'),'success');return;}
+      const ta=document.createElement('textarea');ta.value=url;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();publicToast(t('लिंक कॉपी हो गया।','Link copied.'),'success');
+    }catch(e){if(String(e?.name)!=='AbortError')publicToast(t('शेयर करना पूरा नहीं हो सका।','Sharing could not be completed.'),'error')}
+  };
+
+  saveVillage = function(){
+    const p=publicVillage(); if(!p) return publicToast(t('पहले गाँव चुनें।','Select a village first.'),'error');
+    put('EP_SAVED_VILLAGE',p.id);
+    try{const sel=document.getElementById('user-panchayat-select');if(sel)sel.value=p.id;}catch{}
+    renderAll(); publicToast(t('गाँव सेव हो गया और परिणाम इसी गाँव के अनुसार अपडेट हुए।','Village saved and the dashboard has been refreshed for this village.'),'success');
+  };
+
+  // Keep the results section mathematically consistent and readable. The
+  // donut always totals 100%, with an explicit Other slice when necessary.
+  renderResults = function(){
+    normalizeDbState();
+    const p=publicVillage(),donut=document.getElementById('ep-result-donut'),ranking=document.getElementById('ep-result-ranking');
+    if(!donut||!ranking)return;
+    const totalEl=document.getElementById('ep-result-total'),topName=document.getElementById('ep-result-top-name'),topPct=document.getElementById('ep-result-top-pct'),topVotes=document.getElementById('ep-result-top-votes');
+    const legend=document.getElementById('ep-result-legend'),status=document.getElementById('ep-result-status');
+    const set=(e,v)=>{if(e)e.textContent=v};
+    if(!p){set(totalEl,'0');set(topName,t('गाँव चुनें','Select a village'));set(topPct,'0%');set(topVotes,'0');if(status)status.textContent=t('किसी गाँव का चयन नहीं हुआ है','No village selected');if(legend)legend.innerHTML='';donut.style.background='conic-gradient(#e6edf2 0 100%)';ranking.innerHTML=`<div class="ep-empty-state">${esc(t('गाँव चुनने पर वर्तमान जनमत परिणाम दिखाई देंगे।','Select a village to see current public-opinion results.'))}</div>`;return}
+    if(db?.settings?.publicResultsVisible===false){set(totalEl,'—');set(topName,t('परिणाम छिपे हैं','Results hidden'));set(topPct,'—');set(topVotes,'—');if(status)status.textContent=t('प्रशासन ने सार्वजनिक परिणाम छिपाए हैं','Public results are hidden by the administrator');if(legend)legend.innerHTML='';donut.style.background='conic-gradient(#e6edf2 0 100%)';ranking.innerHTML=`<div class="ep-empty-state">${esc(t('प्रशासन ने फिलहाल सार्वजनिक परिणाम छिपाए हैं।','Public results are currently hidden by the administrator.'))}</div>`;return}
+    const rows=publicRows(p).sort((a,b)=>b.votes-a.votes||String(a.c.name||'').localeCompare(String(b.c.name||'')));const total=rows.reduce((a,x)=>a+x.votes,0);
+    set(totalEl,total.toLocaleString());
+    if(!rows.length){set(topName,t('उम्मीदवार नहीं','No candidates'));set(topPct,'0%');set(topVotes,'0');if(status)status.textContent=t('उम्मीदवार डेटा उपलब्ध नहीं है','Candidate data is unavailable');if(legend)legend.innerHTML='';donut.style.background='conic-gradient(#e6edf2 0 100%)';ranking.innerHTML=`<div class="ep-empty-state">${esc(t('इस गाँव में अभी कोई उम्मीदवार उपलब्ध नहीं है।','No candidates are available in this village.'))}</div>`;return}
+    const colors=['#f28c28','#138a3d','#123c61','#2a7fb2','#7f5af0','#bb6430','#4b9b7a','#697789'];
+    if(total===0){set(topName,t('अभी कोई वोट नहीं','No votes yet'));set(topPct,'0%');set(topVotes,`0 ${t('वोट','votes')}`);if(status)status.textContent=t('उम्मीदवार उपलब्ध हैं, लेकिन अभी वोट 0 है','Candidates are available, but recorded votes are 0');if(legend)legend.innerHTML=rows.slice(0,8).map((x,i)=>`<span class="ep-legend-item"><i style="background:${colors[i%colors.length]}"></i>${esc(x.c.name||t('उम्मीदवार','Candidate'))} · 0%</span>`).join('');donut.style.background='conic-gradient(#e6edf2 0 100%)';ranking.innerHTML=rows.slice(0,12).map((x,i)=>`<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><span>${esc(t('वार्ड ','Ward ')+x.w)}</span></div><div class="ep-rank-track"><span style="width:0%;background:${colors[i%colors.length]}"></span></div></div><div class="ep-rank-value"><strong>0.0%</strong><small>0</small></div></div>`).join('');return}
+    const slices=rows.map((x,i)=>({x,i,pct:x.votes/total*100}));let cursor=0;const parts=[];
+    slices.slice(0,8).forEach(s=>{const next=cursor+s.pct;parts.push(`${colors[s.i%colors.length]} ${cursor.toFixed(4)}% ${next.toFixed(4)}%`);cursor=next;});
+    if(slices.length>8){const other=100-cursor;if(other>0)parts.push(`#cbd5df ${cursor.toFixed(4)}% 100%`)}
+    donut.style.background=`conic-gradient(${parts.join(',')})`;
+    const top=rows[0],topShare=top.votes/total*100,second=rows[1]?.votes||0,margin=top.votes-second,tie=rows[1]&&rows[1].votes===top.votes;
+    set(topName,top.c.name||t('उम्मीदवार','Candidate'));set(topPct,`${topShare.toFixed(1)}%`);set(topVotes,`${top.votes.toLocaleString()} ${t('वोट','votes')}`);
+    if(status) status.textContent=tie?t('बराबरी की बढ़त: दो या अधिक उम्मीदवार समान वोट पर हैं','Tie: two or more candidates have the same highest vote count'):t(`वर्तमान बढ़त ${margin} वोट की है`,`Current lead is ${margin} vote${margin===1?'':'s'}`);
+    if(legend){
+      legend.innerHTML=slices.slice(0,8).map(s=>`<span class="ep-legend-item"><i style="background:${colors[s.i%colors.length]}"></i>${esc(s.x.c.name||t('उम्मीदवार','Candidate'))} · ${s.pct.toFixed(1)}%</span>`).join('')+(slices.length>8?`<span class="ep-legend-item"><i style="background:#cbd5df"></i>${esc(t('अन्य','Other'))} · ${(100-cursor).toFixed(1)}%</span>`:'');
+    }
+    ranking.innerHTML=rows.slice(0,12).map((x,i)=>{const pct=x.votes/total*100;return `<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${esc(x.c.name||t('उम्मीदवार','Candidate'))}</strong><span>${esc(t('वार्ड ','Ward ')+x.w)}</span></div><div class="ep-rank-track"><span style="width:${pct.toFixed(2)}%;background:${colors[i%colors.length]}"></span></div></div><div class="ep-rank-value"><strong>${pct.toFixed(1)}%</strong><small>${x.votes.toLocaleString()}</small></div></div>`}).join('')+`<div class="ep-result-note"><i class="fa-solid fa-circle-info"></i><span>${esc(t('यह केवल इस ब्राउज़र में दर्ज स्वतंत्र सार्वजनिक राय का वर्तमान सारांश है। इसे आधिकारिक परिणाम या जीत की भविष्यवाणी न समझें।','This is only the current summary of independent public opinion recorded in this browser. It is not an official result or a prediction of victory.'))}</span></div>`;
+  };
+
+  renderStats = function(){
+    normalizeDbState();
+    const ps=Object.values(db?.panchayats||{}),p=publicVillage(),rows=p?publicRows(p):[],all=ps.flatMap(publicRows),total=rows.reduce((a,x)=>a+x.votes,0),allVotes=all.reduce((a,x)=>a+x.votes,0);
+    const wards=p?Number(p.totalWards||0):ps.reduce((a,x)=>a+Number(x.totalWards||0),0);
+    const set=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=String(val)};
+    const leader=rows.slice().sort((a,b)=>b.votes-a.votes||String(a.c.name||'').localeCompare(String(b.c.name||'')))[0];set('ep-stat-villages',ps.length.toLocaleString());set('ep-stat-wards',wards.toLocaleString());set('ep-stat-candidates',(p?rows.length:all.length).toLocaleString());set('ep-stat-votes',(p?total:allVotes).toLocaleString());set('ep-stat-selected-village',p?.name||t('सभी गाँव','All villages'));set('ep-stat-leader',leader?String(leader.c.name||'—'):t('अभी कोई वोट नहीं','No votes yet'));set('ep-stat-updated',new Date().toLocaleTimeString(lang()==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'}));
+  };
+
+  renderAnalytics = function(){
+    normalizeDbState();
+    const p=publicVillage(),box=document.getElementById('ep-ward-analytics'),party=document.getElementById('ep-party-analytics');if(!box||!party)return;
+    if(!p){box.innerHTML=`<p style="font-size:12px;color:#687a8b">${esc(t('गाँव चुनें।','Select a village.'))}</p>`;party.innerHTML='';return}
+    const rows=publicRows(p),total=rows.reduce((a,x)=>a+x.votes,0),wardRows=[];
+    for(let w=1;w<=Number(p.totalWards||0);w++){const rr=rows.filter(x=>x.w===w),v=rr.reduce((a,x)=>a+x.votes,0);wardRows.push({w,rr,v});}
+    const maxWard=Math.max(1,...wardRows.map(x=>x.v));
+    const activeWards=wardRows.filter(x=>x.v>0).length;
+    box.innerHTML=`<div class="ep-analytics-summary"><div><b>${activeWards}/${wardRows.length}</b><span>${esc(t('सक्रिय वार्ड','Active wards'))}</span></div><div><b>${total}</b><span>${esc(t('कुल वोट','Total votes'))}</span></div></div>`+
+      `<div class="ep-analytics-subtitle">${esc(t('वार्डवार वोट और कुल वोट में प्रतिशत','Votes by ward and share of total votes'))}</div>`+
+      wardRows.map(x=>{const pct=total?x.v/total*100:0,bar=x.v/maxWard*100;return `<button type="button" class="ep-ward-line" data-ward-jump="${x.w}" title="${esc(t('इस वार्ड की स्थिति देखें','View this ward'))}"><span>${esc(t('वार्ड ','Ward ')+x.w)}</span><div><div class="ep-bar-track"><div class="ep-bar" style="width:${bar.toFixed(1)}%"></div></div><small>${x.v} · ${pct.toFixed(1)}%</small></div><strong>${x.rr.length}</strong></button>`}).join('');
+    box.querySelectorAll('[data-ward-jump]').forEach(b=>b.onclick=()=>{const w=b.getAttribute('data-ward-jump');try{document.getElementById('snapshot-ward').value=w}catch{};wardSnapshot()});
+    const map={};rows.forEach(x=>{const k=x.c.partyName||x.c.party||'Independent';map[k]=(map[k]||0)+x.votes});
+    const part=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    party.innerHTML=part.length?`<div class="ep-analytics-subtitle">${esc(t('पार्टी / स्वतंत्र वोट शेयर','Party / independent vote share'))}</div>`+part.map(([k,v])=>`<div class="ep-party-line"><div><strong>${esc(k)}</strong><small>${v.toLocaleString()} ${esc(t('वोट','votes'))}</small></div><div><div class="ep-bar-track"><div class="ep-bar green" style="width:${total?(v/total*100).toFixed(1):0}%"></div></div><b>${total?(v/total*100).toFixed(1):'0.0'}%</b></div></div>`).join(''):`<p style="font-size:12px;color:#687a8b">${esc(t('अभी कोई वोट नहीं।','No votes yet.'))}</p>`;
+    const top=rows.slice().sort((a,b)=>b.votes-a.votes)[0];
+    if(top){party.insertAdjacentHTML('beforeend',`<div class="ep-analytics-callout"><i class="fa-solid fa-chart-pie"></i><div><strong>${esc(t('वोट शेयर की सबसे बड़ी एकल हिस्सेदारी','Largest individual vote share'))}</strong><span>${esc(top.c.name||'')} · ${(total?top.votes/total*100:0).toFixed(1)}%</span></div></div>`)}
+  };
+
+  // Apply a saved village automatically after a fresh visit.
+  function restoreSavedVillage(){
+    const sel=document.getElementById('user-panchayat-select');if(!sel)return;
+    const saved=root('EP_SAVED_VILLAGE');
+    const ids=Object.keys(db?.panchayats||{});
+    const target=(saved && db?.panchayats?.[saved])?saved:(ids[0]||'');
+    if(target && sel.value!==target){sel.value=target;try{UserInterface.handleVillageSelection()}catch{}}
+  }
+
+  // Admin import/reset consistency: keep the global db reference aligned with
+  // the DatabaseManager instance before persistence/reload.
+  if(window.AdminManager){
+    const nativeImport=AdminManager.Execute_ImportJSON;
+    AdminManager.Execute_ImportJSON=function(){
+      const raw=document.getElementById('t17-json')?.value.trim();if(!raw)return publicToast('Paste valid JSON first.','error');
+      try{
+        const incoming=JSON.parse(raw);if(!incoming||typeof incoming!=='object'||!incoming.panchayats)throw new Error('Invalid database structure.');
+        DBManager.db=incoming;db=DBManager.get();DBManager.validateAndRepair();DBManager.persist();publicToast('Database imported successfully. Reloading portal…','success');setTimeout(()=>location.reload(),180);
+      }catch(e){publicToast('Import failed: '+String(e?.message||e),'error')}
+    };
+    const nativeReset=DBManager.factoryReset?.bind(DBManager);
+    if(nativeReset){DBManager.factoryReset=function(){const r=nativeReset();db=DBManager.get();setTimeout(()=>{try{UserInterface.init();renderAll()}catch{}},20);return r}}
+    // Make tool loading fault-tolerant: one broken render cannot freeze the admin console.
+    const nativeLoad=AdminManager.loadTool;
+    AdminManager.loadTool=function(index){
+      try{
+        activeAdminToolIndex=index;this.renderSidebar();const tool=this.toolsList[index];if(!tool)throw new Error('Tool not found');
+        document.getElementById('admin-tool-badge').innerText=`Tool #${`0${index+1}`.slice(-2)}`;document.getElementById('admin-tool-title').innerText=tool.title;
+        const iconEl=document.getElementById('admin-tool-icon');if(iconEl)iconEl.className=`fa-solid ${tool.icon} text-2xl text-premium-gold opacity-80`;
+        const body=document.getElementById('admin-tool-body');if(!body)throw new Error('Admin tool container missing');body.style.opacity='0.55';
+        try{const rendered=typeof tool.render==='function'?tool.render():'';body.innerHTML=rendered||`<div class="p-6 text-sm text-slate-400">Tool content is unavailable.</div>`;body.style.opacity='1'}catch(e){body.innerHTML=`<div class="p-6 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-200"><strong>Tool could not be loaded.</strong><div class="text-xs mt-2 opacity-80">${Utils.escapeHtml(String(e?.message||e))}</div></div>`;body.style.opacity='1'}
+      }catch(e){try{Utils.showToast(String(e?.message||e),'error')}catch{}}
+    };
+
+    function syncAdminFloat(){
+      const overlay=document.getElementById('admin-dashboard-container');
+      if(!overlay||overlay.classList.contains('hidden')){document.getElementById('ep-floating-admin-ai')?.remove();return}
+      let b=document.getElementById('ep-floating-admin-ai');if(!b){b=document.createElement('button');b.id='ep-floating-admin-ai';b.type='button';b.className='ep-admin-float';b.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i><span>AI</span>';b.title='Admin AI';b.onclick=()=>AdminManager.openAIHelp();document.body.appendChild(b);aiDrag(b)}
+    }
+    const vLogin=AdminManager.verifyLogin;AdminManager.verifyLogin=function(e){const r=vLogin.call(this,e);setTimeout(syncAdminFloat,40);return r};
+    const vLogout=AdminManager.logout;AdminManager.logout=function(){const r=vLogout.call(this);document.getElementById('ep-floating-admin-ai')?.remove();return r};
+    window.EPAdminRepair={syncAdminFloat};
+  }
+
+  // Update only what changed. Feature cards are rebuilt only when language changes,
+  // while results/stats/analytics refresh quickly after voting or persistence.
+  let lastFeatureLanguage='';
+  renderAll = function(forceFeatures=false){
+    normalizeDbState();
+    restoreSavedVillage();
+    language();
+    const currentLang=lang();
+    if(forceFeatures || lastFeatureLanguage!==currentLang || !document.getElementById('ep-public-feature-grid')?.children.length){ renderFeatures(); lastFeatureLanguage=currentLang; }
+    renderLatest(); renderResults(); renderStats(); renderAnalytics();
+    try{UserAI.setLanguage(currentLang)}catch{}
+  };
+
+  featureMap.searchCandidates=searchCandidates;featureMap.compareCandidates=compareCandidates;featureMap.saveVillage=saveVillage;featureMap.shareVillage=shareVillage;featureMap.printVillage=printVillage;featureMap.guide=guide;featureMap.directory=directory;featureMap.villageSummary=villageSummary;featureMap.wardSnapshot=wardSnapshot;featureMap.suggestion=suggestion;featureMap.exportSummary=exportSummary;featureMap.openNotifications=openNotifications;featureMap.rules=rules;featureMap.results=()=>{renderResults();document.getElementById('ep-results-section')?.scrollIntoView({behavior:'smooth',block:'start'})};featureMap.help=help;featureMap.myVote=myVote;featureMap.accessibility=accessibility;featureMap.stats=stats;featureMap.details=details;featureMap.official=official;
+
+  // Rebind the public language selector so it has one source of truth.
+  setLanguage = function(l){const value=l==='en'?'en':'hi';put('EP_LANG',value);put('EP_AI_LANG',value);try{UserAI.setLanguage(value)}catch{};language();if(document.getElementById('ep-ai-backdrop')){const box=document.getElementById('ep-ai-lang');if(box){box.value=value;box.dispatchEvent(new Event('change'))}}renderAll(true)};
+
+  // After a successful local vote, refresh the dashboard and bring the
+  // updated public-opinion result into view. Invalid votes remain in place.
+  if(window.VotingEngine && !window.VotingEngine.__epVoteWrapped){
+    const nativeVote=window.VotingEngine.castVote.bind(window.VotingEngine);
+    window.VotingEngine.castVote=async function(){
+      const before=publicVillage()?publicRows(publicVillage()).reduce((a,x)=>a+x.votes,0):0;
+      const result=await nativeVote();
+      try{const after=publicVillage()?publicRows(publicVillage()).reduce((a,x)=>a+x.votes,0):before;if(after>before){window.EPRefreshDashboard?.();setTimeout(()=>document.getElementById('ep-results-section')?.scrollIntoView({behavior:'smooth',block:'start'}),40);}}catch{}
+      return result;
+    };
+    window.VotingEngine.__epVoteWrapped=true;
+  }
+
+  // Public and admin AI launcher styling/dragging. Citizen AI is a single
+  // launcher; the admin launcher appears only after admin authentication.
+  launchAIButton();
+  if(window.EPAdminRepair) setTimeout(()=>window.EPAdminRepair.syncAdminFloat(),120);
+  normalizeDbState();
+
+  window.EPWebsite={openNotifications,searchCandidates,compareCandidates,saveVillage,shareVillage,printVillage,villageSummary,wardSnapshot,guide,directory,suggestion,exportSummary,rules,help,myVote,accessibility,stats,details,official,refreshResults:renderResults,openAI:citizenAI,setLanguage,refreshAll:renderAll};
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,80),{once:true}); else setTimeout(boot,80);
+})();
+</script></body>
 </html>
