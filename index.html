@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="hi" class="h-full scroll-smooth antialiased">
+<html lang="en" class="h-full scroll-smooth antialiased">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Official Premium E-Panchayat Voting and Public Opinion Portal" />
-    <meta name="theme-color" content="#FF9933" />
+    <meta name="theme-color" content="#0B1120" />
     <title>Enterprise E-Panchayat | Secure Voting & Opinion Portal</title>
 
     <!-- Preconnect to external resources -->
@@ -268,384 +268,9 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
-
-        /* =========================================================
-           TIRANGA THEME OVERRIDE — VISITOR + ADMIN CONSOLES
-           Existing features/components are intentionally retained.
-           ========================================================= */
-        :root {
-            --tiranga-saffron: #FF9933;
-            --tiranga-white: #FFFFFF;
-            --tiranga-green: #138808;
-            --tiranga-navy: #000080;
-            --tiranga-ink: #17301f;
-            --tiranga-soft-saffron: rgba(255,153,51,.14);
-            --tiranga-soft-green: rgba(19,136,8,.14);
-            --tiranga-border: rgba(19,136,8,.22);
-        }
-
-        body:not(.high-contrast) {
-            background-color: #fff !important;
-            background-image:
-                linear-gradient(180deg,
-                    rgba(255,153,51,.30) 0%,
-                    rgba(255,153,51,.20) 18%,
-                    rgba(255,255,255,.92) 38%,
-                    rgba(255,255,255,.96) 62%,
-                    rgba(19,136,8,.18) 82%,
-                    rgba(19,136,8,.30) 100%),
-                linear-gradient(90deg,
-                    rgba(255,153,51,.08),
-                    rgba(255,255,255,.35) 35%,
-                    rgba(19,136,8,.08));
-            background-attachment: fixed;
-        }
-
-        body:not(.high-contrast)::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: .34;
-            background:
-                radial-gradient(circle at 50% 50%, transparent 0 76px, rgba(0,0,128,.035) 77px 79px, transparent 80px),
-                radial-gradient(circle at 50% 50%, transparent 0 30px, rgba(0,0,128,.025) 31px 32px, transparent 33px);
-            background-size: 180px 180px, 180px 180px;
-            background-position: center;
-        }
-
-        body:not(.high-contrast) > * { position: relative; z-index: 1; }
-
-        /* Visitor header: saffron / white / green trim */
-        #main-header {
-            background:
-                linear-gradient(90deg, rgba(255,153,51,.97) 0%, rgba(255,153,51,.92) 30%, rgba(255,255,255,.96) 50%, rgba(19,136,8,.92) 70%, rgba(19,136,8,.97) 100%) !important;
-            color: #102016 !important;
-            border-bottom: 4px solid transparent !important;
-            border-image: linear-gradient(90deg, #FF9933 0 33%, #fff 33% 66%, #138808 66% 100%) 1 !important;
-            backdrop-filter: blur(14px);
-        }
-        #main-header h1 { color: #000080 !important; -webkit-text-fill-color: #000080 !important; }
-        #main-header p, #main-header .text-slate-400, #main-header .text-slate-300 { color: #17301f !important; }
-        #main-header .bg-white\/5 { background: rgba(255,255,255,.62) !important; color: #000080 !important; border-color: rgba(0,0,128,.16) !important; }
-        #main-header .bg-white\/5:hover { background: rgba(255,255,255,.9) !important; }
-        #main-header .text-premium-gold { color: #000080 !important; }
-        #main-header .bg-gradient-to-br { background: linear-gradient(135deg,#FF9933 0%,#fff 50%,#138808 100%) !important; }
-
-        /* Cards remain readable while carrying the national palette. */
-        body:not(.high-contrast) .glass {
-            background: linear-gradient(135deg, rgba(255,255,255,.90), rgba(255,255,255,.76)) !important;
-            border: 1px solid rgba(0,0,128,.10) !important;
-            box-shadow: 0 14px 45px rgba(0,0,0,.08), inset 0 3px 0 rgba(255,153,51,.18), inset 0 -3px 0 rgba(19,136,8,.15) !important;
-        }
-        body:not(.high-contrast) .glass::after {
-            content: "";
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 3px;
-            background: linear-gradient(90deg,#FF9933 0 33%,#FFFFFF 33% 66%,#138808 66% 100%);
-            opacity: .72;
-            pointer-events: none;
-        }
-        body:not(.high-contrast) .text-premium-nav { color: #000080 !important; }
-        body:not(.high-contrast) .text-premium-gold { color: #b45309 !important; }
-        body:not(.high-contrast) .bg-premium-nav { background: #000080 !important; }
-        body:not(.high-contrast) .border-premium-gold { border-color: #FF9933 !important; }
-
-        /* Tiranga buttons and controls */
-        .btn-gold {
-            background: linear-gradient(90deg,#FF9933 0%,#FFB35C 33%,#FFFFFF 50%,#8BCF80 67%,#138808 100%) !important;
-            color: #000080 !important;
-            border: 1px solid rgba(0,0,128,.18) !important;
-            box-shadow: 0 8px 22px rgba(19,136,8,.16), 0 4px 14px rgba(255,153,51,.16) !important;
-        }
-        .btn-gold:hover { box-shadow: 0 12px 28px rgba(19,136,8,.22), 0 7px 18px rgba(255,153,51,.20) !important; }
-        .input-premium:focus { border-color: #000080 !important; box-shadow: 0 0 0 4px rgba(0,0,128,.10) !important; }
-
-        /* Notification ticker */
-        body:not(.high-contrast) #main-header + main > div:first-child {
-            background: linear-gradient(90deg,#FF9933,#fff 50%,#138808) !important;
-            border-color: rgba(0,0,128,.16) !important;
-        }
-
-        /* User AI panel receives a Tiranga identity. */
-        #user-ai-section {
-            background: linear-gradient(135deg, rgba(255,153,51,.15), rgba(255,255,255,.90) 42%, rgba(19,136,8,.15)) !important;
-            border: 2px solid rgba(0,0,128,.10) !important;
-        }
-        #user-ai-section .bg-indigo-50 { background: rgba(255,153,51,.16) !important; color: #000080 !important; border-color: rgba(255,153,51,.35) !important; }
-        #user-ai-section .bg-slate-50 { background: rgba(255,255,255,.82) !important; border-color: rgba(19,136,8,.18) !important; }
-
-        /* =========================================================
-           ADMIN PANEL — FULL TIRANGA TREATMENT
-           ========================================================= */
-        #admin-dashboard-container {
-            background:
-                linear-gradient(180deg, rgba(255,153,51,.94) 0%, rgba(255,153,51,.82) 22%, rgba(255,255,255,.97) 42%, rgba(255,255,255,.97) 58%, rgba(19,136,8,.82) 78%, rgba(19,136,8,.94) 100%) !important;
-            color: #102016 !important;
-        }
-        #admin-dashboard-container::before {
-            content:"";
-            position:absolute;
-            inset:0;
-            pointer-events:none;
-            background: radial-gradient(circle at 50% 50%, transparent 0 82px, rgba(0,0,128,.055) 83px 86px, transparent 87px);
-            background-size: 190px 190px;
-            opacity:.55;
-            z-index:0;
-        }
-        #admin-dashboard-container > * { position:relative; z-index:1; }
-        #admin-dashboard-container > .h-16 {
-            background: linear-gradient(90deg,#FF9933 0%,#fff 50%,#138808 100%) !important;
-            color:#000080 !important;
-            border-bottom:3px solid #000080 !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,.14) !important;
-        }
-        #admin-dashboard-container > .h-16 h2,
-        #admin-dashboard-container > .h-16 p,
-        #admin-dashboard-container > .h-16 .text-white,
-        #admin-dashboard-container > .h-16 .text-slate-400,
-        #admin-dashboard-container > .h-16 .text-slate-500 { color:#000080 !important; }
-        #admin-dashboard-container > .h-16 .bg-premium-gold { background:#000080 !important; color:#fff !important; }
-        #admin-dashboard-container > .h-16 button { background:rgba(255,255,255,.72) !important; color:#000080 !important; border-color:rgba(0,0,128,.18) !important; }
-        #admin-dashboard-container > .h-16 button:hover { background:#fff !important; }
-        #admin-dashboard-container > .h-16 .bg-rose-500\/10 { color:#9f1239 !important; }
-
-        #admin-dashboard-container > .flex-grow > div:first-child {
-            background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86) 48%, rgba(236,248,233,.96)) !important;
-            border-right: 4px solid transparent !important;
-            border-image: linear-gradient(180deg,#FF9933 0 33%,#000080 33% 66%,#138808 66% 100%) 1 !important;
-        }
-        #admin-sidebar-list button { color:#24364b !important; }
-        #admin-sidebar-list button:hover { background:rgba(255,153,51,.16) !important; color:#000080 !important; }
-        #admin-sidebar-list button.bg-premium-gold\/10,
-        #admin-sidebar-list button[class*="bg-premium-gold/10"] {
-            background:linear-gradient(90deg,rgba(255,153,51,.24),rgba(255,255,255,.76),rgba(19,136,8,.16)) !important;
-            color:#000080 !important;
-            border-left-color:#FF9933 !important;
-        }
-        #admin-dashboard-container .input-admin {
-            background:rgba(255,255,255,.90) !important;
-            color:#12231a !important;
-            border-color:rgba(0,0,128,.20) !important;
-        }
-        #admin-dashboard-container .input-admin::placeholder { color:#64748b !important; }
-        #admin-dashboard-container .input-admin:focus { border-color:#000080 !important; background:#fff !important; }
-        #admin-dashboard-container > .flex-grow > div:last-child {
-            background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(236,248,233,.82)) !important;
-        }
-        #admin-dashboard-container #admin-content-wrapper > div {
-            background:rgba(255,255,255,.90) !important;
-            color:#17301f !important;
-            border:1px solid rgba(0,0,128,.16) !important;
-            box-shadow:0 18px 55px rgba(0,0,0,.14) !important;
-        }
-        #admin-dashboard-container #admin-content-wrapper .border-slate-700,
-        #admin-dashboard-container #admin-content-wrapper .border-slate-700\/80 { border-color:rgba(0,0,128,.14) !important; }
-        #admin-dashboard-container #admin-content-wrapper .text-white { color:#102016 !important; }
-        #admin-dashboard-container #admin-content-wrapper .text-slate-300,
-        #admin-dashboard-container #admin-content-wrapper .text-slate-400,
-        #admin-dashboard-container #admin-content-wrapper .text-slate-500 { color:#496052 !important; }
-        #admin-dashboard-container #admin-content-wrapper .bg-\[\#1E293B\],
-        #admin-dashboard-container #admin-content-wrapper .bg-\[\#0F172A\],
-        #admin-dashboard-container #admin-content-wrapper .bg-slate-800,
-        #admin-dashboard-container #admin-content-wrapper .bg-slate-900 { background:rgba(255,255,255,.72) !important; }
-        #admin-dashboard-container #admin-content-wrapper .bg-premium-gold { background:#FF9933 !important; color:#000080 !important; }
-        #admin-dashboard-container #admin-content-wrapper .bg-indigo-600 { background:#000080 !important; }
-        #admin-dashboard-container #admin-content-wrapper .bg-emerald-600 { background:#138808 !important; }
-
-        /* Admin AI panel */
-        #admin-ai-panel {
-            background:linear-gradient(145deg,rgba(255,153,51,.97),rgba(255,255,255,.98) 48%,rgba(19,136,8,.96)) !important;
-            border:2px solid #000080 !important;
-            color:#102016 !important;
-        }
-        #admin-ai-panel .border-slate-700 { border-color:rgba(0,0,128,.20) !important; }
-        #admin-ai-panel .bg-slate-800 { background:rgba(255,255,255,.72) !important; color:#17301f !important; }
-        #admin-ai-panel .text-white { color:#000080 !important; }
-        #admin-ai-panel .input-admin { background:rgba(255,255,255,.94) !important; color:#17301f !important; }
-
-        /* Persistent floating AI controls — one on each side. */
-        .tiranga-ai-float {
-            position:fixed;
-            top:50%;
-            transform:translateY(-50%);
-            width:58px;
-            height:58px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            z-index:500;
-            cursor:pointer;
-            border:3px solid #fff;
-            box-shadow:0 10px 28px rgba(0,0,0,.25),0 0 0 2px rgba(0,0,128,.18);
-            transition:transform .25s ease, box-shadow .25s ease;
-        }
-        .tiranga-ai-float:hover { transform:translateY(-50%) scale(1.10); box-shadow:0 14px 34px rgba(0,0,0,.30),0 0 0 3px rgba(0,0,128,.22); }
-        .tiranga-ai-float:active { transform:translateY(-50%) scale(.96); }
-        .tiranga-ai-float::after {
-            content:"";
-            position:absolute;
-            inset:-7px;
-            border-radius:50%;
-            border:2px solid rgba(0,0,128,.20);
-            animation:tirangaAiPulse 2.2s ease-out infinite;
-            pointer-events:none;
-        }
-        .tiranga-ai-left { left:14px; background:linear-gradient(145deg,#FF9933 0%,#fff 50%,#138808 100%); color:#000080; }
-        .tiranga-ai-right { right:14px; background:linear-gradient(145deg,#138808 0%,#fff 50%,#FF9933 100%); color:#000080; }
-        .tiranga-ai-float i { font-size:22px; }
-        .tiranga-ai-label {
-            position:absolute;
-            white-space:nowrap;
-            padding:5px 9px;
-            border-radius:999px;
-            background:#000080;
-            color:#fff;
-            font-size:9px;
-            font-weight:800;
-            letter-spacing:.08em;
-            text-transform:uppercase;
-            pointer-events:none;
-            opacity:0;
-            transition:opacity .2s ease;
-        }
-        .tiranga-ai-left .tiranga-ai-label { left:68px; }
-        .tiranga-ai-right .tiranga-ai-label { right:68px; }
-        .tiranga-ai-float:hover .tiranga-ai-label { opacity:1; }
-        @keyframes tirangaAiPulse { 0%{transform:scale(.92);opacity:.65} 70%{transform:scale(1.18);opacity:0} 100%{transform:scale(1.18);opacity:0} }
-
-        @media (max-width:640px) {
-            .tiranga-ai-float { width:50px; height:50px; }
-            .tiranga-ai-left { left:8px; }
-            .tiranga-ai-right { right:8px; }
-            .tiranga-ai-float i { font-size:19px; }
-            .tiranga-ai-label { display:none; }
-        }
-
-        body.high-contrast .tiranga-ai-float { background:#000 !important; color:#fff !important; border-color:#fff !important; box-shadow:none !important; }
-
     </style>
- */
-<style id="portal-v2-ux">
-:root{--tr-saffron:#ff9933;--tr-white:#fff;--tr-green:#138808;--tr-blue:#000080;--tr-ink:#172033}
-html{scroll-behavior:smooth}
-body.portal-v2{background:#f7f8fa!important}
-#main-header{background:linear-gradient(90deg,rgba(255,153,51,.97) 0%,rgba(255,153,51,.88) 27%,rgba(255,255,255,.98) 50%,rgba(255,255,255,.98) 58%,rgba(19,136,8,.9) 100%)!important;color:#172033!important;border-bottom:4px solid transparent;border-image:linear-gradient(90deg,#ff9933 0 33%,#fff 33% 66%,#138808 66% 100%) 1}
-#main-header .text-white,#main-header .text-slate-400,#main-header .text-slate-300{color:#172033!important}
-#main-header .bg-white\/5{background:rgba(255,255,255,.58)!important;border-color:rgba(0,0,128,.14)!important;color:#000080!important}
-#main-header .text-gradient-gold{background:none!important;color:#000080!important;-webkit-text-fill-color:#000080!important}
-#main-header .text-premium-gold{color:#000080!important}
-#main-header .bg-gradient-to-br{background:linear-gradient(135deg,#ff9933,#fff,#138808)!important;color:#000080!important}
-#portal-page-nav{position:sticky;top:80px;z-index:35;margin:0 auto 1.25rem;max-width:80rem;padding:.55rem;border:1px solid rgba(0,0,128,.12);background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.08)}
-.portal-nav-scroll{display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none}.portal-nav-scroll::-webkit-scrollbar{display:none}
-.portal-page-btn{flex:0 0 auto;border:1px solid #e5e7eb;background:#fff;color:#334155;padding:.7rem .95rem;border-radius:13px;font-size:.78rem;font-weight:800;display:flex;align-items:center;gap:.5rem;cursor:pointer;transition:.2s}
-.portal-page-btn:hover{transform:translateY(-1px);border-color:#ff9933}.portal-page-btn.active{background:linear-gradient(135deg,#ff9933,#fff 48%,#138808);border-color:#000080;color:#000080;box-shadow:0 5px 18px rgba(0,0,128,.13)}
-.portal-page{display:none!important}.portal-page.portal-active{display:block!important;animation:portalPageIn .28s ease both}
-@keyframes portalPageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#portal-page-home{min-height:360px}#portal-page-voting,#portal-page-ai,#portal-page-services{min-height:70vh}
-#portal-page-services>section{width:100%!important}.portal-service-grid{grid-template-columns:repeat(1,minmax(0,1fr))!important}@media(min-width:768px){.portal-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(min-width:1280px){.portal-service-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-#portal-page-ai #user-ai-section{min-height:65vh}
-#portal-v2-lang{display:flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,128,.14);padding:.25rem;border-radius:999px}
-#portal-v2-lang button{border:0;background:transparent;padding:.35rem .55rem;border-radius:999px;font-size:10px;font-weight:900;cursor:pointer;color:#475569}.portal-lang-active{background:#000080!important;color:#fff!important}
-.portal-page-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}.portal-page-heading h2{font-size:1.4rem;font-weight:900;color:#000080}.portal-page-heading p{font-size:.78rem;color:#64748b;margin-top:.25rem}
-/* Draggable AI controls */
-.tiranga-ai-float{cursor:grab!important;user-select:none;touch-action:none}.tiranga-ai-float.dragging{cursor:grabbing!important;transition:none!important}.tiranga-ai-float .tiranga-ai-label{pointer-events:none}
-/* Floating chat windows */
-.portal-ai-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:1rem;background:rgba(2,6,23,.22);backdrop-filter:blur(3px)}
-.portal-ai-overlay.open{display:flex}
-.portal-ai-chat{width:min(440px,calc(100vw - 1.5rem));height:min(650px,calc(100vh - 2rem));background:#fff;border:2px solid #000080;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.28);display:flex;flex-direction:column}
-.portal-ai-chat .chat-head{padding:1rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#ff9933,#fff 50%,#138808);color:#000080}.portal-ai-chat .chat-head strong{font-size:.95rem}.portal-ai-chat .chat-head small{display:block;font-size:.65rem;color:#334155;margin-top:2px}.portal-ai-close{border:0;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.72);color:#000080;cursor:pointer;font-size:1rem}.portal-ai-messages{flex:1;overflow:auto;padding:1rem;background:linear-gradient(180deg,#fff,#f8fafc)}.portal-ai-row{display:flex;margin:.55rem 0}.portal-ai-row.user{justify-content:flex-end}.portal-ai-bubble{max-width:86%;padding:.7rem .8rem;border-radius:16px;font-size:.78rem;line-height:1.45;white-space:pre-wrap;word-break:break-word}.portal-ai-row.assistant .portal-ai-bubble{background:#f1f5f9;color:#172033;border:1px solid #e2e8f0;border-bottom-left-radius:5px}.portal-ai-row.user .portal-ai-bubble{background:#000080;color:#fff;border-bottom-right-radius:5px}.portal-ai-foot{padding:.7rem;border-top:1px solid #e5e7eb;background:#fff}.portal-ai-input{width:100%;min-height:64px;resize:none;border:1px solid #cbd5e1;border-radius:14px;padding:.7rem;font-size:.78rem;outline:none}.portal-ai-input:focus{border-color:#000080;box-shadow:0 0 0 3px rgba(0,0,128,.08)}.portal-ai-actions{display:flex;gap:.5rem;margin-top:.5rem}.portal-ai-actions button{flex:1;border:0;border-radius:12px;padding:.65rem;font-weight:800;cursor:pointer}.portal-ai-send{background:linear-gradient(90deg,#ff9933,#138808);color:#000080}.portal-ai-clear{background:#f1f5f9;color:#475569}
-.portal-ai-language{font-size:.65rem;padding:.3rem .5rem;border-radius:8px;border:1px solid rgba(0,0,128,.15);background:#fff;color:#000080}
-#admin-dashboard-container .portal-admin-lang{position:relative;z-index:50}
-#admin-dashboard-container{background:linear-gradient(135deg,#ff9933 0%,#fff 42%,#138808 100%)!important}
-#admin-dashboard-container .bg-\[\#090E17\],#admin-dashboard-container .bg-\[\#0F172A\]{background:rgba(255,255,255,.9)!important;color:#172033!important}
-#admin-dashboard-container .text-white{color:#000080!important}#admin-dashboard-container .text-slate-400,#admin-dashboard-container .text-slate-500{color:#475569!important}
-#admin-dashboard-container .border-slate-800,#admin-dashboard-container .border-slate-700{border-color:rgba(0,0,128,.15)!important}
-#admin-dashboard-container input,#admin-dashboard-container textarea,#admin-dashboard-container select{background:rgba(255,255,255,.96)!important;color:#172033!important}
-#admin-dashboard-container .bg-\[\#1E293B\]{background:rgba(255,255,255,.96)!important}
-#admin-dashboard-container .bg-premium-gold{background:#ff9933!important;color:#000080!important}
-.portal-admin-top-actions{display:flex;align-items:center;gap:.5rem}
-@media(max-width:700px){#portal-page-nav{top:64px;border-radius:14px}.portal-page-btn{padding:.6rem .75rem}.portal-ai-overlay{padding:.45rem}.portal-ai-chat{height:calc(100vh - .9rem);border-radius:20px}.tiranga-ai-float{width:52px!important;height:52px!important}.tiranga-ai-float .tiranga-ai-label{display:none!important}}
-</style>
-
-
-<style id="portal-app-shell-v3">
-:root{--app-navy:#10233f;--app-saffron:#f59e0b;--app-green:#138a45;--app-cream:#f7faf8;--app-border:#e5e9ef;--app-text:#182334;--app-muted:#667085;--app-shadow:0 18px 45px rgba(16,35,63,.10)}
-body.portal-v2{background:linear-gradient(180deg,#f7faf8 0%,#fff 38%,#f5f8fb 100%)!important;color:var(--app-text)}
-body.portal-v2:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 10% 0%,rgba(245,158,11,.09),transparent 28%),radial-gradient(circle at 95% 35%,rgba(19,138,69,.07),transparent 25%)}
-body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;padding-bottom:100px!important;gap:18px!important}
-#portal-page-nav{display:none!important}
-.portal-page{width:100%}
-.portal-page-head{display:none!important}
-.portal-app-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:start}
-.portal-app-rail{position:sticky;top:78px;background:rgba(255,255,255,.92);border:1px solid var(--app-border);border-radius:24px;padding:12px;box-shadow:var(--app-shadow);backdrop-filter:blur(18px);z-index:30}
-.portal-app-brand{padding:15px 14px 18px;border-bottom:1px solid var(--app-border);margin-bottom:10px}
-.portal-app-brand .mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#f59e0b 0 33%,#fff 33% 66%,#138a45 66%);display:grid;place-items:center;box-shadow:0 8px 20px rgba(16,35,63,.12);font-size:18px;color:#10233f}
-.portal-app-brand strong{display:block;font-size:14px;color:var(--app-navy);margin-top:10px}
-.portal-app-brand span{display:block;font-size:11px;color:var(--app-muted);margin-top:3px}
-.portal-app-nav{display:grid;gap:6px}
-.portal-app-nav button{border:0;background:transparent;border-radius:14px;padding:11px 12px;display:flex;align-items:center;gap:10px;color:#667085;font-weight:700;font-size:12px;text-align:left;cursor:pointer;transition:.2s}
-.portal-app-nav button:hover{background:#f2f5f8;color:var(--app-navy);transform:translateX(2px)}
-.portal-app-nav button.active{background:linear-gradient(135deg,#10233f,#18395f);color:#fff;box-shadow:0 10px 22px rgba(16,35,63,.18)}
-.portal-app-nav i{width:18px;text-align:center}
-.portal-app-main{min-width:0}
-.portal-home-hero{border-radius:28px;padding:25px 28px;background:linear-gradient(135deg,#10233f 0%,#1b4165 62%,#0e713d 100%);color:#fff;box-shadow:0 20px 50px rgba(16,35,63,.20);position:relative;overflow:hidden;margin-bottom:16px}
-.portal-home-hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-85px;top:-120px;border:55px solid rgba(255,255,255,.06)}
-.portal-home-hero .tricolor-line{height:4px;border-radius:4px;background:linear-gradient(90deg,#ff8c00 0 33%,#fff 33% 66%,#159447 66%);width:110px;margin-bottom:14px}
-.portal-home-hero h1{font-size:clamp(24px,3vw,36px);line-height:1.1;margin:0;letter-spacing:-.03em;font-weight:900}
-.portal-home-hero p{max-width:700px;color:rgba(255,255,255,.76);font-size:13px;margin:9px 0 0;line-height:1.65}
-.portal-home-hero .hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;position:relative;z-index:2}
-.portal-home-hero .hero-actions button{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.11);color:#fff;border-radius:12px;padding:10px 13px;font-size:11px;font-weight:800;cursor:pointer;backdrop-filter:blur(8px)}
-.portal-home-hero .hero-actions button.primary{background:#fff;color:#10233f;border-color:#fff}
-.portal-home-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:16px;margin-bottom:16px}
-.portal-panel{background:rgba(255,255,255,.94);border:1px solid var(--app-border);border-radius:22px;box-shadow:0 12px 34px rgba(16,35,63,.07);overflow:hidden}
-.portal-panel-head{padding:17px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.portal-panel-head h3{margin:0;color:var(--app-navy);font-size:15px;font-weight:900}
-.portal-panel-head p{margin:4px 0 0;color:var(--app-muted);font-size:10px;line-height:1.5}
-.portal-panel-head button{border:0;background:#f2f5f8;color:#10233f;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer}
-.portal-notice-list{padding:0 12px 12px;max-height:245px;overflow:auto}
-.portal-notice{display:flex;gap:11px;padding:11px 7px;border-top:1px solid #eef1f4}
-.portal-notice:first-child{border-top:0}
-.portal-notice-icon{flex:0 0 32px;width:32px;height:32px;border-radius:10px;background:#fff5e8;color:#e27b00;display:grid;place-items:center}
-.portal-notice b{font-size:11px;color:#243044;display:block;line-height:1.4}
-.portal-notice span{font-size:9px;color:#8a94a6;display:block;margin-top:3px}
-.portal-empty{padding:25px 15px;text-align:center;color:#8a94a6;font-size:11px}
-.portal-analytics{padding:18px}
-.portal-analytics-top{display:flex;align-items:center;gap:18px}
-.portal-donut{width:152px;height:152px;border-radius:50%;position:relative;flex:0 0 152px;background:conic-gradient(#10233f 0deg,#10233f 0deg,#e8edf2 0deg 360deg);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(16,35,63,.04)}
-.portal-donut:after{content:"";width:98px;height:98px;border-radius:50%;background:#fff;position:absolute;box-shadow:inset 0 0 0 1px #eef1f4}
-.portal-donut .donut-center{position:relative;z-index:2;text-align:center}.portal-donut .donut-center strong{font-size:25px;color:#10233f;display:block;line-height:1}.portal-donut .donut-center span{font-size:9px;color:#8a94a6;display:block;margin-top:5px}
-.portal-analytics-copy{min-width:0}.portal-analytics-copy h4{font-size:14px;color:#10233f;margin:0 0 4px;font-weight:900}.portal-analytics-copy p{font-size:10px;color:#667085;line-height:1.55;margin:0 0 10px}
-.portal-leader{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;margin-top:7px}.portal-leader .bar{height:7px;border-radius:99px;background:#edf0f3;overflow:hidden;flex:1}.portal-leader .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#10233f,#138a45)}.portal-leader em{font-style:normal;font-weight:900;color:#10233f;width:38px;text-align:right}
-.portal-analytics-foot{margin-top:13px;padding:9px 10px;background:#f7faf8;border-radius:11px;color:#6b7280;font-size:9px;line-height:1.45;border:1px solid #e8eee9}
-.portal-feature-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:16px}
-.portal-feature{border:1px solid var(--app-border);background:#fff;border-radius:17px;padding:14px 12px;cursor:pointer;text-align:left;box-shadow:0 7px 20px rgba(16,35,63,.05);transition:.2s;min-height:110px}.portal-feature:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(16,35,63,.10)}
-.portal-feature .ico{width:34px;height:34px;border-radius:11px;background:#f1f5f9;color:#10233f;display:grid;place-items:center;margin-bottom:10px}.portal-feature b{display:block;font-size:11px;color:#172033}.portal-feature span{display:block;font-size:9px;color:#7a8495;margin-top:4px;line-height:1.45}
-.portal-home-voting{margin-top:2px}
-.portal-home-voting #voting-section{border-radius:24px!important;box-shadow:0 12px 34px rgba(16,35,63,.08)!important}
-.portal-app-status{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;color:#667085}.portal-app-status .dot{width:7px;height:7px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.10)}
-.portal-bottom-nav{display:none}
-#portal-page-services .portal-service-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-#portal-page-ai #user-ai-section{margin-top:0!important}
-#portal-page-voting{display:none!important}
-@media(max-width:980px){.portal-app-layout{grid-template-columns:1fr}.portal-app-rail{display:none}.portal-bottom-nav{display:grid;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.94);border:1px solid #dfe5ea;border-radius:19px;padding:7px;box-shadow:0 16px 40px rgba(16,35,63,.18);backdrop-filter:blur(18px)}.portal-bottom-nav button{border:0;background:transparent;border-radius:13px;padding:8px 4px;color:#7a8495;font-size:9px;font-weight:800}.portal-bottom-nav button i{display:block;font-size:15px;margin-bottom:3px}.portal-bottom-nav button.active{background:#10233f;color:#fff}.portal-home-grid{grid-template-columns:1fr}.portal-feature-grid{grid-template-columns:repeat(2,1fr)}#portal-page-services .portal-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:600px){body.portal-v2 main{padding-left:10px!important;padding-right:10px!important}.portal-home-hero{padding:20px;border-radius:22px}.portal-home-hero h1{font-size:26px}.portal-analytics-top{align-items:flex-start}.portal-donut{width:120px;height:120px;flex-basis:120px}.portal-donut:after{width:78px;height:78px}.portal-donut .donut-center strong{font-size:20px}.portal-feature-grid{grid-template-columns:repeat(2,1fr);gap:8px}.portal-feature{min-height:105px;padding:12px 10px}#portal-page-services .portal-service-grid{grid-template-columns:1fr!important}.portal-home-grid{gap:10px}}
-</style>
-
 </head>
-<body class="text-slate-800 h-full flex flex-col relative portal-v2">
-
-    <!-- FLOATING AI SHORTCUTS: retained alongside the full AI sections -->
-    <button id="floating-user-ai" class="tiranga-ai-float tiranga-ai-left" type="button" onclick="FloatingAI.openUser()" aria-label="Open Citizen AI Assistant">
-        <i class="fa-solid fa-wand-magic-sparkles"></i><span class="tiranga-ai-label">Citizen AI</span>
-    </button>
-    <button id="floating-admin-ai" class="tiranga-ai-float tiranga-ai-right" type="button" onclick="FloatingAI.openAdmin()" aria-label="Open Admin AI Assistant">
-        <i class="fa-solid fa-robot"></i><span class="tiranga-ai-label">Admin AI</span>
-    </button>
+<body class="text-slate-800 h-full flex flex-col relative">
 
     
 
@@ -690,7 +315,7 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
                     aria-label="Access Admin Panel"
                 >
                     <i class="fa-solid fa-user-tie mr-2 text-premium-gold group-hover:animate-bounce"></i> 
-                    <span class="hidden sm:inline" data-i18n="admin_access">एडमिन एक्सेस</span>
+                    <span class="hidden sm:inline">Admin Access</span>
                     <span class="sm:hidden">Admin</span>
                 </button>
             </div>
@@ -699,16 +324,6 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
 
     <!-- MAIN APPLICATION CONTENT -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-10 animate-fade-in relative z-10">
-        <!-- PORTAL V2 PAGE NAVIGATION: original sections remain intact, only presented as virtual pages -->
-        <div id="portal-page-nav" aria-label="Portal navigation">
-            <div class="portal-nav-scroll">
-                <button class="portal-page-btn active" data-portal-page="home" onclick="PortalPages.show('home')"><i class="fa-solid fa-house"></i><span data-i18n="nav_home">होम</span></button>
-                <button class="portal-page-btn" data-portal-page="voting" onclick="PortalPages.show('voting')"><i class="fa-solid fa-check-to-slot"></i><span data-i18n="nav_voting">मतदान</span></button>
-                <button class="portal-page-btn" data-portal-page="ai" onclick="PortalPages.show('ai')"><i class="fa-solid fa-wand-magic-sparkles"></i><span data-i18n="nav_ai">नागरिक AI</span></button>
-                <button class="portal-page-btn" data-portal-page="services" onclick="PortalPages.show('services')"><i class="fa-solid fa-grid-2"></i><span data-i18n="nav_services">सेवाएं</span></button>
-            </div>
-        </div>
-
 
         <!-- SECTION 1: Government Notification Ticker -->
         <div class="bg-gradient-to-r from-premium-nav via-slate-800 to-premium-nav p-1 rounded-2xl shadow-premium-soft border border-slate-700/50 cursor-pointer hover:shadow-premium-gold/30 transition-all duration-300 transform hover:-translate-y-0.5 group" onclick="UIManager.openNotificationsModal()">
@@ -1200,7 +815,7 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
                 <div class="p-4 border-b border-slate-800/80 shrink-0">
                     <div class="relative">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="admin-tool-search" placeholder="टूल खोजें..." data-i18n-placeholder="search_tools" class="w-full bg-[#0F172A] border border-slate-700 rounded-lg py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-premium-gold" oninput="AdminManager.filterTools()">
+                        <input type="text" id="admin-tool-search" placeholder="Search Tools..." class="w-full bg-[#0F172A] border border-slate-700 rounded-lg py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-premium-gold" oninput="AdminManager.filterTools()">
                     </div>
                 </div>
 
@@ -1673,7 +1288,7 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
                 this.append('user',question); input.value=''; button.disabled=true; const pending=this.append('assistant','Gemini is thinking...');
                 try{
                     const snapshot=GeminiService.compactDatabaseSnapshot(db);
-                    const answer=await GeminiService.generate(key,db.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the public help assistant for an Indian village-election portal. Explain features clearly in simple language. ${window.PortalLanguage?.get?.()==='hi'?'Reply ONLY in simple Hindi.':'Reply ONLY in clear simple English.'} Do not fabricate official facts, winners, legal rules, or candidate details. Use the portal snapshot only for database-specific information. Encourage users to follow official election authorities.\n\nPortal snapshot:\n${snapshot}\n\nCitizen question:\n${question}`);
+                    const answer=await GeminiService.generate(key,db.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the public help assistant for an Indian village-election portal. Explain features clearly in simple language. Do not fabricate official facts, winners, legal rules, or candidate details. Use the portal snapshot only for database-specific information. Encourage users to follow official election authorities.\n\nPortal snapshot:\n${snapshot}\n\nCitizen question:\n${question}`);
                     pending.textContent=answer;
                 }catch(e){pending.textContent=`Gemini error: ${e.message}`;Utils.showToast('Gemini request failed.','error');}
                 finally{button.disabled=false;}
@@ -3635,7 +3250,7 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
                 const key=db.settings.adminGeminiApiKey; if(!key)return Utils.showToast('Configure the Admin Gemini API key in Tool 32.','error');
                 log.innerHTML+=`<div class="flex justify-end"><div class="max-w-[85%] bg-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 text-xs whitespace-pre-wrap">${Utils.escapeHtml(q)}</div></div>`; input.value='';
                 const row=document.createElement('div');row.className='flex justify-start';row.innerHTML='<div class="max-w-[85%] bg-slate-800 text-slate-200 rounded-2xl rounded-bl-md px-4 py-3 text-xs whitespace-pre-wrap">Thinking...</div>';log.appendChild(row);log.scrollTop=log.scrollHeight;
-                try{const snapshot=GeminiService.compactDatabaseSnapshot(db);const answer=await GeminiService.generate(key,db.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the private help assistant for an e-panchayat administrator. Give practical guidance about this portal and its existing features. ${window.PortalLanguage?.get?.()==='hi'?'Reply ONLY in simple Hindi.':'Reply ONLY in clear simple English.'} Do not claim an action was executed unless the code executed it. Never expose API keys. Database snapshot:\n${snapshot}\n\nAdmin question: ${q}`);row.firstChild.textContent=answer;}catch(e){row.firstChild.textContent=`Gemini error: ${e.message}`;}log.scrollTop=log.scrollHeight;
+                try{const snapshot=GeminiService.compactDatabaseSnapshot(db);const answer=await GeminiService.generate(key,db.settings.geminiModel||DEFAULT_GEMINI_MODEL,`You are the private help assistant for an e-panchayat administrator. Give practical guidance about this portal and its existing features. Do not claim an action was executed unless the code executed it. Never expose API keys. Database snapshot:\n${snapshot}\n\nAdmin question: ${q}`);row.firstChild.textContent=answer;}catch(e){row.firstChild.textContent=`Gemini error: ${e.message}`;}log.scrollTop=log.scrollHeight;
             }
 
             static Tool_DeleteVillage() {
@@ -3687,8 +3302,6 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
         window.GeminiService=GeminiService;
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Browser inspection and context-menu blocking are disabled.
-
             // Initialize Modules
             UIManager.init();
             UserInterface.init();
@@ -3698,353 +3311,130 @@ body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;paddin
 
     </script>
 
-
-    <script>
-/* ================================================================
-   PORTAL V2 CONTROLLER
-   - virtual full-page sections
-   - Hindi/English default Hindi
-   - draggable AI buttons
-   - floating citizen/admin AI chat
-   ================================================================ */
-(function(){
-  const I18N={
-    nav_home:['होम','Home'],nav_voting:['मतदान','Voting'],nav_ai:['नागरिक AI','Citizen AI'],nav_services:['सेवाएं','Services'],ai:['नागरिक AI','Citizen AI'],
-    citizen_ai:['नागरिक AI सहायक','Citizen AI Assistant'],admin_ai:['एडमिन AI सहायक','Admin AI Assistant'],
-    close:['बंद करें','Close'],send:['भेजें','Send'],clear:['साफ करें','Clear'],language:['भाषा','Language'],
-    default_citizen:['नमस्ते! मैं नागरिक AI सहायक हूँ। मैं पोर्टल चलाने, उम्मीदवारों की जानकारी समझने और उपलब्ध सुविधाओं में मार्गदर्शन कर सकता हूँ।','Hello! I am the Citizen AI Assistant. I can help you use the portal, understand candidate information, and navigate available features.'],
-    default_admin:['नमस्ते! एडमिन AI तैयार है। मैं मौजूदा टूल और डेटाबेस के बारे में सहायता कर सकता हूँ।','Hello! Admin AI is ready. I can help with the existing tools and database.'],
-    thinking:['AI सोच रहा है...','AI is thinking...'],
-    home_title:['ई-पंचायत पोर्टल','E-Panchayat Portal'],home_sub:['गांव, उम्मीदवार और मतदान सेवाएं एक ही जगह','Village, candidate and voting services in one place'],
-    choose_village:['अपना गांव चुनें','Choose your village'],candidate_directory:['उम्मीदवार निर्देशिका','Candidate Directory'],ward_snapshot:['वार्ड जानकारी','Ward Snapshot'],portal_help:['पोर्टल सहायता','Portal Help'],
-    admin_access:['एडमिन एक्सेस','Admin Access'],search_tools:['टूल खोजें...','Search Tools...'],
-    voting:['मतदान','Voting'],services:['सेवाएं','Services'],
-    simple_hindi:['सरल हिंदी','Simple Hindi'],simple_english:['English','English']
-  };
-  let lang=localStorage.getItem('PORTAL_LANGUAGE')||'hi';
-  const t=k=>(I18N[k]?I18N[k][lang==='hi'?0:1]:k);
-  window.PortalLanguage={
-    get(){return lang}, set(v){lang=v==='en'?'en':'hi';localStorage.setItem('PORTAL_LANGUAGE',lang);document.documentElement.lang=lang;this.render();if(window.PortalAI)PortalAI.refreshLanguage();},
-    tr(k){return t(k)}, render(){
-      document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[k])el.textContent=t(k)});
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder');if(I18N[k])el.placeholder=t(k)});
-      document.querySelectorAll('[data-i18n-title]').forEach(el=>{const k=el.getAttribute('data-i18n-title');if(I18N[k])el.title=t(k)});
-      const ulog=document.getElementById('user-ai-messages'); if(ulog&&ulog.children.length===1&&!ulog.querySelector('.portal-user-custom')){const b=ulog.querySelector('.max-w-\[85%\]'); if(b){b.textContent=t('default_citizen');}}
-      document.querySelectorAll('[data-i18n-option]').forEach(el=>{const k=el.getAttribute('data-i18n-option');if(I18N[k])el.textContent=t(k)});
-      document.querySelectorAll('#portal-v2-lang button').forEach(b=>b.classList.toggle('portal-lang-active',b.dataset.lang===lang));
-    },
-    add(k,hi,en){if(!I18N[k])I18N[k]=[hi,en];this.render()}
-  };
-
-  window.PortalPages={
-    init(){
-      const main=document.querySelector('main'); if(!main)return;
-      const kids=Array.from(main.children).filter(el=>el.id!=='portal-page-nav');
-      const groups={home:[],voting:[],ai:[],services:[]};
-      kids.forEach(el=>{
-        if(el.id==='voting-section')groups.voting.push(el);
-        else if(el.id==='user-ai-section')groups.ai.push(el);
-        else if(el.tagName==='SECTION')groups.services.push(el);
-        else groups.home.push(el);
-      });
-      // Divider belongs with Services, preserving original markup.
-      kids.forEach(el=>{if(el.classList.contains('my-8')){groups.services.unshift(el)}});
-      Object.entries(groups).forEach(([name,els])=>{
-        const page=document.createElement('div');page.id='portal-page-'+name;page.className='portal-page';
-        const head=document.createElement('div');head.className='portal-page-heading';
-        const title=document.createElement('div');const h=document.createElement('h2');h.textContent=t(name==='home'?'home_title':name);const p=document.createElement('p');p.textContent=t(name==='home'?'home_sub':'services');title.append(h,p);head.append(title);page.append(head);
-        els.forEach(el=>page.appendChild(el));
-        main.appendChild(page);
-      });
-      this.show('home',false);
-      const grid=document.querySelector('#portal-page-services section.grid'); if(grid)grid.classList.add('portal-service-grid');
-      // Ensure the original sections still have their original IDs and event handlers.
-      PortalLanguage.render();
-    },
-    show(name,push=true){
-      document.querySelectorAll('.portal-page').forEach(p=>p.classList.remove('portal-active'));
-      const p=document.getElementById('portal-page-'+name); if(p)p.classList.add('portal-active');
-      document.querySelectorAll('.portal-page-btn').forEach(b=>b.classList.toggle('active',b.dataset.portalPage===name));
-      if(push)history.replaceState(null,'','#'+name);
-      window.scrollTo({top:0,behavior:'smooth'});
-      if(name==='ai')setTimeout(()=>document.getElementById('user-ai-input')?.focus(),250);
-    }
-  };
-
-  window.PortalAI={
-    userOpen:false,adminOpen:false,
-    add(log,role,text){const row=document.createElement('div');row.className='portal-ai-row '+role;const b=document.createElement('div');b.className='portal-ai-bubble';b.textContent=text;row.appendChild(b);log.appendChild(row);log.scrollTop=log.scrollHeight;return b},
-    open(type){const ov=document.getElementById(type==='user'?'portal-user-ai-overlay':'portal-admin-ai-overlay');if(!ov)return;if(type==='admin'&&!document.getElementById('admin-dashboard-container')?.classList.contains('hidden')===false){/* dashboard state handled below */}ov.classList.add('open');ov.setAttribute('aria-hidden','false');if(type==='user'&&!this.userOpen){this.userOpen=true;const log=document.getElementById('portal-user-ai-messages');this.add(log,'assistant',t('default_citizen'));}if(type==='admin'&&!this.adminOpen){this.adminOpen=true;const log=document.getElementById('portal-admin-ai-messages');this.add(log,'assistant',t('default_admin'));}setTimeout(()=>document.getElementById(type==='user'?'portal-user-ai-input':'portal-admin-ai-input')?.focus(),80)},
-    close(type){const ov=document.getElementById(type==='user'?'portal-user-ai-overlay':'portal-admin-ai-overlay');ov?.classList.remove('open');ov?.setAttribute('aria-hidden','true')},
-    refreshLanguage(){
-      const u=document.querySelector('#portal-user-ai-messages .portal-ai-bubble');if(u&&!u.dataset.userMessage)u.textContent=t('default_citizen');
-      const a=document.querySelector('#portal-admin-ai-messages .portal-ai-bubble');if(a&&!a.dataset.userMessage)a.textContent=t('default_admin');
-      document.querySelectorAll('.portal-ai-language').forEach(x=>x.value=lang);
-    },
-    async ask(type){
-      const input=document.getElementById(type==='user'?'portal-user-ai-input':'portal-admin-ai-input'),log=document.getElementById(type==='user'?'portal-user-ai-messages':'portal-admin-ai-messages');const q=input?.value.trim();if(!q)return;
-      const settings=window.db?.settings||{};const enabled=type==='user'?settings.userAiEnabled:settings.adminAiEnabled;const key=type==='user'?settings.userGeminiApiKey:settings.adminGeminiApiKey;
-      if(!enabled){this.add(log,'assistant',lang==='hi'?'यह AI एडमिन द्वारा बंद है।':'This AI is disabled by the administrator.');return}
-      if(!key){this.add(log,'assistant',lang==='hi'?'AI की API कुंजी कॉन्फ़िगर नहीं है। कृपया एडमिन से संपर्क करें।':'The AI API key is not configured. Please contact the administrator.');return}
-      this.add(log,'user',q);input.value='';const pending=this.add(log,'assistant',t('thinking'));
-      try{const snapshot=window.GeminiService?.compactDatabaseSnapshot?GeminiService.compactDatabaseSnapshot(db):'';const role=type==='user'?'You are the public help assistant for an Indian village-election portal.':'You are the private help assistant for an e-panchayat administrator.';const languageInstruction=lang==='hi'?'Reply ONLY in simple Hindi. Use easy everyday Hindi. Keep names, technical terms, API names and candidate names as written when needed.':'Reply ONLY in clear simple English.';const prompt=`${role} ${languageInstruction} Do not fabricate official facts, winners, legal rules, candidate details, or actions. Use the portal snapshot only for database-specific information.\n\nPortal snapshot:\n${snapshot}\n\nQuestion:\n${q}`;pending.textContent=await GeminiService.generate(key,settings.geminiModel||'gemini-1.5-flash',prompt);pending.dataset.userMessage='1';}catch(e){pending.textContent=(lang==='hi'?'AI त्रुटि: ':'AI error: ')+e.message}
-    }
-  };
-
-  window.FloatingAI={
-    openUser(){PortalAI.open('user')},openAdmin(){
-      const dashboard=document.getElementById('admin-dashboard-container');
-      if(dashboard?.classList.contains('hidden')){if(window.UIManager&&typeof UIManager.openAdminLoginModal==='function')UIManager.openAdminLoginModal();else PortalAI.open('admin');return}
-      PortalAI.open('admin');
-    }
-  };
-
-  function addLangControls(){
-    const make=()=>{const d=document.createElement('div');d.id='portal-v2-lang';d.className='portal-admin-lang';d.innerHTML='<button type="button" data-lang="hi" onclick="PortalLanguage.set(\'hi\')">हिंदी</button><button type="button" data-lang="en" onclick="PortalLanguage.set(\'en\')">English</button>';return d};
-    const header=document.querySelector('#main-header .max-w-7xl');if(header&&!document.getElementById('portal-v2-lang')){const right=header.lastElementChild;if(right)right.prepend(make())}
-    const adminbar=document.querySelector('#admin-dashboard-container > .h-16');if(adminbar&&!adminbar.querySelector('#portal-v2-lang')){const right=adminbar.lastElementChild;if(right){const d=make();right.prepend(d)}}
-  }
-  function addChats(){
-    if(document.getElementById('portal-user-ai-overlay'))return;
-    const make=(type,title,subtitle)=>{const ov=document.createElement('div');ov.id='portal-'+type+'-ai-overlay';ov.className='portal-ai-overlay';ov.setAttribute('aria-hidden','true');ov.innerHTML=`<div class="portal-ai-chat" role="dialog" aria-modal="true"><div class="chat-head"><div><strong>${title}</strong><small>${subtitle}</small></div><div style="display:flex;align-items:center;gap:6px"><select class="portal-ai-language" onchange="PortalLanguage.set(this.value)"><option value="hi">हिंदी</option><option value="en">English</option></select><button class="portal-ai-close" onclick="PortalAI.close('${type}')" aria-label="Close">×</button></div></div><div id="portal-${type}-ai-messages" class="portal-ai-messages"></div><div class="portal-ai-foot"><textarea id="portal-${type}-ai-input" class="portal-ai-input" placeholder="${lang==='hi'?'अपना सवाल लिखें...':'Type your question...'}" onkeydown="if(event.ctrlKey&&event.key==='Enter')PortalAI.ask('${type}')"></textarea><div class="portal-ai-actions"><button class="portal-ai-clear" onclick="document.getElementById('portal-${type}-ai-messages').innerHTML=''">${t('clear')}</button><button class="portal-ai-send" onclick="PortalAI.ask('${type}')"><i class="fa-solid fa-paper-plane"></i> ${t('send')}</button></div></div></div>`;ov.addEventListener('click',e=>{if(e.target===ov)PortalAI.close(type)});document.body.appendChild(ov)};
-    make('user',t('citizen_ai'),lang==='hi'?'पोर्टल सहायता और नागरिक जानकारी':'Portal help and citizen information');
-    make('admin',t('admin_ai'),lang==='hi'?'निजी एडमिन सहायता':'Private administrator help');
-  }
-  function makeDraggable(el){
-    if(!el||el.dataset.dragReady)return;el.dataset.dragReady='1';let drag=false,moved=false,sx=0,sy=0,sl=0,st=0;
-    const down=e=>{const p=e.touches?e.touches[0]:e;drag=true;moved=false;sx=p.clientX;sy=p.clientY;const r=el.getBoundingClientRect();sl=r.left;st=r.top;el.classList.add('dragging');if(e.pointerId)el.setPointerCapture?.(e.pointerId)};
-    const move=e=>{if(!drag)return;const p=e.touches?e.touches[0]:e;const dx=p.clientX-sx,dy=p.clientY-sy;if(Math.abs(dx)+Math.abs(dy)>6)moved=true;const x=Math.max(4,Math.min(window.innerWidth-el.offsetWidth-4,sl+dx));const y=Math.max(4,Math.min(window.innerHeight-el.offsetHeight-4,st+dy));el.style.left=x+'px';el.style.top=y+'px';el.style.right='auto';el.style.transform='none';};
-    const up=()=>{if(!drag)return;drag=false;el.classList.remove('dragging');localStorage.setItem('FLOAT_'+el.id,JSON.stringify({left:el.style.left,top:el.style.top}));if(moved)el.dataset.suppressClick='1';};
-    el.addEventListener('pointerdown',down);el.addEventListener('pointermove',move);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);el.addEventListener('click',e=>{if(el.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();el.dataset.suppressClick='';}} ,true);
-    try{const q=JSON.parse(localStorage.getItem('FLOAT_'+el.id)||'null');if(q?.left&&q?.top){el.style.left=q.left;el.style.top=q.top;el.style.right='auto';el.style.transform='none'}}catch(_){ }
-  }
-  function init(){
-    document.documentElement.lang=lang;document.body.classList.add('portal-v2');addLangControls();addChats();PortalPages.init();makeDraggable(document.getElementById('floating-user-ai'));makeDraggable(document.getElementById('floating-admin-ai'));PortalLanguage.render();
-    window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(['home','voting','ai','services'].includes(h))PortalPages.show(h,false)});
-    if(['home','voting','ai','services'].includes(location.hash.replace('#','')))PortalPages.show(location.hash.replace('#',''),false);
-    // translate and localize existing AI input hints without changing original feature IDs
-    const ua=document.getElementById('user-ai-input');if(ua)ua.setAttribute('data-i18n-placeholder','ai_placeholder');
-    PortalLanguage.add('ai_placeholder','अपना सवाल लिखें...','Type your question...');
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,0);
-})();
-</script>
-
-
-<script id="portal-app-shell-v3-js">
-(function(){
-  'use strict';
-  const qs=(s,r=document)=>r.querySelector(s);
-  const esc=(v)=>{const d=document.createElement('div');d.textContent=v??'';return d.innerHTML};
-  function villageData(){
-    const d=window.db||window.DBManager?.get?.()||{};
-    const ps=d.panchayats||{}; const first=Object.values(ps)[0];
-    return {db:d,ps,first};
-  }
-  function aggregate(p){
-    const rows=[]; let total=0,cands=0;
-    if(!p)return {rows,total,cands};
-    for(let w=1;w<=Number(p.totalWards||0);w++){
-      const wd=p.wardsData?.[w]; if(!wd)continue;
-      (wd.candidates||[]).forEach(c=>{const v=Number(wd.votes?.[c.id]||0);rows.push({c,v,ward:w});total+=v;cands++});
-    }
-    rows.sort((a,b)=>b.v-a.v); return {rows,total,cands};
-  }
-  function renderAnalytics(){
-    const host=qs('#portal-home-analytics'); if(!host)return;
-    const {ps,first}=villageData();
-    let selectedId=qs('#user-panchayat-select')?.value;
-    const p=ps[selectedId]||first; const a=aggregate(p);
-    const top=a.rows.slice(0,4), max=Math.max(1,...top.map(x=>x.v));
-    const topTotal=top.reduce((n,x)=>n+x.v,0);
-    const lead=top[0]?.v||0; const leadPct=a.total?Math.round(lead/a.total*100):0;
-    const grad=top.length?top.map((x,i)=>`${['#10233f','#138a45','#f59e0b','#8a94a6'][i]} ${a.total?Math.round(x.v/a.total*100):0/360*360}deg`).join(','):' #e8edf2 0deg 360deg';
-    // Build a valid conic gradient with cumulative stops.
-    let cursor=0,parts=[]; const palette=['#10233f','#138a45','#f59e0b','#8a94a6'];
-    top.forEach((x,i)=>{const pct=a.total?x.v/a.total*100:0;parts.push(`${palette[i]} ${cursor}% ${cursor+pct}%`);cursor+=pct});
-    if(cursor<100)parts.push(`#e8edf2 ${cursor}% 100%`);
-    const village=esc(p?.name||'Village');
-    host.innerHTML=`<div class="portal-panel-head"><div><h3>गांव विश्लेषण / Village analytics</h3><p>${village} · दर्ज वोटों के आधार पर लाइव शेयर स्नैपशॉट</p></div><button onclick="PortalApp.refreshAnalytics()"><i class="fa-solid fa-rotate"></i></button></div><div class="portal-analytics"><div class="portal-analytics-top"><div class="portal-donut" style="background:conic-gradient(${parts.join(',')})"><div class="donut-center"><strong>${leadPct}%</strong><span>शीर्ष शेयर</span></div></div><div class="portal-analytics-copy"><h4>${top[0]?esc(top[0].c.name):'अभी कोई वोट नहीं'}</h4><p>${a.total?`कुल ${a.total} दर्ज वोट · ${a.cands} उम्मीदवार`:'वोट दर्ज होने पर उम्मीदवार शेयर यहां दिखेंगे।'}</p>${top.map((x,i)=>`<div class="portal-leader"><span>${esc(x.c.name)}</span><div class="bar"><div class="fill" style="width:${a.total?Math.round(x.v/a.total*100):0}%"></div></div><em>${a.total?Math.round(x.v/a.total*100):0}%</em></div>`).join('')}</div></div><div class="portal-analytics-foot"><i class="fa-solid fa-circle-info"></i> यह आधिकारिक परिणाम या भविष्यवाणी नहीं है। यह केवल पोर्टल में दर्ज वोटों का शेयर-स्नैपशॉट है। / This is not an official result or prediction.</div></div>`;
-  }
-  function renderNotices(){
-    const host=qs('#portal-home-notices'); if(!host)return;
-    const ns=Array.isArray(window.db?.notifications)?[...window.db.notifications].reverse():[];
-    host.innerHTML=ns.length?ns.slice(0,8).map(n=>`<div class="portal-notice"><div class="portal-notice-icon"><i class="fa-solid fa-bell"></i></div><div><b>${esc(n.text||n.title||'Notification')}</b><span>${n.date?new Date(n.date).toLocaleString():''}</span></div></div>`).join(''):`<div class="portal-empty">कोई नई सूचना नहीं / No new notifications</div>`;
-  }
-  function featureAction(key){
-    const actions={
-      candidates:()=>{PortalApp.go('home');setTimeout(()=>qs('#user-candidates-wrapper')?.scrollIntoView({behavior:'smooth',block:'start'}),120)},
-      wards:()=>{try{UserInterface.showWardSnapshot()}catch(e){try{window.UIManager?.showTextModal?.('Ward Snapshot','Select a village to view ward information.')}catch(_){}}},
-      summary:()=>{try{UserInterface.showVillageSummary()}catch(e){}},
-      help:()=>{try{UserInterface.showPortalHelp()}catch(e){}},
-      feedback:()=>{const x=qs('#user-suggestion-text'); if(x){x.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>x.focus(),300)}else{try{PortalApp.go('services')}catch(e){}}}
-    }; actions[key]?.();
-  }
-  window.PortalApp={
-    init(){
-      const home=qs('#portal-page-home'); if(!home)return;
-      // Put the existing voting section on the home dashboard without duplicating its IDs.
-      // Insert dashboard shell before the existing notification/voting content.
-      if(!qs('#portal-app-layout')){
-        const votingPage=qs('#portal-page-voting');
-        const vote=qs('#voting-section');
-        if(vote && votingPage && vote.parentElement===votingPage){ votingPage.removeChild(vote); }
-        const children=[...home.children];
-        const firstContent=children.find(x=>x.id!=='portal-page-nav');
-        const layout=document.createElement('div');layout.id='portal-app-layout';layout.className='portal-app-layout';
-        const rail=document.createElement('aside');rail.className='portal-app-rail';rail.innerHTML=`<div class="portal-app-brand"><div class="mark"><i class="fa-solid fa-building-columns"></i></div><strong>ई-पंचायत पोर्टल</strong><span>Digital village services</span></div><nav class="portal-app-nav"><button class="active" data-app-nav="home"><i class="fa-solid fa-house"></i>होम</button><button data-app-nav="voting"><i class="fa-solid fa-check-to-slot"></i>मतदान</button><button data-app-nav="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI सहायता</button><button data-app-nav="services"><i class="fa-solid fa-grid-2"></i>सभी सेवाएं</button></nav>`;
-        const content=document.createElement('div');content.className='portal-app-main';
-        content.innerHTML=`<section class="portal-home-hero"><div class="tricolor-line"></div><h1>आपके गांव की डिजिटल चुनाव सेवा</h1><p>मतदान, उम्मीदवार जानकारी, गांव विश्लेषण, सूचनाएं और नागरिक सहायता — एक साफ और आसान ऐप-जैसे इंटरफेस में।</p><div class="hero-actions"><button class="primary" onclick="document.getElementById('voting-section')?.scrollIntoView({behavior:'smooth',block:'start'})"><i class="fa-solid fa-check-to-slot"></i> अभी मतदान देखें</button><button onclick="UIManager.openNotificationsModal()"><i class="fa-solid fa-bell"></i> सभी सूचनाएं</button><span class="portal-app-status"><span class="dot"></span> पोर्टल सक्रिय</span></div></section><div class="portal-home-grid"><section class="portal-panel" id="portal-home-notification-panel"><div class="portal-panel-head"><div><h3>ताज़ा सूचनाएं / Notifications</h3><p>ग्राम पंचायत की नवीनतम घोषणाएं</p></div><button onclick="UIManager.openNotificationsModal()">सभी देखें</button></div><div id="portal-home-notices" class="portal-notice-list"></div></section><section class="portal-panel" id="portal-home-analytics"></section></div><section class="portal-feature-grid"><button class="portal-feature" onclick="PortalApp.newFeature('calendar')"><span class="ico"><i class="fa-solid fa-calendar-days"></i></span><b>चुनाव कैलेंडर</b><span>मुख्य चरण और रिमाइंडर एक जगह</span></button><button class="portal-feature" onclick="PortalApp.newFeature('guide')"><span class="ico"><i class="fa-solid fa-list-check"></i></span><b>मतदाता गाइड</b><span>मतदान से पहले आसान चेकलिस्ट</span></button><button class="portal-feature" onclick="PortalApp.newFeature('compare')"><span class="ico"><i class="fa-solid fa-scale-balanced"></i></span><b>उम्मीदवार तुलना</b><span>उपलब्ध रिकॉर्ड साथ-साथ देखें</span></button><button class="portal-feature" onclick="PortalApp.newFeature('turnout')"><span class="ico"><i class="fa-solid fa-chart-line"></i></span><b>टर्नआउट ट्रैकर</b><span>दर्ज वोटों की वर्तमान स्थिति</span></button><button class="portal-feature" onclick="PortalApp.newFeature('updates')"><span class="ico"><i class="fa-solid fa-bell"></i></span><b>नोटिफिकेशन सेंटर</b><span>सभी सूचनाएं और घोषणाएं</span></button></section>`;
-        const originalWrap=document.createElement('div');originalWrap.id='portal-original-home-content';
-        children.forEach(ch=>{if(ch.id!=='portal-page-nav')originalWrap.appendChild(ch)});
-        if(vote){ vote.classList.add('portal-home-voting'); originalWrap.appendChild(vote); }
-        content.appendChild(originalWrap);
-        layout.append(rail,content); home.innerHTML=''; home.appendChild(layout);
-        const bottom=document.createElement('nav');bottom.className='portal-bottom-nav';bottom.innerHTML=`<button class="active" data-app-nav="home"><i class="fa-solid fa-house"></i>होम</button><button data-app-nav="voting"><i class="fa-solid fa-check-to-slot"></i>मतदान</button><button data-app-nav="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</button><button data-app-nav="services"><i class="fa-solid fa-grid-2"></i>सेवाएं</button>`;document.body.appendChild(bottom);
-        document.querySelectorAll('[data-app-nav]').forEach(b=>b.addEventListener('click',()=>this.go(b.dataset.appNav)));
-      }
-      // Existing notification ticker is still retained inside original content.
-      renderNotices(); renderAnalytics();
-      qs('#user-panchayat-select')?.addEventListener('change',()=>setTimeout(renderAnalytics,50));
-      // Re-render when vote/candidate state changes through the portal's existing functions.
-      setInterval(()=>{renderNotices();renderAnalytics()},3000);
-    },
-    go(page){
-      const set=(name)=>document.querySelectorAll('[data-app-nav]').forEach(b=>b.classList.toggle('active',b.dataset.appNav===name));
-      if(page==='home'||page==='voting'){
-        document.querySelectorAll('.portal-page').forEach(p=>p.classList.remove('portal-active'));qs('#portal-page-home')?.classList.add('portal-active');set('voting'===page?'voting':'home');
-        if(page==='voting')setTimeout(()=>qs('#voting-section')?.scrollIntoView({behavior:'smooth',block:'start'}),80); else window.scrollTo({top:0,behavior:'smooth'});
-      }else{window.PortalPages?.show?.(page);set(page)}
-    },
-    feature(k){featureAction(k)},
-    newFeature(key){
-      const {ps,first}=villageData(); const p=ps[qs('#user-panchayat-select')?.value]||first; const a=aggregate(p);
-      if(key==='calendar') return UIManager.showTextModal('चुनाव कैलेंडर / Election calendar', '<div class="space-y-3 text-sm"><div><b>1. उम्मीदवार जानकारी</b><br><span class="text-slate-500">पोर्टल में उपलब्ध रिकॉर्ड देखें।</span></div><div><b>2. मतदाता तैयारी</b><br><span class="text-slate-500">गांव चुनें और मतदान निर्देश पढ़ें।</span></div><div><b>3. मतदान</b><br><span class="text-slate-500">उम्मीदवार चुनकर उपलब्ध मतदान प्रक्रिया पूरी करें।</span></div><div><b>4. परिणाम</b><br><span class="text-slate-500">आधिकारिक परिणाम केवल अधिकृत स्रोत से मान्य होंगे।</span></div><div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-500">यह पोर्टल-स्तरीय सहायता कैलेंडर है; तारीखें/कानूनी समय-सीमाएं यहां स्वतः आधिकारिक नहीं मानी जानी चाहिए।</div></div>');
-      if(key==='guide') return UIManager.showTextModal('मतदाता गाइड / Voter guide', '<div class="space-y-3 text-sm"><p>✓ अपना सही गांव चुनें।</p><p>✓ उम्मीदवार का नाम, वार्ड, पद और अन्य उपलब्ध जानकारी जांचें।</p><p>✓ मतदान से पहले अपनी पसंद ध्यान से चुनें।</p><p>✓ मोबाइल सत्यापन/मतदान प्रक्रिया में केवल अपनी जानकारी का उपयोग करें।</p><p>✓ किसी भी आधिकारिक घोषणा के लिए अधिकृत चुनाव प्राधिकरण की सूचना देखें।</p></div>');
-      if(key==='compare'){
-        if(!a.rows.length) return UIManager.showTextModal('उम्मीदवार तुलना / Candidate compare','<p class="text-sm text-slate-500">इस गांव में अभी तुलना के लिए उम्मीदवार रिकॉर्ड उपलब्ध नहीं हैं।</p>');
-        const rows=a.rows.slice(0,6); const html='<div class="space-y-2">'+rows.map((x,i)=>`<div class="border border-slate-200 rounded-xl p-3 bg-white"><div class="flex justify-between gap-3"><b>${esc(x.c.name)}</b><span class="text-xs font-bold text-slate-500">Ward ${x.ward}</span></div><div class="text-xs text-slate-500 mt-1">${esc(x.c.post||'—')} · ${esc(x.c.partyName||'Independent')} · ${esc(x.c.category||'—')}</div><div class="text-xs mt-2"><b>${x.v}</b> दर्ज वोट</div></div>`).join('')+'</div>';
-        return UIManager.showTextModal('उम्मीदवार तुलना / Candidate compare',html);
-      }
-      if(key==='turnout'){
-        const voters=Object.keys(window.db?.votersLog||{}).length; const villageVotes=a.total; const base=Math.max(voters,villageVotes); const pct=base?Math.min(100,Math.round(villageVotes/base*100)):0;
-        return UIManager.showTextModal('टर्नआउट ट्रैकर / Turnout tracker',`<div class="text-center p-3"><div class="text-5xl font-black text-slate-800">${pct}%</div><p class="text-sm text-slate-500 mt-2">पोर्टल में उपलब्ध वोट-लॉग के आधार पर संकेतक</p><div class="mt-4 h-3 bg-slate-100 rounded-full overflow-hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#f59e0b,#138a45)"></div></div><p class="text-xs text-slate-400 mt-3">यह आधिकारिक मतदाता टर्नआउट आंकड़ा नहीं है।</p></div>`);
-      }
-      if(key==='updates') return UIManager.openNotificationsModal();
-    },
-    refreshAnalytics(){renderAnalytics();renderNotices()}
-  };
-  window.addEventListener('load',()=>setTimeout(()=>PortalApp.init(),100));
-  // Also expose a small refresh hook for existing voting/candidate functions.
-  const oldCast=window.VotingEngine?.castVote;
-  if(oldCast){window.VotingEngine.castVote=async function(){const r=await oldCast.apply(this,arguments);setTimeout(()=>PortalApp.refreshAnalytics(),100);return r}}
-})();
-</script>
-
-
-<style id="portal-app-redesign-2026">
-/* ================================================================
-   APP-FIRST PUBLIC UI — keeps original IDs/features, changes only
-   presentation. Admin remains a separate full-screen destination.
-   ================================================================ */
-:root{--app-navy:#10233f;--app-saffron:#ff9933;--app-green:#138808;--app-cream:#f7f8f5;--app-line:#e7ece8;--app-muted:#718096}
-body.portal-v2{background:linear-gradient(180deg,#f4f7f4 0,#fff 28%,#f6f8f6 100%)!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body.portal-v2 #main-header{background:rgba(255,255,255,.94)!important;color:var(--app-navy)!important;border-bottom:1px solid #e6ebe7;box-shadow:0 3px 18px rgba(16,35,63,.06)!important;backdrop-filter:blur(18px)}
-body.portal-v2 #main-header .text-white{color:var(--app-navy)!important}body.portal-v2 #main-header .text-slate-400,body.portal-v2 #main-header .text-slate-300{color:#64748b!important}
-body.portal-v2 #main-header .bg-white\/5{background:#f5f7f6!important;border-color:#e2e8e4!important;color:var(--app-navy)!important}
-body.portal-v2 main{max-width:1180px!important;padding-top:18px!important;padding-bottom:88px!important}
-#portal-page-nav{display:none!important}
-.portal-app-layout{display:block!important;max-width:1080px;margin:0 auto}
-.portal-app-rail{display:none!important}
-.portal-app-main{width:100%;min-width:0}
-.portal-bottom-nav{display:grid!important;position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(520px,calc(100vw - 24px));z-index:10000;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.96)!important;border:1px solid #dfe7e1!important;border-radius:24px!important;padding:7px!important;box-shadow:0 18px 45px rgba(16,35,63,.17)!important;backdrop-filter:blur(20px)}
-.portal-bottom-nav button{border:0!important;background:transparent!important;border-radius:18px!important;padding:9px 5px!important;color:#7b8794!important;font-size:10px!important;font-weight:850!important;transition:.2s ease}.portal-bottom-nav button i{display:block;font-size:16px;margin-bottom:3px}.portal-bottom-nav button.active{background:var(--app-navy)!important;color:#fff!important}
-.portal-home-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff 0%,#f8fbf8 65%,#eef6ef 100%)!important;border:1px solid #e1e9e3!important;border-radius:30px!important;padding:30px!important;box-shadow:0 12px 38px rgba(16,35,63,.07)!important;margin-bottom:14px}
-.portal-home-hero:after{content:"";position:absolute;right:-70px;top:-70px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,153,51,.20),rgba(255,153,51,0) 70%);pointer-events:none}
-.portal-home-hero .tricolor-line{height:5px;border-radius:99px;background:linear-gradient(90deg,var(--app-saffron) 0 33%,#fff 33% 66%,var(--app-green) 66%);margin-bottom:18px}
-.portal-home-hero h1{font-size:clamp(25px,4vw,40px)!important;line-height:1.12!important;color:var(--app-navy)!important;letter-spacing:-.035em!important;max-width:720px}
-.portal-home-hero p{max-width:700px!important;font-size:13px!important;line-height:1.7!important;color:#667085!important}
-.hero-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:9px!important;margin-top:18px!important}.hero-actions button{border:1px solid #dce5df!important;background:#fff!important;color:var(--app-navy)!important;border-radius:14px!important;padding:10px 14px!important;font-weight:850!important}.hero-actions button.primary{background:var(--app-navy)!important;color:#fff!important;border-color:var(--app-navy)!important}.portal-app-status{font-size:10px!important;font-weight:800!important;color:#138808!important;background:#edf8ed!important;padding:9px 11px!important;border-radius:999px!important}.portal-app-status .dot{display:inline-block;width:7px;height:7px;background:#138808;border-radius:50%;margin-right:5px}
-.portal-home-grid{display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr)!important;gap:14px!important;margin-bottom:14px!important}.portal-panel{background:#fff!important;border:1px solid #e3eae5!important;border-radius:24px!important;box-shadow:0 8px 28px rgba(16,35,63,.055)!important;overflow:hidden!important}.portal-panel-head{padding:17px 18px!important;border-bottom:1px solid #edf1ee!important}.portal-panel-head h3{font-size:14px!important;color:var(--app-navy)!important}.portal-panel-head p{font-size:10px!important;color:#7a8491!important}
-.portal-notice-list{padding:6px 10px 12px!important;max-height:365px;overflow:auto}.portal-notice{display:flex!important;align-items:flex-start!important;gap:10px!important;padding:11px 8px!important;border-bottom:1px solid #f0f3f1!important}.portal-notice:last-child{border-bottom:0}.portal-notice-icon{width:34px!important;height:34px!important;border-radius:11px!important;background:#fff4e9!important;color:var(--app-saffron)!important;display:grid!important;place-items:center!important;flex:none}.portal-notice b{display:block!important;font-size:11px!important;line-height:1.45!important;color:#243247!important}.portal-notice span{display:block!important;font-size:9px!important;color:#98a1ad!important;margin-top:3px}.portal-empty{padding:25px 12px;text-align:center;color:#8b95a1;font-size:11px}
-.portal-analytics{padding:17px!important}.portal-analytics-top{gap:17px!important}.portal-donut{width:154px!important;height:154px!important;flex:0 0 154px!important;border-radius:50%!important;box-shadow:inset 0 0 0 1px rgba(16,35,63,.06),0 10px 24px rgba(16,35,63,.09)!important}.portal-donut:after{width:100px!important;height:100px!important;background:#fff!important;box-shadow:0 0 0 1px #edf1ee!important}.portal-donut .donut-center strong{font-size:28px!important;color:var(--app-navy)!important}.portal-donut .donut-center span{font-size:8px!important;color:#778292!important}.portal-analytics-copy h4{font-size:15px!important;color:var(--app-navy)!important}.portal-analytics-copy p{font-size:10px!important}.portal-leader{display:grid!important;grid-template-columns:1fr 80px 34px!important;gap:7px!important;align-items:center!important;margin:8px 0!important;font-size:9px!important}.portal-leader .bar{height:6px!important;background:#edf1ee!important;border-radius:99px!important;overflow:hidden}.portal-leader .fill{height:100%!important;background:linear-gradient(90deg,var(--app-saffron),var(--app-green))!important;border-radius:99px!important}.portal-leader em{font-style:normal!important;font-weight:900!important;color:var(--app-navy)!important;text-align:right}.portal-analytics-foot{font-size:9px!important;margin-top:10px!important}
-/* Voting is a first-class home card, immediately visible under the hero. */
-#portal-original-home-content{display:flex!important;flex-direction:column!important;gap:14px!important}.portal-home-voting{order:-2!important;margin:0!important}#portal-home-notification-panel{order:-1!important}.portal-home-voting #voting-section{border-radius:24px!important;box-shadow:0 10px 32px rgba(16,35,63,.07)!important;border:1px solid #e1e9e3!important}
-/* New feature launcher cards */
-.portal-feature-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;margin:14px 0!important}.portal-feature{min-height:125px!important;padding:14px!important;background:#fff!important;border:1px solid #e2e9e4!important;border-radius:19px!important;box-shadow:0 6px 20px rgba(16,35,63,.045)!important;text-align:left!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;transition:transform .18s,box-shadow .18s,border-color .18s!important}.portal-feature:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(16,35,63,.09)!important;border-color:#cddbd1!important}.portal-feature .ico{width:38px!important;height:38px!important;border-radius:12px!important;display:grid!important;place-items:center!important;background:#f0f7f1!important;color:var(--app-green)!important;margin-bottom:10px!important}.portal-feature b{font-size:11px!important;color:var(--app-navy)!important}.portal-feature>span:last-child{font-size:9px!important;color:#7d8794!important;line-height:1.45!important;margin-top:4px}
-/* Admin is deliberately not rendered as public home content. It stays a separate authenticated full-screen destination. */
-#admin-dashboard-container{z-index:11000!important}
-#admin-login-modal{z-index:12000!important}
-@media(max-width:900px){.portal-home-grid{grid-template-columns:1fr!important}.portal-feature-grid{grid-template-columns:repeat(3,1fr)!important}}
-@media(max-width:620px){body.portal-v2 main{padding:10px 10px 92px!important}.portal-home-hero{padding:20px!important;border-radius:23px!important}.portal-home-hero h1{font-size:27px!important}.hero-actions button{flex:1 1 auto}.portal-home-grid{gap:10px!important}.portal-feature-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}.portal-feature{min-height:112px!important;padding:12px!important}.portal-donut{width:122px!important;height:122px!important;flex-basis:122px!important}.portal-donut:after{width:79px!important;height:79px!important}.portal-donut .donut-center strong{font-size:21px!important}.portal-leader{grid-template-columns:1fr 62px 30px!important}}
+<style id="ep-app-layout-final">
+:root{--ep-navy:#102a43;--ep-blue:#174a7c;--ep-saffron:#ff9933;--ep-green:#138808;--ep-bg:#f4f7f9;--ep-card:#fff;--ep-line:#e6ebf0;--ep-text:#142235;--ep-muted:#6b7785;--ep-shadow:0 8px 28px rgba(16,42,67,.08)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body.ep-app{background:var(--ep-bg)!important;color:var(--ep-text)!important}
+body.ep-app #main-header{background:#fff!important;color:var(--ep-text)!important;border-bottom:1px solid var(--ep-line);box-shadow:0 2px 14px rgba(16,42,67,.06)!important}
+body.ep-app #main-header .text-white,body.ep-app #main-header .text-slate-400,body.ep-app #main-header .text-slate-300{color:var(--ep-text)!important}
+body.ep-app #main-header .text-gradient-gold{background:none!important;color:var(--ep-navy)!important;-webkit-text-fill-color:var(--ep-navy)!important}
+body.ep-app #main-header .text-premium-gold{color:var(--ep-saffron)!important}
+body.ep-app #main-header .bg-gradient-to-br{background:linear-gradient(135deg,var(--ep-saffron) 0 33%,#fff 33% 66%,var(--ep-green) 66%)!important;color:var(--ep-navy)!important}
+body.ep-app #main-header button{background:var(--ep-navy)!important;border-color:var(--ep-navy)!important;color:#fff!important}
+body.ep-app main{max-width:1180px!important;padding:16px 16px 96px!important;display:block!important}
+.ep-app-shell{width:100%}
+.ep-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.ep-brand{display:flex;align-items:center;gap:10px}.ep-brand-mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--ep-saffron) 0 33%,#fff 33% 66%,var(--ep-green) 66%);display:grid;place-items:center;color:var(--ep-navy);border:1px solid #dfe6ec;box-shadow:0 6px 18px rgba(16,42,67,.08)}.ep-brand b{font-size:16px;color:var(--ep-navy);display:block}.ep-brand span{font-size:10px;color:var(--ep-muted)}
+.ep-language{display:flex;align-items:center;background:#fff;border:1px solid var(--ep-line);padding:3px;border-radius:999px;box-shadow:0 3px 10px rgba(16,42,67,.05)}.ep-language button{border:0;background:transparent;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:800;color:#687789;cursor:pointer}.ep-language button.active{background:var(--ep-navy);color:#fff}
+.ep-page{display:none}.ep-page.active{display:block;animation:epin .22s ease}@keyframes epin{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ep-home-banner{background:#fff;border:1px solid var(--ep-line);border-radius:22px;padding:20px;box-shadow:var(--ep-shadow);margin-bottom:12px;position:relative;overflow:hidden}.ep-home-banner:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--ep-saffron) 0 33%,#fff 33% 66%,var(--ep-green) 66%)}.ep-home-banner h2{font-size:24px;line-height:1.15;color:var(--ep-navy);font-weight:900;margin:0}.ep-home-banner p{font-size:12px;color:var(--ep-muted);margin:6px 0 0;max-width:720px}.ep-home-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.ep-home-actions button{border:1px solid var(--ep-line);background:#fff;color:var(--ep-navy);border-radius:11px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer}.ep-home-actions button.primary{background:var(--ep-navy);color:#fff;border-color:var(--ep-navy)}
+.ep-grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:12px}.ep-card{background:#fff;border:1px solid var(--ep-line);border-radius:20px;box-shadow:var(--ep-shadow);padding:16px}.ep-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.ep-card-head h3{font-size:14px;font-weight:900;color:var(--ep-navy);margin:0}.ep-card-head p{font-size:10px;color:var(--ep-muted);margin:3px 0 0}.ep-card-head button{border:0;background:#f1f5f8;color:var(--ep-navy);border-radius:9px;padding:7px 9px;font-size:9px;font-weight:800;cursor:pointer}
+.ep-notices{max-height:250px;overflow:auto;display:grid;gap:7px}.ep-notice{display:flex;gap:9px;align-items:flex-start;padding:10px;border:1px solid #edf0f3;border-radius:12px;background:#fbfcfd}.ep-notice .bell{width:30px;height:30px;border-radius:9px;background:#fff2e5;color:#d96c00;display:grid;place-items:center;flex:none}.ep-notice b{display:block;font-size:10px;color:var(--ep-text);line-height:1.4}.ep-notice span{display:block;font-size:8px;color:#8994a1;margin-top:3px}
+.ep-analytics{display:flex;gap:16px;align-items:center}.ep-donut{width:148px;height:148px;border-radius:50%;display:grid;place-items:center;flex:none;background:conic-gradient(#138808 0deg,#138808 0deg,#e8edf1 0deg 360deg);position:relative}.ep-donut:after{content:"";width:96px;height:96px;background:#fff;border-radius:50%;position:absolute}.ep-donut-center{position:relative;z-index:1;text-align:center}.ep-donut-center strong{display:block;font-size:25px;color:var(--ep-navy);line-height:1}.ep-donut-center span{font-size:8px;color:var(--ep-muted);font-weight:800}.ep-leaders{flex:1;min-width:0}.ep-leader{display:grid;grid-template-columns:minmax(80px,1fr) 72px 36px;align-items:center;gap:7px;margin:8px 0;font-size:9px}.ep-leader-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800;color:var(--ep-text)}.ep-bar{height:7px;border-radius:99px;background:#edf1f3;overflow:hidden}.ep-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ep-saffron),var(--ep-green))}.ep-pct{text-align:right;font-weight:900;color:var(--ep-navy)}.ep-footnote{font-size:8px;color:#8a95a2;line-height:1.45;margin-top:10px}
+.ep-feature-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}.ep-feature{border:1px solid var(--ep-line);background:#fff;border-radius:16px;padding:12px;text-align:left;cursor:pointer;min-height:102px;box-shadow:0 5px 18px rgba(16,42,67,.045);transition:.18s}.ep-feature:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,42,67,.09)}.ep-feature .ico{width:34px;height:34px;border-radius:10px;background:#f1f6f2;color:var(--ep-green);display:grid;place-items:center;margin-bottom:8px}.ep-feature b{font-size:10px;color:var(--ep-navy);display:block}.ep-feature span{font-size:8px;color:var(--ep-muted);display:block;line-height:1.35;margin-top:3px}
+/* Keep the original voting feature and candidate UI, but make it an app card. */
+#ep-home-voting{margin-top:0}.ep-original-ticker{display:block!important;background:#fff!important;border:1px solid var(--ep-line)!important;border-radius:14px!important;box-shadow:none!important;padding:0!important;margin:0 0 10px!important}.ep-original-ticker>div{background:#fff!important;border-radius:13px!important}.ep-original-ticker p{color:var(--ep-text)!important}.ep-original-ticker .bg-rose-500{background:#fff2e5!important;color:#c65f00!important}.ep-original-ticker .text-premium-gold{color:var(--ep-navy)!important}
+.ep-original-voting{background:#fff!important;border:1px solid var(--ep-line)!important;border-radius:20px!important;box-shadow:var(--ep-shadow)!important;padding:16px!important}.ep-original-voting .absolute{display:none!important}.ep-original-voting .text-2xl,.ep-original-voting .sm\:text-3xl{font-size:19px!important;color:var(--ep-navy)!important}.ep-original-voting .mb-10{margin-bottom:14px!important}.ep-original-voting #user-candidates-grid{gap:10px!important}.ep-original-voting #user-candidates-grid>div{border-radius:15px!important}.ep-original-voting .bg-premium-nav{border-radius:16px!important}.ep-original-voting .bg-slate-900{border-radius:13px!important}
+/* Other original pages are still available through app navigation. */
+#ep-services .ep-services-head{margin:0 0 10px}.ep-services-head h2{font-size:19px;color:var(--ep-navy);font-weight:900;margin:0}.ep-services-head p{font-size:10px;color:var(--ep-muted);margin-top:3px}
+#ep-ai .ep-ai-head{margin-bottom:10px}.ep-ai-head h2{font-size:19px;color:var(--ep-navy);font-weight:900}.ep-ai-head p{font-size:10px;color:var(--ep-muted)}
+.ep-bottom-nav{position:fixed;z-index:100;left:50%;bottom:10px;transform:translateX(-50%);width:min(520px,calc(100% - 20px));display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:5px;background:rgba(255,255,255,.96);border:1px solid var(--ep-line);border-radius:18px;box-shadow:0 12px 40px rgba(16,42,67,.16);backdrop-filter:blur(16px)}.ep-bottom-nav button{border:0;background:transparent;border-radius:13px;padding:7px 3px;color:#788594;font-size:8px;font-weight:800;cursor:pointer}.ep-bottom-nav button i{display:block;font-size:15px;margin-bottom:3px}.ep-bottom-nav button.active{background:var(--ep-navy);color:#fff}
+/* Floating AI: circular, draggable, no page takeover. */
+.ep-ai-float{position:fixed;z-index:120;width:56px;height:56px;border-radius:50%;border:2px solid #fff;box-shadow:0 10px 30px rgba(16,42,67,.22);display:grid;place-items:center;cursor:grab;touch-action:none;user-select:none;font-size:20px}.ep-ai-float.user{right:20px;bottom:92px;background:var(--ep-navy);color:#fff}.ep-ai-float.admin{left:20px;bottom:92px;background:linear-gradient(135deg,var(--ep-saffron),#fff,var(--ep-green));color:var(--ep-navy)}.ep-ai-float.dragging{cursor:grabbing}.ep-ai-float small{position:absolute;bottom:-16px;font-size:7px;background:#fff;color:var(--ep-navy);border-radius:6px;padding:2px 5px;box-shadow:0 2px 8px rgba(16,42,67,.1);white-space:nowrap}
+/* Hide old standalone notification ticker only visually; its data remains and the full notification modal remains available. */
+#ep-hidden-original-ticker{display:none!important}
+/* Admin remains its original authenticated fixed panel and is never part of the home DOM view. */
+#admin-dashboard-container{z-index:10000!important}
+#admin-login-modal{z-index:10001!important}
+@media(max-width:900px){.ep-grid2{grid-template-columns:1fr}.ep-feature-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){body.ep-app main{padding:10px 10px 88px!important}.ep-topbar{margin-bottom:10px}.ep-brand b{font-size:14px}.ep-home-banner{padding:16px;border-radius:18px}.ep-home-banner h2{font-size:21px}.ep-grid2{gap:9px}.ep-card{padding:13px;border-radius:17px}.ep-analytics{gap:10px}.ep-donut{width:120px;height:120px}.ep-donut:after{width:78px;height:78px}.ep-donut-center strong{font-size:21px}.ep-feature-row{grid-template-columns:repeat(2,1fr);gap:7px}.ep-feature{min-height:98px;padding:10px}.ep-ai-float{width:50px;height:50px}.ep-ai-float.user{right:12px;bottom:76px}.ep-ai-float.admin{left:12px;bottom:76px}}
 </style>
-
-
-<script id="portal-app-redesign-controller">
+<script id="ep-app-layout-final-js">
 (function(){
-  const q=s=>document.querySelector(s);
-  function addFiveMoreFeatures(){
-    const grid=q('.portal-feature-grid'); if(!grid || grid.dataset.more5==='1')return; grid.dataset.more5='1';
-    const cards=[
-      ['candidate-search','fa-magnifying-glass','उम्मीदवार खोज','नाम, पार्टी या वार्ड से उपलब्ध उम्मीदवार खोजें'],
-      ['village-card','fa-map-location-dot','गांव प्रोफाइल','चुने हुए गांव की वार्ड और चुनाव जानकारी एक जगह देखें'],
-      ['share-village','fa-share-nodes','गांव साझा करें','गांव की पोर्टल जानकारी परिवार और समुदाय के साथ साझा करें'],
-      ['print-summary','fa-print','सारांश प्रिंट करें','चुने हुए गांव की उपलब्ध चुनाव जानकारी का प्रिंट-फ्रेंडली सारांश'],
-      ['quick-help','fa-circle-question','त्वरित सहायता','मतदान, उम्मीदवार और पोर्टल उपयोग के आसान जवाब']
-    ];
-    cards.forEach(([key,icon,title,sub])=>{const b=document.createElement('button');b.className='portal-feature';b.type='button';b.onclick=()=>window.PortalApp?.newFeature?.(key);b.innerHTML=`<span class="ico"><i class="fa-solid ${icon}"></i></span><b>${title}</b><span>${sub}</span>`;grid.appendChild(b)});
-  }
-  function putVotingFirst(){
-    const content=q('#portal-original-home-content'), vote=q('#voting-section'), hero=q('.portal-home-hero'), panels=q('.portal-home-grid');
-    if(!content||!vote||!hero)return;
-    vote.classList.add('portal-home-voting');
-    // Voting remains on the home page and is placed directly after the hero.
-    if(vote.parentElement!==content) content.appendChild(vote);
-    const originalOrder=[...content.children];
-    if(originalOrder.indexOf(vote)>1) content.insertBefore(vote, originalOrder[0]||null);
-    // Keep the notification + analytics dashboard directly after voting.
-    if(panels && panels.parentElement!==content) content.insertBefore(panels, vote.nextSibling);
-  }
-  function adminAsSeparateRoute(){
-    const btns=document.querySelectorAll('#main-header button[onclick*="openAdminLoginModal"]');
-    btns.forEach(btn=>{btn.setAttribute('data-admin-route','1');btn.onclick=function(){location.hash='admin';window.UIManager?.openAdminLoginModal?.()}});
-    if(location.hash==='#admin') setTimeout(()=>window.UIManager?.openAdminLoginModal?.(),150);
-    window.addEventListener('hashchange',()=>{if(location.hash==='#admin')window.UIManager?.openAdminLoginModal?.()});
-  }
-  function addMoreFeatureHandlers(){
-    const old=window.PortalApp?.newFeature;
-    if(!old || old.__v3)return;
-    function fn(key){
-      if(['candidate-search','village-card','share-village','print-summary','quick-help'].includes(key)){
-        const select=q('#user-panchayat-select'); const p=window.db?.panchayats?.[select?.value] || Object.values(window.db?.panchayats||{})[0];
-        const rows=[]; if(p)for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w];(wd?.candidates||[]).forEach(c=>rows.push({...c,ward:w,votes:Number(wd?.votes?.[c.id]||0)}))}
-        if(key==='candidate-search'){
-          const html=`<div class="space-y-3"><input id="portal-candidate-filter" class="input-premium w-full" placeholder="नाम / पार्टी / वार्ड खोजें"><div id="portal-candidate-results" class="space-y-2">${rows.map(r=>`<div class="portal-cand-row border rounded-xl p-3 bg-white" data-search="${String(r.name||'')} ${String(r.partyName||'')} ${r.ward}"><b>${esc(r.name||'—')}</b><div class="text-xs text-slate-500">Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')}</div></div>`).join('')||'<p class="text-sm text-slate-500">कोई उम्मीदवार रिकॉर्ड उपलब्ध नहीं है।</p>'}</div></div>`;
-          window.UIManager?.showTextModal?.('उम्मीदवार खोज / Candidate search',html);
-          setTimeout(()=>{const inp=q('#portal-candidate-filter');inp?.addEventListener('input',()=>{const s=inp.value.toLowerCase();document.querySelectorAll('.portal-cand-row').forEach(x=>x.style.display=x.dataset.search.toLowerCase().includes(s)?'':'none')})},80); return;
-        }
-        if(key==='village-card'){
-          if(!p)return window.UIManager?.showTextModal?.('गांव प्रोफाइल / Village profile','कोई गांव उपलब्ध नहीं है।');
-          return window.UIManager?.showTextModal?.('गांव प्रोफाइल / Village profile',`<div class="space-y-2 text-sm"><div><b>गांव:</b> ${esc(p.name||'—')}</div><div><b>कुल वार्ड:</b> ${p.totalWards||0}</div><div><b>उम्मीदवार:</b> ${rows.length}</div><div><b>दर्ज वोट:</b> ${rows.reduce((n,r)=>n+r.votes,0)}</div><div class="p-3 rounded-xl bg-slate-50 text-xs text-slate-500">उपलब्ध पोर्टल रिकॉर्ड का सारांश।</div></div>`);
-        }
-        if(key==='share-village'){
-          const name=p?.name||'गांव'; const text=`${name} — ई-पंचायत चुनाव पोर्टल`; if(navigator.share)navigator.share({title:name,text,url:location.href}).catch(()=>{}); else navigator.clipboard?.writeText(location.href).then(()=>window.Utils?.showToast?.('पोर्टल लिंक कॉपी हो गया।','success')); return;
-        }
-        if(key==='print-summary'){
-          const name=p?.name||'Village'; const win=(rows.sort((a,b)=>b.votes-a.votes)[0]); const w=window.open('','_blank','width=800,height=900'); if(!w)return; w.document.write(`<html lang="hi"><head><title>${esc(name)} - Summary</title><style>body{font-family:Arial;padding:32px;color:#10233f}h1{border-bottom:4px solid #ff9933;padding-bottom:10px}.row{padding:10px;border-bottom:1px solid #ddd}small{color:#667085}</style></head><body><h1>${esc(name)} चुनाव सारांश</h1><p>उपलब्ध पोर्टल रिकॉर्ड</p>${rows.map(r=>`<div class="row"><b>${esc(r.name||'—')}</b><br><small>Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')} · दर्ज वोट ${r.votes}</small></div>`).join('')}<p style="margin-top:24px;font-size:12px;color:#777">सबसे अधिक दर्ज वोट: ${win?esc(win.name):'—'} (${win?.votes||0})</p></body></html>`);w.document.close();setTimeout(()=>w.print(),250); return;
-        }
-        if(key==='quick-help') return window.UIManager?.showTextModal?.('त्वरित सहायता / Quick help',`<div class="space-y-3 text-sm"><p><b>मतदान:</b> होम पर मतदान कार्ड खोलें, गांव चुनें और उपलब्ध उम्मीदवार सूची देखें।</p><p><b>उम्मीदवार:</b> सभी उपलब्ध उम्मीदवारों को गांव के रिकॉर्ड के अनुसार देखें; वार्ड नंबर भी दिखता है।</p><p><b>AI:</b> फ्लोटिंग AI बटन दबाकर हिंदी या English में सहायता लें।</p><p><b>एडमिन:</b> एडमिन बटन अलग authenticated admin destination खोलता है।</p></div>`);
-      }
-      return old.apply(this,arguments);
-    }
-    fn.__v3=true; window.PortalApp.newFeature=fn;
-  }
-  function boot(){
-    setTimeout(()=>{putVotingFirst();addFiveMoreFeatures();addMoreFeatureHandlers();adminAsSeparateRoute();},250);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+'use strict';
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=v=>window.Utils?.escapeHtml?Utils.escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const state={lang:localStorage.getItem('EP_LANG')||'hi',page:'home'};
+const T={
+ home:['होम','Home'], voting:['मतदान','Voting'], ai:['AI सहायता','AI Help'], services:['सेवाएं','Services'],
+ welcome:['गांव चुनाव पोर्टल','Village Election Portal'], welcomeSub:['मतदान, उम्मीदवार, सूचनाएं और गांव की वर्तमान स्थिति एक ही आसान ऐप में।','Voting, candidates, notifications and village status in one simple app.'],
+ voteNow:['अभी मतदान करें','Vote now'], notifications:['सूचनाएं','Notifications'], all:['सभी देखें','View all'], analytics:['गांव वोट विश्लेषण','Village vote analytics'], current:['वर्तमान दर्ज वोट शेयर','Current recorded vote share'], noData:['अभी वोट डेटा उपलब्ध नहीं है','No vote data available yet'],
+ features:['त्वरित सुविधाएं','Quick features'], search:['उम्मीदवार खोजें','Search candidates'], compare:['उम्मीदवार तुलना','Compare candidates'], save:['गांव सेव करें','Save village'], share:['गांव साझा करें','Share village'], print:['सारांश प्रिंट करें','Print summary'],
+ saved:['गांव सेव हो गया','Village saved'], copied:['लिंक कॉपी हो गया','Link copied'], selectVillage:['पहले गांव चुनें','Select a village first'], leader:['सबसे अधिक दर्ज वोट','Highest recorded votes'], snapshot:['यह केवल पोर्टल में दर्ज वोट का वर्तमान शेयर है; यह आधिकारिक परिणाम या भविष्यवाणी नहीं है।','This is only the current share of votes recorded in the portal; it is not an official result or prediction.'],
+ searchTitle:['उम्मीदवार खोज','Candidate search'], compareTitle:['उम्मीदवार तुलना','Candidate comparison'], saveTitle:['सेव किया गया गांव','Saved village'], printTitle:['गांव चुनाव सारांश','Village election summary'], noCandidates:['कोई उम्मीदवार रिकॉर्ड नहीं मिला।','No candidate records found.'], close:['बंद करें','Close'], selectTwo:['तुलना के लिए दो उम्मीदवार चुनें।','Select two candidates to compare.'],
+ language:['भाषा','Language']
+};
+function tr(k){return (T[k]||['',''])[state.lang==='hi'?0:1]||k}
+function setLang(lang){state.lang=lang;localStorage.setItem('EP_LANG',lang);document.documentElement.lang=lang;renderShellText();renderNotices();renderAnalytics();}
+function renderShellText(){const ids={'.ep-brand b':'welcome','.ep-brand span':'welcomeSub','.ep-home-banner h2':'welcome','.ep-home-banner p':'welcomeSub','.ep-card.analytics h3':'analytics','.ep-card.notifications h3':'notifications'};Object.entries(ids).forEach(([sel,k])=>{const el=$(sel);if(el)el.textContent=tr(k)});$$('[data-ep-nav]').forEach(b=>{const k=b.dataset.epNav;b.querySelector('.txt').textContent=tr(k)});$$('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===state.lang));}
+function village(){const id=$('#user-panchayat-select')?.value;const ps=window.db?.panchayats||{};return ps[id]||Object.values(ps)[0]||null}
+function rowsFor(p){const rows=[];if(!p)return rows;for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w];(wd?.candidates||[]).forEach(c=>rows.push({...c,ward:w,votes:Number(wd?.votes?.[c.id]||0)}))}return rows}
+function renderNotices(){const host=$('#ep-notices');if(!host)return;const ns=Array.isArray(window.db?.notifications)?[...db.notifications].reverse():[];host.innerHTML=ns.length?ns.slice(0,12).map(n=>`<div class="ep-notice"><div class="bell"><i class="fa-solid fa-bell"></i></div><div><b>${esc(n.text||n.title||'Notification')}</b><span>${n.date?esc(new Date(n.date).toLocaleString()):''}</span></div></div>`).join(''):`<div class="ep-notice"><div><b>${tr('noData')}</b></div></div>`}
+function renderAnalytics(){const host=$('#ep-analytics');if(!host)return;const p=village();const rows=rowsFor(p);const totals={};rows.forEach(r=>{const key=r.id||r.name;totals[key]=(totals[key]||{name:r.name,party:r.partyName||'Independent',votes:0,ward:r.ward});totals[key].votes+=r.votes});const arr=Object.values(totals).sort((a,b)=>b.votes-a.votes);const total=arr.reduce((n,r)=>n+r.votes,0);const leader=arr[0];if(!arr.length||!total){host.innerHTML=`<div class="ep-analytics"><div class="ep-donut" style="background:conic-gradient(#e8edf1 0 360deg)"><div class="ep-donut-center"><strong>0%</strong><span>${esc(tr('leader'))}</span></div></div><div class="ep-leaders"><b style="font-size:11px;color:var(--ep-navy)">${esc(p?.name||tr('analytics'))}</b><p class="ep-footnote">${esc(tr('noData'))}<br>${esc(tr('snapshot'))}</p></div></div>`;return}let cum=0;const colors=['#138808','#ff9933','#174a7c','#7c3aed','#d946ef','#0f766e'];const stops=arr.map((r,i)=>{const s=cum/total*360;cum+=r.votes;return `${colors[i%colors.length]} ${s}deg ${cum/total*360}deg`}).join(',');const lp=Math.round(leader.votes/total*100);host.innerHTML=`<div class="ep-analytics"><div class="ep-donut" style="background:conic-gradient(${stops})"><div class="ep-donut-center"><strong>${lp}%</strong><span>${esc(tr('leader'))}</span></div></div><div class="ep-leaders"><b style="font-size:11px;color:var(--ep-navy)">${esc(p?.name||'')}</b>${arr.slice(0,5).map((r,i)=>{const pct=Math.round(r.votes/total*100);return `<div class="ep-leader"><span class="ep-leader-name">${esc(r.name||'—')}</span><span class="ep-bar"><i style="width:${pct}%"></i></span><span class="ep-pct">${pct}%</span></div>`}).join('')}<p class="ep-footnote">${esc(tr('snapshot'))}</p></div></div>`}
+function go(page){state.page=page;$$('.ep-page').forEach(x=>x.classList.toggle('active',x.id==='ep-'+page));$$('[data-ep-nav]').forEach(b=>b.classList.toggle('active',b.dataset.epNav===page));window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'','#'+page)}
+function openModal(title,html){if(window.UIManager?.showTextModal)return UIManager.showTextModal(title,html);alert(title+'\n\n'+html.replace(/<[^>]+>/g,''))}
+function getRows(){const p=village();if(!p){if(window.Utils?.showToast)Utils.showToast(tr('selectVillage'),'error');return []}return rowsFor(p)}
+function feature(key){const rows=getRows(),p=village();
+ if(key==='search'){const html=`<div style="display:grid;gap:10px"><input id="ep-candidate-search" class="input-premium" placeholder="${state.lang==='hi'?'नाम, पार्टी या वार्ड खोजें':'Search name, party or ward'}"><div id="ep-search-results" style="display:grid;gap:7px;max-height:55vh;overflow:auto">${rows.length?rows.map(r=>`<div class="ep-search-row" data-s="${esc((r.name||'')+' '+(r.partyName||'')+' '+r.ward+' '+(r.post||''))}" style="padding:10px;border:1px solid #e7ebef;border-radius:12px;background:#fff"><b>${esc(r.name||'—')}</b><div style="font-size:10px;color:#758191">Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')} · ${esc(r.category||'')}</div></div>`).join(''):`<p>${esc(tr('noCandidates'))}</p>`}</div></div>`;openModal(tr('searchTitle'),html);setTimeout(()=>$('#ep-candidate-search')?.addEventListener('input',e=>{const s=e.target.value.toLowerCase();$$('.ep-search-row').forEach(x=>x.style.display=x.dataset.s.toLowerCase().includes(s)?'':'none')}),50);return}
+ if(key==='compare'){if(rows.length<2)return openModal(tr('compareTitle'),`<p>${esc(tr('selectTwo'))}</p>`);const opts=rows.map((r,i)=>`<option value="${i}">${esc(r.name)} — Ward ${r.ward}</option>`).join('');const html=`<div style="display:grid;gap:10px"><select id="ep-c1" class="input-premium">${opts}</select><select id="ep-c2" class="input-premium">${opts}</select><div id="ep-compare-out" style="padding:12px;border:1px solid #e7ebef;border-radius:12px;background:#f8fafb"></div></div>`;openModal(tr('compareTitle'),html);setTimeout(()=>{const update=()=>{const a=rows[Number($('#ep-c1')?.value||0)],b=rows[Number($('#ep-c2')?.value||1)];if(!a||!b)return;$('#ep-compare-out').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><b>${esc(a.name)}</b><br><small>Ward ${a.ward}<br>${esc(a.post||'—')}<br>${esc(a.partyName||'Independent')}<br>${a.votes} votes</small></div><div><b>${esc(b.name)}</b><br><small>Ward ${b.ward}<br>${esc(b.post||'—')}<br>${esc(b.partyName||'Independent')}<br>${b.votes} votes</small></div></div>`};$('#ep-c1')?.addEventListener('change',update);$('#ep-c2')?.addEventListener('change',update);update()},50);return}
+ if(key==='save'){if(!p)return;localStorage.setItem('EP_SAVED_VILLAGE',p.id);Utils?.showToast?.(`${tr('saved')}: ${p.name}`,'success');return}
+ if(key==='share'){if(!p)return;const text=`${p.name} — ${tr('welcome')}`;if(navigator.share){navigator.share({title:p.name,text,url:location.href}).catch(()=>{})}else if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(()=>Utils?.showToast?.(tr('copied'),'success'))}return}
+ if(key==='print'){if(!p)return;const w=window.open('','_blank');if(!w)return;w.document.write(`<html lang="${state.lang}"><head><title>${esc(p.name)}</title><style>body{font-family:Arial;padding:28px;color:#142235}h1{border-bottom:4px solid #ff9933;padding-bottom:8px}.r{padding:9px;border-bottom:1px solid #ddd;font-size:12px}</style></head><body><h1>${esc(p.name)} — ${esc(tr('printTitle'))}</h1><p>${esc(tr('snapshot'))}</p>${rows.map(r=>`<div class="r"><b>${esc(r.name)}</b> · Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')} · ${r.votes} votes</div>`).join('')}<\/body></html>`);w.document.close();setTimeout(()=>w.print(),250);return}}
+function mount(){
+ document.body.classList.add('ep-app');
+ const main=$('main');if(!main)return;
+ // Preserve every original section by moving only its top-level containers into app pages.
+ const original=[...main.children].filter(x=>!x.classList.contains('ep-app-shell'));
+ const ticker=original.find(x=>x.querySelector?.('#ticker-notification-text'));
+ const vote=$('#voting-section');const ai=$('#user-ai-section');const utilTitle=original.find(x=>x.textContent?.includes('Public Utility Tools'));
+ const utilGrid=original.find(x=>x.querySelector?.('button') && x.querySelector?.('[onclick*="openDirectoryModal"], [onclick*="showVillageSummary"]') && x!==vote && x!==ai);
+ const shell=document.createElement('div');shell.className='ep-app-shell';shell.innerHTML=`<div class="ep-topbar"><div class="ep-brand"><div class="ep-brand-mark"><i class="fa-solid fa-building-columns"></i></div><div><b>${tr('welcome')}</b><span>${tr('welcomeSub')}</span></div></div><div class="ep-language"><button data-lang="hi">हिंदी</button><button data-lang="en">English</button></div></div><section id="ep-home" class="ep-page active"><div class="ep-home-banner"><h2>${tr('welcome')}</h2><p>${tr('welcomeSub')}</p><div class="ep-home-actions"><button class="primary" data-go="voting"><i class="fa-solid fa-check-to-slot"></i> ${tr('voteNow')}</button><button onclick="UIManager.openNotificationsModal()"><i class="fa-solid fa-bell"></i> ${tr('notifications')}</button></div></div><div class="ep-grid2"><section class="ep-card notifications"><div class="ep-card-head"><div><h3>${tr('notifications')}</h3><p>${state.lang==='hi'?'ग्राम पंचायत की नवीनतम घोषणाएं':'Latest village announcements'}</p></div><button onclick="UIManager.openNotificationsModal()">${tr('all')}</button></div><div id="ep-notices" class="ep-notices"></div></section><section class="ep-card analytics"><div class="ep-card-head"><div><h3>${tr('analytics')}</h3><p>${tr('current')}</p></div></div><div id="ep-analytics"></div></section></div><div class="ep-feature-row"><button class="ep-feature" data-feature="search"><span class="ico"><i class="fa-solid fa-magnifying-glass"></i></span><b>${tr('search')}</b><span>${state.lang==='hi'?'नाम, पार्टी या वार्ड से':'By name, party or ward'}</span></button><button class="ep-feature" data-feature="compare"><span class="ico"><i class="fa-solid fa-scale-balanced"></i></span><b>${tr('compare')}</b><span>${state.lang==='hi'?'दो उम्मीदवारों की जानकारी':'Compare two candidates'}</span></button><button class="ep-feature" data-feature="save"><span class="ico"><i class="fa-solid fa-bookmark"></i></span><b>${tr('save')}</b><span>${state.lang==='hi'?'अपना गांव सेव रखें':'Keep your village saved'}</span></button><button class="ep-feature" data-feature="share"><span class="ico"><i class="fa-solid fa-share-nodes"></i></span><b>${tr('share')}</b><span>${state.lang==='hi'?'पोर्टल लिंक साझा करें':'Share portal link'}</span></button><button class="ep-feature" data-feature="print"><span class="ico"><i class="fa-solid fa-print"></i></span><b>${tr('print')}</b><span>${state.lang==='hi'?'गांव सारांश प्रिंट करें':'Print village summary'}</span></button></div><div id="ep-home-voting"></div></section><section id="ep-voting" class="ep-page"></section><section id="ep-ai" class="ep-page"></section><section id="ep-services" class="ep-page"></section>`;
+ main.innerHTML='';main.appendChild(shell);
+ if(ticker){ticker.classList.add('ep-original-ticker');const banner=$('.ep-home-banner');if(banner)banner.insertAdjacentElement('afterend',ticker)}
+ if(vote){vote.classList.add('ep-original-voting');$('#ep-home-voting').appendChild(vote);$('#ep-voting').appendChild(vote.cloneNode(false));/* placeholder never used */}
+ // Remove accidental clone placeholder and use same original voting card on Home; Voting nav scrolls home voting.
+ const placeholder=$('#ep-voting');if(placeholder)placeholder.innerHTML='';
+ if(ai){$('#ep-ai').appendChild(ai);const h=document.createElement('div');h.className='ep-ai-head';h.innerHTML=`<h2>${tr('ai')}</h2><p>${state.lang==='hi'?'नागरिक सहायता के लिए Gemini AI का उपयोग करें।':'Use Gemini AI for citizen assistance.'}</p>`;ai.parentElement.insertBefore(h,ai)}
+ const services=$('#ep-services');services.innerHTML=`<div class="ep-services-head"><h2>${tr('services')}</h2><p>${state.lang==='hi'?'पोर्टल की सभी मौजूदा सार्वजनिक सुविधाएं यहां उपलब्ध हैं।':'All existing public portal tools remain available here.'}</p></div>`;
+ if(utilTitle)services.appendChild(utilTitle);if(utilGrid)services.appendChild(utilGrid);
+ // Anything not explicitly moved is retained inside a hidden preservation tray, not deleted.
+ const tray=document.createElement('div');tray.id='ep-preserved';tray.style.display='none';original.forEach(x=>{if(x!==ticker&&x!==vote&&x!==ai&&x!==utilTitle&&x!==utilGrid)tray.appendChild(x)});shell.appendChild(tray);
+ const bottom=document.createElement('nav');bottom.className='ep-bottom-nav';bottom.innerHTML=`<button data-ep-nav="home" class="active"><i class="fa-solid fa-house"></i><span class="txt">${tr('home')}</span></button><button data-ep-nav="voting"><i class="fa-solid fa-check-to-slot"></i><span class="txt">${tr('voting')}</span></button><button data-ep-nav="ai"><i class="fa-solid fa-wand-magic-sparkles"></i><span class="txt">${tr('ai')}</span></button><button data-ep-nav="services"><i class="fa-solid fa-grid-2"></i><span class="txt">${tr('services')}</span></button>`;document.body.appendChild(bottom);
+ $$('[data-ep-nav]').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.epNav;if(p==='voting'){go('home');setTimeout(()=>$('#ep-home-voting')?.scrollIntoView({behavior:'smooth',block:'start'}),50)}else go(p)}));$$('[data-go]').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.go;if(p==='voting'){go('home');setTimeout(()=>$('#ep-home-voting')?.scrollIntoView({behavior:'smooth',block:'start'}),50)}}));$$('[data-feature]').forEach(b=>b.addEventListener('click',()=>feature(b.dataset.feature)));$$('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+ // Floating AI buttons: existing buttons are reused, but made circular/draggable.
+ let fu=$('#floating-user-ai'),fa=$('#floating-admin-ai');
+ if(!fu){fu=document.createElement('button');fu.id='floating-user-ai';fu.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i><small>AI</small>';document.body.appendChild(fu)}
+ if(!fa){fa=document.createElement('button');fa.id='floating-admin-ai';fa.innerHTML='<i class="fa-solid fa-user-tie"></i><small>Admin</small>';document.body.appendChild(fa)}
+ fu.className='ep-ai-float user';fa.className='ep-ai-float admin';fu.onclick=()=>window.PortalAI?.open?PortalAI.open('user'):$('#user-ai-section')?.scrollIntoView({behavior:'smooth'});fa.onclick=()=>UIManager?.openAdminLoginModal?.();
+ makeDrag(fu,'EP_FLOAT_USER');makeDrag(fa,'EP_FLOAT_ADMIN');
+ // Admin header/footer always opens the existing authenticated login, never a public panel.
+ $$('button[onclick*="openAdminLoginModal"],a[onclick*="openAdminLoginModal"]').forEach(el=>{if(el.id==='floating-admin-ai')return;el.onclick=function(e){e.preventDefault();location.hash='admin';UIManager.openAdminLoginModal();return false}});
+ // Keep selected village and saved village in sync.
+ const sel=$('#user-panchayat-select');if(sel){const saved=localStorage.getItem('EP_SAVED_VILLAGE');if(saved&&window.db?.panchayats?.[saved])sel.value=saved;sel.addEventListener('change',()=>setTimeout(renderAnalytics,80));setTimeout(()=>sel.value||null,0)}
+ renderNotices();renderAnalytics();renderShellText();
+ // Repaint analytics after any existing vote/candidate UI refresh.
+ setInterval(()=>{renderNotices();renderAnalytics()},2500);
+ const hash=location.hash.replace('#','');if(['ai','services','home'].includes(hash))go(hash);
+}
+function makeDrag(el,key){let dragging=false,moved=false,sx=0,sy=0,ox=0,oy=0;try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved){el.style.left=saved.left;el.style.top=saved.top;el.style.right='auto';el.style.bottom='auto'}}catch(_){}
+el.addEventListener('pointerdown',e=>{dragging=true;moved=false;sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect();ox=r.left;oy=r.top;el.setPointerCapture?.(e.pointerId);el.classList.add('dragging')});el.addEventListener('pointermove',e=>{if(!dragging)return;const x=Math.max(4,Math.min(innerWidth-el.offsetWidth-4,ox+e.clientX-sx)),y=Math.max(4,Math.min(innerHeight-el.offsetHeight-4,oy+e.clientY-sy));if(Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy)>6)moved=true;el.style.left=x+'px';el.style.top=y+'px';el.style.right='auto';el.style.bottom='auto'});el.addEventListener('pointerup',()=>{if(!dragging)return;dragging=false;el.classList.remove('dragging');localStorage.setItem(key,JSON.stringify({left:el.style.left,top:el.style.top}));if(moved){el.dataset.dragged='1';setTimeout(()=>delete el.dataset.dragged,0)}});el.addEventListener('click',e=>{if(el.dataset.dragged){e.preventDefault();e.stopImmediatePropagation();delete el.dataset.dragged}},true)}
+window.EPApp={go,feature,setLanguage:setLang,renderAnalytics};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(mount,60));else setTimeout(mount,60);
 })();
 </script>
 
+<style id="ep-ai-overlay-final">
+.ep-chat-overlay{position:fixed;inset:0;z-index:20000;background:rgba(15,31,48,.28);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:flex-end;padding:18px}.ep-chat-overlay.open{display:flex}.ep-chat{width:min(420px,calc(100vw - 24px));height:min(650px,calc(100vh - 36px));background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 25px 80px rgba(16,42,67,.28);border:1px solid #dfe7ed;display:flex;flex-direction:column}.ep-chat-head{padding:13px 15px;background:linear-gradient(90deg,#ff9933,#fff 50%,#138808);display:flex;align-items:center;justify-content:space-between}.ep-chat-head b{font-size:13px;color:#102a43}.ep-chat-head small{display:block;font-size:8px;color:#607080;margin-top:2px}.ep-chat-head button{border:0;background:rgba(255,255,255,.8);width:31px;height:31px;border-radius:50%;color:#102a43;cursor:pointer}.ep-chat-lang{padding:7px 10px;border-bottom:1px solid #e9edf1;display:flex;justify-content:flex-end}.ep-chat-lang select{font-size:9px;border:1px solid #dce3e8;border-radius:8px;padding:4px 7px;background:#fff;color:#102a43}.ep-chat-log{flex:1;overflow:auto;padding:12px;background:#f7f9fa}.ep-chat-row{display:flex;margin:6px 0}.ep-chat-row.user{justify-content:flex-end}.ep-chat-bubble{max-width:85%;padding:8px 10px;border-radius:14px;font-size:11px;line-height:1.5;white-space:pre-wrap;word-break:break-word}.ep-chat-row.assistant .ep-chat-bubble{background:#fff;border:1px solid #e2e8ed;color:#263747;border-bottom-left-radius:4px}.ep-chat-row.user .ep-chat-bubble{background:#102a43;color:#fff;border-bottom-right-radius:4px}.ep-chat-foot{padding:9px;border-top:1px solid #e5e9ed;background:#fff}.ep-chat-foot textarea{width:100%;height:58px;resize:none;border:1px solid #d5dde4;border-radius:11px;padding:8px;font-size:10px;outline:none}.ep-chat-actions{display:flex;gap:6px;margin-top:6px}.ep-chat-actions button{flex:1;border:0;border-radius:10px;padding:8px;font-size:10px;font-weight:800;cursor:pointer}.ep-chat-send{background:#102a43;color:#fff}.ep-chat-clear{background:#eef2f5;color:#4b5b69}@media(max-width:600px){.ep-chat-overlay{padding:8px}.ep-chat{width:100%;height:calc(100vh - 16px);border-radius:18px}}
+</style><script id="ep-ai-overlay-final-js">
+(function(){
+const q=s=>document.querySelector(s);const getLang=()=>localStorage.getItem('EP_LANG')||'hi';
+const tx={hi:{title:'नागरिक AI सहायता',sub:'पोर्टल और मतदान संबंधी सहायता',placeholder:'अपना सवाल लिखें...',send:'भेजें',clear:'साफ करें',hello:'नमस्ते! मैं आपके गांव के चुनाव पोर्टल में सहायता करने के लिए तैयार हूं।'},en:{title:'Citizen AI Help',sub:'Portal and voting assistance',placeholder:'Type your question...',send:'Send',clear:'Clear',hello:'Hello! I can help you use the village election portal.'}};
+function ensure(){if(q('#ep-ai-overlay'))return;const d=document.createElement('div');d.id='ep-ai-overlay';d.className='ep-chat-overlay';d.innerHTML='<div class="ep-chat"><div class="ep-chat-head"><div><b id="ep-chat-title"></b><small id="ep-chat-sub"></small></div><button id="ep-chat-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div><div class="ep-chat-lang"><select id="ep-chat-lang"><option value="hi">हिंदी</option><option value="en">English</option></select></div><div id="ep-chat-log" class="ep-chat-log"></div><div class="ep-chat-foot"><textarea id="ep-chat-input"></textarea><div class="ep-chat-actions"><button id="ep-chat-clear" class="ep-chat-clear"></button><button id="ep-chat-send" class="ep-chat-send"></button></div></div></div>';document.body.appendChild(d);q('#ep-chat-close').onclick=()=>d.classList.remove('open');q('#ep-chat-lang').onchange=e=>{localStorage.setItem('EP_LANG',e.target.value);render()};q('#ep-chat-clear').onclick=()=>q('#ep-chat-log').innerHTML='';q('#ep-chat-send').onclick=ask;q('#ep-chat-input').addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='Enter')ask()});render()}
+function render(){const t=tx[getLang()]||tx.hi;q('#ep-chat-title').textContent=t.title;q('#ep-chat-sub').textContent=t.sub;q('#ep-chat-input').placeholder=t.placeholder;q('#ep-chat-send').textContent=t.send;q('#ep-chat-clear').textContent=t.clear;q('#ep-chat-lang').value=getLang();const log=q('#ep-chat-log');if(!log.children.length){const r=document.createElement('div');r.className='ep-chat-row assistant';const b=document.createElement('div');b.className='ep-chat-bubble';b.textContent=t.hello;r.appendChild(b);log.appendChild(r)}}
+async function ask(){const input=q('#ep-chat-input'),log=q('#ep-chat-log');const text=input.value.trim();if(!text)return;const add=(role,t)=>{const r=document.createElement('div');r.className='ep-chat-row '+role;const b=document.createElement('div');b.className='ep-chat-bubble';b.textContent=t;r.appendChild(b);log.appendChild(r);log.scrollTop=log.scrollHeight;return b};add('user',text);input.value='';const pending=add('assistant',getLang()==='hi'?'सोच रहा हूं...':'Thinking...');try{const settings=window.db?.settings||{};if(!settings.userAiEnabled){pending.textContent=getLang()==='hi'?'Citizen AI एडमिन द्वारा बंद है।':'Citizen AI is disabled by the administrator.';return}if(!settings.userGeminiApiKey){pending.textContent=getLang()==='hi'?'AI API key कॉन्फ़िगर नहीं है।':'AI API key is not configured.';return}const snap=window.GeminiService?.compactDatabaseSnapshot?GeminiService.compactDatabaseSnapshot(window.db):'';const instruction=getLang()==='hi'?'सिर्फ सरल हिंदी में उत्तर दें।':'Reply only in clear simple English.';const prompt='You are the citizen assistant for an Indian village election portal. '+instruction+' Do not invent official results or candidate facts. Use the supplied portal data when relevant.\n\nPortal data:\n'+snap+'\n\nQuestion:\n'+text;pending.textContent=await window.GeminiService.generate(settings.userGeminiApiKey,settings.geminiModel||'gemini-1.5-flash',prompt)}catch(e){pending.textContent=(getLang()==='hi'?'AI त्रुटि: ':'AI error: ')+e.message}}
+window.PortalAI={open:function(){ensure();q('#ep-ai-overlay').classList.add('open');q('#ep-chat-input').focus()}};
+})();
+</script><script id="ep-ai-bind-final">(function(){function b(){const u=document.getElementById('floating-user-ai');if(u)u.onclick=function(e){e.preventDefault();window.PortalAI?.open()};const a=document.getElementById('floating-admin-ai');if(a)a.onclick=function(e){e.preventDefault();window.UIManager?.openAdminLoginModal?.()}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(b,180));else setTimeout(b,180)})();</script>
 </body>
 </html>
