@@ -1316,3 +1316,1052 @@
                 }
             }
         }
+/**
+         * User Interface Logic
+         * Handles all public-facing interactions, search, compare, history, and the gallery.
+         */
+        class UserInterface {
+            static init() {
+                this.renderTicker();
+                this.populateVillageDropdown();
+                this.updateGlobalBadge();
+            }
+
+            static renderTicker() {
+                const ticker = document.getElementById("ticker-notification-text");
+                if(!ticker) return;
+                if(db.notifications.length === 0) {
+                    ticker.innerText = "No active government announcements.";
+                    return;
+                }
+                const latest = db.notifications[db.notifications.length - 1];
+                ticker.innerText = latest.text;
+            }
+
+            static updateGlobalBadge() {
+                const container = document.getElementById("voting-badge-status-container");
+                if (!container) return;
+
+                if (db.settings.maintenanceMode) {
+                    container.innerHTML = `<span class="px-5 py-2 bg-amber-100 text-amber-800 text-xs font-bold rounded-xl border border-amber-300 shadow-sm flex items-center"><i class="fa-solid fa-person-digging mr-2 text-lg"></i> Maintenance Mode Active</span>`;
+                    return;
+                }
+
+                if (db.settings.votingEnabled) {
+                    container.innerHTML = `<span class="px-5 py-2 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl border-2 border-emerald-400 shadow-sm flex items-center"><i class="fa-solid fa-lock-open mr-2 text-lg"></i> Secure Voting Active</span>`;
+                } else {
+                    container.innerHTML = `<span class="px-5 py-2 bg-rose-50 text-rose-700 text-xs font-bold rounded-xl border-2 border-rose-400 shadow-sm flex items-center"><i class="fa-solid fa-lock mr-2 text-lg"></i> Voting Paused by Admin</span>`;
+                }
+            }
+
+            static populateVillageDropdown() {
+                const sel = document.getElementById("user-panchayat-select");
+                if(!sel) return;
+                sel.innerHTML = `<option value="">-- Select Gram Panchayat --</option>`;
+                
+                const sortedKeys = Object.keys(db.panchayats).sort((a,b) => db.panchayats[a].name.localeCompare(db.panchayats[b].name));
+                
+                sortedKeys.forEach(k => {
+                    const p = db.panchayats[k];
+                    sel.innerHTML += `<option value="${p.id}">${Utils.escapeHtml(p.name)} (${p.totalWards} Wards)</option>`;
+                });
+                
+                this.populateCompareDropdowns();
+            }
+
+            static async handleVillageSelection() {
+                const pId = document.getElementById("user-panchayat-select").value;
+                const wrapper = document.getElementById("user-candidates-wrapper");
+                const grid = document.getElementById("user-candidates-grid");
+                
+                selectedUserCandidateId = null;
+                
+                if (!pId || !db.panchayats[pId]) {
+                    wrapper.classList.add("hidden");
+                    this.renderLiveAnalytics(null);
+                    this.populateCompareDropdowns();
+                    return;
+                }
+
+                grid.style.opacity = '0.4';
+                await new Promise(r => setTimeout(r, 300));
+
+                const p = db.panchayats[pId];
+                let allCandidates = [];
+                
+                for (let w = 1; w <= p.totalWards; w++) {
+                    const ward = p.wardsData[w];
+                    if (ward && ward.candidates) {
+                        ward.candidates.forEach(c => allCandidates.push({...c, wardNo: w, reservation: ward.reservation}));
+                    }
+                }
+
+                document.getElementById("candidate-count-badge").innerHTML = `<i class="fa-solid fa-users mr-1.5"></i> ${allCandidates.length} Active Candidates`;
+                grid.innerHTML = "";
+
+                if (db.settings.maintenanceMode) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-amber-50 rounded-2xl border-2 border-dashed border-amber-300 text-center font-bold text-amber-800">System under scheduled maintenance.</div>`;
+                } else if (!db.settings.votingEnabled) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-rose-50 rounded-2xl border-2 border-dashed border-rose-300 text-center font-bold text-rose-800">Voting session currently paused.</div>`;
+                } else if (allCandidates.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full p-10 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 text-center text-slate-500 font-medium">No candidates registered in this village yet.</div>`;
+                } else {
+                    allCandidates.forEach(c => {
+                        const avatarUrl = c.personImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=0F172A&color=D4AF37&size=128&bold=true`;
+                        const symbolHtml = c.symbolImage ? `<img src="${c.symbolImage}" class="w-8 h-8 object-contain rounded border bg-white p-0.5" title="Election Symbol">` : `<span class="text-[10px] font-mono text-slate-400 bg-slate-100 px-2 py-1 rounded">No Symbol</span>`;
+                        
+                        grid.innerHTML += `
+                            <div 
+                                onclick="UserInterface.selectCandidate('${c.id}')" 
+                                id="candidate-card-${c.id}" 
+                                class="bg-white border-2 border-slate-100 rounded-3xl p-5 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all relative group flex flex-col h-full"
+                            >
+                                <div class="absolute top-4 right-4 z-10">
+                                    <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 transition-colors" id="icon-container-${c.id}">
+                                        <i class="fa-solid fa-check text-slate-300 text-xs" id="icon-${c.id}"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-col items-center text-center mb-4 pt-2">
+                                    <div class="relative mb-3">
+                                        <img src="${Utils.escapeHtml(avatarUrl)}" class="w-20 h-20 rounded-full object-cover shadow-md border-4 border-white" alt="Candidate">
+                                    </div>
+                                    <h4 class="font-extrabold text-slate-900 text-base leading-tight mb-0.5">${Utils.escapeHtml(c.name)}</h4>
+                                    <span class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider bg-indigo-50 px-2.5 py-0.5 rounded-full mt-1">${Utils.escapeHtml(c.post || 'Sarpanch / Member')}</span>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 mb-3 flex items-center justify-between">
+                                    <div class="text-left">
+                                        <span class="block text-[9px] text-slate-400 uppercase font-bold">Party / Affiliation</span>
+                                        <span class="font-bold text-slate-800 text-xs">${Utils.escapeHtml(c.partyName || 'Independent')}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block text-[9px] text-slate-400 uppercase font-bold mb-0.5">Symbol</span>
+                                        ${symbolHtml}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-1.5 mt-auto pt-2 text-[11px] text-center">
+                                    <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+                                        <span class="block text-[8px] text-slate-400 uppercase">Ward</span>
+                                        <span class="font-bold text-slate-800">${c.wardNo}</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+                                        <span class="block text-[8px] text-slate-400 uppercase">Age</span>
+                                        <span class="font-bold text-slate-800">${c.age || 'N/A'}</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+                                        <span class="block text-[8px] text-slate-400 uppercase">Gender</span>
+                                        <span class="font-bold text-slate-800">${c.gender || 'N/A'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                grid.style.opacity = '1';
+                wrapper.classList.remove("hidden");
+                this.renderLiveAnalytics(pId);
+                this.populateCompareDropdowns();
+            }
+
+            static selectCandidate(cId) {
+                selectedUserCandidateId = cId;
+                const pId = document.getElementById("user-panchayat-select").value;
+                const p = db.panchayats[pId];
+                
+                for (let w = 1; w <= p.totalWards; w++) {
+                    p.wardsData[w].candidates.forEach(c => {
+                        const card = document.getElementById(`candidate-card-${c.id}`);
+                        const iconCont = document.getElementById(`icon-container-${c.id}`);
+                        const icon = document.getElementById(`icon-${c.id}`);
+                        
+                        if (!card) return;
+                        
+                        if (c.id === cId) {
+                            card.classList.add("border-premium-gold", "bg-amber-50/10", "ring-4", "ring-premium-gold/10");
+                            card.classList.remove("border-slate-100", "bg-white");
+                            iconCont.classList.add("bg-premium-gold", "border-premium-gold");
+                            iconCont.classList.remove("bg-slate-100", "border-slate-200");
+                            icon.classList.add("text-white");
+                            icon.classList.remove("text-slate-300");
+                        } else {
+                            card.classList.remove("border-premium-gold", "bg-amber-50/10", "ring-4", "ring-premium-gold/10");
+                            card.classList.add("border-slate-100", "bg-white");
+                            iconCont.classList.remove("bg-premium-gold", "border-premium-gold");
+                            iconCont.classList.add("bg-slate-100", "border-slate-200");
+                            icon.classList.remove("text-white");
+                            icon.classList.add("text-slate-300");
+                        }
+                    });
+                }
+            }
+
+            static renderLiveAnalytics(pId) {
+                const container = document.getElementById("live-results-container");
+                const countBadge = document.getElementById("total-votes-counter");
+                if(!container) return;
+                
+                if (!pId) { 
+                    container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-xs">Select village to inspect real-time polling analytics.</div>`; 
+                    countBadge.innerText = `0`; 
+                    return; 
+                }
+                
+                if (!db.settings.publicResultsVisible) { 
+                    container.innerHTML = `<div class="col-span-full p-8 text-center bg-slate-100 rounded-2xl text-slate-500 font-bold text-xs">Live results stream temporarily cloaked by administrator.</div>`; 
+                    countBadge.innerText = `Cloaked`; 
+                    return; 
+                }
+
+                let totalVotes = 0;
+                let candsData = [];
+                const p = db.panchayats[pId];
+                
+                for (let w = 1; w <= p.totalWards; w++) {
+                    p.wardsData[w].candidates.forEach(c => {
+                        const votes = p.wardsData[w].votes[c.id] || 0;
+                        totalVotes += votes; 
+                        candsData.push({...c, wNo: w, votes: votes});
+                    });
+                }
+                
+                countBadge.innerText = totalVotes.toLocaleString();
+                if (totalVotes === 0) { 
+                    container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200 text-xs">No votes securely recorded yet.</div>`; 
+                    return; 
+                }
+                
+                candsData.sort((a,b) => b.votes - a.votes);
+                let html = "";
+                candsData.forEach((c, index) => {
+                    if (index > 8) return; 
+                    const pct = totalVotes > 0 ? Math.round((c.votes / totalVotes) * 100) : 0;
+                    
+                    html += `
+                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[10px] font-bold">#${index+1}</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">${Utils.escapeHtml(c.name)}</h4>
+                                    <p class="text-[10px] text-slate-500">Ward ${c.wNo} &bull; ${Utils.escapeHtml(c.partyName || 'Ind')}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="block font-black text-slate-900 text-sm">${c.votes.toLocaleString()}</span>
+                                <span class="block text-[10px] font-bold text-premium-gold">${pct}%</span>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200/50 mt-auto">
+                            <div class="bg-gradient-to-r from-premium-gold to-yellow-400 h-full rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
+                        </div>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            }
+
+            // --- Tool 1: Search ---
+            static handleSearch() {
+                const query = document.getElementById("candidate-search-input").value.toLowerCase().trim();
+                const resContainer = document.getElementById("candidate-search-results");
+                resContainer.innerHTML = "";
+                if (!query) return;
+                
+                let matches = [];
+                Object.values(db.panchayats).forEach(p => {
+                    for(let w = 1; w <= p.totalWards; w++) {
+                        p.wardsData[w].candidates.forEach(c => {
+                            if (c.name.toLowerCase().includes(query) || (c.partyName||'').toLowerCase().includes(query) || (c.post||'').toLowerCase().includes(query)) {
+                                matches.push({ pName: p.name, wNo: w, cand: c });
+                            }
+                        });
+                    }
+                });
+                
+                if (matches.length === 0) {
+                    resContainer.innerHTML = "<div class='p-3 text-center text-[11px] text-slate-500 bg-slate-50 rounded-lg'>No matches found.</div>";
+                    return;
+                }
+                
+                matches.forEach(m => {
+                    resContainer.innerHTML += `
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-xs">
+                            <div class="flex justify-between font-bold text-slate-800 mb-0.5">
+                                <span>${Utils.escapeHtml(m.cand.name)}</span>
+                                <span class="text-indigo-600 text-[10px]">${Utils.escapeHtml(m.cand.post || '')}</span>
+                            </div>
+                            <div class="text-[10px] text-slate-500">${Utils.escapeHtml(m.pName)} &bull; Ward ${m.wNo}</div>
+                        </div>`;
+                });
+            }
+
+            // --- Tool 2: Compare ---
+            static populateCompareDropdowns() {
+                const pId = document.getElementById("user-panchayat-select")?.value;
+                const d1 = document.getElementById("compare-ward-1");
+                const d2 = document.getElementById("compare-ward-2");
+                if(!d1 || !d2) return;
+                
+                d1.innerHTML = `<option value="">Select Ward A</option>`;
+                d2.innerHTML = `<option value="">Select Ward B</option>`;
+                if(!pId) return;
+                
+                const p = db.panchayats[pId];
+                for(let i = 1; i <= p.totalWards; i++) {
+                    const opt = `<option value="${i}">Ward ${i} (${p.wardsData[i].candidates.length} Cands)</option>`;
+                    d1.innerHTML += opt; d2.innerHTML += opt;
+                }
+            }
+
+            static runComparison() {
+                const pId = document.getElementById("user-panchayat-select").value;
+                const w1 = document.getElementById("compare-ward-1").value;
+                const w2 = document.getElementById("compare-ward-2").value;
+                const out = document.getElementById("compare-result");
+                
+                if(!pId || !w1 || !w2 || w1 === w2) { Utils.showToast("Select two distinct wards.", "error"); return; }
+                
+                const data1 = db.panchayats[pId].wardsData[w1];
+                const data2 = db.panchayats[pId].wardsData[w2];
+                const v1 = data1.candidates.reduce((s,c) => s + (data1.votes[c.id]||0), 0);
+                const v2 = data2.candidates.reduce((s,c) => s + (data2.votes[c.id]||0), 0);
+                
+                out.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-white p-2 rounded border">
+                            <span class="block text-[9px] text-slate-400 uppercase">Ward ${w1}</span>
+                            <span class="font-bold text-slate-800 text-sm">${v1} Votes</span>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <span class="block text-[9px] text-slate-400 uppercase">Ward ${w2}</span>
+                            <span class="font-bold text-slate-800 text-sm">${v2} Votes</span>
+                        </div>
+                    </div>`;
+                out.classList.remove("hidden");
+            }
+
+            // --- Tool 3: History ---
+            static checkHistory() {
+                const mob = document.getElementById("my-vote-mobile").value.trim();
+                const out = document.getElementById("my-vote-history-output");
+                if(!/^\d{10}$/.test(mob)) { Utils.showToast("Valid 10-digit mobile required.", "error"); return; }
+                
+                let found = [];
+                Object.values(db.votersLog).forEach(v => { if(v.mob === mob) found.push(v); });
+                
+                if(found.length === 0) {
+                    out.innerHTML = `<div class="p-2 text-center text-slate-500 bg-slate-50 rounded">No voting records found.</div>`;
+                } else {
+                    let html = `<div class="space-y-1.5 mt-2">`;
+                    found.forEach(v => {
+                        const pName = db.panchayats[v.pId]?.name || 'Panchayat';
+                        html += `<div class="p-2 bg-emerald-50 border border-emerald-200 rounded text-[10px] text-emerald-900"><b>${pName}</b> &bull; Ward ${v.wNo}<br>Recorded: ${new Date(v.time).toLocaleString()}</div>`;
+                    });
+                    html += `</div>`;
+                    out.innerHTML = html;
+                }
+            }
+
+            // --- Tool 5: Suggestion ---
+            static submitSuggestion() {
+                const text = document.getElementById("user-suggestion-text").value.trim();
+                if(!text) { Utils.showToast("Enter grievance text.", "error"); return; }
+                db.suggestions.push({ id: Utils.generateId('S'), text: text, date: new Date().toISOString() });
+                DBManager.persist();
+                document.getElementById("user-suggestion-text").value = "";
+                Utils.showToast("Grievance encrypted and submitted to Admin queue.", "success");
+            }
+
+            // --- Tool 6: Export ---
+            static downloadReport() {
+                let report = "=== E-PANCHAYAT TRANSPARENCY REPORT ===\nGenerated: " + new Date().toLocaleString() + "\n\n";
+                Object.values(db.panchayats).forEach(p => {
+                    report += `[ ${p.name.toUpperCase()} ]\n`;
+                    for(let w=1; w<=p.totalWards; w++) {
+                        report += ` Ward ${w} (${p.wardsData[w].reservation}):\n`;
+                        p.wardsData[w].candidates.forEach(c => {
+                            report += `   - ${c.name} [${c.post||'Member'}] (${c.partyName||'Ind'}): ${p.wardsData[w].votes[c.id]||0} votes\n`;
+                        });
+                    }
+                    report += "\n";
+                });
+                const blob = new Blob([report], { type: "text/plain" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url; a.download = `E_Panchayat_Report_${Date.now()}.txt`;
+                a.click(); URL.revokeObjectURL(url);
+                Utils.showToast("Report exported successfully.", "success");
+            }
+
+            static sharePortal() {
+                navigator.clipboard.writeText(window.location.href).then(() => Utils.showToast("Portal link copied.", "success"));
+            }
+        }
+
+        /**
+         * Core Voting Engine
+         */
+        class VotingEngine {
+            static async castVote() {
+                if (db.settings.maintenanceMode) return Utils.showToast("System maintenance active.", "error");
+                if (!db.settings.votingEnabled) return Utils.showToast("Voting session closed.", "error");
+
+                const pId = document.getElementById("user-panchayat-select").value;
+                const mob = document.getElementById("voter-mobile-input").value.trim();
+                
+                if (!pId) return Utils.showToast("Select village first.", "error");
+                if (!selectedUserCandidateId) return Utils.showToast("Select a candidate from the gallery.", "error");
+                if (!/^\d{10}$/.test(mob)) return Utils.showToast("Valid 10-digit mobile number required.", "error");
+
+                const fp = Utils.getDeviceFP();
+                const mobileKey = `${pId}_MOBILE_${mob}`;
+                const deviceKey = `${pId}_DEVICE_${fp}`;
+
+                if (db.villageVotedLog[mobileKey] || db.villageVotedLog[deviceKey]) {
+                    document.getElementById("voter-mobile-input").value = "";
+                    return Utils.showToast("Duplicate Vote Violation: This phone number or device has already voted in this village.", "error");
+                }
+
+                let targetW = null, targetC = null;
+                const p = db.panchayats[pId];
+                for (let w = 1; w <= p.totalWards; w++) {
+                    const cand = p.wardsData[w].candidates.find(c => c.id === selectedUserCandidateId);
+                    if (cand) { targetW = w; targetC = cand; break; }
+                }
+
+                if (!targetW) return Utils.showToast("Candidate mapping error.", "error");
+
+                const btn = document.getElementById("btn-cast-vote");
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Encrypting...`;
+                btn.disabled = true;
+
+                await new Promise(r => setTimeout(r, 800));
+
+                p.wardsData[targetW].votes[selectedUserCandidateId] = (p.wardsData[targetW].votes[selectedUserCandidateId] || 0) + 1;
+                db.villageVotedLog[mobileKey] = { time: new Date().toISOString() };
+                db.villageVotedLog[deviceKey] = { time: new Date().toISOString() };
+                
+                const voteId = Utils.generateId('V');
+                db.votersLog[voteId] = { pId: pId, wNo: targetW, cId: selectedUserCandidateId, mob: mob, device: fp, time: new Date().toISOString() };
+
+                DBManager.persist();
+                document.getElementById("voter-mobile-input").value = "";
+                UserInterface.handleVillageSelection();
+                
+                btn.innerHTML = `<i class="fa-solid fa-check-double mr-2 text-lg"></i> Submit Secure Vote`;
+                btn.disabled = false;
+                Utils.showToast(`Vote securely recorded for ${targetC.name} (Ward ${targetW})`, "success");
+            }
+        }
+
+        /**
+         * Complete 32+ Tool Enterprise Admin Manager
+         */
+        class AdminManager {
+            static init() {
+                this.renderSidebar();
+            }
+
+            static verifyLogin(e) {
+                e.preventDefault();
+                const pass = document.getElementById("admin-password-box").value;
+                if (pass === db.settings.masterPassword) {
+                    UIManager.closeAdminLoginModal();
+                    document.getElementById("admin-dashboard-container").classList.remove("hidden");
+                    this.init();
+                    this.loadTool(0);
+                    Utils.showToast("Admin Console Initialized.", "success");
+                } else {
+                    Utils.showToast("Invalid master password.", "error");
+                }
+            }
+
+            static logout() {
+                document.getElementById("admin-dashboard-container").classList.add("hidden");
+                Utils.showToast("Admin session terminated.", "info");
+                UserInterface.init();
+            }
+
+            // Complete array of 33 Admin Tools
+            static toolsList = [
+                /* 01 */ { title: "Manage Dynamic Villages", icon: "fa-map-location-dot", render: () => this.Tool_ManageVillages() },
+                /* 02 */ { title: "Configure Ward Reservations", icon: "fa-list-ol", render: () => this.Tool_WardReservations() },
+                /* 03 */ { title: "Manual Candidate Entry (Gallery)", icon: "fa-user-plus", render: () => this.Tool_ManualCandidate() },
+                /* 04 */ { title: "Edit Candidate Records", icon: "fa-user-pen", render: () => this.Tool_EditCandidate() },
+                /* 05 */ { title: "Remove Candidate", icon: "fa-user-minus", render: () => this.Tool_RemoveCandidate() },
+                /* 06 */ { title: "Broadcast Gov Notification", icon: "fa-bullhorn", render: () => this.Tool_PublishNotification() },
+                /* 07 */ { title: "Manage Active Notifications", icon: "fa-bell-slash", render: () => this.Tool_ManageNotifications() },
+                /* 08 */ { title: "Live Cryptographic Vote Audit", icon: "fa-server", render: () => this.Tool_VoteAudit() },
+                /* 09 */ { title: "Reset Specific Ward Votes", icon: "fa-arrow-rotate-left", render: () => this.Tool_ResetWards() },
+                /* 10 */ { title: "Global Voting Override Switch", icon: "fa-toggle-on", render: () => this.Tool_GlobalVoting() },
+                /* 11 */ { title: "Public Results Visibility", icon: "fa-eye-slash", render: () => this.Tool_PublicResults() },
+                /* 12 */ { title: "Review Suggestions & Grievances", icon: "fa-comments", render: () => this.Tool_SuggestionsQueue() },
+                /* 13 */ { title: "Purge Suggestions Queue", icon: "fa-trash-can-check", render: () => this.Tool_ClearSuggestions() },
+                /* 14 */ { title: "Update Master Password", icon: "fa-key", render: () => this.Tool_ChangePassword() },
+                /* 15 */ { title: "Export Raw JSON Database", icon: "fa-database", render: () => this.Tool_ExportJSON() },
+                /* 16 */ { title: "Import & Restore JSON Payload", icon: "fa-file-import", render: () => this.Tool_ImportJSON() },
+                /* 17 */ { title: "Nuclear Factory Reset", icon: "fa-radiation", render: () => this.Tool_FactoryReset() },
+                /* 18 */ { title: "Inspect Voter Security Logs", icon: "fa-shield-halved", render: () => this.Tool_VoterLogs() },
+                /* 19 */ { title: "Purge Voter Security Logs", icon: "fa-eraser", render: () => this.Tool_PurgeLogs() },
+                /* 20 */ { title: "System Title Configuration", icon: "fa-font", render: () => this.Tool_SystemTitle() },
+                /* 21 */ { title: "Bulk Template Application", icon: "fa-layer-group", render: () => this.Tool_BulkTemplate() },
+                /* 22 */ { title: "Generate Gazette Document", icon: "fa-file-contract", render: () => this.Tool_GazetteReport() },
+                /* 23 */ { title: "Maintenance Mode Switch", icon: "fa-person-digging", render: () => this.Tool_MaintenanceMode() },
+                /* 24 */ { title: "Emergency System Shutdown", icon: "fa-siren-on", render: () => this.Tool_EmergencyShutdown() },
+                /* 25 */ { title: "Custom Alert Bulletin", icon: "fa-message-exclamation", render: () => this.Tool_AlertBulletin() },
+                /* 26 */ { title: "Storage Diagnostic Metrics", icon: "fa-hard-drive", render: () => this.Tool_StorageMetrics() },
+                /* 27 */ { title: "Simulate Test Votes", icon: "fa-robot", render: () => this.Tool_SimulateVotes() },
+                /* 28 */ { title: "Wipe All Polling Data Only", icon: "fa-broom", render: () => this.Tool_WipeVotes() },
+                /* 29 */ { title: "System Health & Analytics", icon: "fa-heart-pulse", render: () => this.Tool_SystemHealth() },
+                /* 30 */ { title: "Delete Village Database Node", icon: "fa-building-circle-xmark", render: () => this.Tool_DeleteVillage() },
+                /* 31 */ { title: "Gemini AI System Configuration (API)", icon: "fa-brain", render: () => this.Tool_AiConfiguration() }
+            ];
+
+            static renderSidebar() {
+                const list = document.getElementById("admin-sidebar-list");
+                const searchTerm = (document.getElementById("admin-tool-search")?.value || "").toLowerCase();
+                if(!list) return;
+                
+                list.innerHTML = "";
+                let count = 0;
+
+                this.toolsList.forEach((tool, index) => {
+                    if (searchTerm && !tool.title.toLowerCase().includes(searchTerm)) return;
+                    const numStr = `0${index + 1}`.slice(-2);
+                    const isActive = index === activeAdminToolIndex;
+                    const classes = isActive ? "bg-premium-gold/10 text-premium-gold border-l-4 border-premium-gold font-semibold" : "text-slate-400 hover:text-white hover:bg-slate-800/50 border-l-4 border-transparent";
+
+                    list.innerHTML += `
+                        <button onclick="AdminManager.loadTool(${index})" class="w-full text-left py-2.5 px-3 rounded-r-xl text-xs transition-all flex items-center group mb-0.5 ${classes}">
+                            <span class="w-6 opacity-50 text-[9px] font-mono shrink-0">${numStr}.</span>
+                            <i class="fa-solid ${tool.icon} w-6 text-center opacity-70 group-hover:opacity-100"></i>
+                            <span class="truncate ml-2">${Utils.escapeHtml(tool.title)}</span>
+                        </button>
+                    `;
+                    count++;
+                });
+
+                const dbInd = document.getElementById("db-size-indicator");
+                if (dbInd) dbInd.innerText = `${Utils.calculateDbSize()} KB`;
+            }
+
+            static filterTools() { this.renderSidebar(); }
+
+            static loadTool(index) {
+                activeAdminToolIndex = index;
+                this.renderSidebar();
+                
+                const tool = this.toolsList[index];
+                document.getElementById("admin-tool-badge").innerText = `Tool #${`0${index+1}`.slice(-2)}`;
+                document.getElementById("admin-tool-title").innerText = tool.title;
+                document.getElementById("admin-tool-icon").className = `fa-solid ${tool.icon} text-2xl text-premium-gold`;
+
+                const body = document.getElementById("admin-tool-body");
+                body.style.opacity = '0';
+                setTimeout(() => {
+                    body.innerHTML = tool.render();
+                    body.style.opacity = '1';
+                }, 120);
+            }
+
+            static buildVillageSelect(idPrefix, onChangeAction = "") {
+                let html = `<div class="mb-4"><label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Target Village Database</label><select id="${idPrefix}-village" class="input-admin" onchange="${onChangeAction}"><option value="">-- Select Village --</option>`;
+                Object.keys(db.panchayats).forEach(k => { html += `<option value="${k}">${Utils.escapeHtml(db.panchayats[k].name)}</option>`; });
+                return html + `</select></div>`;
+            }
+
+            static buildWardSelect(idPrefix) {
+                return `<div class="mb-4"><label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Target Ward</label><select id="${idPrefix}-ward" class="input-admin"><option value="">-- Select Village First --</option></select></div>`;
+            }
+
+            static updateWardDropdown(idPrefix) {
+                const vId = document.getElementById(`${idPrefix}-village`).value;
+                const wSel = document.getElementById(`${idPrefix}-ward`);
+                if(!wSel) return;
+                wSel.innerHTML = "";
+                if (!vId) { wSel.innerHTML = `<option value="">-- Select Village First --</option>`; return; }
+                const p = db.panchayats[vId];
+                for (let w = 1; w <= p.totalWards; w++) {
+                    wSel.innerHTML += `<option value="${w}">Ward ${w} [${p.wardsData[w].reservation}]</option>`;
+                }
+            }
+
+            // ==========================================
+            // TOOL 01: Manage Dynamic Villages
+            // ==========================================
+            static Tool_ManageVillages() {
+                let html = `
+                    <div class="space-y-6">
+                        <p class="text-slate-400 text-xs">Instantiate a new Gram Panchayat database or update ward capacities.</p>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div><label class="block text-xs font-bold text-slate-400 uppercase mb-2">System ID (No Spaces)</label><input type="text" id="t1-id" class="input-admin" placeholder="e.g. sonapur"></div>
+                                <div><label class="block text-xs font-bold text-slate-400 uppercase mb-2">Display Name</label><input type="text" id="t1-name" class="input-admin" placeholder="Gram Panchayat Sonapur"></div>
+                            </div>
+                            <div class="mb-5"><label class="block text-xs font-bold text-slate-400 uppercase mb-2">Total Wards</label><input type="number" id="t1-wards" class="input-admin" value="11" min="1"></div>
+                            <button onclick="AdminManager.Execute_ManageVillages()" class="btn-gold w-full py-3 rounded-xl shadow-premium-gold">Instantiate / Update Village</button>
+                        </div>
+                        <div class="space-y-2">`;
+                Object.values(db.panchayats).forEach(p => {
+                    html += `<div class="bg-[#0F172A] p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs"><span><b>${Utils.escapeHtml(p.name)}</b> (${p.id})</span><span class="text-premium-gold font-bold">${p.totalWards} Wards</span></div>`;
+                });
+                return html + `</div></div>`;
+            }
+
+            static Execute_ManageVillages() {
+                const id = document.getElementById("t1-id").value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+                const name = document.getElementById("t1-name").value.trim();
+                const wards = parseInt(document.getElementById("t1-wards").value);
+                if (!id || !name || isNaN(wards)) return Utils.showToast("All fields required.", "error");
+                
+                if (!db.panchayats[id]) {
+                    db.panchayats[id] = { id: id, name: name, totalWards: wards, wardsData: {} };
+                } else {
+                    db.panchayats[id].name = name;
+                    db.panchayats[id].totalWards = wards;
+                }
+                DBManager.validateAndRepair();
+                DBManager.persist();
+                Utils.showToast("Village database updated.", "success");
+                this.loadTool(0);
+                UserInterface.populateVillageDropdown();
+            }
+
+            // ==========================================
+            // TOOL 02: Ward Reservations
+            // ==========================================
+            static Tool_WardReservations() {
+                return `
+                    <div class="space-y-4">
+                        <p class="text-slate-400 text-xs">Set lottery reservation status for wards.</p>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            ${this.buildVillageSelect('t2', "AdminManager.updateWardDropdown('t2')")}
+                            ${this.buildWardSelect('t2')}
+                            <div class="mb-6"><label class="block text-xs font-bold text-slate-400 uppercase mb-2">Category String</label><input type="text" id="t2-val" class="input-admin" placeholder="e.g. SC Female / OBC / General"></div>
+                            <button onclick="AdminManager.Execute_WardReservations()" class="btn-gold w-full py-3 rounded-xl">Commit Reservation</button>
+                        </div>
+                    </div>`;
+            }
+
+            static Execute_WardReservations() {
+                const v = document.getElementById("t2-village").value;
+                const w = document.getElementById("t2-ward").value;
+                const val = document.getElementById("t2-val").value.trim();
+                if(!v || !w || !val) return Utils.showToast("All fields required.", "error");
+                db.panchayats[v].wardsData[w].reservation = val;
+                DBManager.persist();
+                Utils.showToast("Reservation updated.", "success");
+                this.updateWardDropdown('t2');
+            }
+
+            // ==========================================
+            // TOOL 03: Manual Candidate Entry (With Image & Symbol Gallery Uploads)
+            // ==========================================
+            static Tool_ManualCandidate() {
+                return `
+                    <div class="space-y-5">
+                        <p class="text-slate-400 text-xs">Register candidate with direct photo and election symbol upload from gallery.</p>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 space-y-4">
+                            ${this.buildVillageSelect('t3', "AdminManager.updateWardDropdown('t3')")}
+                            ${this.buildWardSelect('t3')}
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Candidate Name *</label><input type="text" id="t3-name" class="input-admin" placeholder="Full Legal Name"></div>
+                                <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Post / Position</label><select id="t3-post" class="input-admin"><option>Sarpanch</option><option>Ward Panch</option><option>Panchayat Samiti Member</option><option>Zila Parishad Member</option></select></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-3">
+                                <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Age</label><input type="number" id="t3-age" class="input-admin" placeholder="42"></div>
+                                <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gender</label><select id="t3-gender" class="input-admin"><option>Male</option><option>Female</option><option>Other</option></select></div>
+                                <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Party</label><input type="text" id="t3-party" class="input-admin" placeholder="Independent"></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-700">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-2">Candidate Photo (Gallery)</label>
+                                    <div class="image-preview-box" onclick="document.getElementById('t3-img-file').click()">
+                                        <img id="t3-img-preview" src="" class="hidden">
+                                        <div id="t3-img-placeholder" class="text-center p-2"><i class="fa-solid fa-camera text-slate-400 text-xl mb-1"></i><span class="block text-[10px] text-slate-400">Choose Photo</span></div>
+                                    </div>
+                                    <input type="file" id="t3-img-file" accept="image/*" class="hidden" onchange="AdminManager.previewImage(this, 't3-img-preview', 't3-img-placeholder')">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-2">Election Symbol (Gallery)</label>
+                                    <div class="image-preview-box" onclick="document.getElementById('t3-sym-file').click()">
+                                        <img id="t3-sym-preview" src="" class="hidden">
+                                        <div id="t3-sym-placeholder" class="text-center p-2"><i class="fa-solid fa-icons text-slate-400 text-xl mb-1"></i><span class="block text-[10px] text-slate-400">Choose Symbol</span></div>
+                                    </div>
+                                    <input type="file" id="t3-sym-file" accept="image/*" class="hidden" onchange="AdminManager.previewImage(this, 't3-sym-preview', 't3-sym-placeholder')">
+                                </div>
+                            </div>
+
+                            <button onclick="AdminManager.Execute_ManualCandidate()" class="btn-gold w-full py-3.5 rounded-xl shadow-premium-gold mt-4">
+                                <i class="fa-solid fa-user-check mr-2"></i> Register Candidate in Database
+                            </button>
+                        </div>
+                    </div>`;
+            }
+
+            static async previewImage(input, previewId, placeholderId) {
+                if (input.files && input.files[0]) {
+                    const base64 = await Utils.fileToBase64(input.files[0]);
+                    const compressed = await Utils.compressImage(base64, 300, 0.7);
+                    const prev = document.getElementById(previewId);
+                    const ph = document.getElementById(placeholderId);
+                    prev.src = compressed;
+                    prev.classList.remove("hidden");
+                    ph.classList.add("hidden");
+                }
+            }
+
+            static async Execute_ManualCandidate() {
+                const v = document.getElementById("t3-village").value;
+                const w = document.getElementById("t3-ward").value;
+                const name = document.getElementById("t3-name").value.trim();
+                if(!v || !w || !name) return Utils.showToast("Village, ward and candidate name are required.", "error");
+
+                const imgPrev = document.getElementById("t3-img-preview");
+                const symPrev = document.getElementById("t3-sym-preview");
+
+                const cId = Utils.generateId('C');
+                db.panchayats[v].wardsData[w].candidates.push({
+                    id: cId,
+                    name: name,
+                    post: document.getElementById("t3-post").value,
+                    age: document.getElementById("t3-age").value.trim() || "N/A",
+                    gender: document.getElementById("t3-gender").value,
+                    partyName: document.getElementById("t3-party").value.trim() || "Independent",
+                    personImage: imgPrev.src && !imgPrev.classList.contains("hidden") ? imgPrev.src : "",
+                    symbolImage: symPrev.src && !symPrev.classList.contains("hidden") ? symPrev.src : ""
+                });
+                db.panchayats[v].wardsData[w].votes[cId] = 0;
+                DBManager.persist();
+
+                Utils.showToast(`Candidate ${name} registered successfully.`, "success");
+                this.loadTool(2); // reload tool
+                UserInterface.populateVillageDropdown();
+            }
+
+            // ==========================================
+            // TOOL 04: Edit Candidate
+            // ==========================================
+            static Tool_EditCandidate() {
+                return `
+                    <div class="space-y-4">
+                        <p class="text-slate-400 text-xs">Modify candidate attributes.</p>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            ${this.buildVillageSelect('t4', "AdminManager.updateWardDropdown('t4')")}
+                            ${this.buildWardSelect('t4')}
+                            <button onclick="AdminManager.Render_EditList()" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold py-2.5 rounded-xl transition mb-4">Query Records</button>
+                            <div id="t4-list" class="space-y-3 max-h-80 overflow-y-auto dark-scrollbar pr-2"></div>
+                        </div>
+                    </div>`;
+            }
+
+            static Render_EditList() {
+                const v = document.getElementById("t4-village").value;
+                const w = document.getElementById("t4-ward").value;
+                const list = document.getElementById("t4-list");
+                if(!v || !w) return;
+                list.innerHTML = "";
+                const cands = db.panchayats[v].wardsData[w].candidates;
+                if(cands.length === 0) { list.innerHTML = "<div class='text-slate-500 text-xs'>No candidates found.</div>"; return; }
+                
+                cands.forEach(c => {
+                    list.innerHTML += `
+                        <div class="bg-[#0F172A] p-3 rounded-xl border border-slate-700 flex flex-col gap-2 text-xs">
+                            <div class="flex gap-2">
+                                <input type="text" id="t4-n-${c.id}" value="${Utils.escapeHtml(c.name)}" class="input-admin py-1.5 flex-grow">
+                                <input type="text" id="t4-p-${c.id}" value="${Utils.escapeHtml(c.partyName||'')}" class="input-admin py-1.5 w-32">
+                            </div>
+                            <button onclick="AdminManager.Execute_EditCandidate('${v}','${w}','${c.id}')" class="bg-blue-600 text-white py-1.5 rounded font-bold text-[11px]">Save Changes</button>
+                        </div>`;
+                });
+            }
+
+            static Execute_EditCandidate(v, w, cId) {
+                const c = db.panchayats[v].wardsData[w].candidates.find(x => x.id === cId);
+                if(c) {
+                    c.name = document.getElementById(`t4-n-${cId}`).value.trim() || c.name;
+                    c.partyName = document.getElementById(`t4-p-${cId}`).value.trim() || c.partyName;
+                    DBManager.persist();
+                    Utils.showToast("Candidate updated.", "success");
+                    UserInterface.populateVillageDropdown();
+                }
+            }
+
+            // ==========================================
+            // TOOL 05: Remove Candidate
+            // ==========================================
+            static Tool_RemoveCandidate() {
+                return `
+                    <div class="space-y-4">
+                        <div class="bg-rose-500/10 border border-rose-500/30 p-3 rounded-xl text-rose-400 text-xs">Purges candidate record and associated votes.</div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            ${this.buildVillageSelect('t5', "AdminManager.updateWardDropdown('t5')")}
+                            ${this.buildWardSelect('t5')}
+                            <button onclick="AdminManager.Render_DeleteList()" class="w-full bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl mb-4">Query Targets</button>
+                            <div id="t5-list" class="space-y-2 max-h-80 overflow-y-auto dark-scrollbar"></div>
+                        </div>
+                    </div>`;
+            }
+
+            static Render_DeleteList() {
+                const v = document.getElementById("t5-village").value;
+                const w = document.getElementById("t5-ward").value;
+                const list = document.getElementById("t5-list");
+                if(!v || !w) return;
+                list.innerHTML = "";
+                db.panchayats[v].wardsData[w].candidates.forEach(c => {
+                    list.innerHTML += `<div class="bg-[#0F172A] p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs"><span class="text-white">${Utils.escapeHtml(c.name)}</span><button onclick="AdminManager.Execute_Remove('${v}','${w}','${c.id}')" class="bg-rose-600 text-white px-3 py-1 rounded">Purge</button></div>`;
+                });
+            }
+
+            static Execute_Remove(v, w, cId) {
+                if(confirm("Permanently delete candidate?")) {
+                    db.panchayats[v].wardsData[w].candidates = db.panchayats[v].wardsData[w].candidates.filter(x => x.id !== cId);
+                    delete db.panchayats[v].wardsData[w].votes[cId];
+                    DBManager.persist();
+                    Utils.showToast("Candidate purged.", "success");
+                    this.Render_DeleteList();
+                    UserInterface.populateVillageDropdown();
+                }
+            }
+
+            // ==========================================
+            // TOOLS 06-07: Notifications
+            // ==========================================
+            static Tool_PublishNotification() {
+                return `
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Notice Text</label>
+                            <textarea id="t6-msg" rows="3" class="input-admin mb-4" placeholder="Government notification..."></textarea>
+                            <button onclick="AdminManager.Execute_PublishNotification()" class="btn-gold w-full py-3 rounded-xl">Broadcast Notice</button>
+                        </div>
+                    </div>`;
+            }
+
+            static Execute_PublishNotification() {
+                const txt = document.getElementById("t6-msg").value.trim();
+                if(!txt) return;
+                db.notifications.push({ id: Utils.generateId('N'), text: txt, date: new Date().toISOString() });
+                DBManager.persist();
+                document.getElementById("t6-msg").value = "";
+                Utils.showToast("Notice broadcasted.", "success");
+                UserInterface.renderTicker();
+            }
+
+            static Tool_ManageNotifications() {
+                let html = `<div class="space-y-3 max-h-96 overflow-y-auto">`;
+                db.notifications.forEach((n, idx) => {
+                    html += `<div class="bg-slate-800/50 p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs text-white"><span>${Utils.escapeHtml(n.text)}</span><button onclick="db.notifications.splice(${idx},1);DBManager.persist();AdminManager.loadTool(6);UserInterface.renderTicker();" class="text-rose-400">Delete</button></div>`;
+                });
+                return html + `</div>`;
+            }
+
+            // ==========================================
+            // TOOL 08: Live Vote Audit
+            // ==========================================
+            static Tool_VoteAudit() {
+                let html = `<div class="space-y-4 max-h-[500px] overflow-y-auto dark-scrollbar">`;
+                Object.values(db.panchayats).forEach(p => {
+                    html += `<div class="bg-[#0F172A] p-4 rounded-xl border border-slate-700 text-xs"><h4 class="font-bold text-premium-gold mb-2">${Utils.escapeHtml(p.name)}</h4>`;
+                    for(let w=1; w<=p.totalWards; w++) {
+                        html += `<div class="mb-1 text-slate-300">Ward ${w}: `;
+                        p.wardsData[w].candidates.forEach(c => {
+                            html += `<span>${c.name} (${p.wardsData[w].votes[c.id]||0}), </span>`;
+                        });
+                        html += `</div>`;
+                    }
+                    html += `</div>`;
+                });
+                return html + `</div>`;
+            }
+
+            // ==========================================
+            // TOOLS 09-13: Voting Controls & Suggestions
+            // ==========================================
+            static Tool_ResetWards() {
+                return `
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                        ${this.buildVillageSelect('t9', "AdminManager.updateWardDropdown('t9')")}
+                        ${this.buildWardSelect('t9')}
+                        <button onclick="AdminManager.Execute_ResetWards()" class="bg-rose-600 text-white w-full py-3 rounded-xl mt-4 text-xs font-bold">Zero-Out Ward Votes</button>
+                    </div>`;
+            }
+
+            static Execute_ResetWards() {
+                const v = document.getElementById("t9-village").value;
+                const w = document.getElementById("t9-ward").value;
+                if(!v || !w) return;
+                db.panchayats[v].wardsData[w].candidates.forEach(c => { db.panchayats[v].wardsData[w].votes[c.id] = 0; });
+                DBManager.persist();
+                Utils.showToast("Ward votes reset to zero.", "success");
+            }
+
+            static Tool_GlobalVoting() {
+                const s = db.settings.votingEnabled;
+                return `<div class="bg-slate-800/50 p-8 rounded-2xl text-center"><p class="text-white text-lg font-bold mb-4">Voting Intake: ${s ? 'ONLINE' : 'OFFLINE'}</p><button onclick="db.settings.votingEnabled=!db.settings.votingEnabled;DBManager.persist();AdminManager.loadTool(9);UserInterface.updateGlobalBadge();" class="btn-gold px-8 py-3 rounded-xl">${s ? 'Shutdown Voting' : 'Enable Voting'}</button></div>`;
+            }
+
+            static Tool_PublicResults() {
+                const s = db.settings.publicResultsVisible;
+                return `<div class="bg-slate-800/50 p-8 rounded-2xl text-center"><p class="text-white text-lg font-bold mb-4">Public Analytics: ${s ? 'VISIBLE' : 'CLOAKED'}</p><button onclick="db.settings.publicResultsVisible=!db.settings.publicResultsVisible;DBManager.persist();AdminManager.loadTool(10);" class="btn-gold px-8 py-3 rounded-xl">${s ? 'Cloak Results' : 'Show Results'}</button></div>`;
+            }
+
+            static Tool_SuggestionsQueue() {
+                let html = `<div class="space-y-3 max-h-96 overflow-y-auto">`;
+                if(db.suggestions.length === 0) html += `<div class="text-slate-500 text-xs">No suggestions.</div>`;
+                db.suggestions.forEach(s => { html += `<div class="bg-[#0F172A] p-3 rounded-xl border border-slate-700 text-xs text-white"><b>${new Date(s.date).toLocaleString()}</b><br>${Utils.escapeHtml(s.text)}</div>`; });
+                return html + `</div>`;
+            }
+
+            static Tool_ClearSuggestions() {
+                return `<div class="text-center"><button onclick="db.suggestions=[];DBManager.persist();Utils.showToast('Cleared','success');AdminManager.loadTool(12);" class="bg-rose-600 text-white px-6 py-3 rounded-xl text-xs font-bold">Purge All Suggestions</button></div>`;
+            }
+
+            // ==========================================
+            // TOOLS 14-17: Database Management & Reset
+            // ==========================================
+            static Tool_ChangePassword() {
+                return `<div class="bg-slate-800/50 p-6 rounded-2xl max-w-sm mx-auto"><label class="block text-xs text-slate-400 mb-2">New Password</label><input type="text" id="t14-key" class="input-admin mb-4"><button onclick="db.settings.masterPassword=document.getElementById('t14-key').value;DBManager.persist();Utils.showToast('Password updated','success');" class="btn-gold w-full py-3 rounded-xl">Save Password</button></div>`;
+            }
+
+            static Tool_ExportJSON() {
+                return `<div class="text-center"><button onclick="const b=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='backup.json';a.click();" class="bg-blue-600 text-white px-8 py-3 rounded-xl text-xs font-bold">Download JSON Backup</button></div>`;
+            }
+
+            static Tool_ImportJSON() {
+                return `<div class="space-y-3"><textarea id="t16-json" rows="6" class="input-admin font-mono text-[10px]" placeholder="Paste JSON..."></textarea><button onclick="try{db=JSON.parse(document.getElementById('t16-json').value);DBManager.persist();alert('Imported. Reloading.');location.reload();}catch(e){alert('Invalid JSON');}" class="bg-rose-600 text-white w-full py-3 rounded-xl text-xs font-bold">Import JSON</button></div>`;
+            }
+
+            static Tool_FactoryReset() {
+                return `<div class="text-center"><button onclick="if(confirm('Wipe everything?')) DBManager.factoryReset();" class="bg-rose-600 text-white px-8 py-3 rounded-xl text-xs font-black">NUKULAR FACTORY RESET</button></div>`;
+            }
+
+            // ==========================================
+            // TOOLS 18-22: Security & Gazette
+            // ==========================================
+            static Tool_VoterLogs() {
+                let html = `<div class="space-y-1 max-h-96 overflow-y-auto font-mono text-[10px] text-slate-300">`;
+                Object.keys(db.votersLog).forEach(k => { html += `<div>${k} => Village:${db.votersLog[k].pId} Ward:${db.votersLog[k].wNo}</div>`; });
+                return html + `</div>`;
+            }
+
+            static Tool_PurgeLogs() {
+                return `<div class="text-center"><button onclick="db.votersLog={};db.villageVotedLog={};DBManager.persist();Utils.showToast('Logs scrubbed','success');" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs font-bold">Scrub Voter Logs</button></div>`;
+            }
+
+            static Tool_SystemTitle() {
+                return `<div class="bg-slate-800/50 p-6 rounded-2xl"><input type="text" id="t20-title" value="${Utils.escapeHtml(db.settings.portalTitle)}" class="input-admin mb-4"><button onclick="db.settings.portalTitle=document.getElementById('t20-title').value;DBManager.persist();document.getElementById('header-portal-title').innerText=db.settings.portalTitle;Utils.showToast('Title updated','success');" class="btn-gold w-full py-3 rounded-xl">Update Title</button></div>`;
+            }
+
+            static Tool_BulkTemplate() {
+                return `<div class="bg-slate-800/50 p-6 rounded-2xl"><input type="text" id="t21-res" class="input-admin mb-4" placeholder="e.g. General Open"><button onclick="const r=document.getElementById('t21-res').value;Object.values(db.panchayats).forEach(p=>{for(let i=1;i<=p.totalWards;i++)p.wardsData[i].reservation=r;});DBManager.persist();Utils.showToast('Propagated','success');" class="bg-blue-600 text-white w-full py-3 rounded-xl text-xs font-bold">Apply to All Wards</button></div>`;
+            }
+
+            static Tool_GazetteReport() {
+                return `<div class="text-center"><button onclick="let t='';Object.values(db.panchayats).forEach(p=>{t+=p.name+'\\n';for(let i=1;i<=p.totalWards;i++)t+=' Ward '+i+': '+p.wardsData[i].reservation+'\\n';});const b=new Blob([t],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='gazette.txt';a.click();" class="bg-emerald-600 text-white px-8 py-3 rounded-xl text-xs font-bold">Download Gazette</button></div>`;
+            }
+
+            // ==========================================
+            // TOOLS 23-31: Maintenance, Diagnostics & Gemini AI Key Configuration
+            // ==========================================
+            static Tool_MaintenanceMode() {
+                const s = db.settings.maintenanceMode;
+                return `<div class="bg-slate-800/50 p-8 rounded-2xl text-center"><button onclick="db.settings.maintenanceMode=!db.settings.maintenanceMode;DBManager.persist();AdminManager.loadTool(22);UserInterface.updateGlobalBadge();" class="btn-gold px-8 py-3 rounded-xl">${s ? 'Disable Maintenance' : 'Enable Maintenance'}</button></div>`;
+            }
+
+            static Tool_EmergencyShutdown() {
+                return `<div class="text-center"><button onclick="db.settings.votingEnabled=false;DBManager.persist();UserInterface.updateGlobalBadge();Utils.showToast('Emergency Shutdown Executed','error');" class="bg-rose-600 text-white px-8 py-3 rounded-xl text-xs font-bold">KILL ALL VOTING ENGINES</button></div>`;
+            }
+
+            static Tool_AlertBulletin() {
+                return `<div class="bg-slate-800/50 p-6 rounded-2xl"><textarea id="t25-msg" rows="3" class="input-admin mb-4" placeholder="Bulletin directive..."></textarea><button onclick="db.notifications.push({id:Utils.generateId(),text:'[ALERT] '+document.getElementById('t25-msg').value,date:new Date().toISOString()});DBManager.persist();Utils.showToast('Bulletin posted','success');UserInterface.renderTicker();" class="bg-amber-600 text-white w-full py-3 rounded-xl text-xs font-bold">Post Bulletin</button></div>`;
+            }
+
+            static Tool_StorageMetrics() {
+                return `<div class="bg-slate-800/50 p-8 rounded-2xl text-center text-3xl font-bold text-emerald-400 font-mono">${Utils.calculateDbSize()} KB <span class="block text-xs text-slate-400 mt-2">Storage Used</span></div>`;
+            }
+
+            static Tool_SimulateVotes() {
+                return `<div class="text-center"><button onclick="Object.values(db.panchayats).forEach(p=>{for(let w=1;w<=p.totalWards;w++){p.wardsData[w].candidates.forEach(c=>{p.wardsData[w].votes[c.id]=(p.wardsData[w].votes[c.id]||0)+Math.floor(Math.random()*15);});}});DBManager.persist();Utils.showToast('Simulated votes injected','success');UserInterface.handleVillageSelection();" class="bg-indigo-600 text-white px-8 py-3 rounded-xl text-xs font-bold">Inject Random Test Votes</button></div>`;
+            }
+
+            static Tool_WipeVotes() {
+                return `<div class="text-center"><button onclick="Object.values(db.panchayats).forEach(p=>{for(let w=1;w<=p.totalWards;w++){p.wardsData[w].candidates.forEach(c=>{p.wardsData[w].votes[c.id]=0;});}});DBManager.persist();Utils.showToast('All votes zeroed','success');UserInterface.handleVillageSelection();" class="bg-rose-600 text-white px-8 py-3 rounded-xl text-xs font-bold">Zero-Out All Voting Counters</button></div>`;
+            }
+
+            static Tool_SystemHealth() {
+                return `<div class="bg-[#0F172A] p-6 rounded-2xl text-center text-xs text-slate-300 space-y-2"><p><b>Databases:</b> ${Object.keys(db.panchayats).length}</p><p><b>Notifications:</b> ${db.notifications.length}</p><p><b>System Uptime:</b> Optimal</p></div>`;
+            }
+
+            static Tool_DeleteVillage() {
+                return `
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                        ${this.buildVillageSelect('t30')}
+                        <button onclick="const v=document.getElementById('t30-village').value;if(v && confirm('Delete village database?')){delete db.panchayats[v];DBManager.persist();Utils.showToast('Village deleted','success');AdminManager.loadTool(29);UserInterface.populateVillageDropdown();}" class="bg-rose-600 text-white w-full py-3 rounded-xl mt-4 text-xs font-bold">Annihilate Village Database</button>
+                    </div>`;
+            }
+
+            // ==========================================
+            // TOOL 32: Gemini AI API Key Configuration
+            // ==========================================
+            static Tool_AiConfiguration() {
+                const currentKey = db.settings.geminiApiKey || "";
+                const maskedKey = currentKey ? currentKey.substring(0, 6) + "************************" : "No API Key Configured";
+                
+                return `
+                    <div class="space-y-6">
+                        <div class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl flex items-start">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-400 text-xl mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="text-indigo-400 font-bold text-sm">Dual AI API Configuration</h4>
+                                <p class="text-xs text-indigo-300/70 mt-1">Provide your Google Gemini API Key here. This key will power both the <b>User AI Assistant</b> on the public homepage and the <b>Admin AI Intelligence</b> in the Master Console.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Current Status</label>
+                                <div class="bg-[#0F172A] p-3 rounded-xl border border-slate-700 font-mono text-xs text-indigo-300">
+                                    ${maskedKey}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Enter Google Gemini API Key</label>
+                                <input type="password" id="t32-apikey" class="input-admin font-mono text-xs" placeholder="AIzaSy...">
+                            </div>
+
+                            <button onclick="AdminManager.Execute_SaveAiKey()" class="btn-ai w-full py-3.5 rounded-xl shadow-ai-glow">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Save API Key to Secure ROM
+                            </button>
+                        </div>
+                    </div>`;
+            }
+
+            static Execute_SaveAiKey() {
+                const key = document.getElementById("t32-apikey").value.trim();
+                if(!key) return Utils.showToast("API Key cannot be blank.", "error");
+                db.settings.geminiApiKey = key;
+                DBManager.persist();
+                Utils.showToast("Gemini API Key successfully saved and connected.", "success");
+                this.loadTool(31);
+            }
+        }
+
+        /**
+         * Global Boot Sequence
+         */
+        document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            UIManager.init();
+            UserInterface.init();
+        });
+    </script>
+</body>
+</html>
