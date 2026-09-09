@@ -529,6 +529,11 @@
         body.high-contrast .tiranga-ai-float { background:#000 !important; color:#fff !important; border-color:#fff !important; box-shadow:none !important; }
 
     </style>
+/* ================================================================
+   PORTAL V2 UX LAYER — TIRANGA WITHOUT REBUILDING THE ORIGINAL UI
+   Virtual pages, bilingual UI, draggable AI controls, chat overlays.
+   This layer intentionally preserves the original DOM/features.
+   ================================================================ */
 <style id="portal-v2-ux">
 :root{--tr-saffron:#ff9933;--tr-white:#fff;--tr-green:#138808;--tr-blue:#000080;--tr-ink:#172033}
 html{scroll-behavior:smooth}
@@ -569,6 +574,70 @@ body.portal-v2{background:#f7f8fa!important}
 #admin-dashboard-container .bg-premium-gold{background:#ff9933!important;color:#000080!important}
 .portal-admin-top-actions{display:flex;align-items:center;gap:.5rem}
 @media(max-width:700px){#portal-page-nav{top:64px;border-radius:14px}.portal-page-btn{padding:.6rem .75rem}.portal-ai-overlay{padding:.45rem}.portal-ai-chat{height:calc(100vh - .9rem);border-radius:20px}.tiranga-ai-float{width:52px!important;height:52px!important}.tiranga-ai-float .tiranga-ai-label{display:none!important}}
+</style>
+
+
+<style id="portal-app-shell-v3">
+:root{--app-navy:#10233f;--app-saffron:#f59e0b;--app-green:#138a45;--app-cream:#f7faf8;--app-border:#e5e9ef;--app-text:#182334;--app-muted:#667085;--app-shadow:0 18px 45px rgba(16,35,63,.10)}
+body.portal-v2{background:linear-gradient(180deg,#f7faf8 0%,#fff 38%,#f5f8fb 100%)!important;color:var(--app-text)}
+body.portal-v2:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 10% 0%,rgba(245,158,11,.09),transparent 28%),radial-gradient(circle at 95% 35%,rgba(19,138,69,.07),transparent 25%)}
+body.portal-v2 main{max-width:1280px!important;padding-top:18px!important;padding-bottom:100px!important;gap:18px!important}
+#portal-page-nav{display:none!important}
+.portal-page{width:100%}
+.portal-page-head{display:none!important}
+.portal-app-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:start}
+.portal-app-rail{position:sticky;top:78px;background:rgba(255,255,255,.92);border:1px solid var(--app-border);border-radius:24px;padding:12px;box-shadow:var(--app-shadow);backdrop-filter:blur(18px);z-index:30}
+.portal-app-brand{padding:15px 14px 18px;border-bottom:1px solid var(--app-border);margin-bottom:10px}
+.portal-app-brand .mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#f59e0b 0 33%,#fff 33% 66%,#138a45 66%);display:grid;place-items:center;box-shadow:0 8px 20px rgba(16,35,63,.12);font-size:18px;color:#10233f}
+.portal-app-brand strong{display:block;font-size:14px;color:var(--app-navy);margin-top:10px}
+.portal-app-brand span{display:block;font-size:11px;color:var(--app-muted);margin-top:3px}
+.portal-app-nav{display:grid;gap:6px}
+.portal-app-nav button{border:0;background:transparent;border-radius:14px;padding:11px 12px;display:flex;align-items:center;gap:10px;color:#667085;font-weight:700;font-size:12px;text-align:left;cursor:pointer;transition:.2s}
+.portal-app-nav button:hover{background:#f2f5f8;color:var(--app-navy);transform:translateX(2px)}
+.portal-app-nav button.active{background:linear-gradient(135deg,#10233f,#18395f);color:#fff;box-shadow:0 10px 22px rgba(16,35,63,.18)}
+.portal-app-nav i{width:18px;text-align:center}
+.portal-app-main{min-width:0}
+.portal-home-hero{border-radius:28px;padding:25px 28px;background:linear-gradient(135deg,#10233f 0%,#1b4165 62%,#0e713d 100%);color:#fff;box-shadow:0 20px 50px rgba(16,35,63,.20);position:relative;overflow:hidden;margin-bottom:16px}
+.portal-home-hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-85px;top:-120px;border:55px solid rgba(255,255,255,.06)}
+.portal-home-hero .tricolor-line{height:4px;border-radius:4px;background:linear-gradient(90deg,#ff8c00 0 33%,#fff 33% 66%,#159447 66%);width:110px;margin-bottom:14px}
+.portal-home-hero h1{font-size:clamp(24px,3vw,36px);line-height:1.1;margin:0;letter-spacing:-.03em;font-weight:900}
+.portal-home-hero p{max-width:700px;color:rgba(255,255,255,.76);font-size:13px;margin:9px 0 0;line-height:1.65}
+.portal-home-hero .hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;position:relative;z-index:2}
+.portal-home-hero .hero-actions button{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.11);color:#fff;border-radius:12px;padding:10px 13px;font-size:11px;font-weight:800;cursor:pointer;backdrop-filter:blur(8px)}
+.portal-home-hero .hero-actions button.primary{background:#fff;color:#10233f;border-color:#fff}
+.portal-home-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:16px;margin-bottom:16px}
+.portal-panel{background:rgba(255,255,255,.94);border:1px solid var(--app-border);border-radius:22px;box-shadow:0 12px 34px rgba(16,35,63,.07);overflow:hidden}
+.portal-panel-head{padding:17px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.portal-panel-head h3{margin:0;color:var(--app-navy);font-size:15px;font-weight:900}
+.portal-panel-head p{margin:4px 0 0;color:var(--app-muted);font-size:10px;line-height:1.5}
+.portal-panel-head button{border:0;background:#f2f5f8;color:#10233f;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer}
+.portal-notice-list{padding:0 12px 12px;max-height:245px;overflow:auto}
+.portal-notice{display:flex;gap:11px;padding:11px 7px;border-top:1px solid #eef1f4}
+.portal-notice:first-child{border-top:0}
+.portal-notice-icon{flex:0 0 32px;width:32px;height:32px;border-radius:10px;background:#fff5e8;color:#e27b00;display:grid;place-items:center}
+.portal-notice b{font-size:11px;color:#243044;display:block;line-height:1.4}
+.portal-notice span{font-size:9px;color:#8a94a6;display:block;margin-top:3px}
+.portal-empty{padding:25px 15px;text-align:center;color:#8a94a6;font-size:11px}
+.portal-analytics{padding:18px}
+.portal-analytics-top{display:flex;align-items:center;gap:18px}
+.portal-donut{width:152px;height:152px;border-radius:50%;position:relative;flex:0 0 152px;background:conic-gradient(#10233f 0deg,#10233f 0deg,#e8edf2 0deg 360deg);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(16,35,63,.04)}
+.portal-donut:after{content:"";width:98px;height:98px;border-radius:50%;background:#fff;position:absolute;box-shadow:inset 0 0 0 1px #eef1f4}
+.portal-donut .donut-center{position:relative;z-index:2;text-align:center}.portal-donut .donut-center strong{font-size:25px;color:#10233f;display:block;line-height:1}.portal-donut .donut-center span{font-size:9px;color:#8a94a6;display:block;margin-top:5px}
+.portal-analytics-copy{min-width:0}.portal-analytics-copy h4{font-size:14px;color:#10233f;margin:0 0 4px;font-weight:900}.portal-analytics-copy p{font-size:10px;color:#667085;line-height:1.55;margin:0 0 10px}
+.portal-leader{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;margin-top:7px}.portal-leader .bar{height:7px;border-radius:99px;background:#edf0f3;overflow:hidden;flex:1}.portal-leader .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#10233f,#138a45)}.portal-leader em{font-style:normal;font-weight:900;color:#10233f;width:38px;text-align:right}
+.portal-analytics-foot{margin-top:13px;padding:9px 10px;background:#f7faf8;border-radius:11px;color:#6b7280;font-size:9px;line-height:1.45;border:1px solid #e8eee9}
+.portal-feature-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.portal-feature{border:1px solid var(--app-border);background:#fff;border-radius:17px;padding:14px 12px;cursor:pointer;text-align:left;box-shadow:0 7px 20px rgba(16,35,63,.05);transition:.2s;min-height:110px}.portal-feature:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(16,35,63,.10)}
+.portal-feature .ico{width:34px;height:34px;border-radius:11px;background:#f1f5f9;color:#10233f;display:grid;place-items:center;margin-bottom:10px}.portal-feature b{display:block;font-size:11px;color:#172033}.portal-feature span{display:block;font-size:9px;color:#7a8495;margin-top:4px;line-height:1.45}
+.portal-home-voting{margin-top:2px}
+.portal-home-voting #voting-section{border-radius:24px!important;box-shadow:0 12px 34px rgba(16,35,63,.08)!important}
+.portal-app-status{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;color:#667085}.portal-app-status .dot{width:7px;height:7px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.10)}
+.portal-bottom-nav{display:none}
+#portal-page-services .portal-service-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#portal-page-ai #user-ai-section{margin-top:0!important}
+#portal-page-voting{display:none!important}
+@media(max-width:980px){.portal-app-layout{grid-template-columns:1fr}.portal-app-rail{display:none}.portal-bottom-nav{display:grid;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.94);border:1px solid #dfe5ea;border-radius:19px;padding:7px;box-shadow:0 16px 40px rgba(16,35,63,.18);backdrop-filter:blur(18px)}.portal-bottom-nav button{border:0;background:transparent;border-radius:13px;padding:8px 4px;color:#7a8495;font-size:9px;font-weight:800}.portal-bottom-nav button i{display:block;font-size:15px;margin-bottom:3px}.portal-bottom-nav button.active{background:#10233f;color:#fff}.portal-home-grid{grid-template-columns:1fr}.portal-feature-grid{grid-template-columns:repeat(2,1fr)}#portal-page-services .portal-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){body.portal-v2 main{padding-left:10px!important;padding-right:10px!important}.portal-home-hero{padding:20px;border-radius:22px}.portal-home-hero h1{font-size:26px}.portal-analytics-top{align-items:flex-start}.portal-donut{width:120px;height:120px;flex-basis:120px}.portal-donut:after{width:78px;height:78px}.portal-donut .donut-center strong{font-size:20px}.portal-feature-grid{grid-template-columns:repeat(2,1fr);gap:8px}.portal-feature{min-height:105px;padding:12px 10px}#portal-page-services .portal-service-grid{grid-template-columns:1fr!important}.portal-home-grid{gap:10px}}
 </style>
 
 </head>
@@ -3622,13 +3691,7 @@ body.portal-v2{background:#f7f8fa!important}
         window.GeminiService=GeminiService;
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Anti-tamper logic (Basic wrapper to prevent casual console inspection)
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('keydown', e => {
-                if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) || (e.ctrlKey && e.keyCode === 85)) {
-                    e.preventDefault();
-                }
-            });
+            // Browser inspection and context-menu blocking are disabled.
 
             // Initialize Modules
             UIManager.init();
@@ -3768,6 +3831,222 @@ body.portal-v2{background:#f7f8fa!important}
     PortalLanguage.add('ai_placeholder','अपना सवाल लिखें...','Type your question...');
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,0);
+})();
+</script>
+
+
+<script id="portal-app-shell-v3-js">
+(function(){
+  'use strict';
+  const qs=(s,r=document)=>r.querySelector(s);
+  const esc=(v)=>{const d=document.createElement('div');d.textContent=v??'';return d.innerHTML};
+  function villageData(){
+    const d=window.db||window.DBManager?.get?.()||{};
+    const ps=d.panchayats||{}; const first=Object.values(ps)[0];
+    return {db:d,ps,first};
+  }
+  function aggregate(p){
+    const rows=[]; let total=0,cands=0;
+    if(!p)return {rows,total,cands};
+    for(let w=1;w<=Number(p.totalWards||0);w++){
+      const wd=p.wardsData?.[w]; if(!wd)continue;
+      (wd.candidates||[]).forEach(c=>{const v=Number(wd.votes?.[c.id]||0);rows.push({c,v,ward:w});total+=v;cands++});
+    }
+    rows.sort((a,b)=>b.v-a.v); return {rows,total,cands};
+  }
+  function renderAnalytics(){
+    const host=qs('#portal-home-analytics'); if(!host)return;
+    const {ps,first}=villageData();
+    let selectedId=qs('#user-panchayat-select')?.value;
+    const p=ps[selectedId]||first; const a=aggregate(p);
+    const top=a.rows.slice(0,4), max=Math.max(1,...top.map(x=>x.v));
+    const topTotal=top.reduce((n,x)=>n+x.v,0);
+    const lead=top[0]?.v||0; const leadPct=a.total?Math.round(lead/a.total*100):0;
+    const grad=top.length?top.map((x,i)=>`${['#10233f','#138a45','#f59e0b','#8a94a6'][i]} ${a.total?Math.round(x.v/a.total*100):0/360*360}deg`).join(','):' #e8edf2 0deg 360deg';
+    // Build a valid conic gradient with cumulative stops.
+    let cursor=0,parts=[]; const palette=['#10233f','#138a45','#f59e0b','#8a94a6'];
+    top.forEach((x,i)=>{const pct=a.total?x.v/a.total*100:0;parts.push(`${palette[i]} ${cursor}% ${cursor+pct}%`);cursor+=pct});
+    if(cursor<100)parts.push(`#e8edf2 ${cursor}% 100%`);
+    const village=esc(p?.name||'Village');
+    host.innerHTML=`<div class="portal-panel-head"><div><h3>गांव विश्लेषण / Village analytics</h3><p>${village} · दर्ज वोटों के आधार पर लाइव शेयर स्नैपशॉट</p></div><button onclick="PortalApp.refreshAnalytics()"><i class="fa-solid fa-rotate"></i></button></div><div class="portal-analytics"><div class="portal-analytics-top"><div class="portal-donut" style="background:conic-gradient(${parts.join(',')})"><div class="donut-center"><strong>${leadPct}%</strong><span>शीर्ष शेयर</span></div></div><div class="portal-analytics-copy"><h4>${top[0]?esc(top[0].c.name):'अभी कोई वोट नहीं'}</h4><p>${a.total?`कुल ${a.total} दर्ज वोट · ${a.cands} उम्मीदवार`:'वोट दर्ज होने पर उम्मीदवार शेयर यहां दिखेंगे।'}</p>${top.map((x,i)=>`<div class="portal-leader"><span>${esc(x.c.name)}</span><div class="bar"><div class="fill" style="width:${a.total?Math.round(x.v/a.total*100):0}%"></div></div><em>${a.total?Math.round(x.v/a.total*100):0}%</em></div>`).join('')}</div></div><div class="portal-analytics-foot"><i class="fa-solid fa-circle-info"></i> यह आधिकारिक परिणाम या भविष्यवाणी नहीं है। यह केवल पोर्टल में दर्ज वोटों का शेयर-स्नैपशॉट है। / This is not an official result or prediction.</div></div>`;
+  }
+  function renderNotices(){
+    const host=qs('#portal-home-notices'); if(!host)return;
+    const ns=Array.isArray(window.db?.notifications)?[...window.db.notifications].reverse():[];
+    host.innerHTML=ns.length?ns.slice(0,8).map(n=>`<div class="portal-notice"><div class="portal-notice-icon"><i class="fa-solid fa-bell"></i></div><div><b>${esc(n.text||n.title||'Notification')}</b><span>${n.date?new Date(n.date).toLocaleString():''}</span></div></div>`).join(''):`<div class="portal-empty">कोई नई सूचना नहीं / No new notifications</div>`;
+  }
+  function featureAction(key){
+    const actions={
+      candidates:()=>{PortalApp.go('home');setTimeout(()=>qs('#user-candidates-wrapper')?.scrollIntoView({behavior:'smooth',block:'start'}),120)},
+      wards:()=>{try{UserInterface.showWardSnapshot()}catch(e){try{window.UIManager?.showTextModal?.('Ward Snapshot','Select a village to view ward information.')}catch(_){}}},
+      summary:()=>{try{UserInterface.showVillageSummary()}catch(e){}},
+      help:()=>{try{UserInterface.showPortalHelp()}catch(e){}},
+      feedback:()=>{const x=qs('#user-suggestion-text'); if(x){x.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>x.focus(),300)}else{try{PortalApp.go('services')}catch(e){}}}
+    }; actions[key]?.();
+  }
+  window.PortalApp={
+    init(){
+      const home=qs('#portal-page-home'); if(!home)return;
+      // Put the existing voting section on the home dashboard without duplicating its IDs.
+      // Insert dashboard shell before the existing notification/voting content.
+      if(!qs('#portal-app-layout')){
+        const votingPage=qs('#portal-page-voting');
+        const vote=qs('#voting-section');
+        if(vote && votingPage && vote.parentElement===votingPage){ votingPage.removeChild(vote); }
+        const children=[...home.children];
+        const firstContent=children.find(x=>x.id!=='portal-page-nav');
+        const layout=document.createElement('div');layout.id='portal-app-layout';layout.className='portal-app-layout';
+        const rail=document.createElement('aside');rail.className='portal-app-rail';rail.innerHTML=`<div class="portal-app-brand"><div class="mark"><i class="fa-solid fa-building-columns"></i></div><strong>ई-पंचायत पोर्टल</strong><span>Digital village services</span></div><nav class="portal-app-nav"><button class="active" data-app-nav="home"><i class="fa-solid fa-house"></i>होम</button><button data-app-nav="voting"><i class="fa-solid fa-check-to-slot"></i>मतदान</button><button data-app-nav="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI सहायता</button><button data-app-nav="services"><i class="fa-solid fa-grid-2"></i>सभी सेवाएं</button></nav>`;
+        const content=document.createElement('div');content.className='portal-app-main';
+        content.innerHTML=`<section class="portal-home-hero"><div class="tricolor-line"></div><h1>आपके गांव की डिजिटल चुनाव सेवा</h1><p>मतदान, उम्मीदवार जानकारी, गांव विश्लेषण, सूचनाएं और नागरिक सहायता — एक साफ और आसान ऐप-जैसे इंटरफेस में।</p><div class="hero-actions"><button class="primary" onclick="document.getElementById('voting-section')?.scrollIntoView({behavior:'smooth',block:'start'})"><i class="fa-solid fa-check-to-slot"></i> अभी मतदान देखें</button><button onclick="UIManager.openNotificationsModal()"><i class="fa-solid fa-bell"></i> सभी सूचनाएं</button><span class="portal-app-status"><span class="dot"></span> पोर्टल सक्रिय</span></div></section><div class="portal-home-grid"><section class="portal-panel" id="portal-home-notification-panel"><div class="portal-panel-head"><div><h3>ताज़ा सूचनाएं / Notifications</h3><p>ग्राम पंचायत की नवीनतम घोषणाएं</p></div><button onclick="UIManager.openNotificationsModal()">सभी देखें</button></div><div id="portal-home-notices" class="portal-notice-list"></div></section><section class="portal-panel" id="portal-home-analytics"></section></div><section class="portal-feature-grid"><button class="portal-feature" onclick="PortalApp.newFeature('calendar')"><span class="ico"><i class="fa-solid fa-calendar-days"></i></span><b>चुनाव कैलेंडर</b><span>मुख्य चरण और रिमाइंडर एक जगह</span></button><button class="portal-feature" onclick="PortalApp.newFeature('guide')"><span class="ico"><i class="fa-solid fa-list-check"></i></span><b>मतदाता गाइड</b><span>मतदान से पहले आसान चेकलिस्ट</span></button><button class="portal-feature" onclick="PortalApp.newFeature('compare')"><span class="ico"><i class="fa-solid fa-scale-balanced"></i></span><b>उम्मीदवार तुलना</b><span>उपलब्ध रिकॉर्ड साथ-साथ देखें</span></button><button class="portal-feature" onclick="PortalApp.newFeature('turnout')"><span class="ico"><i class="fa-solid fa-chart-line"></i></span><b>टर्नआउट ट्रैकर</b><span>दर्ज वोटों की वर्तमान स्थिति</span></button><button class="portal-feature" onclick="PortalApp.newFeature('updates')"><span class="ico"><i class="fa-solid fa-bell"></i></span><b>नोटिफिकेशन सेंटर</b><span>सभी सूचनाएं और घोषणाएं</span></button></section>`;
+        const originalWrap=document.createElement('div');originalWrap.id='portal-original-home-content';
+        children.forEach(ch=>{if(ch.id!=='portal-page-nav')originalWrap.appendChild(ch)});
+        if(vote){ vote.classList.add('portal-home-voting'); originalWrap.appendChild(vote); }
+        content.appendChild(originalWrap);
+        layout.append(rail,content); home.innerHTML=''; home.appendChild(layout);
+        const bottom=document.createElement('nav');bottom.className='portal-bottom-nav';bottom.innerHTML=`<button class="active" data-app-nav="home"><i class="fa-solid fa-house"></i>होम</button><button data-app-nav="voting"><i class="fa-solid fa-check-to-slot"></i>मतदान</button><button data-app-nav="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</button><button data-app-nav="services"><i class="fa-solid fa-grid-2"></i>सेवाएं</button>`;document.body.appendChild(bottom);
+        document.querySelectorAll('[data-app-nav]').forEach(b=>b.addEventListener('click',()=>this.go(b.dataset.appNav)));
+      }
+      // Existing notification ticker is still retained inside original content.
+      renderNotices(); renderAnalytics();
+      qs('#user-panchayat-select')?.addEventListener('change',()=>setTimeout(renderAnalytics,50));
+      // Re-render when vote/candidate state changes through the portal's existing functions.
+      setInterval(()=>{renderNotices();renderAnalytics()},3000);
+    },
+    go(page){
+      const set=(name)=>document.querySelectorAll('[data-app-nav]').forEach(b=>b.classList.toggle('active',b.dataset.appNav===name));
+      if(page==='home'||page==='voting'){
+        document.querySelectorAll('.portal-page').forEach(p=>p.classList.remove('portal-active'));qs('#portal-page-home')?.classList.add('portal-active');set('voting'===page?'voting':'home');
+        if(page==='voting')setTimeout(()=>qs('#voting-section')?.scrollIntoView({behavior:'smooth',block:'start'}),80); else window.scrollTo({top:0,behavior:'smooth'});
+      }else{window.PortalPages?.show?.(page);set(page)}
+    },
+    feature(k){featureAction(k)},
+    newFeature(key){
+      const {ps,first}=villageData(); const p=ps[qs('#user-panchayat-select')?.value]||first; const a=aggregate(p);
+      if(key==='calendar') return UIManager.showTextModal('चुनाव कैलेंडर / Election calendar', '<div class="space-y-3 text-sm"><div><b>1. उम्मीदवार जानकारी</b><br><span class="text-slate-500">पोर्टल में उपलब्ध रिकॉर्ड देखें।</span></div><div><b>2. मतदाता तैयारी</b><br><span class="text-slate-500">गांव चुनें और मतदान निर्देश पढ़ें।</span></div><div><b>3. मतदान</b><br><span class="text-slate-500">उम्मीदवार चुनकर उपलब्ध मतदान प्रक्रिया पूरी करें।</span></div><div><b>4. परिणाम</b><br><span class="text-slate-500">आधिकारिक परिणाम केवल अधिकृत स्रोत से मान्य होंगे।</span></div><div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-500">यह पोर्टल-स्तरीय सहायता कैलेंडर है; तारीखें/कानूनी समय-सीमाएं यहां स्वतः आधिकारिक नहीं मानी जानी चाहिए।</div></div>');
+      if(key==='guide') return UIManager.showTextModal('मतदाता गाइड / Voter guide', '<div class="space-y-3 text-sm"><p>✓ अपना सही गांव चुनें।</p><p>✓ उम्मीदवार का नाम, वार्ड, पद और अन्य उपलब्ध जानकारी जांचें।</p><p>✓ मतदान से पहले अपनी पसंद ध्यान से चुनें।</p><p>✓ मोबाइल सत्यापन/मतदान प्रक्रिया में केवल अपनी जानकारी का उपयोग करें।</p><p>✓ किसी भी आधिकारिक घोषणा के लिए अधिकृत चुनाव प्राधिकरण की सूचना देखें।</p></div>');
+      if(key==='compare'){
+        if(!a.rows.length) return UIManager.showTextModal('उम्मीदवार तुलना / Candidate compare','<p class="text-sm text-slate-500">इस गांव में अभी तुलना के लिए उम्मीदवार रिकॉर्ड उपलब्ध नहीं हैं।</p>');
+        const rows=a.rows.slice(0,6); const html='<div class="space-y-2">'+rows.map((x,i)=>`<div class="border border-slate-200 rounded-xl p-3 bg-white"><div class="flex justify-between gap-3"><b>${esc(x.c.name)}</b><span class="text-xs font-bold text-slate-500">Ward ${x.ward}</span></div><div class="text-xs text-slate-500 mt-1">${esc(x.c.post||'—')} · ${esc(x.c.partyName||'Independent')} · ${esc(x.c.category||'—')}</div><div class="text-xs mt-2"><b>${x.v}</b> दर्ज वोट</div></div>`).join('')+'</div>';
+        return UIManager.showTextModal('उम्मीदवार तुलना / Candidate compare',html);
+      }
+      if(key==='turnout'){
+        const voters=Object.keys(window.db?.votersLog||{}).length; const villageVotes=a.total; const base=Math.max(voters,villageVotes); const pct=base?Math.min(100,Math.round(villageVotes/base*100)):0;
+        return UIManager.showTextModal('टर्नआउट ट्रैकर / Turnout tracker',`<div class="text-center p-3"><div class="text-5xl font-black text-slate-800">${pct}%</div><p class="text-sm text-slate-500 mt-2">पोर्टल में उपलब्ध वोट-लॉग के आधार पर संकेतक</p><div class="mt-4 h-3 bg-slate-100 rounded-full overflow-hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#f59e0b,#138a45)"></div></div><p class="text-xs text-slate-400 mt-3">यह आधिकारिक मतदाता टर्नआउट आंकड़ा नहीं है।</p></div>`);
+      }
+      if(key==='updates') return UIManager.openNotificationsModal();
+    },
+    refreshAnalytics(){renderAnalytics();renderNotices()}
+  };
+  window.addEventListener('load',()=>setTimeout(()=>PortalApp.init(),100));
+  // Also expose a small refresh hook for existing voting/candidate functions.
+  const oldCast=window.VotingEngine?.castVote;
+  if(oldCast){window.VotingEngine.castVote=async function(){const r=await oldCast.apply(this,arguments);setTimeout(()=>PortalApp.refreshAnalytics(),100);return r}}
+})();
+</script>
+
+
+<style id="portal-app-redesign-2026">
+/* ================================================================
+   APP-FIRST PUBLIC UI — keeps original IDs/features, changes only
+   presentation. Admin remains a separate full-screen destination.
+   ================================================================ */
+:root{--app-navy:#10233f;--app-saffron:#ff9933;--app-green:#138808;--app-cream:#f7f8f5;--app-line:#e7ece8;--app-muted:#718096}
+body.portal-v2{background:linear-gradient(180deg,#f4f7f4 0,#fff 28%,#f6f8f6 100%)!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body.portal-v2 #main-header{background:rgba(255,255,255,.94)!important;color:var(--app-navy)!important;border-bottom:1px solid #e6ebe7;box-shadow:0 3px 18px rgba(16,35,63,.06)!important;backdrop-filter:blur(18px)}
+body.portal-v2 #main-header .text-white{color:var(--app-navy)!important}body.portal-v2 #main-header .text-slate-400,body.portal-v2 #main-header .text-slate-300{color:#64748b!important}
+body.portal-v2 #main-header .bg-white\/5{background:#f5f7f6!important;border-color:#e2e8e4!important;color:var(--app-navy)!important}
+body.portal-v2 main{max-width:1180px!important;padding-top:18px!important;padding-bottom:88px!important}
+#portal-page-nav{display:none!important}
+.portal-app-layout{display:block!important;max-width:1080px;margin:0 auto}
+.portal-app-rail{display:none!important}
+.portal-app-main{width:100%;min-width:0}
+.portal-bottom-nav{display:grid!important;position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(520px,calc(100vw - 24px));z-index:10000;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.96)!important;border:1px solid #dfe7e1!important;border-radius:24px!important;padding:7px!important;box-shadow:0 18px 45px rgba(16,35,63,.17)!important;backdrop-filter:blur(20px)}
+.portal-bottom-nav button{border:0!important;background:transparent!important;border-radius:18px!important;padding:9px 5px!important;color:#7b8794!important;font-size:10px!important;font-weight:850!important;transition:.2s ease}.portal-bottom-nav button i{display:block;font-size:16px;margin-bottom:3px}.portal-bottom-nav button.active{background:var(--app-navy)!important;color:#fff!important}
+.portal-home-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff 0%,#f8fbf8 65%,#eef6ef 100%)!important;border:1px solid #e1e9e3!important;border-radius:30px!important;padding:30px!important;box-shadow:0 12px 38px rgba(16,35,63,.07)!important;margin-bottom:14px}
+.portal-home-hero:after{content:"";position:absolute;right:-70px;top:-70px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,153,51,.20),rgba(255,153,51,0) 70%);pointer-events:none}
+.portal-home-hero .tricolor-line{height:5px;border-radius:99px;background:linear-gradient(90deg,var(--app-saffron) 0 33%,#fff 33% 66%,var(--app-green) 66%);margin-bottom:18px}
+.portal-home-hero h1{font-size:clamp(25px,4vw,40px)!important;line-height:1.12!important;color:var(--app-navy)!important;letter-spacing:-.035em!important;max-width:720px}
+.portal-home-hero p{max-width:700px!important;font-size:13px!important;line-height:1.7!important;color:#667085!important}
+.hero-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:9px!important;margin-top:18px!important}.hero-actions button{border:1px solid #dce5df!important;background:#fff!important;color:var(--app-navy)!important;border-radius:14px!important;padding:10px 14px!important;font-weight:850!important}.hero-actions button.primary{background:var(--app-navy)!important;color:#fff!important;border-color:var(--app-navy)!important}.portal-app-status{font-size:10px!important;font-weight:800!important;color:#138808!important;background:#edf8ed!important;padding:9px 11px!important;border-radius:999px!important}.portal-app-status .dot{display:inline-block;width:7px;height:7px;background:#138808;border-radius:50%;margin-right:5px}
+.portal-home-grid{display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr)!important;gap:14px!important;margin-bottom:14px!important}.portal-panel{background:#fff!important;border:1px solid #e3eae5!important;border-radius:24px!important;box-shadow:0 8px 28px rgba(16,35,63,.055)!important;overflow:hidden!important}.portal-panel-head{padding:17px 18px!important;border-bottom:1px solid #edf1ee!important}.portal-panel-head h3{font-size:14px!important;color:var(--app-navy)!important}.portal-panel-head p{font-size:10px!important;color:#7a8491!important}
+.portal-notice-list{padding:6px 10px 12px!important;max-height:365px;overflow:auto}.portal-notice{display:flex!important;align-items:flex-start!important;gap:10px!important;padding:11px 8px!important;border-bottom:1px solid #f0f3f1!important}.portal-notice:last-child{border-bottom:0}.portal-notice-icon{width:34px!important;height:34px!important;border-radius:11px!important;background:#fff4e9!important;color:var(--app-saffron)!important;display:grid!important;place-items:center!important;flex:none}.portal-notice b{display:block!important;font-size:11px!important;line-height:1.45!important;color:#243247!important}.portal-notice span{display:block!important;font-size:9px!important;color:#98a1ad!important;margin-top:3px}.portal-empty{padding:25px 12px;text-align:center;color:#8b95a1;font-size:11px}
+.portal-analytics{padding:17px!important}.portal-analytics-top{gap:17px!important}.portal-donut{width:154px!important;height:154px!important;flex:0 0 154px!important;border-radius:50%!important;box-shadow:inset 0 0 0 1px rgba(16,35,63,.06),0 10px 24px rgba(16,35,63,.09)!important}.portal-donut:after{width:100px!important;height:100px!important;background:#fff!important;box-shadow:0 0 0 1px #edf1ee!important}.portal-donut .donut-center strong{font-size:28px!important;color:var(--app-navy)!important}.portal-donut .donut-center span{font-size:8px!important;color:#778292!important}.portal-analytics-copy h4{font-size:15px!important;color:var(--app-navy)!important}.portal-analytics-copy p{font-size:10px!important}.portal-leader{display:grid!important;grid-template-columns:1fr 80px 34px!important;gap:7px!important;align-items:center!important;margin:8px 0!important;font-size:9px!important}.portal-leader .bar{height:6px!important;background:#edf1ee!important;border-radius:99px!important;overflow:hidden}.portal-leader .fill{height:100%!important;background:linear-gradient(90deg,var(--app-saffron),var(--app-green))!important;border-radius:99px!important}.portal-leader em{font-style:normal!important;font-weight:900!important;color:var(--app-navy)!important;text-align:right}.portal-analytics-foot{font-size:9px!important;margin-top:10px!important}
+/* Voting is a first-class home card, immediately visible under the hero. */
+#portal-original-home-content{display:flex!important;flex-direction:column!important;gap:14px!important}.portal-home-voting{order:-2!important;margin:0!important}#portal-home-notification-panel{order:-1!important}.portal-home-voting #voting-section{border-radius:24px!important;box-shadow:0 10px 32px rgba(16,35,63,.07)!important;border:1px solid #e1e9e3!important}
+/* New feature launcher cards */
+.portal-feature-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;margin:14px 0!important}.portal-feature{min-height:125px!important;padding:14px!important;background:#fff!important;border:1px solid #e2e9e4!important;border-radius:19px!important;box-shadow:0 6px 20px rgba(16,35,63,.045)!important;text-align:left!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;transition:transform .18s,box-shadow .18s,border-color .18s!important}.portal-feature:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(16,35,63,.09)!important;border-color:#cddbd1!important}.portal-feature .ico{width:38px!important;height:38px!important;border-radius:12px!important;display:grid!important;place-items:center!important;background:#f0f7f1!important;color:var(--app-green)!important;margin-bottom:10px!important}.portal-feature b{font-size:11px!important;color:var(--app-navy)!important}.portal-feature>span:last-child{font-size:9px!important;color:#7d8794!important;line-height:1.45!important;margin-top:4px}
+/* Admin is deliberately not rendered as public home content. It stays a separate authenticated full-screen destination. */
+#admin-dashboard-container{z-index:11000!important}
+#admin-login-modal{z-index:12000!important}
+@media(max-width:900px){.portal-home-grid{grid-template-columns:1fr!important}.portal-feature-grid{grid-template-columns:repeat(3,1fr)!important}}
+@media(max-width:620px){body.portal-v2 main{padding:10px 10px 92px!important}.portal-home-hero{padding:20px!important;border-radius:23px!important}.portal-home-hero h1{font-size:27px!important}.hero-actions button{flex:1 1 auto}.portal-home-grid{gap:10px!important}.portal-feature-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}.portal-feature{min-height:112px!important;padding:12px!important}.portal-donut{width:122px!important;height:122px!important;flex-basis:122px!important}.portal-donut:after{width:79px!important;height:79px!important}.portal-donut .donut-center strong{font-size:21px!important}.portal-leader{grid-template-columns:1fr 62px 30px!important}}
+</style>
+
+
+<script id="portal-app-redesign-controller">
+(function(){
+  const q=s=>document.querySelector(s);
+  function addFiveMoreFeatures(){
+    const grid=q('.portal-feature-grid'); if(!grid || grid.dataset.more5==='1')return; grid.dataset.more5='1';
+    const cards=[
+      ['candidate-search','fa-magnifying-glass','उम्मीदवार खोज','नाम, पार्टी या वार्ड से उपलब्ध उम्मीदवार खोजें'],
+      ['village-card','fa-map-location-dot','गांव प्रोफाइल','चुने हुए गांव की वार्ड और चुनाव जानकारी एक जगह देखें'],
+      ['share-village','fa-share-nodes','गांव साझा करें','गांव की पोर्टल जानकारी परिवार और समुदाय के साथ साझा करें'],
+      ['print-summary','fa-print','सारांश प्रिंट करें','चुने हुए गांव की उपलब्ध चुनाव जानकारी का प्रिंट-फ्रेंडली सारांश'],
+      ['quick-help','fa-circle-question','त्वरित सहायता','मतदान, उम्मीदवार और पोर्टल उपयोग के आसान जवाब']
+    ];
+    cards.forEach(([key,icon,title,sub])=>{const b=document.createElement('button');b.className='portal-feature';b.type='button';b.onclick=()=>window.PortalApp?.newFeature?.(key);b.innerHTML=`<span class="ico"><i class="fa-solid ${icon}"></i></span><b>${title}</b><span>${sub}</span>`;grid.appendChild(b)});
+  }
+  function putVotingFirst(){
+    const content=q('#portal-original-home-content'), vote=q('#voting-section'), hero=q('.portal-home-hero'), panels=q('.portal-home-grid');
+    if(!content||!vote||!hero)return;
+    vote.classList.add('portal-home-voting');
+    // Voting remains on the home page and is placed directly after the hero.
+    if(vote.parentElement!==content) content.appendChild(vote);
+    const originalOrder=[...content.children];
+    if(originalOrder.indexOf(vote)>1) content.insertBefore(vote, originalOrder[0]||null);
+    // Keep the notification + analytics dashboard directly after voting.
+    if(panels && panels.parentElement!==content) content.insertBefore(panels, vote.nextSibling);
+  }
+  function adminAsSeparateRoute(){
+    const btns=document.querySelectorAll('#main-header button[onclick*="openAdminLoginModal"]');
+    btns.forEach(btn=>{btn.setAttribute('data-admin-route','1');btn.onclick=function(){location.hash='admin';window.UIManager?.openAdminLoginModal?.()}});
+    if(location.hash==='#admin') setTimeout(()=>window.UIManager?.openAdminLoginModal?.(),150);
+    window.addEventListener('hashchange',()=>{if(location.hash==='#admin')window.UIManager?.openAdminLoginModal?.()});
+  }
+  function addMoreFeatureHandlers(){
+    const old=window.PortalApp?.newFeature;
+    if(!old || old.__v3)return;
+    function fn(key){
+      if(['candidate-search','village-card','share-village','print-summary','quick-help'].includes(key)){
+        const select=q('#user-panchayat-select'); const p=window.db?.panchayats?.[select?.value] || Object.values(window.db?.panchayats||{})[0];
+        const rows=[]; if(p)for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w];(wd?.candidates||[]).forEach(c=>rows.push({...c,ward:w,votes:Number(wd?.votes?.[c.id]||0)}))}
+        if(key==='candidate-search'){
+          const html=`<div class="space-y-3"><input id="portal-candidate-filter" class="input-premium w-full" placeholder="नाम / पार्टी / वार्ड खोजें"><div id="portal-candidate-results" class="space-y-2">${rows.map(r=>`<div class="portal-cand-row border rounded-xl p-3 bg-white" data-search="${String(r.name||'')} ${String(r.partyName||'')} ${r.ward}"><b>${esc(r.name||'—')}</b><div class="text-xs text-slate-500">Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')}</div></div>`).join('')||'<p class="text-sm text-slate-500">कोई उम्मीदवार रिकॉर्ड उपलब्ध नहीं है।</p>'}</div></div>`;
+          window.UIManager?.showTextModal?.('उम्मीदवार खोज / Candidate search',html);
+          setTimeout(()=>{const inp=q('#portal-candidate-filter');inp?.addEventListener('input',()=>{const s=inp.value.toLowerCase();document.querySelectorAll('.portal-cand-row').forEach(x=>x.style.display=x.dataset.search.toLowerCase().includes(s)?'':'none')})},80); return;
+        }
+        if(key==='village-card'){
+          if(!p)return window.UIManager?.showTextModal?.('गांव प्रोफाइल / Village profile','कोई गांव उपलब्ध नहीं है।');
+          return window.UIManager?.showTextModal?.('गांव प्रोफाइल / Village profile',`<div class="space-y-2 text-sm"><div><b>गांव:</b> ${esc(p.name||'—')}</div><div><b>कुल वार्ड:</b> ${p.totalWards||0}</div><div><b>उम्मीदवार:</b> ${rows.length}</div><div><b>दर्ज वोट:</b> ${rows.reduce((n,r)=>n+r.votes,0)}</div><div class="p-3 rounded-xl bg-slate-50 text-xs text-slate-500">उपलब्ध पोर्टल रिकॉर्ड का सारांश।</div></div>`);
+        }
+        if(key==='share-village'){
+          const name=p?.name||'गांव'; const text=`${name} — ई-पंचायत चुनाव पोर्टल`; if(navigator.share)navigator.share({title:name,text,url:location.href}).catch(()=>{}); else navigator.clipboard?.writeText(location.href).then(()=>window.Utils?.showToast?.('पोर्टल लिंक कॉपी हो गया।','success')); return;
+        }
+        if(key==='print-summary'){
+          const name=p?.name||'Village'; const win=(rows.sort((a,b)=>b.votes-a.votes)[0]); const w=window.open('','_blank','width=800,height=900'); if(!w)return; w.document.write(`<html lang="hi"><head><title>${esc(name)} - Summary</title><style>body{font-family:Arial;padding:32px;color:#10233f}h1{border-bottom:4px solid #ff9933;padding-bottom:10px}.row{padding:10px;border-bottom:1px solid #ddd}small{color:#667085}</style></head><body><h1>${esc(name)} चुनाव सारांश</h1><p>उपलब्ध पोर्टल रिकॉर्ड</p>${rows.map(r=>`<div class="row"><b>${esc(r.name||'—')}</b><br><small>Ward ${r.ward} · ${esc(r.post||'—')} · ${esc(r.partyName||'Independent')} · दर्ज वोट ${r.votes}</small></div>`).join('')}<p style="margin-top:24px;font-size:12px;color:#777">सबसे अधिक दर्ज वोट: ${win?esc(win.name):'—'} (${win?.votes||0})</p></body></html>`);w.document.close();setTimeout(()=>w.print(),250); return;
+        }
+        if(key==='quick-help') return window.UIManager?.showTextModal?.('त्वरित सहायता / Quick help',`<div class="space-y-3 text-sm"><p><b>मतदान:</b> होम पर मतदान कार्ड खोलें, गांव चुनें और उपलब्ध उम्मीदवार सूची देखें।</p><p><b>उम्मीदवार:</b> सभी उपलब्ध उम्मीदवारों को गांव के रिकॉर्ड के अनुसार देखें; वार्ड नंबर भी दिखता है।</p><p><b>AI:</b> फ्लोटिंग AI बटन दबाकर हिंदी या English में सहायता लें।</p><p><b>एडमिन:</b> एडमिन बटन अलग authenticated admin destination खोलता है।</p></div>`);
+      }
+      return old.apply(this,arguments);
+    }
+    fn.__v3=true; window.PortalApp.newFeature=fn;
+  }
+  function boot(){
+    setTimeout(()=>{putVotingFirst();addFiveMoreFeatures();addMoreFeatureHandlers();adminAsSeparateRoute();},250);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
 
