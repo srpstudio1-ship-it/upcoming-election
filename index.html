@@ -706,14 +706,18 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
                 </div>
 </div>
 </div>
-<!-- PROFESSIONAL NOTIFICATION CENTER -->
-<section aria-labelledby="ep-notification-title" class="ep-section ep-notification-section" id="ep-notification-section">
-<div class="ep-section-head">
-<div><h2 data-en="Latest Notification" data-hi="अंतिम सूचना" id="ep-notification-title">अंतिम सूचना</h2><p data-en="See the latest portal notice here. Open the complete notification centre for all current and past updates." data-hi="पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।">पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।</p></div>
-<button class="ep-outline-btn" onclick="EPWebsite.openNotifications()" type="button"><i class="fa-solid fa-bell"></i><span data-en="Open All Notifications" data-hi="सभी सूचनाएँ">सभी सूचनाएँ</span></button>
+
+        <!-- Tool 1: Advanced Search -->
+<div class="glass p-6 rounded-3xl shadow-premium-soft flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mr-3">
+<i class="fa-solid fa-magnifying-glass text-lg"></i>
 </div>
-<div class="ep-notification-grid" id="ep-notification-grid"></div>
-</section>
+<h3 class="font-bold text-sm text-slate-800">Search Registry</h3>
+</div>
+<input class="input-premium py-2 text-xs mb-3" id="candidate-search-input" oninput="UserInterface.handleSearch()" placeholder="Search name, party, ward..." type="text"/>
+<div class="flex-grow max-h-40 overflow-y-auto custom-scrollbar space-y-2 pr-1" id="candidate-search-results"></div>
+</div>
 <!-- PUBLIC OPINION DISCLAIMER -->
 <div class="ep-disclaimer"><i class="fa-solid fa-circle-info"></i><div data-en="This website is only for voluntary public-opinion voting. It is not an official election portal of the Government of India, Government of Rajasthan, Election Commission of India, or State Election Commission, and its figures are not official election results. Use official government sources for actual elections, voting and results." data-hi="यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।">यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।</div></div>
 <!-- SECTION 2: Dynamic Village Selector & Candidates Gallery -->
