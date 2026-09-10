@@ -706,7 +706,14 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
                 </div>
 </div>
 </div>
-
+<!-- PROFESSIONAL NOTIFICATION CENTER -->
+<section aria-labelledby="ep-notification-title" class="ep-section ep-notification-section" id="ep-notification-section">
+<div class="ep-section-head">
+<div><h2 data-en="Latest Notification" data-hi="अंतिम सूचना" id="ep-notification-title">अंतिम सूचना</h2><p data-en="See the latest portal notice here. Open the complete notification centre for all current and past updates." data-hi="पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।">पोर्टल की सबसे नई सूचना यहाँ देखें। पूरी सूचना सूची खोलकर सभी पुराने और नए अपडेट पढ़ें।</p></div>
+<button class="ep-outline-btn" onclick="EPWebsite.openNotifications()" type="button"><i class="fa-solid fa-bell"></i><span data-en="Open All Notifications" data-hi="सभी सूचनाएँ">सभी सूचनाएँ</span></button>
+</div>
+<div class="ep-notification-grid" id="ep-notification-grid"></div>
+</section>
 <!-- PUBLIC OPINION DISCLAIMER -->
 <div class="ep-disclaimer"><i class="fa-solid fa-circle-info"></i><div data-en="This website is only for voluntary public-opinion voting. It is not an official election portal of the Government of India, Government of Rajasthan, Election Commission of India, or State Election Commission, and its figures are not official election results. Use official government sources for actual elections, voting and results." data-hi="यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।">यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।</div></div>
 <!-- SECTION 2: Dynamic Village Selector & Candidates Gallery -->
@@ -6013,6 +6020,269 @@ function boot(){
  setTimeout(installAdminTool,3000);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,150),{once:true});else setTimeout(boot,150);
+})();
+</script>
+
+
+<style id="ep-voter-evidence-reference-style">
+/* Additive evidence-reference layer. Existing features/content are preserved. */
+.ep-voter-ref-box{margin-top:14px;padding:14px;border:1px solid #cbd9d0;border-radius:14px;background:linear-gradient(135deg,#fff4e5,#fff,#edf8ef)}
+.ep-voter-ref-box strong{color:#082742}.ep-voter-ref-box .ref-value{display:block;margin-top:6px;font-family:"Courier New",monospace;font-size:14px;font-weight:900;letter-spacing:.08em;color:#0b2945;word-break:break-all}
+.ep-voter-ref-box small{display:block;margin-top:6px;color:#68788a;font-size:10px;line-height:1.55}
+.ep-voter-ref-admin{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border-radius:7px;background:#fff4e5;border:1px solid #f1d5b4;color:#7a4a13;font-family:"Courier New",monospace;font-size:9px;font-weight:900}
+.ep-voter-ref-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ep-voter-ref-actions button{border:1px solid #bfcfca;background:#fff;color:#082742;padding:9px 12px;border-radius:9px;font-size:10px;font-weight:850;cursor:pointer}
+.ep-voter-ref-actions button:hover{background:#082742;color:#fff}
+@media(max-width:620px){.ep-voter-ref-actions{display:grid;grid-template-columns:1fr}.ep-voter-ref-actions button{width:100%}}
+</style>
+<script id="ep-voter-evidence-reference-layer">
+(function(){
+  'use strict';
+
+  const REF_VERSION='EP-VR-1';
+  const q=(s,r=document)=>r.querySelector(s);
+  const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const D=()=>window.db||window.DBManager?.get?.()||window.DBManager?.getState?.()||null;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const toast=(m,type='info')=>{try{window.Utils?.showToast?.(m,type)}catch{}};
+  const persist=()=>{try{window.DBManager?.persist?.()}catch{}};
+
+  function randomPart(){
+    try{
+      if(window.crypto?.getRandomValues){
+        const a=new Uint32Array(3);crypto.getRandomValues(a);
+        return [...a].map(x=>x.toString(36).toUpperCase().padStart(7,'0')).join('');
+      }
+    }catch{}
+    return Math.random().toString(36).slice(2)+Date.now().toString(36);
+  }
+
+  function makeReference(voteId){
+    const clean=String(voteId||'V').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(-10);
+    return `EVR-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${clean}-${randomPart().slice(0,8)}`;
+  }
+
+  function ensureReference(id,rec){
+    if(!rec || typeof rec!=='object') return '';
+    if(!rec.evidenceReference){
+      rec.evidenceReference=makeReference(id);
+      rec.evidenceReferenceVersion=REF_VERSION;
+    }
+    return String(rec.evidenceReference);
+  }
+
+  function syncAll(){
+    const db=D(); if(!db)return [];
+    db.votersLog=db.votersLog||{};
+    const out=[];
+    Object.entries(db.votersLog).forEach(([id,r])=>{
+      if(!r||typeof r!=='object')return;
+      const ref=ensureReference(id,r);
+      if(ref)out.push({id,ref,r});
+    });
+    try{persist()}catch{}
+    return out;
+  }
+
+  function findLatest(){
+    const db=D(); if(!db)return null;
+    const arr=syncAll();
+    arr.sort((a,b)=>String(b.r.time||'').localeCompare(String(a.r.time||'')));
+    return arr[0]||null;
+  }
+
+  function candidateName(r){
+    const db=D(),p=db?.panchayats?.[r?.pId],w=p?.wardsData?.[r?.wNo];
+    const c=(w?.candidates||[]).find(x=>String(x.id)===String(r?.cId));
+    return c?.name||r?.candidate||'Unknown candidate';
+  }
+
+  function villageName(r){
+    const db=D();
+    return db?.panchayats?.[r?.pId]?.name||r?.village||r?.pId||'Unknown village';
+  }
+
+  function attachReceipt(ref,record){
+    let box=q('#ep-voter-reference-receipt');
+    if(!box){
+      box=document.createElement('div');
+      box.id='ep-voter-reference-receipt';
+      box.className='ep-voter-ref-box';
+      const target=q('#voting-section .bg-premium-nav')||q('#voting-section');
+      target?.appendChild(box);
+    }
+    if(!box)return;
+    box.innerHTML=`
+      <strong><i class="fa-solid fa-receipt"></i> Voter Evidence Number / मतदाता साक्ष्य संख्या</strong>
+      <span class="ref-value">${esc(ref)}</span>
+      <small>
+        This is a portal-generated evidence reference for this public-opinion transaction.
+        It is <b>not</b> an official Election Commission voter/EPIC number and does not establish official voter identity.
+      </small>
+      <div class="ep-voter-ref-actions">
+        <button type="button" id="ep-copy-voter-ref"><i class="fa-regular fa-copy"></i> Copy Reference</button>
+        <button type="button" id="ep-print-voter-ref"><i class="fa-solid fa-print"></i> Print Receipt</button>
+      </div>`;
+    q('#ep-copy-voter-ref',box)?.addEventListener('click',async()=>{
+      try{await navigator.clipboard.writeText(ref);toast('Evidence reference copied.','success')}
+      catch{toast('Copy is not available.','error')}
+    });
+    q('#ep-print-voter-ref',box)?.addEventListener('click',()=>printReceipt(ref,record));
+  }
+
+  function printReceipt(ref,record){
+    const w=window.open('','_blank','noopener,noreferrer');
+    if(!w){toast('Print window was blocked by the browser.','error');return}
+    const db=D();
+    const p=db?.panchayats?.[record?.pId];
+    const c=(p?.wardsData?.[record?.wNo]?.candidates||[]).find(x=>String(x.id)===String(record?.cId));
+    const html=`<!doctype html><html><head><meta charset="utf-8"><title>Public Opinion Evidence Receipt</title>
+      <style>body{font-family:Arial,sans-serif;padding:32px;color:#183047}h1{font-size:22px} .ref{font:900 18px "Courier New",monospace;letter-spacing:.08em;padding:14px;border:2px solid #183047;border-radius:10px}table{width:100%;border-collapse:collapse;margin-top:18px}td{border:1px solid #d9e2e9;padding:9px;font-size:12px}td:first-child{font-weight:800;width:180px;background:#f5f8fa}.note{margin-top:18px;font-size:10px;line-height:1.6;color:#617286}</style></head>
+      <body><h1>Public Opinion Evidence Receipt</h1><div class="ref">${esc(ref)}</div>
+      <table><tr><td>Vote ID</td><td>${esc(record?.id||'')}</td></tr>
+      <tr><td>Time</td><td>${esc(record?.r?.time||'')}</td></tr>
+      <tr><td>Village</td><td>${esc(p?.name||record?.r?.pId||'')}</td></tr>
+      <tr><td>Ward</td><td>${esc(record?.r?.wNo||'')}</td></tr>
+      <tr><td>Candidate</td><td>${esc(c?.name||record?.r?.candidate||'')}</td></tr>
+      <tr><td>Party</td><td>${esc(c?.partyName||c?.party||record?.r?.party||'Independent')}</td></tr></table>
+      <div class="note">This receipt is generated by an independent public-opinion website. The evidence number is portal-generated, not an official voter/EPIC number. Browser-side storage does not by itself provide an immutable court-grade chain of custody.</div>
+      </body></html>`;
+    w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
+  }
+
+  function patchVote(){
+    const V=window.VotingEngine;
+    if(!V?.castVote || V.castVote.__epVoterRefPatched)return false;
+    const old=V.castVote.bind(V);
+    const wrapped=async function(){
+      const before=new Set(Object.keys(D()?.votersLog||{}));
+      const result=await old();
+      const db=D(); if(!db)return result;
+      const candidates=Object.entries(db.votersLog||{}).filter(([id])=>!before.has(id));
+      let hit=candidates.sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
+      if(!hit){
+        hit=Object.entries(db.votersLog||{}).sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
+      }
+      if(hit){
+        const ref=ensureReference(hit[0],hit[1]);
+        persist();
+        attachReceipt(ref,{id:hit[0],r:hit[1]});
+      }
+      return result;
+    };
+    wrapped.__epVoterRefPatched=true;
+    V.castVote=wrapped;
+    return true;
+  }
+
+  function patchEvidenceTable(){
+    const m=q('#ep-v8-evidence-modal'); if(!m)return;
+    const table=q('#ep-v8-preview table',m); if(!table)return;
+    const rows=syncAll();
+    const byId=new Map(rows.map(x=>[String(x.id),x]));
+    const head=table.querySelector('thead tr');
+    if(head && !head.querySelector('[data-ep-ref-head]')){
+      const th=document.createElement('th');th.dataset.epRefHead='1';th.textContent='Voter Evidence No.';head.appendChild(th);
+    }
+    qa('tbody tr',table).forEach(tr=>{
+      if(tr.querySelector('[data-ep-ref-cell]'))return;
+      const voteCell=tr.children[1];const id=voteCell?.textContent?.trim()||'';
+      const hit=byId.get(id);
+      const td=document.createElement('td');td.dataset.epRefCell='1';
+      td.innerHTML=hit?`<span class="ep-voter-ref-admin">${esc(hit.ref)}</span>`:'—';
+      tr.appendChild(td);
+    });
+  }
+
+  function addRegisterButton(){
+    const m=q('#ep-v8-evidence-modal');if(!m)return;
+    const main=q('#ep-v8-main',m);if(!main)return;
+    let bar=q('#ep-voter-reference-register',m);
+    if(!bar){
+      bar=document.createElement('div');
+      bar.id='ep-voter-reference-register';
+      bar.className='ep-voter-ref-actions';
+      bar.innerHTML=`<button type="button" id="ep-download-voter-reference-register"><i class="fa-solid fa-id-card"></i> Download Voter Evidence Reference Register</button>
+      <button type="button" id="ep-copy-voter-reference-register"><i class="fa-regular fa-copy"></i> Copy Reference Register JSON</button>`;
+      main.prepend(bar);
+    }
+    q('#ep-download-voter-reference-register',bar).onclick=()=>downloadRegister();
+    q('#ep-copy-voter-reference-register',bar).onclick=async()=>{
+      const data=registerData();
+      try{await navigator.clipboard.writeText(JSON.stringify(data,null,2));toast('Reference register copied.','success')}
+      catch{toast('Copy is not available.','error')}
+    };
+  }
+
+  function registerData(){
+    const db=D(); if(!db)return [];
+    return syncAll().map(x=>{
+      const r=x.r,p=db?.panchayats?.[r.pId],w=p?.wardsData?.[r.wNo],c=(w?.candidates||[]).find(z=>String(z.id)===String(r.cId));
+      return {
+        voterEvidenceNumber:x.ref,
+        evidenceReferenceVersion:r.evidenceReferenceVersion||REF_VERSION,
+        voteId:x.id,
+        time:r.time||'',
+        villageId:r.pId||'',
+        village:p?.name||r.village||'',
+        ward:Number(r.wNo||0)||0,
+        candidateId:r.cId||'',
+        candidate:c?.name||r.candidate||'',
+        party:c?.partyName||c?.party||r.party||'Independent',
+        post:c?.post||r.post||'',
+        category:c?.category||r.category||''
+      };
+    });
+  }
+
+  function downloadRegister(){
+    const data=registerData();
+    const payload={
+      documentType:'PortalGeneratedVoterEvidenceReferenceRegister',
+      version:REF_VERSION,
+      generatedAt:new Date().toISOString(),
+      official:false,
+      records:data,
+      limitation:'The Voter Evidence Number is generated by this portal. It is not an official electoral-roll/EPIC number and does not independently prove voter identity.'
+    };
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='Voter_Evidence_Reference_Register_'+Date.now()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+    toast('Voter evidence reference register downloaded.','success');
+  }
+
+  function showLatestReceipt(){
+    const hit=findLatest();if(!hit)return;
+    attachReceipt(hit.ref,hit);
+  }
+
+  function boot(){
+    syncAll();
+    patchVote();
+    setTimeout(patchVote,100);
+    setTimeout(patchVote,500);
+    setTimeout(patchVote,1500);
+    showLatestReceipt();
+
+    const obs=new MutationObserver(()=>{
+      patchVote();
+      patchEvidenceTable();
+      if(q('#ep-v8-evidence-modal.ep-open'))addRegisterButton();
+    });
+    try{obs.observe(document.body,{childList:true,subtree:true})}catch{}
+    setInterval(()=>{patchVote();patchEvidenceTable();if(q('#ep-v8-evidence-modal.ep-open'))addRegisterButton()},1200);
+  }
+
+  window.EPVoterEvidenceReference={
+    version:REF_VERSION,
+    sync:syncAll,
+    latest:findLatest,
+    register:registerData,
+    downloadRegister,
+    makeReference
+  };
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,250),{once:true});
+  else setTimeout(boot,250);
 })();
 </script>
 
