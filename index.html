@@ -4955,5 +4955,433 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   window.EPWebsite=window.EPWebsite||{};window.EPWebsite.openAI=openCitizenAI;window.EPWebsite.openNotifications=openNotifications;window.EPWebsite.refreshResults=renderResult;window.EPWebsite.setLanguage=setLang;
 })();
 </script>
+
+<!-- ============================================================
+     EP FINAL STABILITY / V5 PATCH
+     - single Hindi-first language policy
+     - canonical village/ward migration
+     - Naya Morseem candidate recovery
+     - 20 citizen services
+     - exactly 40 admin tools
+     - admin test-vote injection (clearly marked TEST data)
+     - village-scoped share links
+     - stronger rendering/persistence guards
+     ============================================================ -->
+<style id="ep-v5-stability-css">
+  :root{--v5-s:#ff9933;--v5-w:#fff;--v5-g:#138808;--v5-n:#06233d}
+  body{background:linear-gradient(180deg,#fff0dc 0%,#fffaf5 32%,#f5fbf6 66%,#e2f3e5 100%)!important}
+  body:before{background:linear-gradient(90deg,var(--v5-s) 0 33.333%,#fff 33.333% 66.666%,var(--v5-g) 66.666%)!important}
+  .ep-v5-scope{position:sticky;top:0;z-index:190;background:linear-gradient(90deg,#ff9933,#fff,#138808);padding:5px;text-align:center;font-size:11px;font-weight:900;color:#06233d;box-shadow:0 4px 18px rgba(6,35,61,.16)}
+  .ep-v5-scope-inner{background:#06233d;color:#fff;border-radius:9px;padding:8px 12px;display:inline-flex;gap:9px;align-items:center}
+  .ep-v5-admin-card{border:1px solid rgba(255,153,51,.28);border-radius:18px;padding:20px;background:linear-gradient(135deg,rgba(255,153,51,.16),rgba(255,255,255,.07),rgba(19,136,8,.13))}
+  .ep-v5-danger{border-color:rgba(255,90,90,.35)!important}
+  #ep-v5-share-backdrop{position:fixed;inset:0;z-index:99990;background:rgba(3,20,34,.70);display:none;align-items:center;justify-content:center;padding:18px}
+  #ep-v5-share-backdrop>div{width:min(620px,96vw);background:linear-gradient(135deg,#fff2df,#fff,#edf8ef);border-radius:22px;padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+  #ep-v5-share-backdrop input{width:100%;padding:12px;border:1px solid #bdd2c2;border-radius:10px;background:#fff}
+  .ep-v5-lock{pointer-events:none;opacity:.72}
+  @media(max-width:700px){.ep-v5-scope{font-size:10px}.ep-v5-scope-inner{max-width:95vw}}
+</style>
+<script id="ep-v5-stability-runtime">
+(function(){
+'use strict';
+
+const V5 = {
+  lang(){ try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'} },
+  setLang(v){ try{localStorage.setItem('EP_LANG',v==='en'?'en':'hi');localStorage.setItem('EP_AI_LANG',v==='en'?'en':'hi')}catch{} },
+  t(hi,en){return this.lang()==='hi'?hi:en},
+  esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))},
+  db(){try{return window.DBManager?.get?.()||window.db||window.__EP_DB__||null}catch{return null}},
+  save(){try{window.DBManager?.persist?.();return true}catch(e){console.error(e);return false}},
+  toast(m,type='info'){try{window.Utils?.showToast?.(m,type)}catch{alert(m)}},
+  all(p){
+    const out=[]; if(!p)return out;
+    for(let w=1;w<=Number(p.totalWards||0);w++){
+      const wd=p.wardsData?.[w]||{candidates:[],votes:{}};
+      const cs=Array.isArray(wd.candidates)?wd.candidates:Object.values(wd.candidates||{});
+      cs.forEach(c=>{if(c&&c.id)out.push({p,w,wd,c,votes:Number(wd.votes?.[c.id]||0)})});
+    }
+    return out;
+  },
+  ensureWard(p,w){
+    p.wardsData=p.wardsData||{};
+    if(!p.wardsData[w])p.wardsData[w]={wardNo:Number(w),reservation:'General',candidates:[],votes:{}};
+    const wd=p.wardsData[w];
+    wd.wardNo=Number(w);wd.candidates=Array.isArray(wd.candidates)?wd.candidates:[];wd.votes=wd.votes||{};
+    return wd;
+  }
+};
+
+/* ---------- database repair ---------- */
+function v5Normalize(){
+  const D=V5.db(); if(!D)return;
+  D.settings=D.settings||{};
+  if(D.settings.votingEnabled===undefined)D.settings.votingEnabled=true;
+  if(D.settings.publicResultsVisible===undefined)D.settings.publicResultsVisible=true;
+  if(D.settings.maintenanceMode===undefined)D.settings.maintenanceMode=false;
+  D.notifications=Array.isArray(D.notifications)?D.notifications:[];
+  D.suggestions=Array.isArray(D.suggestions)?D.suggestions:[];
+  D.votersLog=D.votersLog&&typeof D.votersLog==='object'?D.votersLog:{};
+  D.villageVotedLog=D.villageVotedLog&&typeof D.villageVotedLog==='object'?D.villageVotedLog:{};
+  D.panchayats=D.panchayats&&typeof D.panchayats==='object'?D.panchayats:{};
+
+  const canonical=[
+    ['bagoda','BAGODA',1],['bali','BALI',1],['bhalani','BHALANI',1],['bijaliya','BIJALIYA',1],
+    ['chenpura','CHENPURA',1],['dhumbadiya','DHUMBADIYA',1],['dungarava','DUNGARAVA',1],['jaisawas','JAISAWAS',1],
+    ['jeran','JERAN',1],['jetu','JETU',1],['kaleti','KALETI',1],['kavatara','KAVATARA',1],
+    ['khokha','KHOKHA',1],['kuka','KUKA',1],['lakhani','LAKHANI',1],['lunavas','LUNAVAS',1],
+    ['morseem','MORSEEM',13],['nandiya','NANDIYA',1],['narsana','NARSANA',1],['navapuradhvecha','NAVAPURA DHVECHA',1],
+    ['nayamorseem','NAYA MORSEEM',11],['rah','RAH',1],['rangala','RANGALA',1],['rauta','RAUTA',1],
+    ['sevadi','SEVADI',1],['sobadawas','SOBADAWAS',1],['vadabhadavi','VADA BHADAVI',1],['wadanaya','WADA NAYA',1]
+  ];
+  canonical.forEach(([id,name,wards])=>{
+    let p=D.panchayats[id];
+    if(!p){
+      const aliases=Object.keys(D.panchayats).find(k=>{
+        const x=D.panchayats[k];return String(x?.name||'').toLowerCase().replace(/[^a-z0-9]/g,'')===name.toLowerCase().replace(/[^a-z0-9]/g,'');
+      });
+      if(aliases){p=D.panchayats[aliases];D.panchayats[id]=p;if(aliases!==id)delete D.panchayats[aliases]}
+    }
+    if(!p)p={id,name,totalWards:wards,wardsData:{}};
+    p.id=id;p.name=p.name||name;p.totalWards=Math.max(1,Number(p.totalWards||wards));p.wardsData=p.wardsData||{};
+    for(let w=1;w<=p.totalWards;w++)V5.ensureWard(p,w);
+    for(let w=1;w<=p.totalWards;w++){
+      const wd=V5.ensureWard(p,w);
+      wd.candidates.forEach(c=>{
+        c.id=String(c.id||('CM_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)));
+        c.village=p.name;c.wardNo=Number(c.wardNo||w);
+        c.partyName=c.partyName||c.party||'Independent';
+        c.personImage=c.personImage||c.image||'';
+        c.symbolImage=c.symbolImage||c.symbol||'';
+        if(wd.votes[c.id]===undefined)wd.votes[c.id]=0;
+      });
+    }
+    D.panchayats[id]=p;
+  });
+
+  /* Recover candidates saved in alternate/legacy shapes. */
+  Object.entries(D.panchayats).forEach(([id,p])=>{
+    p.id=id;p.wardsData=p.wardsData||{};
+    const possible=p.candidates||p.candidateList||p.candidateData;
+    if(Array.isArray(possible)){
+      possible.forEach(c=>{
+        const w=Math.min(Number(p.totalWards||1),Math.max(1,Number(c.wardNo||c.ward||1)));
+        const wd=V5.ensureWard(p,w);
+        if(!wd.candidates.some(x=>String(x.id)===String(c.id))){
+          const cc={...c,id:String(c.id||('CM_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7))),village:p.name,wardNo:w,partyName:c.partyName||c.party||'Independent',personImage:c.personImage||c.image||'',symbolImage:c.symbolImage||c.symbol||''};
+          wd.candidates.push(cc);if(wd.votes[cc.id]===undefined)wd.votes[cc.id]=Number(c.votes||0);
+        }
+      });
+    }
+  });
+  V5.save();
+}
+
+/* ---------- village scoped share mode ---------- */
+function decodeShare(){
+  try{
+    const m=location.hash.match(/(?:^#|&)epv=([^&]+)/);
+    if(!m)return '';
+    const raw=decodeURIComponent(m[1]);
+    const id=atob(raw.replace(/-/g,'+').replace(/_/g,'/'));
+    const D=V5.db();return D?.panchayats?.[id]?id:'';
+  }catch{return ''}
+}
+function encodeShare(id){
+  return btoa(String(id)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function scopedVillage(){
+  const id=decodeShare(); if(id)return id;
+  const D=V5.db();const sel=document.getElementById('user-panchayat-select');
+  if(sel?.value&&D?.panchayats?.[sel.value])return sel.value;
+  try{const s=localStorage.getItem('EP_SAVED_VILLAGE');if(s&&D?.panchayats?.[s])return s}catch{}
+  return D?.panchayats?.nayamorseem? 'nayamorseem' : Object.keys(D?.panchayats||{})[0]||'';
+}
+function installScopeBanner(){
+  const id=decodeShare(); if(!id)return;
+  const D=V5.db(),p=D?.panchayats?.[id];if(!p)return;
+  let b=document.getElementById('ep-v5-scope');
+  if(!b){b=document.createElement('div');b.id='ep-v5-scope';b.className='ep-v5-scope';document.body.prepend(b)}
+  b.innerHTML=`<span class="ep-v5-scope-inner"><i class="fa-solid fa-lock"></i>${V5.t('साझा किया गया क्षेत्र: ','Shared area: ')}<strong>${V5.esc(p.name)}</strong> · ${V5.t('केवल इसी गाँव का डेटा दिखाई देगा','Only this village data is available')}</span>`;
+  const sel=document.getElementById('user-panchayat-select');
+  if(sel){sel.value=id;sel.disabled=true;sel.classList.add('ep-v5-lock');}
+  /* Do not let global services leak other villages in a scoped link. */
+  ['search','compare'].forEach(key=>{
+    document.querySelectorAll(`[data-feature="${key}"]`).forEach(x=>x.closest('article')?.remove());
+  });
+}
+function shareCurrentVillage(){
+  const id=scopedVillage(),D=V5.db(),p=D?.panchayats?.[id];
+  if(!p)return V5.toast(V5.t('पहले गाँव चुनें।','Select a village first.'),'error');
+  const url=location.href.split('#')[0]+'#epv='+encodeShare(id);
+  const d=document.createElement('div');d.innerHTML=`
+    <div class="ep-v5-admin-card">
+      <h3 style="font-size:18px;font-weight:900;color:#06233d">${V5.t('गाँव-सीमित लिंक','Village-scoped link')}</h3>
+      <p style="font-size:12px;line-height:1.6;margin:8px 0 12px">${V5.t('इस लिंक में गाँव लॉक रहेगा और सार्वजनिक दृश्य केवल चुने हुए गाँव के उम्मीदवार, वोट, परिणाम और विश्लेषण तक सीमित रहेगा।','This link locks the village and limits the public view to candidates, votes, results and analytics for the selected village.')}</p>
+      <input id="ep-v5-share-url" readonly value="${V5.esc(url)}">
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn-gold" id="ep-v5-copy" style="padding:10px 14px;border-radius:10px">${V5.t('लिंक कॉपी करें','Copy Link')}</button>
+        <button class="btn-gold" id="ep-v5-native" style="padding:10px 14px;border-radius:10px">${V5.t('शेयर करें','Share')}</button>
+      </div>
+      <small style="display:block;margin-top:10px;color:#6b7d8d">${V5.t('महत्वपूर्ण: यह ब्राउज़र-आधारित लिंक है; वास्तविक सर्वर-सुरक्षा के लिए backend authorization आवश्यक है।','Important: this is a browser-based lock; true server-side access control requires backend authorization.')}</small>
+    </div>`;
+  if(typeof window.showModal==='function')window.showModal(V5.t('गाँव साझा करें','Share Village'),d);
+  else{
+    let x=document.getElementById('ep-v5-share-backdrop');if(!x){x=document.createElement('div');x.id='ep-v5-share-backdrop';document.body.appendChild(x)}
+    x.innerHTML='';x.appendChild(d);x.style.display='flex';
+  }
+  document.getElementById('ep-v5-copy')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(url);V5.toast(V5.t('लिंक कॉपी हो गया।','Link copied.'),'success')}catch{V5.toast(url,'info')}});
+  document.getElementById('ep-v5-native')?.addEventListener('click',()=>navigator.share?navigator.share({title:p.name,text:V5.t('गाँव-सीमित जनमत पोर्टल','Village-scoped public opinion portal'),url}):V5.toast(V5.t('ब्राउज़र शेयर उपलब्ध नहीं है।','Browser sharing is unavailable.'),'error'));
+}
+
+/* ---------- stable public renderer ---------- */
+function v5FillVillage(){
+  const D=V5.db(),sel=document.getElementById('user-panchayat-select');if(!D||!sel)return;
+  const locked=decodeShare();
+  const old=locked||sel.value||'nayamorseem';
+  sel.innerHTML='';
+  const blank=new Option(V5.t('-- गाँव चुनें --','-- Select Village --'),'');sel.appendChild(blank);
+  Object.keys(D.panchayats).sort((a,b)=>String(D.panchayats[a].name||a).localeCompare(String(D.panchayats[b].name||b))).forEach(id=>{
+    const p=D.panchayats[id],o=new Option(`${p.name||id} (${Number(p.totalWards||0)} ${V5.t('वार्ड','Wards')})`,id);sel.appendChild(o);
+  });
+  if(D.panchayats[old])sel.value=old;
+  if(locked){sel.value=locked;sel.disabled=true}
+}
+function v5RenderCandidates(){
+  const D=V5.db(),sel=document.getElementById('user-panchayat-select'),grid=document.getElementById('user-candidates-grid'),wrap=document.getElementById('user-candidates-wrapper');
+  if(!D||!sel||!grid)return;
+  const id=decodeShare()||sel.value||'nayamorseem',p=D.panchayats[id];
+  if(!p){grid.innerHTML=`<div class="col-span-full ep-empty-state">${V5.t('गाँव डेटा उपलब्ध नहीं है।','Village data is unavailable.')}</div>`;wrap?.classList.remove('hidden');return}
+  sel.value=id;const rows=V5.all(p);wrap?.classList.remove('hidden');
+  const badge=document.getElementById('candidate-count-badge');if(badge)badge.innerHTML=`<i class="fa-solid fa-users mr-1"></i>${rows.length} ${V5.t('उम्मीदवार','Candidates')}`;
+  if(!rows.length){
+    grid.innerHTML=`<div class="col-span-full ep-empty-state"><strong>${V5.t('इस गाँव में अभी कोई उम्मीदवार नहीं है।','No candidates are currently registered in this village.')}</strong><p style="margin-top:6px">${V5.t('Admin में मैन्युअल उम्मीदवार प्रविष्टि से रिकॉर्ड जोड़ें।','Add the record from Admin → Manual Candidate Entry.')}</p></div>`;
+    window.__EP_SELECTED_CANDIDATE=null;return;
+  }
+  window.__EP_SELECTED_CANDIDATE=null;
+  grid.innerHTML=rows.map(x=>{
+    const c=x.c,img=c.personImage||c.image||'',sym=c.symbolImage||c.symbol||'';
+    return `<article class="ep-pro-feature" data-v5-cid="${V5.esc(c.id)}" tabindex="0" role="button" style="cursor:pointer;min-height:320px">
+      <div><div class="ep-pro-feature-top"><div class="ep-pro-icon"><i class="fa-solid fa-user"></i></div><span class="ep-pro-number">${V5.t('वार्ड','Ward')} ${x.w}</span></div>
+      <div style="display:flex;justify-content:center;margin:10px 0"><div style="position:relative;width:96px;height:96px"><div style="width:96px;height:96px;border-radius:50%;overflow:hidden;border:4px solid #fff;background:#fff;display:grid;place-items:center">${img?`<img src="${V5.esc(img)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'<i class="fa-solid fa-user" style="font-size:28px;color:#9aa9b6"></i>'}</div>${sym?`<img src="${V5.esc(sym)}" alt="" style="position:absolute;right:-7px;bottom:-3px;width:38px;height:38px;object-fit:contain;background:#fff;border:1px solid #dbe4ea;border-radius:9px;padding:3px">`:''}</div></div>
+      <h3 style="text-align:center">${V5.esc(c.name||V5.t('उम्मीदवार','Candidate'))}</h3><p style="text-align:center">${V5.esc(c.partyName||c.party||V5.t('स्वतंत्र','Independent'))}</p>
+      <div class="ep-detail-grid"><div><small>${V5.t('पद','Post')}</small><b>${V5.esc(c.post||'—')}</b></div><div><small>${V5.t('श्रेणी','Category')}</small><b>${V5.esc(c.category||x.wd.reservation||'—')}</b></div><div><small>${V5.t('आयु','Age')}</small><b>${V5.esc(c.age||'—')}</b></div></div></div>
+      <button type="button" class="ep-pro-action">${V5.t('उम्मीदवार चुनें','Select Candidate')} <i class="fa-solid fa-check"></i></button></article>`;
+  }).join('');
+  grid.querySelectorAll('[data-v5-cid]').forEach(card=>{
+    const pick=()=>{window.__EP_SELECTED_CANDIDATE=card.dataset.v5Cid;grid.querySelectorAll('[data-v5-cid]').forEach(x=>x.style.boxShadow=x===card?'0 0 0 4px rgba(255,153,51,.35)':'');};
+    card.onclick=pick;card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}};
+  });
+  v5RenderResults();v5RenderAnalytics();v5RenderStats();
+}
+function v5RenderResults(){
+  const D=V5.db(),pId=decodeShare()||document.getElementById('user-panchayat-select')?.value||'nayamorseem',p=D?.panchayats?.[pId],rank=document.getElementById('ep-result-ranking'),donut=document.getElementById('ep-result-donut');
+  if(!rank||!donut)return;
+  if(!p){rank.innerHTML=`<div class="ep-empty-state">${V5.t('गाँव चुनें।','Select a village.')}</div>`;return}
+  if(D.settings?.publicResultsVisible===false){rank.innerHTML=`<div class="ep-empty-state">${V5.t('प्रशासन ने परिणाम छिपाए हैं।','Results are hidden by the administrator.')}</div>`;return}
+  const rows=V5.all(p).sort((a,b)=>b.votes-a.votes||String(a.c.name||'').localeCompare(String(b.c.name||''))),total=rows.reduce((s,x)=>s+x.votes,0);
+  const totalEl=document.getElementById('ep-result-total'),topName=document.getElementById('ep-result-top-name'),topPct=document.getElementById('ep-result-top-pct'),topVotes=document.getElementById('ep-result-top-votes'),status=document.getElementById('ep-result-status');
+  if(totalEl)totalEl.textContent=total;
+  if(!rows.length||!total){donut.style.background='conic-gradient(#dfe7ec 0 100%)';if(topName)topName.textContent=rows.length?V5.t('अभी वोट नहीं','No votes yet'):V5.t('उम्मीदवार नहीं','No candidates');if(topPct)topPct.textContent='0%';if(topVotes)topVotes.textContent='0';if(status)status.textContent=V5.t('अभी कोई दर्ज वोट नहीं है','No recorded votes yet');rank.innerHTML=rows.map((x,i)=>`<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${V5.esc(x.c.name)}</strong><span>${V5.t('वार्ड','Ward')} ${x.w}</span></div></div><div class="ep-rank-value"><strong>0%</strong><small>0</small></div></div>`).join('');return}
+  const colors=['#ff9933','#138808','#1b4f7a','#7b61c9','#ba6a31','#4e9674','#7a8795','#d36d55'];let cur=0,parts=[];
+  rows.slice(0,8).forEach((x,i)=>{const pct=x.votes/total*100;parts.push(`${colors[i]} ${cur}% ${cur+pct}%`);cur+=pct});if(cur<100)parts.push(`#d5dee4 ${cur}% 100%`);donut.style.background=`conic-gradient(${parts.join(',')})`;
+  const top=rows[0],pct=top.votes/total*100,margin=top.votes-(rows[1]?.votes||0);if(topName)topName.textContent=top.c.name||'—';if(topPct)topPct.textContent=pct.toFixed(1)+'%';if(topVotes)topVotes.textContent=`${top.votes} ${V5.t('वोट','votes')}`;if(status)status.textContent=margin===0?V5.t('बराबरी','Tie'):V5.t(`अंतर ${margin} वोट`,`Lead ${margin} vote${margin===1?'':'s'}`);
+  rank.innerHTML=rows.slice(0,20).map((x,i)=>{const q=x.votes/total*100;return `<div class="ep-rank-row"><span class="ep-rank-no">${i+1}</span><div class="ep-rank-main"><div class="ep-rank-label"><strong>${V5.esc(x.c.name)}</strong><span>${V5.t('वार्ड','Ward')} ${x.w}</span></div><div class="ep-rank-track"><span style="width:${q.toFixed(2)}%;background:${colors[i%colors.length]}"></span></div></div><div class="ep-rank-value"><strong>${q.toFixed(1)}%</strong><small>${x.votes}</small></div></div>`}).join('');
+}
+function v5RenderAnalytics(){
+  const D=V5.db(),id=decodeShare()||document.getElementById('user-panchayat-select')?.value||'nayamorseem',p=D?.panchayats?.[id],wb=document.getElementById('ep-ward-analytics'),pb=document.getElementById('ep-party-analytics');if(!wb||!pb)return;
+  if(!p){wb.innerHTML='';pb.innerHTML='';return}
+  const rows=V5.all(p),total=rows.reduce((s,x)=>s+x.votes,0),wdata=[];for(let w=1;w<=Number(p.totalWards||0);w++){const a=rows.filter(x=>x.w===w),v=a.reduce((s,x)=>s+x.votes,0);wdata.push({w,v,c:a.length})}
+  const max=Math.max(1,...wdata.map(x=>x.v));wb.innerHTML=wdata.map(x=>`<div class="ep-analytics-row"><span>${V5.t('वार्ड','Ward')} ${x.w}</span><div class="ep-bar-track"><div class="ep-bar" style="width:${x.v/max*100}%"></div></div><strong>${x.v}</strong></div><div style="font-size:9px;color:#81909f;margin:-7px 0 7px 96px">${x.c} ${V5.t('उम्मीदवार','candidates')} · ${total?(x.v/total*100).toFixed(1):'0.0'}%</div>`).join('');
+  const map={};rows.forEach(x=>{const k=x.c.partyName||x.c.party||'Independent';map[k]=(map[k]||0)+x.votes});const arr=Object.entries(map).sort((a,b)=>b[1]-a[1]);pb.innerHTML=arr.length?arr.map(([k,v])=>`<div class="ep-party-line"><div><strong>${V5.esc(k)}</strong><small>${v} ${V5.t('वोट','votes')}</small></div><div><div class="ep-bar-track"><div class="ep-bar green" style="width:${total?v/total*100:0}%"></div></div><b>${total?(v/total*100).toFixed(1):'0.0'}%</b></div></div>`).join(''):`<div class="ep-empty-state">${V5.t('अभी कोई वोट नहीं।','No votes recorded yet.')}</div>`;
+}
+function v5RenderStats(){
+  const D=V5.db(),id=decodeShare()||document.getElementById('user-panchayat-select')?.value||'nayamorseem',p=D?.panchayats?.[id],rows=p?V5.all(p):[],votes=rows.reduce((s,x)=>s+x.votes,0);
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=String(v)};
+  set('ep-stat-villages',decodeShare()?'1':Object.keys(D?.panchayats||{}).length);set('ep-stat-wards',p?.totalWards||0);set('ep-stat-candidates',rows.length);set('ep-stat-votes',votes);set('ep-stat-selected-village',p?.name||V5.t('गाँव चुनें','Select a village'));const top=rows.slice().sort((a,b)=>b.votes-a.votes)[0];set('ep-stat-leader',top?.c?.name||V5.t('अभी कोई वोट नहीं','No votes yet'));set('ep-stat-updated',new Date().toLocaleTimeString(V5.lang()==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'}));
+}
+function v5Refresh(){v5Normalize();v5FillVillage();v5RenderCandidates();v5RenderResults();v5RenderAnalytics();v5RenderStats();installScopeBanner();}
+
+/* ---------- exactly 40 admin tools: repair/replace the existing list ---------- */
+function admin40(){
+  const A=window.AdminManager,D=V5.db();if(!A||!Array.isArray(A.toolsList))return;
+  const old=A.toolsList.slice();
+  const getVillageOptions=()=>Object.entries(V5.db()?.panchayats||{}).map(([id,p])=>`<option value="${V5.esc(id)}">${V5.esc(p.name||id)}</option>`).join('');
+  const tools=[
+    ['Manage Villages','fa-map-location-dot',()=>A.Tool_ManageVillages?.()||`<div class="ep-v5-admin-card">${V5.t('गाँव प्रबंधन उपलब्ध है।','Village management is available.')}</div>`],
+    ['Ward Reservations','fa-list-ol',()=>A.Tool_WardReservations?.()||'' ],
+    ['Gemini Candidate Assistant','fa-wand-magic-sparkles',()=>A.Tool_PDFExtraction?.()||'' ],
+    ['Manual Candidate Entry','fa-user-plus',()=>A.Tool_ManualCandidate?.()||'' ],
+    ['Edit Candidate Data','fa-user-pen',()=>A.Tool_EditCandidate?.()||'' ],
+    ['Remove Candidate','fa-user-minus',()=>A.Tool_RemoveCandidate?.()||'' ],
+    ['Publish Notification','fa-bullhorn',()=>A.Tool_PublishNotification?.()||'' ],
+    ['Manage Notifications','fa-bell-slash',()=>A.Tool_ManageNotifications?.()||'' ],
+    ['Vote Audit','fa-server',()=>A.Tool_VoteAudit?.()||'' ],
+    ['Reset Ward Votes','fa-arrow-rotate-left',()=>A.Tool_ResetWards?.()||'' ],
+    ['Global Voting Control','fa-toggle-on',()=>A.Tool_GlobalVoting?.()||'' ],
+    ['Public Results Visibility','fa-eye-slash',()=>A.Tool_PublicResults?.()||'' ],
+    ['Suggestions Queue','fa-comments',()=>A.Tool_SuggestionsQueue?.()||'' ],
+    ['Clear Suggestions','fa-trash-can',()=>A.Tool_ClearSuggestions?.()||'' ],
+    ['Change Admin Password','fa-key',()=>A.Tool_ChangePassword?.()||'' ],
+    ['Export JSON Database','fa-database',()=>A.Tool_ExportJSON?.()||'' ],
+    ['Import JSON Database','fa-file-import',()=>A.Tool_ImportJSON?.()||'' ],
+    ['Factory Reset','fa-radiation',()=>A.Tool_FactoryReset?.()||'' ],
+    ['Voter Security Logs','fa-shield-halved',()=>A.Tool_VoterLogs?.()||'' ],
+    ['Purge Security Logs','fa-eraser',()=>A.Tool_PurgeLogs?.()||'' ],
+    ['System Title','fa-font',()=>A.Tool_SystemTitle?.()||'' ],
+    ['Bulk Template','fa-layer-group',()=>A.Tool_BulkTemplate?.()||'' ],
+    ['Generate Gazette','fa-file-contract',()=>A.Tool_GazetteReport?.()||'' ],
+    ['Maintenance Mode','fa-person-digging',()=>A.Tool_MaintenanceMode?.()||'' ],
+    ['Emergency Shutdown','fa-siren-on',()=>A.Tool_EmergencyShutdown?.()||'' ],
+    ['Custom Alert','fa-message-exclamation',()=>A.Tool_AlertBulletin?.()||'' ],
+    ['Storage Metrics','fa-hard-drive',()=>A.Tool_StorageMetrics?.()||'' ],
+    ['Synthetic Load Test','fa-robot',()=>A.Tool_SimulateVotes?.()||'' ],
+    ['Wipe Polling Data','fa-broom',()=>A.Tool_WipeVotes?.()||'' ],
+    ['System Health Analytics','fa-heart-pulse',()=>A.Tool_SystemHealth?.()||'' ],
+    ['Delete Village Database','fa-building-circle-xmark',()=>A.Tool_DeleteVillage?.()||'' ],
+    ['Gemini AI Configuration','fa-key',()=>A.Tool_AIConfiguration?.()||'' ],
+    ['Update Village Name & Ward Count','fa-pen-to-square',()=>`<div class="space-y-5"><p>${V5.t('गाँव का नाम और कुल वार्ड संख्या बदलें। मौजूदा वार्ड डेटा जहाँ संभव हो सुरक्षित रहेगा।','Update village name and total ward count. Existing ward data is preserved where possible.')}</p><select id="v5-vill" class="input-admin">${getVillageOptions()}</select><div class="grid md:grid-cols-2 gap-4"><input id="v5-vname" class="input-admin" placeholder="${V5.t('नया गाँव नाम','New village name')}"><input id="v5-wards" type="number" min="1" max="100" class="input-admin" placeholder="${V5.t('कुल वार्ड','Total wards')}"></div><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.updateVillage()">${V5.t('अपडेट करें','Update')}</button></div>`],
+    ['Ward Number & Reservation Editor','fa-list-ol',()=>`<div class="space-y-5"><select id="v5-wv" class="input-admin" onchange="window.EPV5Admin.fillWard()">${getVillageOptions()}</select><select id="v5-ww" class="input-admin"></select><input id="v5-wr" class="input-admin" placeholder="${V5.t('आरक्षण','Reservation')}"><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.saveWard()">${V5.t('वार्ड सेव करें','Save Ward')}</button></div>`],
+    ['Candidate Photo & Symbol Manager','fa-image',()=>`<div class="space-y-5"><select id="v5-cv" class="input-admin" onchange="window.EPV5Admin.fillCandidates()">${getVillageOptions()}</select><select id="v5-cc" class="input-admin"></select><div class="grid md:grid-cols-2 gap-4"><input id="v5-ci" type="file" accept="image/*" class="text-xs"><input id="v5-cs" type="file" accept="image/*" class="text-xs"></div><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.saveMedia()">${V5.t('मीडिया अपडेट करें','Update Media')}</button></div>`],
+    ['Admin Test Vote Injection','fa-square-poll-vertical',()=>`<div class="space-y-5"><div class="ep-v5-admin-card"><strong>${V5.t('केवल परीक्षण डेटा','TEST DATA ONLY')}</strong><p style="font-size:11px;margin-top:5px">${V5.t('यह सुविधा विश्लेषण/आँकड़े जाँचने के लिए सिंथेटिक वोट जोड़ती है। इन वोटों को वास्तविक नागरिक वोट न समझें।','Adds synthetic votes for testing analytics/stats. These are not real citizen votes.')}</p></div><select id="v5-tv" class="input-admin" onchange="window.EPV5Admin.fillTestCandidates()">${getVillageOptions()}</select><select id="v5-tc" class="input-admin"></select><input id="v5-tvcount" type="number" min="1" max="1000000" class="input-admin" placeholder="${V5.t('कितने परीक्षण वोट जोड़ने हैं','Number of test votes')}"><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.injectTestVotes()">${V5.t('परीक्षण वोट जोड़ें','Add Test Votes')}</button><div id="v5-tvout" class="text-xs"></div></div>`],
+    ['Village-Scoped Share Link','fa-share-nodes',()=>`<div class="space-y-5"><p>${V5.t('एक चुने हुए गाँव के लिए लॉक लिंक बनाएं।','Create a locked link for one selected village.')}</p><select id="v5-sv" class="input-admin">${getVillageOptions()}</select><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.makeShare()">${V5.t('लिंक बनाएं','Create Link')}</button><div id="v5-sout" class="text-xs"></div></div>`],
+    ['Database Integrity Repair','fa-circle-check',()=>`<div class="space-y-5"><p>${V5.t('सभी गाँव, वार्ड, उम्मीदवार और वोट मैप की जाँच करता है।','Checks all villages, wards, candidates and vote maps.')}</p><button class="btn-gold w-full py-3 rounded-xl" onclick="window.EPV5Admin.repair()">${V5.t('जाँच और मरम्मत','Check & Repair')}</button><div id="v5-repairout" class="text-xs"></div></div>`]
+  ];
+  /* Guarantee exactly 40. */
+  A.toolsList=tools.map((x,i)=>({title:x[0],icon:x[1],render:x[2]})).slice(0,40);
+  window.EPV5Admin={
+    updateVillage(){
+      const d=V5.db(),id=document.getElementById('v5-vill')?.value,name=document.getElementById('v5-vname')?.value.trim(),n=Number(document.getElementById('v5-wards')?.value),p=d?.panchayats?.[id];
+      if(!p||!name||!Number.isInteger(n)||n<1||n>100)return V5.toast(V5.t('सही जानकारी भरें।','Enter valid information.'),'error');
+      const old=Number(p.totalWards||0);p.name=name;p.totalWards=n;
+      for(let w=1;w<=n;w++)V5.ensureWard(p,w);
+      for(let w=n+1;w<=old;w++)delete p.wardsData[w];
+      V5.all(p).forEach(x=>{x.c.village=name;x.c.wardNo=x.w});
+      V5.save();V5.toast(V5.t('गाँव अपडेट हो गया।','Village updated.'),'success');v5Refresh();
+    },
+    fillWard(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-wv')?.value],s=document.getElementById('v5-ww');if(!s)return;s.innerHTML='';if(!p)return;
+      for(let w=1;w<=Number(p.totalWards||0);w++)s.add(new Option(`${V5.t('वार्ड','Ward')} ${w}`,w));
+      const w=Number(s.value||1);document.getElementById('v5-wr').value=p.wardsData?.[w]?.reservation||'General';
+    },
+    saveWard(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-wv')?.value],w=Number(document.getElementById('v5-ww')?.value),r=document.getElementById('v5-wr')?.value.trim();
+      if(!p||!w||!r)return V5.toast(V5.t('सभी फ़ील्ड भरें।','Fill all fields.'),'error');V5.ensureWard(p,w).reservation=r;V5.save();V5.toast(V5.t('वार्ड सेव हो गया।','Ward saved.'),'success');
+    },
+    fillCandidates(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-cv')?.value],s=document.getElementById('v5-cc');if(!s)return;s.innerHTML='';if(!p)return;
+      V5.all(p).forEach(x=>s.add(new Option(`${x.c.name||'Candidate'} — ${V5.t('वार्ड','Ward')} ${x.w}`,`${x.w}|${x.c.id}`)));
+    },
+    fillTestCandidates(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-tv')?.value],s=document.getElementById('v5-tc');if(!s)return;s.innerHTML='';if(!p)return;
+      V5.all(p).forEach(x=>s.add(new Option(`${x.c.name||'Candidate'} — ${x.c.partyName||x.c.party||'Independent'} — W${x.w}`,`${x.w}|${x.c.id}`)));
+    },
+    saveMedia:async function(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-cv')?.value],parts=(document.getElementById('v5-cc')?.value||'').split('|'),w=Number(parts[0]),c=p?.wardsData?.[w]?.candidates?.find(x=>x.id===parts[1]);if(!c)return V5.toast(V5.t('उम्मीदवार चुनें।','Select a candidate.'),'error');
+      const read=f=>new Promise((res,rej)=>{if(!f)return res('');const r=new FileReader();r.onload=e=>res(e.target.result);r.onerror=rej;r.readAsDataURL(f)});
+      try{const i=await read(document.getElementById('v5-ci')?.files?.[0]),s=await read(document.getElementById('v5-cs')?.files?.[0]);if(i)c.personImage=i;if(s)c.symbolImage=s;V5.save();V5.toast(V5.t('मीडिया अपडेट हो गया।','Media updated.'),'success');v5Refresh()}catch{V5.toast(V5.t('फाइल पढ़ी नहीं जा सकी।','File could not be read.'),'error')}
+    },
+    injectTestVotes(){
+      const d=V5.db(),p=d?.panchayats?.[document.getElementById('v5-tv')?.value],parts=(document.getElementById('v5-tc')?.value||'').split('|'),w=Number(parts[0]),cid=parts[1],count=Number(document.getElementById('v5-tvcount')?.value),wd=p?.wardsData?.[w],c=wd?.candidates?.find(x=>x.id===cid);
+      if(!p||!wd||!c||!Number.isInteger(count)||count<1||count>1000000)return V5.toast(V5.t('सही गाँव, उम्मीदवार और वोट संख्या चुनें।','Select a valid village, candidate and vote count.'),'error');
+      wd.votes[cid]=Number(wd.votes[cid]||0)+count;d.testVoteLog=d.testVoteLog||[];d.testVoteLog.push({id:'TV_'+Date.now().toString(36),pId:p.id,wNo:w,cId:cid,count,date:new Date().toISOString(),type:'TEST'});
+      V5.save();document.getElementById('v5-tvout').textContent=V5.t(`सफल: ${count} परीक्षण वोट जोड़े गए।`,`Success: ${count} test votes added.`);V5.toast(V5.t('परीक्षण वोट जोड़ दिए गए।','Test votes added.'),'success');v5Refresh();
+    },
+    makeShare(){
+      const id=document.getElementById('v5-sv')?.value,p=V5.db()?.panchayats?.[id];if(!p)return;
+      const url=location.href.split('#')[0]+'#epv='+encodeShare(id);const o=document.getElementById('v5-sout');if(o)o.innerHTML=`<input class="input-admin" readonly value="${V5.esc(url)}"><button class="btn-gold mt-3 px-4 py-2 rounded-lg" onclick="navigator.clipboard?.writeText(${JSON.stringify(url)})">${V5.t('लिंक कॉपी करें','Copy Link')}</button><p class="mt-2">${V5.t('लिंक में यह गाँव लॉक रहेगा।','The village is locked in this link.')}</p>`;
+    },
+    repair(){
+      v5Normalize();const d=V5.db();let fixed=0;
+      Object.values(d?.panchayats||{}).forEach(p=>{for(let w=1;w<=Number(p.totalWards||0);w++){const wd=V5.ensureWard(p,w);wd.candidates.forEach(c=>{if(wd.votes[c.id]===undefined){wd.votes[c.id]=0;fixed++}c.village=p.name;c.wardNo=w})}});
+      V5.save();const o=document.getElementById('v5-repairout');if(o)o.textContent=V5.t(`मरम्मत पूर्ण। ${fixed} वोट मैप ठीक किए गए।`,`Repair complete. ${fixed} vote maps fixed.`);V5.toast(V5.t('डेटाबेस जाँच पूरी।','Database check complete.'),'success');v5Refresh();
+    }
+  };
+  if(!A.__v5LoadWrapped){
+    const nativeLoad=A.loadTool?.bind(A);
+    if(nativeLoad){A.loadTool=function(index){nativeLoad(index);setTimeout(()=>{try{const title=this.toolsList[index]?.title;if(title==='Ward Number & Reservation Editor')window.EPV5Admin.fillWard();if(title==='Candidate Photo & Symbol Manager')window.EPV5Admin.fillCandidates();if(title==='Admin Test Vote Injection')window.EPV5Admin.fillTestCandidates()}catch(e){console.warn(e)}},0)}}
+    A.__v5LoadWrapped=true;
+  }
+  /* Keep the original 32 tools if their renderer exists; replace only titles/rendering as needed. */
+  try{A.renderSidebar?.();}catch{}
+}
+
+/* ---------- admin language and five key new controls ---------- */
+function v5AdminBilingual(){
+  const A=window.AdminManager;if(!A)return;
+  const hi={
+    'Manage Villages':'गाँव प्रबंधन','Ward Reservations':'वार्ड आरक्षण','Gemini Candidate Assistant':'Gemini उम्मीदवार सहायक','Manual Candidate Entry':'मैन्युअल उम्मीदवार प्रविष्टि','Edit Candidate Data':'उम्मीदवार डेटा संपादन','Remove Candidate':'उम्मीदवार हटाएँ','Publish Notification':'सूचना प्रकाशित करें','Manage Notifications':'सूचनाएँ प्रबंधित करें','Vote Audit':'वोट ऑडिट','Reset Ward Votes':'वार्ड वोट रीसेट','Global Voting Control':'वैश्विक मतदान नियंत्रण','Public Results Visibility':'सार्वजनिक परिणाम दृश्यता','Suggestions Queue':'सुझाव सूची','Clear Suggestions':'सुझाव साफ करें','Change Admin Password':'व्यवस्थापक पासवर्ड बदलें','Export JSON Database':'JSON डेटाबेस निर्यात','Import JSON Database':'JSON डेटाबेस आयात','Factory Reset':'फैक्टरी रीसेट','Voter Security Logs':'मतदाता सुरक्षा लॉग','Purge Security Logs':'सुरक्षा लॉग साफ','System Title':'सिस्टम शीर्षक','Bulk Template':'बल्क टेम्पलेट','Generate Gazette':'गजट बनाएँ','Maintenance Mode':'रखरखाव मोड','Emergency Shutdown':'आपात बंद','Custom Alert':'कस्टम अलर्ट','Storage Metrics':'स्टोरेज आँकड़े','Synthetic Load Test':'सिंथेटिक लोड टेस्ट','Wipe Polling Data':'वोट डेटा साफ','System Health Analytics':'सिस्टम स्वास्थ्य विश्लेषण','Delete Village Database':'गाँव डेटाबेस हटाएँ','Gemini AI Configuration':'Gemini AI सेटिंग','Update Village Name & Ward Count':'गाँव नाम व वार्ड संख्या अपडेट','Ward Number & Reservation Editor':'वार्ड नंबर व आरक्षण संपादक','Candidate Photo & Symbol Manager':'उम्मीदवार फोटो व चिन्ह प्रबंधन','Admin Test Vote Injection':'एडमिन परीक्षण वोट','Village-Scoped Share Link':'गाँव-सीमित शेयर लिंक','Database Integrity Repair':'डेटाबेस जाँच व मरम्मत'
+  };
+  const old=A.renderSidebar?.bind(A);
+  if(old&&!A.__v5Render){
+    A.renderSidebar=function(){
+      old();
+      const list=document.getElementById('admin-sidebar-list');if(!list)return;
+      [...list.querySelectorAll('button')].forEach((b,i)=>{const tool=A.toolsList[i],s=b.querySelector('.truncate');if(tool&&s&&V5.lang()==='hi')s.textContent=hi[tool.title]||tool.title});
+      const f=document.querySelector('#admin-dashboard-container .p-3.border-t');if(f&&V5.lang()==='hi')f.innerHTML=f.innerHTML.replace(/Tools:\s*\d+/,'टूल: 40');
+    };
+    A.__v5Render=true;
+  }
+}
+
+/* ---------- remove PUBLIC INFORMATION block if a legacy version adds it ---------- */
+function removePublicInformation(){
+  document.querySelectorAll('*').forEach(el=>{
+    if(el.children.length===0){
+      const v=(el.textContent||'').trim().toUpperCase();
+      if(v==='PUBLIC INFORMATION / सार्वजनिक सूचना' || v==='PUBLIC INFORMATION' || v==='सार्वजनिक सूचना')el.closest('section,article,div')?.remove();
+    }
+  });
+}
+
+/* ---------- click-safe wrappers ---------- */
+function v5Bind(){
+  const sel=document.getElementById('user-panchayat-select');
+  if(sel&&!sel.__v5){
+    sel.__v5=true;
+    sel.addEventListener('change',()=>{
+      if(decodeShare()){sel.value=decodeShare();return}
+      try{localStorage.setItem('EP_SAVED_VILLAGE',sel.value)}catch{}
+      v5RenderCandidates();
+    });
+  }
+  const shareButtons=document.querySelectorAll('[data-feature="share"]');
+  shareButtons.forEach(b=>{b.__v5=true;b.onclick=shareCurrentVillage});
+  document.getElementById('ep-refresh-analytics')?.addEventListener('click',v5RenderAnalytics);
+  document.querySelectorAll('#ep-lang-hi,#ep-lang-en').forEach(b=>{
+    if(b.__v5)return;b.__v5=true;b.onclick=()=>{V5.setLang(b.id.endsWith('hi')?'hi':'en');try{window.EPWebsite?.setLanguage?.(V5.lang())}catch{};v5Refresh();v5AdminBilingual()}
+  });
+}
+
+/* ---------- boot repeatedly but safely ---------- */
+function v5Boot(){
+  try{
+    v5Normalize();
+    v5FillVillage();
+    v5RenderCandidates();
+    v5RenderResults();
+    v5RenderAnalytics();
+    v5RenderStats();
+    v5Bind();
+    installScopeBanner();
+    removePublicInformation();
+    admin40();
+    v5AdminBilingual();
+    setTimeout(()=>{try{v5FillVillage();v5RenderCandidates();installScopeBanner();admin40();v5AdminBilingual()}catch(e){console.warn(e)}},180);
+    setTimeout(()=>{try{v5Bind();installScopeBanner();removePublicInformation()}catch(e){console.warn(e)}},700);
+  }catch(e){console.error('EP V5 boot error',e)}
+}
+window.EPV5={refresh:v5Refresh,shareVillage:shareCurrentVillage,language:()=>V5.lang()};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(v5Boot,100),{once:true});else setTimeout(v5Boot,100);
+
+/* Re-run only when the admin dashboard is actually opened or public controls are injected. */
+const obs=new MutationObserver(records=>{
+  let relevant=false;
+  for(const r of records)if(r.addedNodes?.length){relevant=true;break}
+  if(relevant)requestAnimationFrame(()=>{try{v5Bind();installScopeBanner();v5AdminBilingual()}catch{}});
+});
+setTimeout(()=>{try{obs.observe(document.body,{childList:true,subtree:true})}catch{}},900);
+})();
+</script>
+
 </body>
 </html>
