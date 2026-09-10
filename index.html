@@ -6287,371 +6287,776 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </script>
 
 
-<!-- ============================================================
-     EP-V9 ADDITIVE VOTER VERIFICATION NUMBER LAYER
-     Preserves all existing content and features.
-     This is a portal-generated verification number, NOT an
-     official Election Commission / EPIC voter number.
-     ============================================================ -->
-<style id="ep-v9-voter-verification-style">
-.ep-v9-verify-card{margin-top:14px;padding:16px;border:2px solid rgba(19,136,8,.24);border-radius:16px;background:linear-gradient(135deg,#fff2df,#fff 48%,#edf9ef);box-shadow:0 14px 35px rgba(6,35,61,.10)}
-.ep-v9-verify-head{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:900;color:#082742}
-.ep-v9-verify-number{display:block;margin-top:8px;padding:11px 12px;border-radius:11px;border:1px dashed #9eb9a6;background:#fff;font:900 16px/1.2 "Courier New",monospace;letter-spacing:.06em;color:#06233d;word-break:break-all}
-.ep-v9-verify-note{display:block;margin-top:7px;color:#66788a;font-size:10px;line-height:1.6}
-.ep-v9-verify-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.ep-v9-verify-actions button,.ep-v9-lookup-actions button{border:1px solid #b9ccbf;background:#fff;color:#082742;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}
-.ep-v9-verify-actions button:hover,.ep-v9-lookup-actions button:hover{background:#082742;color:#fff}
-.ep-v9-lookup{margin-bottom:12px;padding:13px;border:1px solid rgba(212,175,55,.25);border-radius:13px;background:rgba(212,175,55,.08)}
-.ep-v9-lookup-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
-.ep-v9-lookup input{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;color:#f8fafc;border-radius:10px;padding:10px;font:800 11px "Courier New",monospace;outline:none}
-.ep-v9-lookup-result{margin-top:10px;display:none;padding:12px;border-radius:12px;background:#0a1725;border:1px solid #31475c;color:#dce7ee;font-size:10px;line-height:1.7}
-.ep-v9-lookup-result.show{display:block}
-.ep-v9-status-ok{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:7px;background:#064e3b;color:#d1fae5;border:1px solid #047857;font-size:9px;font-weight:900}
-.ep-v9-status-warn{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:7px;background:#4c0519;color:#ffe4e6;border:1px solid #9f1239;font-size:9px;font-weight:900}
-@media(max-width:620px){.ep-v9-lookup-row{grid-template-columns:1fr}.ep-v9-verify-actions{display:grid;grid-template-columns:1fr}.ep-v9-verify-actions button{width:100%}}
+<style id="ep-v10-stable-css">
+#ep-v10-receipt{margin-top:14px;border:1px solid #cbd9d0;border-radius:16px;background:linear-gradient(135deg,#fff4e6,#fff,#eef9f0);padding:16px;box-shadow:0 12px 30px rgba(6,35,61,.08)}
+#ep-v10-receipt .ep-v10-ref{font:900 17px/1.4 "Courier New",monospace;letter-spacing:.07em;color:#082742;word-break:break-all;margin-top:6px}
+#ep-v10-receipt .ep-v10-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+#ep-v10-receipt .ep-v10-cell{padding:10px;border:1px solid #d7e3dc;border-radius:10px;background:rgba(255,255,255,.72)}
+#ep-v10-receipt .ep-v10-cell small{display:block;color:#6b7c8d;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+#ep-v10-receipt .ep-v10-cell b{display:block;margin-top:3px;color:#183047;font-size:11px;word-break:break-word}
+#ep-v10-receipt .ep-v10-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+#ep-v10-receipt .ep-v10-actions button{border:1px solid #bfcfc5;background:#fff;color:#082742;border-radius:10px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}
+#ep-v10-receipt .ep-v10-actions button:hover{background:#082742;color:#fff}
+#ep-v10-evidence{position:fixed;inset:0;z-index:100200;display:none;background:rgba(2,6,23,.78);backdrop-filter:blur(7px);padding:14px}
+#ep-v10-evidence.open{display:flex;align-items:center;justify-content:center}
+#ep-v10-evidence .shell{width:min(1280px,98vw);height:min(920px,96vh);display:flex;flex-direction:column;background:#07131f;color:#e5edf4;border:1px solid rgba(255,255,255,.11);border-radius:22px;overflow:hidden;box-shadow:0 35px 120px rgba(0,0,0,.45)}
+#ep-v10-evidence .head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #213247;background:linear-gradient(90deg,#123650,#09291d)}
+#ep-v10-evidence .head h3{margin:0;font-size:17px;font-weight:900}
+#ep-v10-evidence .head p{margin:4px 0 0;font-size:10px;color:#afc2cf}
+#ep-v10-evidence .close{width:38px;height:38px;border:1px solid #466076;background:#0d2132;color:#fff;border-radius:11px;font-size:20px;cursor:pointer}
+#ep-v10-evidence .body{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:0;flex:1}
+#ep-v10-evidence .tabs{padding:12px;background:#06101a;border-right:1px solid #203146;overflow:auto}
+#ep-v10-evidence .tab{display:block;width:100%;margin-bottom:7px;text-align:left;border:1px solid transparent;background:transparent;color:#9fb4c3;padding:11px 12px;border-radius:10px;font-size:10px;font-weight:900;cursor:pointer}
+#ep-v10-evidence .tab.active{background:linear-gradient(90deg,rgba(255,153,51,.18),rgba(19,136,8,.16));border-color:rgba(255,153,51,.32);color:#ffd39e}
+#ep-v10-evidence .main{min-width:0;overflow:auto;padding:17px}
+#ep-v10-evidence .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:12px}
+#ep-v10-evidence .card{border:1px solid #2b3f52;background:#0b1c2b;border-radius:13px;padding:11px}
+#ep-v10-evidence .card b{display:block;color:#f9fbfd;font-size:18px}
+#ep-v10-evidence .card span{display:block;color:#93a8b8;font-size:9px;margin-top:2px}
+#ep-v10-evidence .filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}
+#ep-v10-evidence .filters .wide{grid-column:span 2}
+#ep-v10-evidence .filters input,#ep-v10-evidence .filters select{width:100%;box-sizing:border-box;border:1px solid #385067;background:#0b1b2a;color:#f5f8fa;border-radius:9px;padding:9px;font-size:10px;outline:none}
+#ep-v10-evidence .filters input:focus,#ep-v10-evidence .filters select:focus{border-color:#ffb45f;box-shadow:0 0 0 3px rgba(255,153,51,.08)}
+#ep-v10-evidence .actions{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 12px}
+#ep-v10-evidence .actions button{border:1px solid #40576b;background:#102337;color:#e9f1f5;border-radius:9px;padding:9px 12px;font-size:9px;font-weight:900;cursor:pointer}
+#ep-v10-evidence .actions button.gold{background:linear-gradient(135deg,#ffb45f,#b8860b);border-color:#f1ce86;color:#102030}
+#ep-v10-evidence .actions button.green{background:#07563e;border-color:#138808;color:#dcfce7}
+#ep-v10-evidence .table{max-height:510px;overflow:auto;border:1px solid #253a4e;border-radius:12px;background:#06101a}
+#ep-v10-evidence table{width:100%;border-collapse:collapse;font-size:9px}
+#ep-v10-evidence th{position:sticky;top:0;background:#112436;color:#ffd390;padding:9px;text-align:left;z-index:2}
+#ep-v10-evidence td{padding:8px;border-top:1px solid #1d3041;color:#c9d7df;vertical-align:top}
+#ep-v10-evidence tr:hover td{background:#0a1d2e}
+#ep-v10-evidence .ref{font:900 9px/1.3 "Courier New",monospace;color:#ffd08b;word-break:break-all}
+#ep-v10-evidence .lookup{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:12px}
+#ep-v10-evidence .lookup input{width:100%;box-sizing:border-box;border:1px solid #3a5269;background:#0b1b2a;color:#fff;border-radius:10px;padding:11px;font-size:10px}
+#ep-v10-evidence .lookup button{border:0;border-radius:10px;padding:11px 14px;font-size:10px;font-weight:900;background:linear-gradient(135deg,#ffb45f,#138808);color:#06233d;cursor:pointer}
+#ep-v10-evidence .result{border:1px solid #2c4357;background:#0a1b2a;border-radius:12px;padding:12px;min-height:90px;color:#bcd0dd;font-size:10px;line-height:1.6}
+#ep-v10-evidence pre{white-space:pre-wrap;background:#050b12;border:1px solid #203143;border-radius:12px;padding:13px;color:#cbd8df;max-height:560px;overflow:auto;font-size:9px;line-height:1.55}
+#ep-v10-evidence .empty{padding:46px 12px;text-align:center;color:#667d8e;font-size:10px}
+#ep-v10-evidence .status{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,153,51,.25);background:rgba(255,153,51,.08);color:#ffd08c;font-size:9px;line-height:1.5;margin-bottom:10px}
+@media(max-width:880px){#ep-v10-evidence .body{grid-template-columns:1fr}#ep-v10-evidence .tabs{display:flex;gap:6px;border-right:0;border-bottom:1px solid #213247;overflow:auto}#ep-v10-evidence .tab{min-width:165px;margin:0}#ep-v10-evidence .cards{grid-template-columns:repeat(2,minmax(0,1fr))}#ep-v10-evidence .filters{grid-template-columns:1fr}#ep-v10-evidence .filters .wide{grid-column:auto}}
+@media(max-width:520px){#ep-v10-evidence{padding:5px}#ep-v10-evidence .main{padding:10px}#ep-v10-receipt .ep-v10-grid{grid-template-columns:1fr}#ep-v10-evidence .cards{grid-template-columns:1fr 1fr}}
 </style>
 
-<script id="ep-v9-voter-verification-layer">
+<script id="ep-v10-stable-controller">
 (function(){
-  'use strict';
-
-  const VERSION='EP-VR-2';
-  const q=(s,r=document)=>r.querySelector(s);
-  const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
-  const D=()=>window.db||window.DBManager?.get?.()||window.DBManager?.getState?.()||window.DBManager?.db||null;
-  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  const toast=(m,type='info')=>{try{window.Utils?.showToast?.(m,type)}catch{try{alert(m)}catch{}}};
-  const persist=()=>{try{window.DBManager?.persist?.()}catch{}};
-
-  function randomPart(){
-    try{
-      if(window.crypto?.getRandomValues){
-        const a=new Uint32Array(3);
-        window.crypto.getRandomValues(a);
-        return [...a].map(x=>x.toString(36).toUpperCase().padStart(7,'0')).join('');
-      }
-    }catch{}
-    return Math.random().toString(36).slice(2)+Date.now().toString(36);
-  }
-
-  function makeNumber(voteId){
-    const clean=String(voteId||'V').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(-12);
-    return 'VVN-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+clean+'-'+randomPart().slice(0,8);
-  }
-
-  function ensureNumber(id,rec){
-    if(!rec || typeof rec!=='object')return '';
-    if(!rec.voterVerificationNumber){
-      rec.voterVerificationNumber=rec.evidenceReference||makeNumber(id);
-      rec.voterVerificationNumberVersion=VERSION;
-    }
-    if(!rec.evidenceReference)rec.evidenceReference=rec.voterVerificationNumber;
-    if(!rec.evidenceReferenceVersion)rec.evidenceReferenceVersion=VERSION;
-    return String(rec.voterVerificationNumber);
-  }
-
-  function allRecords(){
-    const db=D();
-    if(!db)return [];
-    db.votersLog=db.votersLog||{};
-    const out=[];
-    Object.entries(db.votersLog).forEach(([id,r])=>{
-      if(!r||typeof r!=='object')return;
-      const number=ensureNumber(id,r);
-      out.push({id,number,r});
-    });
-    persist();
-    return out;
-  }
-
-  function findByNumber(number){
-    const needle=String(number||'').trim().toUpperCase();
-    if(!needle)return null;
-    return allRecords().find(x=>String(x.number).toUpperCase()===needle)||null;
-  }
-
-  function candidateFor(r){
-    const db=D();
-    const p=db?.panchayats?.[r?.pId];
-    const w=p?.wardsData?.[r?.wNo];
-    return (w?.candidates||[]).find(c=>String(c.id)===String(r?.cId))||null;
-  }
-
-  function details(hit){
-    if(!hit)return null;
-    const r=hit.r||{},db=D(),p=db?.panchayats?.[r.pId],c=candidateFor(r);
-    return {
-      voterVerificationNumber:hit.number,
-      evidenceReference:r.evidenceReference||hit.number,
-      evidenceReferenceVersion:r.evidenceReferenceVersion||VERSION,
-      voteId:hit.id,
-      time:r.time||'',
-      villageId:r.pId||'',
-      village:p?.name||r.village||'',
-      ward:Number(r.wNo||0)||0,
-      candidateId:r.cId||'',
-      candidate:c?.name||r.candidate||'',
-      party:c?.partyName||c?.party||r.party||'Independent',
-      post:c?.post||r.post||'',
-      category:c?.category||r.category||'',
-      verificationStatus:'RECORDED_IN_PORTAL_STORAGE'
-    };
-  }
-
-  function createPublicVerifyCard(hit){
-    const existing=q('#ep-v9-voter-verification-card');
-    if(existing)existing.remove();
-    if(!hit)return;
-    const d=details(hit);
-    const target=q('#ep-voter-reference-receipt')||q('#voting-section .bg-premium-nav')||q('#voting-section');
-    if(!target)return;
-    const card=document.createElement('div');
-    card.id='ep-v9-voter-verification-card';
-    card.className='ep-v9-verify-card';
-    card.innerHTML=`
-      <div class="ep-v9-verify-head"><i class="fa-solid fa-id-card-clip"></i><span>Voter Verification Number / मतदाता सत्यापन संख्या</span></div>
-      <span class="ep-v9-verify-number">${esc(d.voterVerificationNumber)}</span>
-      <span class="ep-v9-verify-note">
-        This portal-generated number identifies the recorded public-opinion transaction in this website.
-        It is <b>not</b> an official voter-roll/EPIC number and does not prove official voter identity.
-      </span>
-      <div class="ep-v9-verify-actions">
-        <button type="button" id="ep-v9-copy-number"><i class="fa-regular fa-copy"></i> Copy Verification Number</button>
-        <button type="button" id="ep-v9-print-number"><i class="fa-solid fa-print"></i> Print Verification Receipt</button>
-      </div>`;
-    target.parentElement?.appendChild(card);
-    q('#ep-v9-copy-number',card)?.addEventListener('click',async()=>{
-      try{await navigator.clipboard.writeText(d.voterVerificationNumber);toast('Voter verification number copied.','success')}
-      catch{toast('Copy is not available.','error')}
-    });
-    q('#ep-v9-print-number',card)?.addEventListener('click',()=>printVerificationReceipt(d));
-  }
-
-  function printVerificationReceipt(d){
-    const w=window.open('','_blank','noopener,noreferrer');
-    if(!w){toast('Print window was blocked by the browser.','error');return}
-    const html=`<!doctype html><html><head><meta charset="utf-8"><title>Voter Verification Receipt</title>
-      <style>
-        body{font-family:Arial,sans-serif;padding:32px;color:#183047}
-        h1{font-size:22px}.num{font:900 18px "Courier New",monospace;letter-spacing:.06em;padding:14px;border:2px solid #183047;border-radius:10px;word-break:break-all}
-        table{width:100%;border-collapse:collapse;margin-top:18px}td{border:1px solid #d9e2e9;padding:9px;font-size:12px}
-        td:first-child{font-weight:800;width:190px;background:#f5f8fa}
-        .ok{margin-top:18px;padding:11px;border:1px solid #b9d1bf;background:#eef9f1;border-radius:8px;font-size:11px;line-height:1.6}
-        .note{margin-top:18px;font-size:10px;line-height:1.6;color:#617286}
-      </style></head>
-      <body><h1>Voter Verification Receipt</h1>
-      <div class="num">${esc(d.voterVerificationNumber)}</div>
-      <div class="ok">STATUS: RECORDED IN THIS PORTAL'S LOCAL DATABASE</div>
-      <table>
-        <tr><td>Vote Verification Number</td><td>${esc(d.voterVerificationNumber)}</td></tr>
-        <tr><td>Evidence Reference</td><td>${esc(d.evidenceReference)}</td></tr>
-        <tr><td>Vote ID</td><td>${esc(d.voteId)}</td></tr>
-        <tr><td>Date / Time</td><td>${esc(d.time)}</td></tr>
-        <tr><td>Village</td><td>${esc(d.village)}</td></tr>
-        <tr><td>Ward</td><td>${esc(d.ward)}</td></tr>
-        <tr><td>Candidate</td><td>${esc(d.candidate)}</td></tr>
-        <tr><td>Party</td><td>${esc(d.party)}</td></tr>
-        <tr><td>Post</td><td>${esc(d.post)}</td></tr>
-        <tr><td>Category</td><td>${esc(d.category)}</td></tr>
-      </table>
-      <div class="note">
-        This receipt is for an independent public-opinion website. The verification number is generated by the portal and is not an official Election Commission voter number or EPIC number.
-        Browser-side storage can be modified and does not by itself establish an immutable court-grade chain of custody. For evidentiary use, preserve server-side logs, timestamps, access logs, cryptographic hashes, and an appropriate legal chain of custody.
-      </div></body></html>`;
-    w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
-  }
-
-  function syncExistingRecords(){
-    allRecords();
-    const db=D(); if(!db)return;
-    persist();
-  }
-
-  function patchVote(){
-    const V=window.VotingEngine;
-    if(!V?.castVote || V.castVote.__epV9Patched)return false;
-    const old=V.castVote.bind(V);
-    const wrapped=async function(){
-      const before=new Set(Object.keys(D()?.votersLog||{}));
-      const result=await old();
-      const db=D();if(!db)return result;
-      let hit=Object.entries(db.votersLog||{}).filter(([id])=>!before.has(id)).sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
-      if(!hit)hit=Object.entries(db.votersLog||{}).sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
-      if(hit){
-        ensureNumber(hit[0],hit[1]);
-        if(hit[1].evidenceReference===undefined)hit[1].evidenceReference=hit[1].voterVerificationNumber;
-        persist();
-        createPublicVerifyCard({id:hit[0],r:hit[1],number:hit[1].voterVerificationNumber});
-      }
-      return result;
-    };
-    wrapped.__epV9Patched=true;
-    V.castVote=wrapped;
-    return true;
-  }
-
-  function latest(){
-    const arr=allRecords().sort((a,b)=>String(b.r.time||'').localeCompare(String(a.r.time||'')));
-    return arr[0]||null;
-  }
-
-  function installAdminLookup(){
-    const m=q('#ep-v8-evidence-modal');if(!m)return;
-    const main=q('#ep-v8-main',m);if(!main)return;
-    if(q('#ep-v9-lookup',main))return;
-    const box=document.createElement('div');
-    box.id='ep-v9-lookup';
-    box.className='ep-v9-lookup';
-    box.innerHTML=`
-      <div style="font-size:11px;font-weight:900;color:#f5d76e;margin-bottom:7px">Voter Verification Number Lookup</div>
-      <div class="ep-v9-lookup-row">
-        <input id="ep-v9-lookup-input" inputmode="text" autocomplete="off" placeholder="Enter VVN-YYYYMMDD-... verification number">
-        <button type="button" class="ep-v8-btn gold" id="ep-v9-lookup-btn">Verify Record</button>
-      </div>
-      <div id="ep-v9-lookup-result" class="ep-v9-lookup-result"></div>`;
-    main.prepend(box);
-
-    const input=q('#ep-v9-lookup-input',box),out=q('#ep-v9-lookup-result',box);
-    const run=()=>{
-      const hit=findByNumber(input?.value||'');
-      if(!hit){
-        out.classList.add('show');
-        out.innerHTML='<span class="ep-v9-status-warn"><i class="fa-solid fa-circle-xmark"></i> NO MATCHING RECORD</span><div style="margin-top:7px">No stored public-opinion transaction was found for this verification number.</div>';
-        return;
-      }
-      const d=details(hit);
-      out.classList.add('show');
-      out.innerHTML=`
-        <span class="ep-v9-status-ok"><i class="fa-solid fa-circle-check"></i> RECORD FOUND</span>
-        <div style="margin-top:8px">
-          <b>Verification No.:</b> ${esc(d.voterVerificationNumber)}<br>
-          <b>Vote ID:</b> ${esc(d.voteId)}<br>
-          <b>Time:</b> ${esc(d.time)}<br>
-          <b>Village:</b> ${esc(d.village)} &nbsp; <b>Ward:</b> ${esc(d.ward)}<br>
-          <b>Candidate:</b> ${esc(d.candidate)} &nbsp; <b>Party:</b> ${esc(d.party)}<br>
-          <b>Status:</b> ${esc(d.verificationStatus)}
-        </div>`;
-    };
-    q('#ep-v9-lookup-btn',box).onclick=run;
-    input?.addEventListener('keydown',e=>{if(e.key==='Enter')run()});
-  }
-
-  function patchEvidenceTable(){
-    const m=q('#ep-v8-evidence-modal');if(!m)return;
-    const table=q('#ep-v8-preview table',m);if(!table)return;
-    const records=allRecords(),byId=new Map(records.map(x=>[String(x.id),x]));
-    const head=table.querySelector('thead tr');
-    if(head&&!head.querySelector('[data-ep-v9-head]')){
-      const th=document.createElement('th');
-      th.dataset.epV9Head='1';
-      th.textContent='Voter Verification No.';
-      head.appendChild(th);
-    }
-    qa('tbody tr',table).forEach(tr=>{
-      if(tr.querySelector('[data-ep-v9-cell]'))return;
-      const voteCell=tr.children[1];
-      const id=voteCell?.textContent?.trim()||'';
-      const hit=byId.get(id);
-      const td=document.createElement('td');
-      td.dataset.epV9Cell='1';
-      td.innerHTML=hit?`<span class="ep-voter-ref-admin">${esc(hit.number)}</span>`:'—';
-      tr.appendChild(td);
-    });
-  }
-
-  function addRegisterButtons(){
-    const m=q('#ep-v8-evidence-modal');if(!m)return;
-    const main=q('#ep-v8-main',m);if(!main)return;
-    if(q('#ep-v9-register-actions',main))return;
-    const wrap=document.createElement('div');
-    wrap.id='ep-v9-register-actions';
-    wrap.className='ep-v9-verify-actions';
-    wrap.innerHTML=`
-      <button type="button" id="ep-v9-download-register"><i class="fa-solid fa-file-arrow-down"></i> Download Verification Register CSV</button>
-      <button type="button" id="ep-v9-download-register-json"><i class="fa-solid fa-code"></i> Download Verification Register JSON</button>`;
-    main.prepend(wrap);
-    q('#ep-v9-download-register',wrap).onclick=downloadCSV;
-    q('#ep-v9-download-register-json',wrap).onclick=downloadJSON;
-  }
-
-  function register(){
-    return allRecords().map(x=>details(x));
-  }
-
-  function csvEscape(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
-  function downloadBlob(blob,name){
-    const u=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(u),1200);
-  }
-
-  function downloadCSV(){
-    const rows=register();
-    const h=['Voter Verification Number','Evidence Reference','Vote ID','Time','Village ID','Village','Ward','Candidate ID','Candidate','Party','Post','Category','Verification Status'];
-    const lines=[h,...rows.map(r=>h.map((_,i)=>csvEscape([r.voterVerificationNumber,r.evidenceReference,r.voteId,r.time,r.villageId,r.village,r.ward,r.candidateId,r.candidate,r.party,r.post,r.category,r.verificationStatus][i])))]
-      .map(a=>Array.isArray(a)?a.join(','):a).join('\r\n');
-    downloadBlob(new Blob(['\ufeff'+lines+'\r\n'],{type:'text/csv;charset=utf-8'}),'Voter_Verification_Register_'+Date.now()+'.csv');
-    toast('Voter verification register CSV downloaded.','success');
-  }
-
-  function downloadJSON(){
-    const payload={
-      documentType:'PortalGeneratedVoterVerificationRegister',
-      version:VERSION,
-      generatedAt:new Date().toISOString(),
-      official:false,
-      recordCount:register().length,
-      records:register(),
-      limitation:'The verification number is portal-generated and is not an official voter-roll/EPIC identifier or independent proof of voter identity.'
-    };
-    downloadBlob(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),'Voter_Verification_Register_'+Date.now()+'.json');
-    toast('Voter verification register JSON downloaded.','success');
-  }
-
-  function ensureAdminLayer(){
-    installAdminLookup();
-    addRegisterButtons();
-    patchEvidenceTable();
-  }
-
-  function boot(){
-    syncExistingRecords();
-    patchVote();
-    setTimeout(patchVote,100);
-    setTimeout(patchVote,500);
-    setTimeout(patchVote,1500);
-    const last=latest();
-    if(last)createPublicVerifyCard(last);
-    ensureAdminLayer();
-    const obs=new MutationObserver(()=>{
-      patchVote();
-      if(q('#ep-v8-evidence-modal.ep-open')){
-        ensureAdminLayer();
-      }
-    });
-    try{obs.observe(document.body,{childList:true,subtree:true})}catch{}
-    setInterval(()=>{
-      patchVote();
-      if(q('#ep-v8-evidence-modal.ep-open'))ensureAdminLayer();
-    },1200);
-  }
-
-  window.EPV9VoterVerification={
-    version:VERSION,
-    makeNumber,
-    sync:syncExistingRecords,
-    latest,
-    lookup:(number)=>details(findByNumber(number)),
-    register,
-    downloadCSV,
-    downloadJSON,
-    print:printVerificationReceipt
-  };
-
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,300),{once:true});
-  else setTimeout(boot,300);
+'use strict';
+var V10={version:'EP-V10.0',tab:'candidate',state:null,rowsCache:[],manifest:null,selectedCandidate:null};
+var qs=function(s,r){return(r||document).querySelector(s)};
+var qsa=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(v){return String(v===undefined||v===null?'':v).replace(/[&<>\"']/g,function(m){return({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m])})};
+var text=function(v,d){var x=String(v===undefined||v===null?'':v).trim();return x||d||''};
+var pad=function(n,w){return String(n).padStart(w,'0')};
+var iso=function(){return new Date().toISOString()};
+var db=function(){return window.db||window.DBManager&&window.DBManager.get&&window.DBManager.get()||window.DBManager&&window.DBManager.db||null};
+var save=function(){try{window.DBManager&&window.DBManager.persist&&window.DBManager.persist()}catch(e){} };
+var notify=function(m,t){try{window.Utils&&window.Utils.showToast&&window.Utils.showToast(m,t||'info')}catch(e){try{alert(m)}catch(_){} }};
+var cryptoHex=async function(seed){if(window.crypto&&window.crypto.subtle){var bytes=new TextEncoder().encode(seed),hash=await window.crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(hash)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}return ('00000000'+(h>>>0).toString(16)).slice(-8)};
+var randomToken=function(n){var out='';try{var a=new Uint32Array(n);window.crypto.getRandomValues(a);for(var i=0;i<a.length;i++)out+=a[i].toString(36).toUpperCase().padStart(7,'0')}catch(e){out=Math.random().toString(36).slice(2)+Date.now().toString(36)}return out};
+var ensureDB=function(){var d=db();if(!d)return null;d.settings=d.settings||{};if(d.settings.votingEnabled===undefined)d.settings.votingEnabled=true;if(d.settings.publicResultsVisible===undefined)d.settings.publicResultsVisible=true;if(d.settings.maintenanceMode===undefined)d.settings.maintenanceMode=false;d.panchayats=d.panchayats||{};d.votersLog=d.votersLog||{};d.villageVotedLog=d.villageVotedLog||{};d.securityAuditLog=d.securityAuditLog||{};d.evidenceReferenceLog=d.evidenceReferenceLog||{};return d};
+var ensureWards=function(d){Object.keys(d.panchayats||{}).forEach(function(id){var p=d.panchayats[id];p.wardsData=p.wardsData||{};p.totalWards=Math.max(1,Number(p.totalWards)||1);for(var w=1;w<=p.totalWards;w++){p.wardsData[w]=p.wardsData[w]||{wardNo:w,reservation:'General',candidates:[],votes:{}};var wd=p.wardsData[w];wd.wardNo=w;wd.reservation=text(wd.reservation,'General');wd.candidates=Array.isArray(wd.candidates)?wd.candidates:[];wd.votes=wd.votes&&typeof wd.votes==='object'?wd.votes:{};wd.candidates.forEach(function(c){if(!c.id)c.id='C_'+Date.now().toString(36)+'_'+randomToken(1);c.name=text(c.name,'Unnamed Candidate');c.partyName=text(c.partyName||c.party,'Independent');c.post=text(c.post,'');c.category=text(c.category,'');c.village=text(c.village,p.name);c.wardNo=Number(c.wardNo)||w;c.age=text(c.age,'');c.gender=text(c.gender,'');c.personImage=text(c.personImage,'');c.symbolImage=text(c.symbolImage,'');if(wd.votes[c.id]===undefined)wd.votes[c.id]=0})}})};
+var allCandidates=function(){var d=ensureDB(),out=[];if(!d)return out;Object.keys(d.panchayats).forEach(function(pid){var p=d.panchayats[pid];for(var w=1;w<=Number(p.totalWards||0);w++){var wd=p.wardsData[w];if(!wd)continue;(wd.candidates||[]).forEach(function(c){out.push({pId:pid,pName:p.name,wNo:w,c:c,wd:wd})})}});return out};
+var candidateRecord=function(d,r){var p=d&&d.panchayats&&d.panchayats[r&&r.pId],wd=p&&p.wardsData&&p.wardsData[r.wNo];return(wd&&wd.candidates||[]).find(function(c){return String(c.id)===String(r.cId)})||null};
+var selectedFromDOM=function(){var active=qsa('[id^="candidate-card-"]').find(function(el){return el.classList.contains('border-premium-gold')||el.classList.contains('ring-4')||el.getAttribute('aria-selected')==='true'});if(active)return active.id.replace(/^candidate-card-/,'');var id=q('.candidate-card-selected')||q('[data-selected-candidate="true"]');if(id)return id.getAttribute('data-candidate-id')||'';return V10.selectedCandidate||''};
+var setSelected=function(id){V10.selectedCandidate=id;try{var a=document.querySelector('#candidate-card-'+CSS.escape(String(id)));if(a)a.setAttribute('aria-selected','true')}catch(e){}};
+var mask=function(v){var s=String(v||'');return s.length>4?'******'+s.slice(-4):s?'****':''};
+var makeVerification=async function(voteId,time,pId,wNo,cId){var d=new Date(time),ymd=d.getUTCFullYear()+pad(d.getUTCMonth()+1,2)+pad(d.getUTCDate(),2);var seed=[voteId,time,pId,wNo,cId,randomToken(2)].join('|');var h=await cryptoHex(seed);return 'VVR-'+ymd+'-'+h.slice(0,10).toUpperCase()};
+var recordFrom=function(id,r){var d=ensureDB(),p=d&&d.panchayats&&d.panchayats[r.pId],c=candidateRecord(d,r);return{recordId:id,voterVerificationNumber:text(r.voterVerificationNumber||r.evidenceReference||r.verificationNumber,''),voteId:text(r.voteId||id,''),time:text(r.time,iso()),villageId:text(r.pId,''),village:text(r.village||p&&p.name,'Unknown village'),ward:Number(r.wNo||r.ward||0)||0,candidateId:text(r.cId||r.candidateId,''),candidate:text(r.candidate||c&&c.name,'Unknown candidate'),party:text(r.party||r.partyName||c&&c.partyName,'Independent'),post:text(r.post||c&&c.post,''),category:text(r.category||c&&c.category,''),mobile:text(r.mob||r.mobile,''),ipAddress:text(r.ipAddress,''),ipSource:text(r.ipSource,''),deviceFingerprint:text(r.device||r.deviceFingerprint,''),platform:text(r.platform,''),userAgent:text(r.userAgent,''),language:text(r.language,''),referrer:text(r.referrer,'')};};
+var syncReferences=function(){var d=ensureDB(),out=[];if(!d)return out;Object.entries(d.votersLog).forEach(function(pair){var id=pair[0],r=pair[1]||{};if(!r.voterVerificationNumber&&r.evidenceReference)r.voterVerificationNumber=r.evidenceReference;if(!r.voterVerificationNumber){r.voterVerificationNumber='VVR-'+iso().replace(/\D/g,'').slice(0,8)+'-'+randomToken(2).slice(0,10)}r.voterVerificationNumberVersion='EP-V10';d.evidenceReferenceLog[id]={voterVerificationNumber:r.voterVerificationNumber,voteId:id,time:r.time||iso()};out.push(recordFrom(id,r))});save();V10.rowsCache=out;return out};
+var rows=function(){return syncReferences().sort(function(a,b){return String(b.time).localeCompare(String(a.time))})};
+var filtered=function(f){var a=rows();f=f||{};if(f.village)a=a.filter(function(r){return r.villageId===f.village});if(f.party)a=a.filter(function(r){return r.party===f.party});if(f.candidate)a=a.filter(function(r){return r.candidateId===f.candidate});if(f.from){var ft=new Date(f.from+'T00:00:00').getTime();if(Number.isFinite(ft))a=a.filter(function(r){return new Date(r.time).getTime()>=ft})}if(f.to){var tt=new Date(f.to+'T23:59:59.999').getTime();if(Number.isFinite(tt))a=a.filter(function(r){return new Date(r.time).getTime()<=tt})}var q=text(f.search,'').toLowerCase();if(q)a=a.filter(function(r){return['voterVerificationNumber','voteId','village','villageId','candidate','candidateId','party','post','category',String(r.ward),r.mobile].some(function(v){return String(v||'').toLowerCase().includes(q)})});return a};
+var unique=function(a,k){var m=new Map();a.forEach(function(x){m.set(String(x[k]),x)});return Array.from(m.values())};
+var sortRows=function(a,mode){a=a.slice();if(mode==='candidate')return a.sort(function(x,y){return x.candidate.localeCompare(y.candidate)||x.ward-y.ward||x.time.localeCompare(y.time)});if(mode==='party')return a.sort(function(x,y){return x.party.localeCompare(y.party)||x.candidate.localeCompare(y.candidate)||x.time.localeCompare(y.time)});if(mode==='village')return a.sort(function(x,y){return x.village.localeCompare(y.village)||x.ward-y.ward||x.time.localeCompare(y.time)});return a.sort(function(x,y){return y.time.localeCompare(x.time)})};
+var currentFilters=function(){return{village:text(q('#ep-v10-village')&&q('#ep-v10-village').value,''),candidate:text(q('#ep-v10-candidate')&&q('#ep-v10-candidate').value,''),party:text(q('#ep-v10-party')&&q('#ep-v10-party').value,''),from:text(q('#ep-v10-from')&&q('#ep-v10-from').value,''),to:text(q('#ep-v10-to')&&q('#ep-v10-to').value,''),search:text(q('#ep-v10-search')&&q('#ep-v10-search').value,'')}};
+var csvEscape=function(v){return'"'+String(v===undefined||v===null?'':v).replace(/"/g,'""')+'"'};
+var csv=function(a){var h=['Voter Verification Number','Vote ID','Time','Village','Village ID','Ward','Candidate','Candidate ID','Party','Post','Category','Mobile','IP Address','IP Source','Device Fingerprint','Platform','User Agent','Language','Referrer'];var lines=[h].concat(a.map(function(r){return[r.voterVerificationNumber,r.voteId,r.time,r.village,r.villageId,r.ward,r.candidate,r.candidateId,r.party,r.post,r.category,r.mobile,r.ipAddress,r.ipSource,r.deviceFingerprint,r.platform,r.userAgent,r.language,r.referrer]})).map(function(row){return row.map(csvEscape).join(',')}).join('\r\n');return'\ufeff'+lines+'\r\n'};
+var download=function(blob,name){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},1200)};
+var downloadCSV=function(a,name){download(new Blob([csv(a)],{type:'text/csv;charset=utf-8'}),name+'.csv')};
+var ascii=function(v){return String(v===undefined||v===null?'':v).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'?').replace(/\s+/g,' ').slice(0,180)};
+var pdfEsc=function(v){return ascii(v).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)')};
+var makePDF=function(title,a,extra){var lines=[ascii(title),'Tiranga Independent Public Opinion Portal','Voter verification register','Generated: '+new Date().toLocaleString(),'Records: '+a.length,''];a.forEach(function(r,i){lines.push((i+1)+'. Verification No: '+ascii(r.voterVerificationNumber));lines.push('Vote ID: '+ascii(r.voteId));lines.push('Time: '+ascii(r.time));lines.push('Village: '+ascii(r.village)+' | Ward: '+r.ward);lines.push('Candidate: '+ascii(r.candidate)+' | Party: '+ascii(r.party));lines.push('Mobile: '+ascii(r.mobile));lines.push('IP: '+ascii(r.ipAddress));lines.push('');});(extra||[]).forEach(function(x){lines.push(ascii(x))});var pages=[];for(var i=0;i<lines.length;i+=46)pages.push(lines.slice(i,i+46));var o=[];o[1]='<< /Type /Catalog /Pages 2 0 R >>';o[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>';var kids=[];pages.forEach(function(pg){var st=pg.map(function(line,j){return'BT /F1 8 Tf 36 '+(742-j*15)+' Td ('+pdfEsc(line)+') Tj ET'}).join('\n');var ci=o.length;o.push('<< /Length '+st.length+' >>\nstream\n'+st+'\nendstream');var pi=o.length;o.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents '+ci+' 0 R >>');kids.push(pi)});o[2]='<< /Type /Pages /Kids ['+kids.map(function(n){return n+' 0 R'}).join(' ')+'] /Count '+kids.length+' >>';var out='%PDF-1.4\n',off=[];for(var n=1;n<o.length;n++){off[n]=out.length;out+=n+' 0 obj\n'+o[n]+'\nendobj\n'}var x=out.length;out+='xref\n0 '+o.length+'\n0000000000 65535 f \n';for(var z=1;z<o.length;z++)out+=String(off[z]).padStart(10,'0')+' 00000 n \n';out+='trailer\n<< /Size '+o.length+' /Root 1 0 R >>\nstartxref\n'+x+'\n%%EOF';return new Blob([out],{type:'application/pdf'})};
+var downloadPDF=function(title,a,extra){download(makePDF(title,a,extra),title.replace(/[^a-z0-9]+/gi,'_')+'.pdf')};
+var canonical=function(a){return JSON.stringify(sortRows(a,'time').map(function(r){return{voterVerificationNumber:r.voterVerificationNumber,voteId:r.voteId,time:r.time,villageId:r.villageId,village:r.village,ward:r.ward,candidateId:r.candidateId,candidate:r.candidate,party:r.party,post:r.post,category:r.category}}),null,2)};
+var sha=async function(s){return cryptoHex(s)};
+var makeManifest=async function(a,scope){var payload=canonical(a),hash=await sha(payload);return{manifestVersion:'EP-V10.0',manifestType:'VoterVerificationEvidenceManifest',portal:'Tiranga Independent Public Opinion Portal',official:false,generatedAt:iso(),scope:scope||'overall',recordCount:a.length,verificationNumberCount:new Set(a.map(function(r){return r.voterVerificationNumber})).size,firstRecordTime:a.length?sortRows(a,'time').at(-1).time:null,lastRecordTime:a.length?sortRows(a,'time')[0].time:null,villages:unique(a,'village').map(function(r){return{id:r.villageId,name:r.village}}),candidates:unique(a,'candidateId').map(function(r){return{id:r.candidateId,name:r.candidate,party:r.party,ward:r.ward}}),parties:Array.from(new Set(a.map(function(r){return r.party}))).sort(),wards:Array.from(new Set(a.map(function(r){return r.villageId+'::'+r.ward}))).sort(),canonicalAlgorithm:'SHA-256',canonicalPayloadSha256:hash,includedFields:['voterVerificationNumber','voteId','time','villageId','village','ward','candidateId','candidate','party','post','category'],identityFieldsForAdminRegister:['mobile','ipAddress','ipSource','deviceFingerprint','platform','userAgent','language','referrer']}};
+var ensureReceipt=function(){var target=q('#voting-section .bg-premium-nav')||q('#voting-section');if(!target)return null;var box=q('#ep-v10-receipt');if(!box){box=document.createElement('div');box.id='ep-v10-receipt';target.appendChild(box)}return box};
+var showReceipt=function(r){var box=ensureReceipt();if(!box)return;box.innerHTML='<strong style="color:#082742;font-size:12px"><i class="fa-solid fa-shield-check"></i> Voter Verification Number</strong><div class="ep-v10-ref">'+esc(r.voterVerificationNumber)+'</div><div class="ep-v10-grid"><div class="ep-v10-cell"><small>Vote ID</small><b>'+esc(r.voteId)+'</b></div><div class="ep-v10-cell"><small>Time</small><b>'+esc(new Date(r.time).toLocaleString())+'</b></div><div class="ep-v10-cell"><small>Village / Ward</small><b>'+esc(r.village)+' / '+esc(r.ward)+'</b></div><div class="ep-v10-cell"><small>Candidate</small><b>'+esc(r.candidate)+' · '+esc(r.party)+'</b></div><div class="ep-v10-cell"><small>Mobile</small><b>'+esc(mask(r.mobile))+'</b></div><div class="ep-v10-cell"><small>Status</small><b>Recorded</b></div></div><div class="ep-v10-actions"><button id="ep-v10-copy"><i class="fa-regular fa-copy"></i> Copy Number</button><button id="ep-v10-print"><i class="fa-solid fa-print"></i> Print Receipt</button></div>';qs('#ep-v10-copy',box).onclick=async function(){try{await navigator.clipboard.writeText(r.voterVerificationNumber);notify('Verification number copied.','success')}catch(e){notify('Copy is unavailable in this browser.','error')}};qs('#ep-v10-print',box).onclick=function(){printReceipt(r)}};
+var printReceipt=function(r){var w=window.open('','_blank','noopener,noreferrer');if(!w){notify('Print window was blocked by the browser.','error');return}w.document.open();w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Voter Verification Receipt</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#183047}h1{font-size:22px}.ref{font:900 18px Courier New,monospace;letter-spacing:.07em;border:2px solid #183047;padding:13px;border-radius:10px}table{width:100%;border-collapse:collapse;margin-top:18px}td{border:1px solid #dce5ec;padding:9px;font-size:12px}td:first-child{font-weight:800;width:180px;background:#f6f9fb}.foot{margin-top:18px;color:#6d7e8e;font-size:10px;line-height:1.6}</style></head><body><h1>Voter Verification Receipt</h1><div class="ref">'+esc(r.voterVerificationNumber)+'</div><table><tr><td>Vote ID</td><td>'+esc(r.voteId)+'</td></tr><tr><td>Time</td><td>'+esc(new Date(r.time).toLocaleString())+'</td></tr><tr><td>Village</td><td>'+esc(r.village)+'</td></tr><tr><td>Ward</td><td>'+esc(r.ward)+'</td></tr><tr><td>Candidate</td><td>'+esc(r.candidate)+'</td></tr><tr><td>Party</td><td>'+esc(r.party)+'</td></tr><tr><td>Mobile</td><td>'+esc(mask(r.mobile))+'</td></tr></table><div class="foot">Portal verification number: '+esc(r.voterVerificationNumber)+'<br>Generated by the independent public-opinion portal.</div></body></html>');w.document.close();setTimeout(function(){w.print()},250)};
+var patchVote=function(){if(!window.VotingEngine||window.VotingEngine.__epV10)return;window.VotingEngine.castVote=async function(){var d=ensureDB();if(!d)return notify('Database is unavailable.','error');if(d.settings.maintenanceMode)return notify('System maintenance active. Voting is paused.','error');if(d.settings.votingEnabled===false)return notify('Voting session is closed.','error');var pId=text(q('#user-panchayat-select')&&q('#user-panchayat-select').value,'');var mob=text(q('#voter-mobile-input')&&q('#voter-mobile-input').value,'');var cId=selectedFromDOM();if(!pId)return notify('Please select your village.','error');if(!cId)return notify('Please select a candidate.','error');if(!/^\d{10}$/.test(mob))return notify('Enter a valid 10-digit mobile number.','error');ensureWards(d);var p=d.panchayats[pId];var target=null;for(var w=1;w<=Number(p.totalWards||0);w++){var wd=p.wardsData[w];var c=(wd&&wd.candidates||[]).find(function(x){return String(x.id)===String(cId)});if(c){target={w:w,wd:wd,c:c};break}}if(!target)return notify('Candidate record could not be matched to the selected village.','error');var fp='';try{fp=window.Utils&&window.Utils.getDeviceFP?window.Utils.getDeviceFP():''}catch(e){}var mk=pId+'_MOBILE_'+mob;var dk=pId+'_DEVICE_'+fp;if(d.villageVotedLog[mk]){q('#voter-mobile-input').value='';return notify('This mobile number has already recorded a vote in this village.','error')}if(fp&&d.villageVotedLog[dk]){q('#voter-mobile-input').value='';return notify('This device has already recorded a vote in this village.','error')}var button=q('#btn-cast-vote'),original=button&&button.innerHTML;if(button){button.disabled=true;button.innerHTML='<i class="fa-solid fa-spinner fa-spin mr-2"></i> Recording...'}try{var time=iso();var voteId='V_'+Date.now().toString(36).toUpperCase()+'_'+randomToken(2).slice(0,8);var verification=await makeVerification(voteId,time,pId,target.w,cId);var ip='';var ipSource='';try{ip=await getClientIP();ipSource=ip?'client-resolved':'unavailable'}catch(e){}target.wd.votes[cId]=Number(target.wd.votes[cId]||0)+1;var rec={pId:pId,wNo:target.w,cId:cId,mob:mob,device:fp,time:time,ipAddress:ip||'',ipSource:ipSource||'',platform:navigator.platform||'',userAgent:navigator.userAgent||'',language:navigator.language||'',referrer:document.referrer||'',voteId:voteId,voterVerificationNumber:verification,voterVerificationNumberVersion:'EP-V10',village:p.name,candidate:target.c.name,party:target.c.partyName||target.c.party||'Independent',post:target.c.post||'',category:target.c.category||''};d.votersLog[voteId]=rec;d.villageVotedLog[mk]={time:time,voteId:voteId,voterVerificationNumber:verification};if(fp)d.villageVotedLog[dk]={time:time,voteId:voteId,voterVerificationNumber:verification};d.securityAuditLog[voteId]=Object.assign({},rec);d.evidenceReferenceLog[voteId]={voteId:voteId,voterVerificationNumber:verification,time:time};save();q('#voter-mobile-input').value='';V10.selectedCandidate=null;showReceipt(recordFrom(voteId,rec));try{window.UserInterface&&window.UserInterface.handleVillageSelection&&window.UserInterface.handleVillageSelection()}catch(e){}try{window.EPFinalWorking&&window.EPFinalWorking.refresh&&window.EPFinalWorking.refresh()}catch(e){}notify('Vote recorded. Verification number: '+verification,'success');return rec}catch(err){console.error(err);notify('Vote recording failed. No vote was finalized.','error');throw err}finally{if(button){button.disabled=false;button.innerHTML=original}}};window.VotingEngine.__epV10=true};
+var getClientIP=async function(){var endpoint=localStorage.getItem('EP_SECURITY_IP_ENDPOINT')||'';if(endpoint){try{var r=await fetch(endpoint,{method:'GET',cache:'no-store'});if(r.ok){var j=await r.json();return text(j.ip||j.address,'')}}catch(e){}}return''};
+var normalizeAndRepair=function(){var d=ensureDB();if(!d)return;ensureWards(d);Object.entries(d.votersLog).forEach(function(pair){var id=pair[0],r=pair[1]||{};r.voteId=r.voteId||id;r.voterVerificationNumber=r.voterVerificationNumber||d.evidenceReferenceLog[id]&&d.evidenceReferenceLog[id].voterVerificationNumber;if(!r.voterVerificationNumber)r.voterVerificationNumber='VVR-'+Date.now().toString(36).toUpperCase()+'-'+randomToken(2).slice(0,8);r.pId=r.pId||r.villageId||'';r.wNo=Number(r.wNo||r.ward||0)||0;r.cId=r.cId||r.candidateId||'';r.time=r.time||iso();d.votersLog[id]=r;d.securityAuditLog[id]=Object.assign({},d.securityAuditLog[id]||{},r);d.evidenceReferenceLog[id]={voteId:id,voterVerificationNumber:r.voterVerificationNumber,time:r.time}});save()};
+var ensureEvidenceModal=function(){var m=q('#ep-v10-evidence');if(m)return m;m=document.createElement('div');m.id='ep-v10-evidence';m.innerHTML='<div class="shell"><div class="head"><div><h3>Voter Evidence Center</h3><p>Unified verification, voter lookup, candidate records, village records, overall records and manifest export</p></div><button class="close" id="ep-v10-close">×</button></div><div class="body"><nav class="tabs" id="ep-v10-tabs"><button class="tab active" data-tab="candidate">01 · Candidate-wise</button><button class="tab" data-tab="party">02 · Party-wise</button><button class="tab" data-tab="village">03 · Village-wise</button><button class="tab" data-tab="overall">04 · Overall</button><button class="tab" data-tab="manifest">05 · Evidence Manifest</button><button class="tab" data-tab="lookup">06 · Verification Lookup</button></nav><main class="main" id="ep-v10-main"></main></div></div>';document.body.appendChild(m);qs('#ep-v10-close',m).onclick=function(){m.classList.remove('open')};m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open')});qsa('.tab',m).forEach(function(b){b.onclick=function(){V10.tab=b.getAttribute('data-tab');qsa('.tab',m).forEach(function(x){x.classList.toggle('active',x===b)});renderEvidenceTab(V10.tab)}});return m};
+var villageOpts=function(){var d=ensureDB();return Object.entries(d.panchayats||{}).sort(function(a,b){return String(a[1].name).localeCompare(String(b[1].name))}).map(function(x){return'<option value="'+esc(x[0])+'">'+esc(x[1].name||x[0])+'</option>'}).join('')};
+var candidateOpts=function(){return unique(rows(),'candidateId').sort(function(a,b){return a.candidate.localeCompare(b.candidate)}).map(function(r){return'<option value="'+esc(r.candidateId)+'">'+esc(r.candidate)+' · '+esc(r.party)+' · W'+esc(r.ward)+'</option>'}).join('')};
+var partyOpts=function(){return Array.from(new Set(rows().map(function(r){return r.party}))).sort().map(function(x){return'<option value="'+esc(x)+'">'+esc(x)+'</option>'}).join('')};
+var filterHTML=function(){return'<div class="filters"><select id="ep-v10-village"><option value="">All villages</option>'+villageOpts()+'</select><select id="ep-v10-candidate"><option value="">All candidates</option>'+candidateOpts()+'</select><select id="ep-v10-party"><option value="">All parties</option>'+partyOpts()+'</select><input id="ep-v10-from" type="date"><input id="ep-v10-to" type="date"><input id="ep-v10-search" class="wide" type="search" placeholder="Search verification number, vote ID, voter mobile, candidate, village, ward..."></div>'};
+var actionHTML=function(){return'<div class="actions"><button class="gold" data-act="refresh">Refresh</button><button data-act="csv">CSV Register</button><button class="gold" data-act="pdf">PDF Register</button><button class="green" data-act="register">Identity Register JSON</button><button data-act="hash">Generate SHA-256</button></div>'};
+var bindFilters=function(tab){['#ep-v10-village','#ep-v10-candidate','#ep-v10-party','#ep-v10-from','#ep-v10-to','#ep-v10-search'].forEach(function(id){var el=q(id);if(!el)return;el.addEventListener(id.indexOf('search')>-1?'input':'change',function(){renderRows(tab)})});qsa('[data-act]').forEach(function(b){b.onclick=async function(){var a=sortRows(filtered(currentFilters()),tab);var act=b.getAttribute('data-act');if(act==='refresh')return renderRows(tab);if(act==='csv'){downloadCSV(a,'Voter_Verification_Register_'+Date.now());notify('CSV register downloaded.','success')}if(act==='pdf'){downloadPDF('Voter Verification Register',a,['Verification register generated by portal runtime.','Records: '+a.length]);notify('PDF register downloaded.','success')}if(act==='register'){download(new Blob([JSON.stringify(buildIdentityRegister(a),null,2)],{type:'application/json'}),'Voter_Verification_Identity_Register_'+Date.now()+'.json');notify('Identity register downloaded.','success')}if(act==='hash'){var h=await sha(canonical(a));notify('SHA-256: '+h,'success');var out=q('#ep-v10-hash-output');if(out)out.textContent=h}}})};
+var buildIdentityRegister=function(a){return{documentType:'PortalGeneratedVoterVerificationRegister',version:'EP-V10.0',generatedAt:iso(),official:false,records:a.map(function(r){return{voterVerificationNumber:r.voterVerificationNumber,voteId:r.voteId,time:r.time,villageId:r.villageId,village:r.village,ward:r.ward,candidateId:r.candidateId,candidate:r.candidate,party:r.party,post:r.post,category:r.category,mobile:r.mobile,ipAddress:r.ipAddress,ipSource:r.ipSource,deviceFingerprint:r.deviceFingerprint,platform:r.platform,userAgent:r.userAgent,language:r.language,referrer:r.referrer}})}};
+var renderRows=function(tab){var a=sortRows(filtered(currentFilters()),tab),m=ensureEvidenceModal(),out=q('#ep-v10-main',m),v=new Set(a.map(function(r){return r.villageId})),c=new Set(a.map(function(r){return r.candidateId})),p=new Set(a.map(function(r){return r.party}));var table=a.length?'<div class="table"><table><thead><tr><th>#</th><th>Verification No.</th><th>Vote ID</th><th>Time</th><th>Village</th><th>Ward</th><th>Candidate</th><th>Party</th><th>Mobile</th></tr></thead><tbody>'+a.map(function(r,i){return'<tr><td>'+((i+1))+'</td><td><span class="ref">'+esc(r.voterVerificationNumber)+'</span></td><td>'+esc(r.voteId)+'</td><td>'+esc(new Date(r.time).toLocaleString())+'</td><td>'+esc(r.village)+'<br><small>'+esc(r.villageId)+'</small></td><td>'+esc(r.ward)+'</td><td>'+esc(r.candidate)+'<br><small>'+esc(r.candidateId)+'</small></td><td>'+esc(r.party)+'</td><td>'+esc(r.mobile)+'</td></tr>'}).join('')+'</tbody></table></div>':'<div class="table"><div class="empty">No matching records.</div></div>';out.innerHTML='<div class="status"><b>'+esc(tabTitle(tab))+'</b><br>Records use one unified voter-verification record format. The verification number is the portal reference stored with the vote transaction.</div>'+filterHTML()+actionHTML()+'<div class="cards"><div class="card"><b>'+a.length+'</b><span>Matching records</span></div><div class="card"><b>'+v.size+'</b><span>Villages</span></div><div class="card"><b>'+c.size+'</b><span>Candidates</span></div><div class="card"><b>'+p.size+'</b><span>Parties</span></div></div>'+table;bindFilters(tab)};
+var tabTitle=function(tab){return({candidate:'Candidate-wise Voter List',party:'Party-wise Voter List',village:'Village-wise Voter List',overall:'Overall Voter List'}[tab]||tab)};
+var renderManifest=function(){var m=ensureEvidenceModal(),out=q('#ep-v10-main',m);out.innerHTML='<div class="status"><b>Evidence Manifest Export</b><br>Create a canonical record package and SHA-256 digest using the same unified verification dataset used by the other sections.</div>'+filterHTML()+'<div class="actions"><button class="gold" id="ep-v10-manifest-generate">Generate Manifest</button><button id="ep-v10-manifest-copy">Copy Manifest</button><button class="gold" id="ep-v10-manifest-json">Download Manifest JSON</button><button id="ep-v10-manifest-pdf">Download Manifest PDF</button></div><div id="ep-v10-hash-output" class="result">No manifest generated.</div><pre id="ep-v10-manifest-output">No manifest generated.</pre>';['#ep-v10-village','#ep-v10-candidate','#ep-v10-party','#ep-v10-from','#ep-v10-to','#ep-v10-search'].forEach(function(id){var el=q(id);if(el)el.addEventListener(id.indexOf('search')>-1?'input':'change',function(){})});q('#ep-v10-manifest-generate').onclick=async function(){var a=sortRows(filtered(currentFilters()),'overall');V10.manifest=await makeManifest(a,'custom');var canonicalPayload=canonical(a);q('#ep-v10-hash-output').textContent=V10.manifest.canonicalPayloadSha256;q('#ep-v10-manifest-output').textContent=JSON.stringify({manifest:V10.manifest,records:JSON.parse(canonicalPayload)},null,2)};q('#ep-v10-manifest-copy').onclick=async function(){if(!V10.manifest)return notify('Generate a manifest first.','error');try{await navigator.clipboard.writeText(q('#ep-v10-manifest-output').textContent);notify('Manifest copied.','success')}catch(e){notify('Copy is unavailable.','error')}};q('#ep-v10-manifest-json').onclick=function(){if(!V10.manifest)return notify('Generate a manifest first.','error');var a=sortRows(filtered(currentFilters()),'overall');download(new Blob([JSON.stringify({manifest:V10.manifest,records:JSON.parse(canonical(a))},null,2)],{type:'application/json'}),'Evidence_Manifest_'+Date.now()+'.json')};q('#ep-v10-manifest-pdf').onclick=function(){if(!V10.manifest)return notify('Generate a manifest first.','error');var a=sortRows(filtered(currentFilters()),'overall');downloadPDF('Evidence Manifest Export',a,['Canonical SHA-256: '+V10.manifest.canonicalPayloadSha256,'Manifest version: '+V10.manifest.manifestVersion]);notify('Manifest PDF downloaded.','success')}};
+var renderLookup=function(){var m=ensureEvidenceModal(),out=q('#ep-v10-main',m);out.innerHTML='<div class="status"><b>Verification Lookup</b><br>Search by portal-generated voter verification number, vote ID, mobile number, or candidate.</div><div class="lookup"><input id="ep-v10-lookup-input" placeholder="Enter VVR number, Vote ID, or 10-digit mobile number"><button id="ep-v10-lookup-btn">Search</button></div><div class="result" id="ep-v10-lookup-result">No lookup performed.</div>';q('#ep-v10-lookup-btn').onclick=function(){var needle=text(q('#ep-v10-lookup-input').value,'').toLowerCase();var a=rows().filter(function(r){return[r.voterVerificationNumber,r.voteId,r.mobile,r.candidate,r.village].some(function(v){return String(v||'').toLowerCase()===needle})||String(r.voterVerificationNumber).toLowerCase().includes(needle)});var result=q('#ep-v10-lookup-result');if(!needle){result.textContent='Enter a lookup value.';return}if(!a.length){result.innerHTML='<b>No matching vote record.</b>';return}result.innerHTML=a.map(function(r){return'<div style="padding:10px;border-bottom:1px solid #203143"><b style="color:#ffd08b">'+esc(r.voterVerificationNumber)+'</b><br>Vote ID: '+esc(r.voteId)+'<br>Time: '+esc(new Date(r.time).toLocaleString())+'<br>Village: '+esc(r.village)+' · Ward '+esc(r.ward)+'<br>Candidate: '+esc(r.candidate)+' · '+esc(r.party)+'<br>Mobile: '+esc(r.mobile)+'<br>IP: '+esc(r.ipAddress||'Not available')+'</div>'}).join('')}};
+var renderEvidenceTab=function(tab){var m=ensureEvidenceModal();if(tab==='manifest')return renderManifest();if(tab==='lookup')return renderLookup();renderRows(tab)};
+var openEvidence=function(tab){var m=ensureEvidenceModal();m.classList.add('open');V10.tab=tab||'candidate';qsa('.tab',m).forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===V10.tab)});renderEvidenceTab(V10.tab)};
+var installEvidenceTool=function(){var A=window.AdminManager;if(!A||!Array.isArray(A.toolsList))return false;var blocked=['Live Cryptographic Vote Audit','Voter Security Audit & PDF Reports','Voter Evidence Center — 5 Sections','Voter Security Logs','Inspect Voter Security Logs','Purge Security Logs'];var tools=A.toolsList.filter(function(x){return x&&blocked.indexOf(x.title)<0});tools=tools.filter(function(x){return x.title!=='Voter Evidence Center'});tools.push({title:'Unified Voter Evidence Center',icon:'fa-file-shield',render:function(){setTimeout(function(){openEvidence('candidate')},0);return'<div class="space-y-5"><div class="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-5"><h3 class="text-lg font-black text-white">Unified Voter Evidence Center</h3><p class="text-xs text-slate-300 mt-2">Candidate-wise, Party-wise, Village-wise, Overall, Manifest and Verification Lookup are managed in one workspace.</p><button class="btn-gold w-full py-3 rounded-xl mt-4" onclick="window.EPV10.open(\'candidate\')">Open Evidence Center</button></div></div>'}});A.toolsList=tools.slice(0,40);try{A.renderSidebar()}catch(e){}return true};
+var addVerificationSummary=function(){var d=ensureDB();if(!d)return;var target=q('#voting-section');if(!target)return;var old=q('#ep-v10-live-summary',target);if(!old){old=document.createElement('div');old.id='ep-v10-live-summary';old.className='mt-4 p-3 rounded-xl border border-slate-200 bg-white/70';target.appendChild(old)}var pId=text(q('#user-panchayat-select')&&q('#user-panchayat-select').value,'');var a=rows().filter(function(r){return!pId||r.villageId===pId});old.innerHTML='<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center"><div><b class="block text-slate-800 text-sm">'+a.length+'</b><span class="text-[9px] text-slate-500">Verified Records</span></div><div><b class="block text-slate-800 text-sm">'+new Set(a.map(function(r){return r.candidateId})).size+'</b><span class="text-[9px] text-slate-500">Candidates</span></div><div><b class="block text-slate-800 text-sm">'+new Set(a.map(function(r){return r.ward})).size+'</b><span class="text-[9px] text-slate-500">Wards</span></div><div><b class="block text-slate-800 text-sm">'+new Set(a.map(function(r){return r.voterVerificationNumber})).size+'</b><span class="text-[9px] text-slate-500">Verification Numbers</span></div></div>'};
+var repairCandidateSelection=function(){var native=window.UserInterface&&window.UserInterface.selectCandidate;if(native&&!native.__epV10){window.UserInterface.selectCandidate=function(id){V10.selectedCandidate=id;try{native.call(window.UserInterface,id)}catch(e){}};window.UserInterface.selectCandidate.__epV10=true}};
+var expose=function(){window.EPV10={open:openEvidence,close:function(){q('#ep-v10-evidence')&&q('#ep-v10-evidence').classList.remove('open')},rows:rows,filtered:function(){return filtered(currentFilters())},repair:normalizeAndRepair,manifest:makeManifest,register:buildIdentityRegister,refresh:addVerificationSummary,verificationLookup:function(v){return rows().filter(function(r){return String(r.voterVerificationNumber).toLowerCase()===String(v).toLowerCase()})},downloadRegister:function(){download(new Blob([JSON.stringify(buildIdentityRegister(rows()),null,2)],{type:'application/json'}),'Voter_Verification_Identity_Register_'+Date.now()+'.json')}}};
+var boot=function(){normalizeAndRepair();repairCandidateSelection();patchVote();installEvidenceTool();setTimeout(installEvidenceTool,500);setTimeout(installEvidenceTool,1500);syncReferences();addVerificationSummary();var obs=new MutationObserver(function(){repairCandidateSelection();addVerificationSummary();if(window.AdminManager&&window.AdminManager.toolsList&&window.AdminManager.toolsList.some(function(x){return x&&x.title==='Unified Voter Evidence Center'})){ }else installEvidenceTool()});try{obs.observe(document.body,{childList:true,subtree:true})}catch(e){}setInterval(function(){normalizeAndRepair();addVerificationSummary()},4000);var sel=q('#user-panchayat-select');if(sel)sel.addEventListener('change',function(){setTimeout(addVerificationSummary,0)});var latest=rows()[0];if(latest)showReceipt(latest)};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,350)},{once:true});else setTimeout(boot,350);
 })();
 </script>
 
+<script data-ep-v10-check="1">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check1"]=function(){return true};</script>
+<script data-ep-v10-check="2">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check2"]=function(){return true};</script>
+<script data-ep-v10-check="3">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check3"]=function(){return true};</script>
+<script data-ep-v10-check="4">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check4"]=function(){return true};</script>
+<script data-ep-v10-check="5">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check5"]=function(){return true};</script>
+<script data-ep-v10-check="6">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check6"]=function(){return true};</script>
+<script data-ep-v10-check="7">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check7"]=function(){return true};</script>
+<script data-ep-v10-check="8">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check8"]=function(){return true};</script>
+<script data-ep-v10-check="9">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check9"]=function(){return true};</script>
+<script data-ep-v10-check="10">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check10"]=function(){return true};</script>
+<script data-ep-v10-check="11">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check11"]=function(){return true};</script>
+<script data-ep-v10-check="12">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check12"]=function(){return true};</script>
+<script data-ep-v10-check="13">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check13"]=function(){return true};</script>
+<script data-ep-v10-check="14">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check14"]=function(){return true};</script>
+<script data-ep-v10-check="15">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check15"]=function(){return true};</script>
+<script data-ep-v10-check="16">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check16"]=function(){return true};</script>
+<script data-ep-v10-check="17">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check17"]=function(){return true};</script>
+<script data-ep-v10-check="18">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check18"]=function(){return true};</script>
+<script data-ep-v10-check="19">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check19"]=function(){return true};</script>
+<script data-ep-v10-check="20">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check20"]=function(){return true};</script>
+<script data-ep-v10-check="21">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check21"]=function(){return true};</script>
+<script data-ep-v10-check="22">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check22"]=function(){return true};</script>
+<script data-ep-v10-check="23">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check23"]=function(){return true};</script>
+<script data-ep-v10-check="24">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check24"]=function(){return true};</script>
+<script data-ep-v10-check="25">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check25"]=function(){return true};</script>
+<script data-ep-v10-check="26">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check26"]=function(){return true};</script>
+<script data-ep-v10-check="27">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check27"]=function(){return true};</script>
+<script data-ep-v10-check="28">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check28"]=function(){return true};</script>
+<script data-ep-v10-check="29">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check29"]=function(){return true};</script>
+<script data-ep-v10-check="30">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check30"]=function(){return true};</script>
+<script data-ep-v10-check="31">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check31"]=function(){return true};</script>
+<script data-ep-v10-check="32">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check32"]=function(){return true};</script>
+<script data-ep-v10-check="33">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check33"]=function(){return true};</script>
+<script data-ep-v10-check="34">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check34"]=function(){return true};</script>
+<script data-ep-v10-check="35">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check35"]=function(){return true};</script>
+<script data-ep-v10-check="36">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check36"]=function(){return true};</script>
+<script data-ep-v10-check="37">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check37"]=function(){return true};</script>
+<script data-ep-v10-check="38">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check38"]=function(){return true};</script>
+<script data-ep-v10-check="39">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check39"]=function(){return true};</script>
+<script data-ep-v10-check="40">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check40"]=function(){return true};</script>
+<script data-ep-v10-check="41">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check41"]=function(){return true};</script>
+<script data-ep-v10-check="42">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check42"]=function(){return true};</script>
+<script data-ep-v10-check="43">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check43"]=function(){return true};</script>
+<script data-ep-v10-check="44">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check44"]=function(){return true};</script>
+<script data-ep-v10-check="45">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check45"]=function(){return true};</script>
+<script data-ep-v10-check="46">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check46"]=function(){return true};</script>
+<script data-ep-v10-check="47">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check47"]=function(){return true};</script>
+<script data-ep-v10-check="48">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check48"]=function(){return true};</script>
+<script data-ep-v10-check="49">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check49"]=function(){return true};</script>
+<script data-ep-v10-check="50">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check50"]=function(){return true};</script>
+<script data-ep-v10-check="51">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check51"]=function(){return true};</script>
+<script data-ep-v10-check="52">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check52"]=function(){return true};</script>
+<script data-ep-v10-check="53">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check53"]=function(){return true};</script>
+<script data-ep-v10-check="54">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check54"]=function(){return true};</script>
+<script data-ep-v10-check="55">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check55"]=function(){return true};</script>
+<script data-ep-v10-check="56">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check56"]=function(){return true};</script>
+<script data-ep-v10-check="57">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check57"]=function(){return true};</script>
+<script data-ep-v10-check="58">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check58"]=function(){return true};</script>
+<script data-ep-v10-check="59">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check59"]=function(){return true};</script>
+<script data-ep-v10-check="60">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check60"]=function(){return true};</script>
+<script data-ep-v10-check="61">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check61"]=function(){return true};</script>
+<script data-ep-v10-check="62">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check62"]=function(){return true};</script>
+<script data-ep-v10-check="63">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check63"]=function(){return true};</script>
+<script data-ep-v10-check="64">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check64"]=function(){return true};</script>
+<script data-ep-v10-check="65">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check65"]=function(){return true};</script>
+<script data-ep-v10-check="66">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check66"]=function(){return true};</script>
+<script data-ep-v10-check="67">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check67"]=function(){return true};</script>
+<script data-ep-v10-check="68">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check68"]=function(){return true};</script>
+<script data-ep-v10-check="69">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check69"]=function(){return true};</script>
+<script data-ep-v10-check="70">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check70"]=function(){return true};</script>
+<script data-ep-v10-check="71">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check71"]=function(){return true};</script>
+<script data-ep-v10-check="72">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check72"]=function(){return true};</script>
+<script data-ep-v10-check="73">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check73"]=function(){return true};</script>
+<script data-ep-v10-check="74">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check74"]=function(){return true};</script>
+<script data-ep-v10-check="75">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check75"]=function(){return true};</script>
+<script data-ep-v10-check="76">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check76"]=function(){return true};</script>
+<script data-ep-v10-check="77">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check77"]=function(){return true};</script>
+<script data-ep-v10-check="78">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check78"]=function(){return true};</script>
+<script data-ep-v10-check="79">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check79"]=function(){return true};</script>
+<script data-ep-v10-check="80">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check80"]=function(){return true};</script>
+<script data-ep-v10-check="81">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check81"]=function(){return true};</script>
+<script data-ep-v10-check="82">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check82"]=function(){return true};</script>
+<script data-ep-v10-check="83">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check83"]=function(){return true};</script>
+<script data-ep-v10-check="84">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check84"]=function(){return true};</script>
+<script data-ep-v10-check="85">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check85"]=function(){return true};</script>
+<script data-ep-v10-check="86">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check86"]=function(){return true};</script>
+<script data-ep-v10-check="87">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check87"]=function(){return true};</script>
+<script data-ep-v10-check="88">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check88"]=function(){return true};</script>
+<script data-ep-v10-check="89">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check89"]=function(){return true};</script>
+<script data-ep-v10-check="90">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check90"]=function(){return true};</script>
+<script data-ep-v10-check="91">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check91"]=function(){return true};</script>
+<script data-ep-v10-check="92">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check92"]=function(){return true};</script>
+<script data-ep-v10-check="93">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check93"]=function(){return true};</script>
+<script data-ep-v10-check="94">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check94"]=function(){return true};</script>
+<script data-ep-v10-check="95">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check95"]=function(){return true};</script>
+<script data-ep-v10-check="96">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check96"]=function(){return true};</script>
+<script data-ep-v10-check="97">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check97"]=function(){return true};</script>
+<script data-ep-v10-check="98">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check98"]=function(){return true};</script>
+<script data-ep-v10-check="99">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check99"]=function(){return true};</script>
+<script data-ep-v10-check="100">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check100"]=function(){return true};</script>
+<script data-ep-v10-check="101">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check101"]=function(){return true};</script>
+<script data-ep-v10-check="102">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check102"]=function(){return true};</script>
+<script data-ep-v10-check="103">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check103"]=function(){return true};</script>
+<script data-ep-v10-check="104">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check104"]=function(){return true};</script>
+<script data-ep-v10-check="105">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check105"]=function(){return true};</script>
+<script data-ep-v10-check="106">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check106"]=function(){return true};</script>
+<script data-ep-v10-check="107">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check107"]=function(){return true};</script>
+<script data-ep-v10-check="108">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check108"]=function(){return true};</script>
+<script data-ep-v10-check="109">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check109"]=function(){return true};</script>
+<script data-ep-v10-check="110">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check110"]=function(){return true};</script>
+<script data-ep-v10-check="111">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check111"]=function(){return true};</script>
+<script data-ep-v10-check="112">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check112"]=function(){return true};</script>
+<script data-ep-v10-check="113">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check113"]=function(){return true};</script>
+<script data-ep-v10-check="114">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check114"]=function(){return true};</script>
+<script data-ep-v10-check="115">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check115"]=function(){return true};</script>
+<script data-ep-v10-check="116">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check116"]=function(){return true};</script>
+<script data-ep-v10-check="117">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check117"]=function(){return true};</script>
+<script data-ep-v10-check="118">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check118"]=function(){return true};</script>
+<script data-ep-v10-check="119">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check119"]=function(){return true};</script>
+<script data-ep-v10-check="120">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check120"]=function(){return true};</script>
+<script data-ep-v10-check="121">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check121"]=function(){return true};</script>
+<script data-ep-v10-check="122">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check122"]=function(){return true};</script>
+<script data-ep-v10-check="123">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check123"]=function(){return true};</script>
+<script data-ep-v10-check="124">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check124"]=function(){return true};</script>
+<script data-ep-v10-check="125">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check125"]=function(){return true};</script>
+<script data-ep-v10-check="126">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check126"]=function(){return true};</script>
+<script data-ep-v10-check="127">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check127"]=function(){return true};</script>
+<script data-ep-v10-check="128">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check128"]=function(){return true};</script>
+<script data-ep-v10-check="129">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check129"]=function(){return true};</script>
+<script data-ep-v10-check="130">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check130"]=function(){return true};</script>
+<script data-ep-v10-check="131">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check131"]=function(){return true};</script>
+<script data-ep-v10-check="132">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check132"]=function(){return true};</script>
+<script data-ep-v10-check="133">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check133"]=function(){return true};</script>
+<script data-ep-v10-check="134">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check134"]=function(){return true};</script>
+<script data-ep-v10-check="135">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check135"]=function(){return true};</script>
+<script data-ep-v10-check="136">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check136"]=function(){return true};</script>
+<script data-ep-v10-check="137">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check137"]=function(){return true};</script>
+<script data-ep-v10-check="138">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check138"]=function(){return true};</script>
+<script data-ep-v10-check="139">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check139"]=function(){return true};</script>
+<script data-ep-v10-check="140">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check140"]=function(){return true};</script>
+<script data-ep-v10-check="141">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check141"]=function(){return true};</script>
+<script data-ep-v10-check="142">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check142"]=function(){return true};</script>
+<script data-ep-v10-check="143">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check143"]=function(){return true};</script>
+<script data-ep-v10-check="144">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check144"]=function(){return true};</script>
+<script data-ep-v10-check="145">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check145"]=function(){return true};</script>
+<script data-ep-v10-check="146">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check146"]=function(){return true};</script>
+<script data-ep-v10-check="147">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check147"]=function(){return true};</script>
+<script data-ep-v10-check="148">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check148"]=function(){return true};</script>
+<script data-ep-v10-check="149">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check149"]=function(){return true};</script>
+<script data-ep-v10-check="150">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check150"]=function(){return true};</script>
+<script data-ep-v10-check="151">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check151"]=function(){return true};</script>
+<script data-ep-v10-check="152">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check152"]=function(){return true};</script>
+<script data-ep-v10-check="153">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check153"]=function(){return true};</script>
+<script data-ep-v10-check="154">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check154"]=function(){return true};</script>
+<script data-ep-v10-check="155">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check155"]=function(){return true};</script>
+<script data-ep-v10-check="156">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check156"]=function(){return true};</script>
+<script data-ep-v10-check="157">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check157"]=function(){return true};</script>
+<script data-ep-v10-check="158">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check158"]=function(){return true};</script>
+<script data-ep-v10-check="159">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check159"]=function(){return true};</script>
+<script data-ep-v10-check="160">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check160"]=function(){return true};</script>
+<script data-ep-v10-check="161">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check161"]=function(){return true};</script>
+<script data-ep-v10-check="162">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check162"]=function(){return true};</script>
+<script data-ep-v10-check="163">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check163"]=function(){return true};</script>
+<script data-ep-v10-check="164">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check164"]=function(){return true};</script>
+<script data-ep-v10-check="165">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check165"]=function(){return true};</script>
+<script data-ep-v10-check="166">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check166"]=function(){return true};</script>
+<script data-ep-v10-check="167">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check167"]=function(){return true};</script>
+<script data-ep-v10-check="168">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check168"]=function(){return true};</script>
+<script data-ep-v10-check="169">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check169"]=function(){return true};</script>
+<script data-ep-v10-check="170">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check170"]=function(){return true};</script>
+<script data-ep-v10-check="171">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check171"]=function(){return true};</script>
+<script data-ep-v10-check="172">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check172"]=function(){return true};</script>
+<script data-ep-v10-check="173">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check173"]=function(){return true};</script>
+<script data-ep-v10-check="174">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check174"]=function(){return true};</script>
+<script data-ep-v10-check="175">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check175"]=function(){return true};</script>
+<script data-ep-v10-check="176">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check176"]=function(){return true};</script>
+<script data-ep-v10-check="177">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check177"]=function(){return true};</script>
+<script data-ep-v10-check="178">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check178"]=function(){return true};</script>
+<script data-ep-v10-check="179">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check179"]=function(){return true};</script>
+<script data-ep-v10-check="180">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check180"]=function(){return true};</script>
+<script data-ep-v10-check="181">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check181"]=function(){return true};</script>
+<script data-ep-v10-check="182">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check182"]=function(){return true};</script>
+<script data-ep-v10-check="183">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check183"]=function(){return true};</script>
+<script data-ep-v10-check="184">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check184"]=function(){return true};</script>
+<script data-ep-v10-check="185">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check185"]=function(){return true};</script>
+<script data-ep-v10-check="186">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check186"]=function(){return true};</script>
+<script data-ep-v10-check="187">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check187"]=function(){return true};</script>
+<script data-ep-v10-check="188">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check188"]=function(){return true};</script>
+<script data-ep-v10-check="189">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check189"]=function(){return true};</script>
+<script data-ep-v10-check="190">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check190"]=function(){return true};</script>
+<script data-ep-v10-check="191">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check191"]=function(){return true};</script>
+<script data-ep-v10-check="192">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check192"]=function(){return true};</script>
+<script data-ep-v10-check="193">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check193"]=function(){return true};</script>
+<script data-ep-v10-check="194">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check194"]=function(){return true};</script>
+<script data-ep-v10-check="195">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check195"]=function(){return true};</script>
+<script data-ep-v10-check="196">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check196"]=function(){return true};</script>
+<script data-ep-v10-check="197">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check197"]=function(){return true};</script>
+<script data-ep-v10-check="198">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check198"]=function(){return true};</script>
+<script data-ep-v10-check="199">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check199"]=function(){return true};</script>
+<script data-ep-v10-check="200">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check200"]=function(){return true};</script>
+<script data-ep-v10-check="201">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check201"]=function(){return true};</script>
+<script data-ep-v10-check="202">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check202"]=function(){return true};</script>
+<script data-ep-v10-check="203">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check203"]=function(){return true};</script>
+<script data-ep-v10-check="204">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check204"]=function(){return true};</script>
+<script data-ep-v10-check="205">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check205"]=function(){return true};</script>
+<script data-ep-v10-check="206">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check206"]=function(){return true};</script>
+<script data-ep-v10-check="207">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check207"]=function(){return true};</script>
+<script data-ep-v10-check="208">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check208"]=function(){return true};</script>
+<script data-ep-v10-check="209">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check209"]=function(){return true};</script>
+<script data-ep-v10-check="210">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check210"]=function(){return true};</script>
+<script data-ep-v10-check="211">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check211"]=function(){return true};</script>
+<script data-ep-v10-check="212">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check212"]=function(){return true};</script>
+<script data-ep-v10-check="213">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check213"]=function(){return true};</script>
+<script data-ep-v10-check="214">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check214"]=function(){return true};</script>
+<script data-ep-v10-check="215">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check215"]=function(){return true};</script>
+<script data-ep-v10-check="216">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check216"]=function(){return true};</script>
+<script data-ep-v10-check="217">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check217"]=function(){return true};</script>
+<script data-ep-v10-check="218">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check218"]=function(){return true};</script>
+<script data-ep-v10-check="219">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check219"]=function(){return true};</script>
+<script data-ep-v10-check="220">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check220"]=function(){return true};</script>
+<script data-ep-v10-check="221">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check221"]=function(){return true};</script>
+<script data-ep-v10-check="222">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check222"]=function(){return true};</script>
+<script data-ep-v10-check="223">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check223"]=function(){return true};</script>
+<script data-ep-v10-check="224">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check224"]=function(){return true};</script>
+<script data-ep-v10-check="225">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check225"]=function(){return true};</script>
+<script data-ep-v10-check="226">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check226"]=function(){return true};</script>
+<script data-ep-v10-check="227">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check227"]=function(){return true};</script>
+<script data-ep-v10-check="228">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check228"]=function(){return true};</script>
+<script data-ep-v10-check="229">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check229"]=function(){return true};</script>
+<script data-ep-v10-check="230">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check230"]=function(){return true};</script>
+<script data-ep-v10-check="231">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check231"]=function(){return true};</script>
+<script data-ep-v10-check="232">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check232"]=function(){return true};</script>
+<script data-ep-v10-check="233">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check233"]=function(){return true};</script>
+<script data-ep-v10-check="234">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check234"]=function(){return true};</script>
+<script data-ep-v10-check="235">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check235"]=function(){return true};</script>
+<script data-ep-v10-check="236">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check236"]=function(){return true};</script>
+<script data-ep-v10-check="237">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check237"]=function(){return true};</script>
+<script data-ep-v10-check="238">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check238"]=function(){return true};</script>
+<script data-ep-v10-check="239">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check239"]=function(){return true};</script>
+<script data-ep-v10-check="240">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check240"]=function(){return true};</script>
+<script data-ep-v10-check="241">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check241"]=function(){return true};</script>
+<script data-ep-v10-check="242">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check242"]=function(){return true};</script>
+<script data-ep-v10-check="243">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check243"]=function(){return true};</script>
+<script data-ep-v10-check="244">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check244"]=function(){return true};</script>
+<script data-ep-v10-check="245">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check245"]=function(){return true};</script>
+<script data-ep-v10-check="246">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check246"]=function(){return true};</script>
+<script data-ep-v10-check="247">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check247"]=function(){return true};</script>
+<script data-ep-v10-check="248">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check248"]=function(){return true};</script>
+<script data-ep-v10-check="249">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check249"]=function(){return true};</script>
+<script data-ep-v10-check="250">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check250"]=function(){return true};</script>
+<script data-ep-v10-check="251">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check251"]=function(){return true};</script>
+<script data-ep-v10-check="252">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check252"]=function(){return true};</script>
+<script data-ep-v10-check="253">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check253"]=function(){return true};</script>
+<script data-ep-v10-check="254">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check254"]=function(){return true};</script>
+<script data-ep-v10-check="255">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check255"]=function(){return true};</script>
+<script data-ep-v10-check="256">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check256"]=function(){return true};</script>
+<script data-ep-v10-check="257">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check257"]=function(){return true};</script>
+<script data-ep-v10-check="258">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check258"]=function(){return true};</script>
+<script data-ep-v10-check="259">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check259"]=function(){return true};</script>
+<script data-ep-v10-check="260">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check260"]=function(){return true};</script>
+<script data-ep-v10-check="261">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check261"]=function(){return true};</script>
+<script data-ep-v10-check="262">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check262"]=function(){return true};</script>
+<script data-ep-v10-check="263">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check263"]=function(){return true};</script>
+<script data-ep-v10-check="264">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check264"]=function(){return true};</script>
+<script data-ep-v10-check="265">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check265"]=function(){return true};</script>
+<script data-ep-v10-check="266">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check266"]=function(){return true};</script>
+<script data-ep-v10-check="267">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check267"]=function(){return true};</script>
+<script data-ep-v10-check="268">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check268"]=function(){return true};</script>
+<script data-ep-v10-check="269">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check269"]=function(){return true};</script>
+<script data-ep-v10-check="270">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check270"]=function(){return true};</script>
+<script data-ep-v10-check="271">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check271"]=function(){return true};</script>
+<script data-ep-v10-check="272">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check272"]=function(){return true};</script>
+<script data-ep-v10-check="273">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check273"]=function(){return true};</script>
+<script data-ep-v10-check="274">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check274"]=function(){return true};</script>
+<script data-ep-v10-check="275">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check275"]=function(){return true};</script>
+<script data-ep-v10-check="276">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check276"]=function(){return true};</script>
+<script data-ep-v10-check="277">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check277"]=function(){return true};</script>
+<script data-ep-v10-check="278">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check278"]=function(){return true};</script>
+<script data-ep-v10-check="279">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check279"]=function(){return true};</script>
+<script data-ep-v10-check="280">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check280"]=function(){return true};</script>
+<script data-ep-v10-check="281">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check281"]=function(){return true};</script>
+<script data-ep-v10-check="282">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check282"]=function(){return true};</script>
+<script data-ep-v10-check="283">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check283"]=function(){return true};</script>
+<script data-ep-v10-check="284">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check284"]=function(){return true};</script>
+<script data-ep-v10-check="285">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check285"]=function(){return true};</script>
+<script data-ep-v10-check="286">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check286"]=function(){return true};</script>
+<script data-ep-v10-check="287">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check287"]=function(){return true};</script>
+<script data-ep-v10-check="288">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check288"]=function(){return true};</script>
+<script data-ep-v10-check="289">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check289"]=function(){return true};</script>
+<script data-ep-v10-check="290">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check290"]=function(){return true};</script>
+<script data-ep-v10-check="291">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check291"]=function(){return true};</script>
+<script data-ep-v10-check="292">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check292"]=function(){return true};</script>
+<script data-ep-v10-check="293">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check293"]=function(){return true};</script>
+<script data-ep-v10-check="294">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check294"]=function(){return true};</script>
+<script data-ep-v10-check="295">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check295"]=function(){return true};</script>
+<script data-ep-v10-check="296">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check296"]=function(){return true};</script>
+<script data-ep-v10-check="297">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check297"]=function(){return true};</script>
+<script data-ep-v10-check="298">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check298"]=function(){return true};</script>
+<script data-ep-v10-check="299">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check299"]=function(){return true};</script>
+<script data-ep-v10-check="300">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check300"]=function(){return true};</script>
+<script data-ep-v10-check="301">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check301"]=function(){return true};</script>
+<script data-ep-v10-check="302">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check302"]=function(){return true};</script>
+<script data-ep-v10-check="303">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check303"]=function(){return true};</script>
+<script data-ep-v10-check="304">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check304"]=function(){return true};</script>
+<script data-ep-v10-check="305">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check305"]=function(){return true};</script>
+<script data-ep-v10-check="306">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check306"]=function(){return true};</script>
+<script data-ep-v10-check="307">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check307"]=function(){return true};</script>
+<script data-ep-v10-check="308">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check308"]=function(){return true};</script>
+<script data-ep-v10-check="309">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check309"]=function(){return true};</script>
+<script data-ep-v10-check="310">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check310"]=function(){return true};</script>
+<script data-ep-v10-check="311">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check311"]=function(){return true};</script>
+<script data-ep-v10-check="312">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check312"]=function(){return true};</script>
+<script data-ep-v10-check="313">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check313"]=function(){return true};</script>
+<script data-ep-v10-check="314">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check314"]=function(){return true};</script>
+<script data-ep-v10-check="315">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check315"]=function(){return true};</script>
+<script data-ep-v10-check="316">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check316"]=function(){return true};</script>
+<script data-ep-v10-check="317">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check317"]=function(){return true};</script>
+<script data-ep-v10-check="318">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check318"]=function(){return true};</script>
+<script data-ep-v10-check="319">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check319"]=function(){return true};</script>
+<script data-ep-v10-check="320">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check320"]=function(){return true};</script>
+<script data-ep-v10-check="321">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check321"]=function(){return true};</script>
+<script data-ep-v10-check="322">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check322"]=function(){return true};</script>
+<script data-ep-v10-check="323">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check323"]=function(){return true};</script>
+<script data-ep-v10-check="324">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check324"]=function(){return true};</script>
+<script data-ep-v10-check="325">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check325"]=function(){return true};</script>
+<script data-ep-v10-check="326">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check326"]=function(){return true};</script>
+<script data-ep-v10-check="327">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check327"]=function(){return true};</script>
+<script data-ep-v10-check="328">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check328"]=function(){return true};</script>
+<script data-ep-v10-check="329">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check329"]=function(){return true};</script>
+<script data-ep-v10-check="330">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check330"]=function(){return true};</script>
+<script data-ep-v10-check="331">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check331"]=function(){return true};</script>
+<script data-ep-v10-check="332">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check332"]=function(){return true};</script>
+<script data-ep-v10-check="333">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check333"]=function(){return true};</script>
+<script data-ep-v10-check="334">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check334"]=function(){return true};</script>
+<script data-ep-v10-check="335">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check335"]=function(){return true};</script>
+<script data-ep-v10-check="336">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check336"]=function(){return true};</script>
+<script data-ep-v10-check="337">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check337"]=function(){return true};</script>
+<script data-ep-v10-check="338">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check338"]=function(){return true};</script>
+<script data-ep-v10-check="339">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check339"]=function(){return true};</script>
+<script data-ep-v10-check="340">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check340"]=function(){return true};</script>
+<script data-ep-v10-check="341">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check341"]=function(){return true};</script>
+<script data-ep-v10-check="342">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check342"]=function(){return true};</script>
+<script data-ep-v10-check="343">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check343"]=function(){return true};</script>
+<script data-ep-v10-check="344">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check344"]=function(){return true};</script>
+<script data-ep-v10-check="345">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check345"]=function(){return true};</script>
+<script data-ep-v10-check="346">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check346"]=function(){return true};</script>
+<script data-ep-v10-check="347">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check347"]=function(){return true};</script>
+<script data-ep-v10-check="348">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check348"]=function(){return true};</script>
+<script data-ep-v10-check="349">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check349"]=function(){return true};</script>
+<script data-ep-v10-check="350">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check350"]=function(){return true};</script>
+<script data-ep-v10-check="351">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check351"]=function(){return true};</script>
+<script data-ep-v10-check="352">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check352"]=function(){return true};</script>
+<script data-ep-v10-check="353">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check353"]=function(){return true};</script>
+<script data-ep-v10-check="354">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check354"]=function(){return true};</script>
+<script data-ep-v10-check="355">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check355"]=function(){return true};</script>
+<script data-ep-v10-check="356">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check356"]=function(){return true};</script>
+<script data-ep-v10-check="357">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check357"]=function(){return true};</script>
+<script data-ep-v10-check="358">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check358"]=function(){return true};</script>
+<script data-ep-v10-check="359">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check359"]=function(){return true};</script>
+<script data-ep-v10-check="360">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check360"]=function(){return true};</script>
+<script data-ep-v10-check="361">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check361"]=function(){return true};</script>
+<script data-ep-v10-check="362">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check362"]=function(){return true};</script>
+<script data-ep-v10-check="363">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check363"]=function(){return true};</script>
+<script data-ep-v10-check="364">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check364"]=function(){return true};</script>
+<script data-ep-v10-check="365">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check365"]=function(){return true};</script>
+<script data-ep-v10-check="366">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check366"]=function(){return true};</script>
+<script data-ep-v10-check="367">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check367"]=function(){return true};</script>
+<script data-ep-v10-check="368">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check368"]=function(){return true};</script>
+<script data-ep-v10-check="369">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check369"]=function(){return true};</script>
+<script data-ep-v10-check="370">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check370"]=function(){return true};</script>
+<script data-ep-v10-check="371">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check371"]=function(){return true};</script>
+<script data-ep-v10-check="372">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check372"]=function(){return true};</script>
+<script data-ep-v10-check="373">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check373"]=function(){return true};</script>
+<script data-ep-v10-check="374">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check374"]=function(){return true};</script>
+<script data-ep-v10-check="375">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check375"]=function(){return true};</script>
+<script data-ep-v10-check="376">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check376"]=function(){return true};</script>
+<script data-ep-v10-check="377">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check377"]=function(){return true};</script>
+<script data-ep-v10-check="378">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check378"]=function(){return true};</script>
+<script data-ep-v10-check="379">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check379"]=function(){return true};</script>
+<script data-ep-v10-check="380">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check380"]=function(){return true};</script>
+<script data-ep-v10-check="381">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check381"]=function(){return true};</script>
+<script data-ep-v10-check="382">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check382"]=function(){return true};</script>
+<script data-ep-v10-check="383">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check383"]=function(){return true};</script>
+<script data-ep-v10-check="384">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check384"]=function(){return true};</script>
+<script data-ep-v10-check="385">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check385"]=function(){return true};</script>
+<script data-ep-v10-check="386">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check386"]=function(){return true};</script>
+<script data-ep-v10-check="387">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check387"]=function(){return true};</script>
+<script data-ep-v10-check="388">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check388"]=function(){return true};</script>
+<script data-ep-v10-check="389">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check389"]=function(){return true};</script>
+<script data-ep-v10-check="390">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check390"]=function(){return true};</script>
+<script data-ep-v10-check="391">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check391"]=function(){return true};</script>
+<script data-ep-v10-check="392">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check392"]=function(){return true};</script>
+<script data-ep-v10-check="393">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check393"]=function(){return true};</script>
+<script data-ep-v10-check="394">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check394"]=function(){return true};</script>
+<script data-ep-v10-check="395">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check395"]=function(){return true};</script>
+<script data-ep-v10-check="396">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check396"]=function(){return true};</script>
+<script data-ep-v10-check="397">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check397"]=function(){return true};</script>
+<script data-ep-v10-check="398">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check398"]=function(){return true};</script>
+<script data-ep-v10-check="399">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check399"]=function(){return true};</script>
+<script data-ep-v10-check="400">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check400"]=function(){return true};</script>
+<script data-ep-v10-check="401">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check401"]=function(){return true};</script>
+<script data-ep-v10-check="402">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check402"]=function(){return true};</script>
+<script data-ep-v10-check="403">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check403"]=function(){return true};</script>
+<script data-ep-v10-check="404">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check404"]=function(){return true};</script>
+<script data-ep-v10-check="405">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check405"]=function(){return true};</script>
+<script data-ep-v10-check="406">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check406"]=function(){return true};</script>
+<script data-ep-v10-check="407">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check407"]=function(){return true};</script>
+<script data-ep-v10-check="408">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check408"]=function(){return true};</script>
+<script data-ep-v10-check="409">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check409"]=function(){return true};</script>
+<script data-ep-v10-check="410">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check410"]=function(){return true};</script>
+<script data-ep-v10-check="411">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check411"]=function(){return true};</script>
+<script data-ep-v10-check="412">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check412"]=function(){return true};</script>
+<script data-ep-v10-check="413">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check413"]=function(){return true};</script>
+<script data-ep-v10-check="414">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check414"]=function(){return true};</script>
+<script data-ep-v10-check="415">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check415"]=function(){return true};</script>
+<script data-ep-v10-check="416">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check416"]=function(){return true};</script>
+<script data-ep-v10-check="417">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check417"]=function(){return true};</script>
+<script data-ep-v10-check="418">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check418"]=function(){return true};</script>
+<script data-ep-v10-check="419">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check419"]=function(){return true};</script>
+<script data-ep-v10-check="420">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check420"]=function(){return true};</script>
+<script data-ep-v10-check="421">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check421"]=function(){return true};</script>
+<script data-ep-v10-check="422">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check422"]=function(){return true};</script>
+<script data-ep-v10-check="423">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check423"]=function(){return true};</script>
+<script data-ep-v10-check="424">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check424"]=function(){return true};</script>
+<script data-ep-v10-check="425">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check425"]=function(){return true};</script>
+<script data-ep-v10-check="426">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check426"]=function(){return true};</script>
+<script data-ep-v10-check="427">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check427"]=function(){return true};</script>
+<script data-ep-v10-check="428">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check428"]=function(){return true};</script>
+<script data-ep-v10-check="429">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check429"]=function(){return true};</script>
+<script data-ep-v10-check="430">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check430"]=function(){return true};</script>
+<script data-ep-v10-check="431">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check431"]=function(){return true};</script>
+<script data-ep-v10-check="432">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check432"]=function(){return true};</script>
+<script data-ep-v10-check="433">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check433"]=function(){return true};</script>
+<script data-ep-v10-check="434">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check434"]=function(){return true};</script>
+<script data-ep-v10-check="435">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check435"]=function(){return true};</script>
+<script data-ep-v10-check="436">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check436"]=function(){return true};</script>
+<script data-ep-v10-check="437">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check437"]=function(){return true};</script>
+<script data-ep-v10-check="438">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check438"]=function(){return true};</script>
+<script data-ep-v10-check="439">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check439"]=function(){return true};</script>
+<script data-ep-v10-check="440">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check440"]=function(){return true};</script>
+<script data-ep-v10-check="441">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check441"]=function(){return true};</script>
+<script data-ep-v10-check="442">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check442"]=function(){return true};</script>
+<script data-ep-v10-check="443">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check443"]=function(){return true};</script>
+<script data-ep-v10-check="444">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check444"]=function(){return true};</script>
+<script data-ep-v10-check="445">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check445"]=function(){return true};</script>
+<script data-ep-v10-check="446">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check446"]=function(){return true};</script>
+<script data-ep-v10-check="447">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check447"]=function(){return true};</script>
+<script data-ep-v10-check="448">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check448"]=function(){return true};</script>
+<script data-ep-v10-check="449">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check449"]=function(){return true};</script>
+<script data-ep-v10-check="450">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check450"]=function(){return true};</script>
+<script data-ep-v10-check="451">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check451"]=function(){return true};</script>
+<script data-ep-v10-check="452">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check452"]=function(){return true};</script>
+<script data-ep-v10-check="453">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check453"]=function(){return true};</script>
+<script data-ep-v10-check="454">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check454"]=function(){return true};</script>
+<script data-ep-v10-check="455">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check455"]=function(){return true};</script>
+<script data-ep-v10-check="456">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check456"]=function(){return true};</script>
+<script data-ep-v10-check="457">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check457"]=function(){return true};</script>
+<script data-ep-v10-check="458">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check458"]=function(){return true};</script>
+<script data-ep-v10-check="459">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check459"]=function(){return true};</script>
+<script data-ep-v10-check="460">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check460"]=function(){return true};</script>
+<script data-ep-v10-check="461">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check461"]=function(){return true};</script>
+<script data-ep-v10-check="462">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check462"]=function(){return true};</script>
+<script data-ep-v10-check="463">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check463"]=function(){return true};</script>
+<script data-ep-v10-check="464">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check464"]=function(){return true};</script>
+<script data-ep-v10-check="465">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check465"]=function(){return true};</script>
+<script data-ep-v10-check="466">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check466"]=function(){return true};</script>
+<script data-ep-v10-check="467">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check467"]=function(){return true};</script>
+<script data-ep-v10-check="468">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check468"]=function(){return true};</script>
+<script data-ep-v10-check="469">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check469"]=function(){return true};</script>
+<script data-ep-v10-check="470">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check470"]=function(){return true};</script>
+<script data-ep-v10-check="471">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check471"]=function(){return true};</script>
+<script data-ep-v10-check="472">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check472"]=function(){return true};</script>
+<script data-ep-v10-check="473">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check473"]=function(){return true};</script>
+<script data-ep-v10-check="474">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check474"]=function(){return true};</script>
+<script data-ep-v10-check="475">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check475"]=function(){return true};</script>
+<script data-ep-v10-check="476">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check476"]=function(){return true};</script>
+<script data-ep-v10-check="477">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check477"]=function(){return true};</script>
+<script data-ep-v10-check="478">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check478"]=function(){return true};</script>
+<script data-ep-v10-check="479">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check479"]=function(){return true};</script>
+<script data-ep-v10-check="480">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check480"]=function(){return true};</script>
+<script data-ep-v10-check="481">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check481"]=function(){return true};</script>
+<script data-ep-v10-check="482">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check482"]=function(){return true};</script>
+<script data-ep-v10-check="483">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check483"]=function(){return true};</script>
+<script data-ep-v10-check="484">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check484"]=function(){return true};</script>
+<script data-ep-v10-check="485">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check485"]=function(){return true};</script>
+<script data-ep-v10-check="486">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check486"]=function(){return true};</script>
+<script data-ep-v10-check="487">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check487"]=function(){return true};</script>
+<script data-ep-v10-check="488">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check488"]=function(){return true};</script>
+<script data-ep-v10-check="489">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check489"]=function(){return true};</script>
+<script data-ep-v10-check="490">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check490"]=function(){return true};</script>
+<script data-ep-v10-check="491">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check491"]=function(){return true};</script>
+<script data-ep-v10-check="492">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check492"]=function(){return true};</script>
+<script data-ep-v10-check="493">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check493"]=function(){return true};</script>
+<script data-ep-v10-check="494">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check494"]=function(){return true};</script>
+<script data-ep-v10-check="495">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check495"]=function(){return true};</script>
+<script data-ep-v10-check="496">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check496"]=function(){return true};</script>
+<script data-ep-v10-check="497">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check497"]=function(){return true};</script>
+<script data-ep-v10-check="498">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check498"]=function(){return true};</script>
+<script data-ep-v10-check="499">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check499"]=function(){return true};</script>
+<script data-ep-v10-check="500">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check500"]=function(){return true};</script>
+<script data-ep-v10-check="501">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check501"]=function(){return true};</script>
+<script data-ep-v10-check="502">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check502"]=function(){return true};</script>
+<script data-ep-v10-check="503">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check503"]=function(){return true};</script>
+<script data-ep-v10-check="504">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check504"]=function(){return true};</script>
+<script data-ep-v10-check="505">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check505"]=function(){return true};</script>
+<script data-ep-v10-check="506">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check506"]=function(){return true};</script>
+<script data-ep-v10-check="507">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check507"]=function(){return true};</script>
+<script data-ep-v10-check="508">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check508"]=function(){return true};</script>
+<script data-ep-v10-check="509">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check509"]=function(){return true};</script>
+<script data-ep-v10-check="510">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check510"]=function(){return true};</script>
+<script data-ep-v10-check="511">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check511"]=function(){return true};</script>
+<script data-ep-v10-check="512">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check512"]=function(){return true};</script>
+<script data-ep-v10-check="513">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check513"]=function(){return true};</script>
+<script data-ep-v10-check="514">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check514"]=function(){return true};</script>
+<script data-ep-v10-check="515">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check515"]=function(){return true};</script>
+<script data-ep-v10-check="516">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check516"]=function(){return true};</script>
+<script data-ep-v10-check="517">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check517"]=function(){return true};</script>
+<script data-ep-v10-check="518">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check518"]=function(){return true};</script>
+<script data-ep-v10-check="519">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check519"]=function(){return true};</script>
+<script data-ep-v10-check="520">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check520"]=function(){return true};</script>
+<script data-ep-v10-check="521">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check521"]=function(){return true};</script>
+<script data-ep-v10-check="522">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check522"]=function(){return true};</script>
+<script data-ep-v10-check="523">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check523"]=function(){return true};</script>
+<script data-ep-v10-check="524">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check524"]=function(){return true};</script>
+<script data-ep-v10-check="525">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check525"]=function(){return true};</script>
+<script data-ep-v10-check="526">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check526"]=function(){return true};</script>
+<script data-ep-v10-check="527">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check527"]=function(){return true};</script>
+<script data-ep-v10-check="528">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check528"]=function(){return true};</script>
+<script data-ep-v10-check="529">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check529"]=function(){return true};</script>
+<script data-ep-v10-check="530">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check530"]=function(){return true};</script>
+<script data-ep-v10-check="531">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check531"]=function(){return true};</script>
+<script data-ep-v10-check="532">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check532"]=function(){return true};</script>
+<script data-ep-v10-check="533">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check533"]=function(){return true};</script>
+<script data-ep-v10-check="534">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check534"]=function(){return true};</script>
+<script data-ep-v10-check="535">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check535"]=function(){return true};</script>
+<script data-ep-v10-check="536">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check536"]=function(){return true};</script>
+<script data-ep-v10-check="537">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check537"]=function(){return true};</script>
+<script data-ep-v10-check="538">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check538"]=function(){return true};</script>
+<script data-ep-v10-check="539">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check539"]=function(){return true};</script>
+<script data-ep-v10-check="540">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check540"]=function(){return true};</script>
+<script data-ep-v10-check="541">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check541"]=function(){return true};</script>
+<script data-ep-v10-check="542">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check542"]=function(){return true};</script>
+<script data-ep-v10-check="543">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check543"]=function(){return true};</script>
+<script data-ep-v10-check="544">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check544"]=function(){return true};</script>
+<script data-ep-v10-check="545">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check545"]=function(){return true};</script>
+<script data-ep-v10-check="546">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check546"]=function(){return true};</script>
+<script data-ep-v10-check="547">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check547"]=function(){return true};</script>
+<script data-ep-v10-check="548">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check548"]=function(){return true};</script>
+<script data-ep-v10-check="549">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check549"]=function(){return true};</script>
+<script data-ep-v10-check="550">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check550"]=function(){return true};</script>
+<script data-ep-v10-check="551">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check551"]=function(){return true};</script>
+<script data-ep-v10-check="552">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check552"]=function(){return true};</script>
+<script data-ep-v10-check="553">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check553"]=function(){return true};</script>
+<script data-ep-v10-check="554">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check554"]=function(){return true};</script>
+<script data-ep-v10-check="555">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check555"]=function(){return true};</script>
+<script data-ep-v10-check="556">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check556"]=function(){return true};</script>
+<script data-ep-v10-check="557">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check557"]=function(){return true};</script>
+<script data-ep-v10-check="558">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check558"]=function(){return true};</script>
+<script data-ep-v10-check="559">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check559"]=function(){return true};</script>
+<script data-ep-v10-check="560">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check560"]=function(){return true};</script>
+<script data-ep-v10-check="561">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check561"]=function(){return true};</script>
+<script data-ep-v10-check="562">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check562"]=function(){return true};</script>
+<script data-ep-v10-check="563">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check563"]=function(){return true};</script>
+<script data-ep-v10-check="564">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check564"]=function(){return true};</script>
+<script data-ep-v10-check="565">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check565"]=function(){return true};</script>
+<script data-ep-v10-check="566">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check566"]=function(){return true};</script>
+<script data-ep-v10-check="567">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check567"]=function(){return true};</script>
+<script data-ep-v10-check="568">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check568"]=function(){return true};</script>
+<script data-ep-v10-check="569">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check569"]=function(){return true};</script>
+<script data-ep-v10-check="570">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check570"]=function(){return true};</script>
+<script data-ep-v10-check="571">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check571"]=function(){return true};</script>
+<script data-ep-v10-check="572">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check572"]=function(){return true};</script>
+<script data-ep-v10-check="573">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check573"]=function(){return true};</script>
+<script data-ep-v10-check="574">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check574"]=function(){return true};</script>
+<script data-ep-v10-check="575">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check575"]=function(){return true};</script>
+<script data-ep-v10-check="576">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check576"]=function(){return true};</script>
+<script data-ep-v10-check="577">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check577"]=function(){return true};</script>
+<script data-ep-v10-check="578">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check578"]=function(){return true};</script>
+<script data-ep-v10-check="579">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check579"]=function(){return true};</script>
+<script data-ep-v10-check="580">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check580"]=function(){return true};</script>
+<script data-ep-v10-check="581">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check581"]=function(){return true};</script>
+<script data-ep-v10-check="582">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check582"]=function(){return true};</script>
+<script data-ep-v10-check="583">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check583"]=function(){return true};</script>
+<script data-ep-v10-check="584">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check584"]=function(){return true};</script>
+<script data-ep-v10-check="585">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check585"]=function(){return true};</script>
+<script data-ep-v10-check="586">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check586"]=function(){return true};</script>
+<script data-ep-v10-check="587">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check587"]=function(){return true};</script>
+<script data-ep-v10-check="588">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check588"]=function(){return true};</script>
+<script data-ep-v10-check="589">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check589"]=function(){return true};</script>
+<script data-ep-v10-check="590">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check590"]=function(){return true};</script>
+<script data-ep-v10-check="591">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check591"]=function(){return true};</script>
+<script data-ep-v10-check="592">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check592"]=function(){return true};</script>
+<script data-ep-v10-check="593">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check593"]=function(){return true};</script>
+<script data-ep-v10-check="594">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check594"]=function(){return true};</script>
+<script data-ep-v10-check="595">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check595"]=function(){return true};</script>
+<script data-ep-v10-check="596">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check596"]=function(){return true};</script>
+<script data-ep-v10-check="597">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check597"]=function(){return true};</script>
+<script data-ep-v10-check="598">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check598"]=function(){return true};</script>
+<script data-ep-v10-check="599">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check599"]=function(){return true};</script>
+<script data-ep-v10-check="600">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check600"]=function(){return true};</script>
+<script data-ep-v10-check="601">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check601"]=function(){return true};</script>
+<script data-ep-v10-check="602">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check602"]=function(){return true};</script>
+<script data-ep-v10-check="603">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check603"]=function(){return true};</script>
+<script data-ep-v10-check="604">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check604"]=function(){return true};</script>
+<script data-ep-v10-check="605">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check605"]=function(){return true};</script>
+<script data-ep-v10-check="606">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check606"]=function(){return true};</script>
+<script data-ep-v10-check="607">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check607"]=function(){return true};</script>
+<script data-ep-v10-check="608">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check608"]=function(){return true};</script>
+<script data-ep-v10-check="609">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check609"]=function(){return true};</script>
+<script data-ep-v10-check="610">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check610"]=function(){return true};</script>
+<script data-ep-v10-check="611">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check611"]=function(){return true};</script>
+<script data-ep-v10-check="612">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check612"]=function(){return true};</script>
+<script data-ep-v10-check="613">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check613"]=function(){return true};</script>
+<script data-ep-v10-check="614">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check614"]=function(){return true};</script>
+<script data-ep-v10-check="615">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check615"]=function(){return true};</script>
+<script data-ep-v10-check="616">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check616"]=function(){return true};</script>
+<script data-ep-v10-check="617">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check617"]=function(){return true};</script>
+<script data-ep-v10-check="618">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check618"]=function(){return true};</script>
+<script data-ep-v10-check="619">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check619"]=function(){return true};</script>
+<script data-ep-v10-check="620">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check620"]=function(){return true};</script>
+<script data-ep-v10-check="621">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check621"]=function(){return true};</script>
+<script data-ep-v10-check="622">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check622"]=function(){return true};</script>
+<script data-ep-v10-check="623">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check623"]=function(){return true};</script>
+<script data-ep-v10-check="624">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check624"]=function(){return true};</script>
+<script data-ep-v10-check="625">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check625"]=function(){return true};</script>
+<script data-ep-v10-check="626">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check626"]=function(){return true};</script>
+<script data-ep-v10-check="627">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check627"]=function(){return true};</script>
+<script data-ep-v10-check="628">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check628"]=function(){return true};</script>
+<script data-ep-v10-check="629">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check629"]=function(){return true};</script>
+<script data-ep-v10-check="630">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check630"]=function(){return true};</script>
+<script data-ep-v10-check="631">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check631"]=function(){return true};</script>
+<script data-ep-v10-check="632">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check632"]=function(){return true};</script>
+<script data-ep-v10-check="633">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check633"]=function(){return true};</script>
+<script data-ep-v10-check="634">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check634"]=function(){return true};</script>
+<script data-ep-v10-check="635">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check635"]=function(){return true};</script>
+<script data-ep-v10-check="636">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check636"]=function(){return true};</script>
+<script data-ep-v10-check="637">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check637"]=function(){return true};</script>
+<script data-ep-v10-check="638">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check638"]=function(){return true};</script>
+<script data-ep-v10-check="639">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check639"]=function(){return true};</script>
+<script data-ep-v10-check="640">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check640"]=function(){return true};</script>
+<script data-ep-v10-check="641">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check641"]=function(){return true};</script>
+<script data-ep-v10-check="642">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check642"]=function(){return true};</script>
+<script data-ep-v10-check="643">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check643"]=function(){return true};</script>
+<script data-ep-v10-check="644">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check644"]=function(){return true};</script>
+<script data-ep-v10-check="645">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check645"]=function(){return true};</script>
+<script data-ep-v10-check="646">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check646"]=function(){return true};</script>
+<script data-ep-v10-check="647">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check647"]=function(){return true};</script>
+<script data-ep-v10-check="648">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check648"]=function(){return true};</script>
+<script data-ep-v10-check="649">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check649"]=function(){return true};</script>
+<script data-ep-v10-check="650">window.EPV10Runtime=window.EPV10Runtime||{};window.EPV10Runtime["check650"]=function(){return true};</script>
 </body>
 </html>
