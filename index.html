@@ -6286,5 +6286,372 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<!-- ============================================================
+     EP-V9 ADDITIVE VOTER VERIFICATION NUMBER LAYER
+     Preserves all existing content and features.
+     This is a portal-generated verification number, NOT an
+     official Election Commission / EPIC voter number.
+     ============================================================ -->
+<style id="ep-v9-voter-verification-style">
+.ep-v9-verify-card{margin-top:14px;padding:16px;border:2px solid rgba(19,136,8,.24);border-radius:16px;background:linear-gradient(135deg,#fff2df,#fff 48%,#edf9ef);box-shadow:0 14px 35px rgba(6,35,61,.10)}
+.ep-v9-verify-head{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:900;color:#082742}
+.ep-v9-verify-number{display:block;margin-top:8px;padding:11px 12px;border-radius:11px;border:1px dashed #9eb9a6;background:#fff;font:900 16px/1.2 "Courier New",monospace;letter-spacing:.06em;color:#06233d;word-break:break-all}
+.ep-v9-verify-note{display:block;margin-top:7px;color:#66788a;font-size:10px;line-height:1.6}
+.ep-v9-verify-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ep-v9-verify-actions button,.ep-v9-lookup-actions button{border:1px solid #b9ccbf;background:#fff;color:#082742;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}
+.ep-v9-verify-actions button:hover,.ep-v9-lookup-actions button:hover{background:#082742;color:#fff}
+.ep-v9-lookup{margin-bottom:12px;padding:13px;border:1px solid rgba(212,175,55,.25);border-radius:13px;background:rgba(212,175,55,.08)}
+.ep-v9-lookup-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.ep-v9-lookup input{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;color:#f8fafc;border-radius:10px;padding:10px;font:800 11px "Courier New",monospace;outline:none}
+.ep-v9-lookup-result{margin-top:10px;display:none;padding:12px;border-radius:12px;background:#0a1725;border:1px solid #31475c;color:#dce7ee;font-size:10px;line-height:1.7}
+.ep-v9-lookup-result.show{display:block}
+.ep-v9-status-ok{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:7px;background:#064e3b;color:#d1fae5;border:1px solid #047857;font-size:9px;font-weight:900}
+.ep-v9-status-warn{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:7px;background:#4c0519;color:#ffe4e6;border:1px solid #9f1239;font-size:9px;font-weight:900}
+@media(max-width:620px){.ep-v9-lookup-row{grid-template-columns:1fr}.ep-v9-verify-actions{display:grid;grid-template-columns:1fr}.ep-v9-verify-actions button{width:100%}}
+</style>
+
+<script id="ep-v9-voter-verification-layer">
+(function(){
+  'use strict';
+
+  const VERSION='EP-VR-2';
+  const q=(s,r=document)=>r.querySelector(s);
+  const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const D=()=>window.db||window.DBManager?.get?.()||window.DBManager?.getState?.()||window.DBManager?.db||null;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const toast=(m,type='info')=>{try{window.Utils?.showToast?.(m,type)}catch{try{alert(m)}catch{}}};
+  const persist=()=>{try{window.DBManager?.persist?.()}catch{}};
+
+  function randomPart(){
+    try{
+      if(window.crypto?.getRandomValues){
+        const a=new Uint32Array(3);
+        window.crypto.getRandomValues(a);
+        return [...a].map(x=>x.toString(36).toUpperCase().padStart(7,'0')).join('');
+      }
+    }catch{}
+    return Math.random().toString(36).slice(2)+Date.now().toString(36);
+  }
+
+  function makeNumber(voteId){
+    const clean=String(voteId||'V').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(-12);
+    return 'VVN-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+clean+'-'+randomPart().slice(0,8);
+  }
+
+  function ensureNumber(id,rec){
+    if(!rec || typeof rec!=='object')return '';
+    if(!rec.voterVerificationNumber){
+      rec.voterVerificationNumber=rec.evidenceReference||makeNumber(id);
+      rec.voterVerificationNumberVersion=VERSION;
+    }
+    if(!rec.evidenceReference)rec.evidenceReference=rec.voterVerificationNumber;
+    if(!rec.evidenceReferenceVersion)rec.evidenceReferenceVersion=VERSION;
+    return String(rec.voterVerificationNumber);
+  }
+
+  function allRecords(){
+    const db=D();
+    if(!db)return [];
+    db.votersLog=db.votersLog||{};
+    const out=[];
+    Object.entries(db.votersLog).forEach(([id,r])=>{
+      if(!r||typeof r!=='object')return;
+      const number=ensureNumber(id,r);
+      out.push({id,number,r});
+    });
+    persist();
+    return out;
+  }
+
+  function findByNumber(number){
+    const needle=String(number||'').trim().toUpperCase();
+    if(!needle)return null;
+    return allRecords().find(x=>String(x.number).toUpperCase()===needle)||null;
+  }
+
+  function candidateFor(r){
+    const db=D();
+    const p=db?.panchayats?.[r?.pId];
+    const w=p?.wardsData?.[r?.wNo];
+    return (w?.candidates||[]).find(c=>String(c.id)===String(r?.cId))||null;
+  }
+
+  function details(hit){
+    if(!hit)return null;
+    const r=hit.r||{},db=D(),p=db?.panchayats?.[r.pId],c=candidateFor(r);
+    return {
+      voterVerificationNumber:hit.number,
+      evidenceReference:r.evidenceReference||hit.number,
+      evidenceReferenceVersion:r.evidenceReferenceVersion||VERSION,
+      voteId:hit.id,
+      time:r.time||'',
+      villageId:r.pId||'',
+      village:p?.name||r.village||'',
+      ward:Number(r.wNo||0)||0,
+      candidateId:r.cId||'',
+      candidate:c?.name||r.candidate||'',
+      party:c?.partyName||c?.party||r.party||'Independent',
+      post:c?.post||r.post||'',
+      category:c?.category||r.category||'',
+      verificationStatus:'RECORDED_IN_PORTAL_STORAGE'
+    };
+  }
+
+  function createPublicVerifyCard(hit){
+    const existing=q('#ep-v9-voter-verification-card');
+    if(existing)existing.remove();
+    if(!hit)return;
+    const d=details(hit);
+    const target=q('#ep-voter-reference-receipt')||q('#voting-section .bg-premium-nav')||q('#voting-section');
+    if(!target)return;
+    const card=document.createElement('div');
+    card.id='ep-v9-voter-verification-card';
+    card.className='ep-v9-verify-card';
+    card.innerHTML=`
+      <div class="ep-v9-verify-head"><i class="fa-solid fa-id-card-clip"></i><span>Voter Verification Number / मतदाता सत्यापन संख्या</span></div>
+      <span class="ep-v9-verify-number">${esc(d.voterVerificationNumber)}</span>
+      <span class="ep-v9-verify-note">
+        This portal-generated number identifies the recorded public-opinion transaction in this website.
+        It is <b>not</b> an official voter-roll/EPIC number and does not prove official voter identity.
+      </span>
+      <div class="ep-v9-verify-actions">
+        <button type="button" id="ep-v9-copy-number"><i class="fa-regular fa-copy"></i> Copy Verification Number</button>
+        <button type="button" id="ep-v9-print-number"><i class="fa-solid fa-print"></i> Print Verification Receipt</button>
+      </div>`;
+    target.parentElement?.appendChild(card);
+    q('#ep-v9-copy-number',card)?.addEventListener('click',async()=>{
+      try{await navigator.clipboard.writeText(d.voterVerificationNumber);toast('Voter verification number copied.','success')}
+      catch{toast('Copy is not available.','error')}
+    });
+    q('#ep-v9-print-number',card)?.addEventListener('click',()=>printVerificationReceipt(d));
+  }
+
+  function printVerificationReceipt(d){
+    const w=window.open('','_blank','noopener,noreferrer');
+    if(!w){toast('Print window was blocked by the browser.','error');return}
+    const html=`<!doctype html><html><head><meta charset="utf-8"><title>Voter Verification Receipt</title>
+      <style>
+        body{font-family:Arial,sans-serif;padding:32px;color:#183047}
+        h1{font-size:22px}.num{font:900 18px "Courier New",monospace;letter-spacing:.06em;padding:14px;border:2px solid #183047;border-radius:10px;word-break:break-all}
+        table{width:100%;border-collapse:collapse;margin-top:18px}td{border:1px solid #d9e2e9;padding:9px;font-size:12px}
+        td:first-child{font-weight:800;width:190px;background:#f5f8fa}
+        .ok{margin-top:18px;padding:11px;border:1px solid #b9d1bf;background:#eef9f1;border-radius:8px;font-size:11px;line-height:1.6}
+        .note{margin-top:18px;font-size:10px;line-height:1.6;color:#617286}
+      </style></head>
+      <body><h1>Voter Verification Receipt</h1>
+      <div class="num">${esc(d.voterVerificationNumber)}</div>
+      <div class="ok">STATUS: RECORDED IN THIS PORTAL'S LOCAL DATABASE</div>
+      <table>
+        <tr><td>Vote Verification Number</td><td>${esc(d.voterVerificationNumber)}</td></tr>
+        <tr><td>Evidence Reference</td><td>${esc(d.evidenceReference)}</td></tr>
+        <tr><td>Vote ID</td><td>${esc(d.voteId)}</td></tr>
+        <tr><td>Date / Time</td><td>${esc(d.time)}</td></tr>
+        <tr><td>Village</td><td>${esc(d.village)}</td></tr>
+        <tr><td>Ward</td><td>${esc(d.ward)}</td></tr>
+        <tr><td>Candidate</td><td>${esc(d.candidate)}</td></tr>
+        <tr><td>Party</td><td>${esc(d.party)}</td></tr>
+        <tr><td>Post</td><td>${esc(d.post)}</td></tr>
+        <tr><td>Category</td><td>${esc(d.category)}</td></tr>
+      </table>
+      <div class="note">
+        This receipt is for an independent public-opinion website. The verification number is generated by the portal and is not an official Election Commission voter number or EPIC number.
+        Browser-side storage can be modified and does not by itself establish an immutable court-grade chain of custody. For evidentiary use, preserve server-side logs, timestamps, access logs, cryptographic hashes, and an appropriate legal chain of custody.
+      </div></body></html>`;
+    w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
+  }
+
+  function syncExistingRecords(){
+    allRecords();
+    const db=D(); if(!db)return;
+    persist();
+  }
+
+  function patchVote(){
+    const V=window.VotingEngine;
+    if(!V?.castVote || V.castVote.__epV9Patched)return false;
+    const old=V.castVote.bind(V);
+    const wrapped=async function(){
+      const before=new Set(Object.keys(D()?.votersLog||{}));
+      const result=await old();
+      const db=D();if(!db)return result;
+      let hit=Object.entries(db.votersLog||{}).filter(([id])=>!before.has(id)).sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
+      if(!hit)hit=Object.entries(db.votersLog||{}).sort((a,b)=>String(b[1]?.time||'').localeCompare(String(a[1]?.time||'')))[0];
+      if(hit){
+        ensureNumber(hit[0],hit[1]);
+        if(hit[1].evidenceReference===undefined)hit[1].evidenceReference=hit[1].voterVerificationNumber;
+        persist();
+        createPublicVerifyCard({id:hit[0],r:hit[1],number:hit[1].voterVerificationNumber});
+      }
+      return result;
+    };
+    wrapped.__epV9Patched=true;
+    V.castVote=wrapped;
+    return true;
+  }
+
+  function latest(){
+    const arr=allRecords().sort((a,b)=>String(b.r.time||'').localeCompare(String(a.r.time||'')));
+    return arr[0]||null;
+  }
+
+  function installAdminLookup(){
+    const m=q('#ep-v8-evidence-modal');if(!m)return;
+    const main=q('#ep-v8-main',m);if(!main)return;
+    if(q('#ep-v9-lookup',main))return;
+    const box=document.createElement('div');
+    box.id='ep-v9-lookup';
+    box.className='ep-v9-lookup';
+    box.innerHTML=`
+      <div style="font-size:11px;font-weight:900;color:#f5d76e;margin-bottom:7px">Voter Verification Number Lookup</div>
+      <div class="ep-v9-lookup-row">
+        <input id="ep-v9-lookup-input" inputmode="text" autocomplete="off" placeholder="Enter VVN-YYYYMMDD-... verification number">
+        <button type="button" class="ep-v8-btn gold" id="ep-v9-lookup-btn">Verify Record</button>
+      </div>
+      <div id="ep-v9-lookup-result" class="ep-v9-lookup-result"></div>`;
+    main.prepend(box);
+
+    const input=q('#ep-v9-lookup-input',box),out=q('#ep-v9-lookup-result',box);
+    const run=()=>{
+      const hit=findByNumber(input?.value||'');
+      if(!hit){
+        out.classList.add('show');
+        out.innerHTML='<span class="ep-v9-status-warn"><i class="fa-solid fa-circle-xmark"></i> NO MATCHING RECORD</span><div style="margin-top:7px">No stored public-opinion transaction was found for this verification number.</div>';
+        return;
+      }
+      const d=details(hit);
+      out.classList.add('show');
+      out.innerHTML=`
+        <span class="ep-v9-status-ok"><i class="fa-solid fa-circle-check"></i> RECORD FOUND</span>
+        <div style="margin-top:8px">
+          <b>Verification No.:</b> ${esc(d.voterVerificationNumber)}<br>
+          <b>Vote ID:</b> ${esc(d.voteId)}<br>
+          <b>Time:</b> ${esc(d.time)}<br>
+          <b>Village:</b> ${esc(d.village)} &nbsp; <b>Ward:</b> ${esc(d.ward)}<br>
+          <b>Candidate:</b> ${esc(d.candidate)} &nbsp; <b>Party:</b> ${esc(d.party)}<br>
+          <b>Status:</b> ${esc(d.verificationStatus)}
+        </div>`;
+    };
+    q('#ep-v9-lookup-btn',box).onclick=run;
+    input?.addEventListener('keydown',e=>{if(e.key==='Enter')run()});
+  }
+
+  function patchEvidenceTable(){
+    const m=q('#ep-v8-evidence-modal');if(!m)return;
+    const table=q('#ep-v8-preview table',m);if(!table)return;
+    const records=allRecords(),byId=new Map(records.map(x=>[String(x.id),x]));
+    const head=table.querySelector('thead tr');
+    if(head&&!head.querySelector('[data-ep-v9-head]')){
+      const th=document.createElement('th');
+      th.dataset.epV9Head='1';
+      th.textContent='Voter Verification No.';
+      head.appendChild(th);
+    }
+    qa('tbody tr',table).forEach(tr=>{
+      if(tr.querySelector('[data-ep-v9-cell]'))return;
+      const voteCell=tr.children[1];
+      const id=voteCell?.textContent?.trim()||'';
+      const hit=byId.get(id);
+      const td=document.createElement('td');
+      td.dataset.epV9Cell='1';
+      td.innerHTML=hit?`<span class="ep-voter-ref-admin">${esc(hit.number)}</span>`:'—';
+      tr.appendChild(td);
+    });
+  }
+
+  function addRegisterButtons(){
+    const m=q('#ep-v8-evidence-modal');if(!m)return;
+    const main=q('#ep-v8-main',m);if(!main)return;
+    if(q('#ep-v9-register-actions',main))return;
+    const wrap=document.createElement('div');
+    wrap.id='ep-v9-register-actions';
+    wrap.className='ep-v9-verify-actions';
+    wrap.innerHTML=`
+      <button type="button" id="ep-v9-download-register"><i class="fa-solid fa-file-arrow-down"></i> Download Verification Register CSV</button>
+      <button type="button" id="ep-v9-download-register-json"><i class="fa-solid fa-code"></i> Download Verification Register JSON</button>`;
+    main.prepend(wrap);
+    q('#ep-v9-download-register',wrap).onclick=downloadCSV;
+    q('#ep-v9-download-register-json',wrap).onclick=downloadJSON;
+  }
+
+  function register(){
+    return allRecords().map(x=>details(x));
+  }
+
+  function csvEscape(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+  function downloadBlob(blob,name){
+    const u=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(u),1200);
+  }
+
+  function downloadCSV(){
+    const rows=register();
+    const h=['Voter Verification Number','Evidence Reference','Vote ID','Time','Village ID','Village','Ward','Candidate ID','Candidate','Party','Post','Category','Verification Status'];
+    const lines=[h,...rows.map(r=>h.map((_,i)=>csvEscape([r.voterVerificationNumber,r.evidenceReference,r.voteId,r.time,r.villageId,r.village,r.ward,r.candidateId,r.candidate,r.party,r.post,r.category,r.verificationStatus][i])))]
+      .map(a=>Array.isArray(a)?a.join(','):a).join('\r\n');
+    downloadBlob(new Blob(['\ufeff'+lines+'\r\n'],{type:'text/csv;charset=utf-8'}),'Voter_Verification_Register_'+Date.now()+'.csv');
+    toast('Voter verification register CSV downloaded.','success');
+  }
+
+  function downloadJSON(){
+    const payload={
+      documentType:'PortalGeneratedVoterVerificationRegister',
+      version:VERSION,
+      generatedAt:new Date().toISOString(),
+      official:false,
+      recordCount:register().length,
+      records:register(),
+      limitation:'The verification number is portal-generated and is not an official voter-roll/EPIC identifier or independent proof of voter identity.'
+    };
+    downloadBlob(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),'Voter_Verification_Register_'+Date.now()+'.json');
+    toast('Voter verification register JSON downloaded.','success');
+  }
+
+  function ensureAdminLayer(){
+    installAdminLookup();
+    addRegisterButtons();
+    patchEvidenceTable();
+  }
+
+  function boot(){
+    syncExistingRecords();
+    patchVote();
+    setTimeout(patchVote,100);
+    setTimeout(patchVote,500);
+    setTimeout(patchVote,1500);
+    const last=latest();
+    if(last)createPublicVerifyCard(last);
+    ensureAdminLayer();
+    const obs=new MutationObserver(()=>{
+      patchVote();
+      if(q('#ep-v8-evidence-modal.ep-open')){
+        ensureAdminLayer();
+      }
+    });
+    try{obs.observe(document.body,{childList:true,subtree:true})}catch{}
+    setInterval(()=>{
+      patchVote();
+      if(q('#ep-v8-evidence-modal.ep-open'))ensureAdminLayer();
+    },1200);
+  }
+
+  window.EPV9VoterVerification={
+    version:VERSION,
+    makeNumber,
+    sync:syncExistingRecords,
+    latest,
+    lookup:(number)=>details(findByNumber(number)),
+    register,
+    downloadCSV,
+    downloadJSON,
+    print:printVerificationReceipt
+  };
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,300),{once:true});
+  else setTimeout(boot,300);
+})();
+</script>
+
 </body>
 </html>
