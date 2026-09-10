@@ -736,7 +736,9 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
 <!-- PUBLIC OPINION DISCLAIMER -->
 <div class="ep-disclaimer"><i class="fa-solid fa-circle-info"></i><div data-en="This website is only for voluntary public-opinion voting. It is not an official election portal of the Government of India, Government of Rajasthan, Election Commission of India, or State Election Commission, and its figures are not official election results. Use official government sources for actual elections, voting and results." data-hi="यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।">यह वेबसाइट केवल स्वैच्छिक सार्वजनिक राय / जनमत मतदान के लिए है। यह भारत सरकार, राजस्थान सरकार, भारत निर्वाचन आयोग या राज्य निर्वाचन आयोग का आधिकारिक चुनाव पोर्टल नहीं है और यहाँ दिखाए गए आँकड़े आधिकारिक चुनाव परिणाम नहीं हैं। वास्तविक चुनाव, मतदान और परिणाम के लिए केवल आधिकारिक सरकारी स्रोत मानें।</div></div>
 <!-- SECTION 2: Dynamic Village Selector & Candidates Gallery -->
-<section class="glass rounded-3xl p-6 md:p-10 shadow-premium-soft relative overflow-hidden" 
+<section class="glass rounded-3xl p-6 md:p-10 shadow-premium-soft relative overflow-hidden">
+<!-- Existing village/candidate area -->
+</section>
 <!-- TOOL 1: PUBLIC PERSON / PARTY / CANDIDATE SEARCH -->
 <section id="ep-candidate-search-tool" class="ep-section ep-candidate-search-tool" aria-labelledby="ep-search-title">
   <div class="ep-search-tool-head">
@@ -2965,38 +2967,42 @@ ${question}`);
                 if(!name)return Utils.showToast('Enter a symbol name first. / पहले चुनाव चिन्ह का नाम लिखें।','error');
                 const img=document.getElementById('t4-symbol-preview');
                 const hidden=document.getElementById('t4-symbol');
-                if(img){img.src=this.symbolSvgDataUrl(name);img.classList.remove('hidden');}
-                if(hidden)hidden.value=this.symbolSvgDataUrl(name);
+                const fallback=this.symbolSvgDataUrl(name);
+                if(img){img.src=fallback;img.classList.remove('hidden');}
+                if(hidden)hidden.value=fallback;
 
-                const D=window.db||window.DBManager?.getState?.()||window.DBManager?.db;
+                const D=(()=>{try{if(window.DBManager?.get)return window.DBManager.get();}catch(e){}return window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null;})();
                 const key=String(D?.settings?.adminGeminiApiKey||D?.settings?.userGeminiApiKey||'').trim();
-                const model=String(D?.settings?.geminiImageModel||'gemini-2.5-flash-image').trim();
+                const configured=String(D?.settings?.geminiImageModel||'').trim();
+                const models=[configured,'gemini-3.1-flash-image','gemini-3.1-flash-image'].filter((v,i,a)=>v&&a.indexOf(v)===i);
                 if(!key){
-                    Utils.showToast('AI key is not configured; a working poster-style symbol was generated automatically.','info');
+                    Utils.showToast('AI key is not configured. A working poster-style symbol was generated automatically.','info');
                     return;
                 }
-
-                Utils.showToast('AI is generating the symbol; the working fallback remains available.','info');
-                try{
-                    const url=`${GEMINI_API_BASE}/models/${encodeURIComponent(model)}:generateContent`;
-                    const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},
-                        body:JSON.stringify({contents:[{role:'user',parts:[{text:`Create a clean election/public-opinion symbol image for the symbol name "${name}". Make it a single centered 3D poster-style icon on a simple light background. Do not add candidate names, political claims, logos, flags, or extra text. Return an image.`}]}],generationConfig:{responseModalities:["IMAGE"]}})
-                    });
-                    const data=await response.json().catch(()=>({}));
-                    const part=data?.candidates?.[0]?.content?.parts?.find(x=>x?.inlineData?.data);
-                    if(part?.inlineData?.data){
-                        const mime=part.inlineData.mimeType||'image/png';
-                        const aiData=`data:${mime};base64,${part.inlineData.data}`;
-                        if(img)img.src=aiData;
-                        if(hidden)hidden.value=aiData;
-                        Utils.showToast('AI symbol generated successfully.','success');
-                    }else{
-                        Utils.showToast('AI image model did not return an image; the automatic symbol poster is ready.','info');
-                    }
-                }catch(e){
-                    console.warn('AI symbol generation fallback:',e);
-                    Utils.showToast('AI generation was unavailable; automatic symbol poster remains ready.','info');
+                Utils.showToast('AI poster generation started. Please wait...','info');
+                let lastError='';
+                for(const model of models){
+                    try{
+                        const url=`${GEMINI_API_BASE}/models/${encodeURIComponent(model)}:generateContent`;
+                        const prompt=`Create ONLY a clean election/public-opinion symbol poster for the symbol named "${name}". The symbol itself must be the main subject and must be visually recognizable as ${name}. Center it large, front-facing, isolated, professional 3D/realistic poster style, high contrast, simple light background, no candidate, no person, no party logo, no political slogan, no extra objects, no extra text except the exact symbol name if absolutely necessary. Square 1:1 composition.`;
+                        const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseModalities:['IMAGE'],responseFormat:{image:{aspectRatio:'1:1',imageSize:'1K'}}}})});
+                        const data=await response.json().catch(()=>({}));
+                        if(!response.ok) throw new Error(data?.error?.message||`HTTP ${response.status}`);
+                        const parts=data?.candidates?.flatMap(c=>c?.content?.parts||[])||[];
+                        const part=parts.find(x=>x?.inlineData?.data||x?.inline_data?.data);
+                        const raw=part?.inlineData||part?.inline_data;
+                        if(raw?.data){
+                            const mime=raw.mimeType||raw.mime_type||'image/png';
+                            const aiData=`data:${mime};base64,${raw.data}`;
+                            if(img)img.src=aiData;
+                            if(hidden)hidden.value=aiData;
+                            Utils.showToast(`AI symbol poster generated using ${model}.`,'success');
+                            return;
+                        }
+                        throw new Error('The selected Gemini model returned no image data.');
+                    }catch(e){lastError=e?.message||String(e);console.warn('Gemini image model failed',model,e);}
                 }
+                Utils.showToast(`AI could not return an image. Working automatic poster kept instead. ${lastError||''}`,'info');
             }
 
             static async Execute_ManualCandidate() {
@@ -5731,7 +5737,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <script id="ep-v6-security-audit">
 (function(){'use strict';
-const $=(s,r=document)=>r.querySelector(s), DB=()=>window.db||window.DBManager?.getState?.()||window.DBManager?.db;
+const $=(s,r=document)=>r.querySelector(s), DB=()=>{try{if(window.DBManager?.get)return window.DBManager.get();}catch(e){}return window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null};
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const lang=()=>localStorage.getItem('EP_LANG')==='en'?'en':'hi', t=(h,e)=>lang()==='hi'?h:e;
 const toast=(m,x='success')=>{try{window.Utils?.showToast?.(m,x)}catch{alert(m)}};
@@ -6956,7 +6962,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const status=rows.length?'VOTED / RECORD PRESENT':'NO MATCHING RECORD IN CURRENT DATABASE';
     const body=rows.length?rows.map((r,i)=>`<section class="card"><h3>Transaction ${i+1}</h3><table><tr><td>Vote status</td><td><b>VOTED / RECORD PRESENT</b></td></tr><tr><td>Mobile</td><td class="mobile">${esc(r.mobile)}</td></tr><tr><td>Vote ID</td><td>${esc(r.voteId)}</td></tr><tr><td>Village</td><td>${esc(r.village)} (${esc(r.villageId)})</td></tr><tr><td>Ward</td><td>${esc(r.ward)}</td></tr><tr><td>Candidate</td><td>${esc(r.candidate)}</td></tr><tr><td>Party / Post</td><td>${esc(r.party)} / ${esc(r.post||'—')}</td></tr><tr><td>Time</td><td>${esc(r.time)} — ${esc(r.time?new Date(r.time).toLocaleString():'')}</td></tr><tr><td>Evidence Reference</td><td>${esc(r.evidenceReference||'Not assigned')}</td></tr><tr><td>Device</td><td>${esc(r.device||'Not stored')}</td></tr><tr><td>IP</td><td>${esc(r.ip||'Not server-recorded')}</td></tr></table></section>`).join(''):`<section class="card"><h3>${status}</h3><p>No matching transaction exists in the current client-side database for mobile ${esc(payload.search.mobile)}.</p></section>`;
     const w=window.open('','_blank','noopener,noreferrer');if(!w)return toast('Print window blocked by browser.','error');
-    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Court Voter Verification</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#173047}h1{font-size:20px;margin-bottom:5px}.sub{font-size:10px;color:#6b7c8b;line-height:1.6}.status{padding:12px;border:2px solid #173047;border-radius:10px;font-weight:900;margin:15px 0}.card{margin:14px 0;border:1px solid #ced9e1;border-radius:12px;padding:14px;break-inside:avoid}h3{font-size:14px;margin:0 0 10px}table{width:100%;border-collapse:collapse}td{border:1px solid #dce5eb;padding:8px;font-size:11px;vertical-align:top}td:first-child{width:170px;background:#f5f8fa;font-weight:800}.mobile{font:900 16px monospace;letter-spacing:.08em}.note{margin-top:18px;padding:10px;border:1px dashed #b6c4ce;font-size:9px;line-height:1.6;color:#607282}</style></head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div></body></html>`);
+    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Court Voter Verification</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#173047}h1{font-size:20px;margin-bottom:5px}.sub{font-size:10px;color:#6b7c8b;line-height:1.6}.status{padding:12px;border:2px solid #173047;border-radius:10px;font-weight:900;margin:15px 0}.card{margin:14px 0;border:1px solid #ced9e1;border-radius:12px;padding:14px;break-inside:avoid}h3{font-size:14px;margin:0 0 10px}table{width:100%;border-collapse:collapse}td{border:1px solid #dce5eb;padding:8px;font-size:11px;vertical-align:top}td:first-child{width:170px;background:#f5f8fa;font-weight:800}.mobile{font:900 16px monospace;letter-spacing:.08em}.note{margin-top:18px;padding:10px;border:1px dashed #b6c4ce;font-size:9px;line-height:1.6;color:#607282}</style>
+<style id="ep-final-voting-search-fix">
+#ep-candidate-search-tool{position:relative;z-index:20}
+#voting-section{position:relative;z-index:10}
+.ep-vote-candidate-card{cursor:pointer;will-change:auto!important;transform:none!important;transition:box-shadow .16s ease,border-color .16s ease!important}
+.ep-vote-candidate-card:hover{transform:none!important}
+.ep-vote-name-hi{font-size:clamp(24px,3vw,36px)!important;line-height:1.18!important;font-weight:950!important;color:#082742!important;text-align:center!important}
+.ep-vote-name-en{font-size:clamp(17px,2vw,24px)!important;line-height:1.3!important;font-weight:850!important;color:#31536c!important;text-align:center!important;margin-top:5px!important}
+.ep-vote-party strong,.ep-vote-party em{font-size:clamp(16px,1.8vw,22px)!important;line-height:1.35!important}
+.ep-vote-detail{padding:13px!important;border-radius:14px!important}
+.ep-vote-detail span{font-size:12px!important;font-weight:900!important}
+.ep-vote-detail b{font-size:clamp(16px,1.7vw,21px)!important;line-height:1.35!important}
+.ep-vote-detail small{font-size:14px!important;line-height:1.4!important}
+.ep-vote-select-button{font-size:clamp(16px,1.8vw,21px)!important;min-height:58px!important;font-weight:950!important}
+.ep-search-result-name{font-size:18px!important}.ep-bilingual-extra{font-size:12px!important;line-height:1.7!important}
+</style>
+</head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div></body></html>`);
     w.document.close();setTimeout(()=>w.print(),300);
   }
 
@@ -7071,7 +7093,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script id="ep-candidate-upgrade-runtime">
 (function(){
 'use strict';
-const $=(s,r=document)=>r.querySelector(s), DB=()=>window.db||window.DBManager?.getState?.()||window.DBManager?.db;
+const $=(s,r=document)=>r.querySelector(s), DB=()=>{try{if(window.DBManager?.get)return window.DBManager.get();}catch(e){}return window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null};
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const lang=()=>localStorage.getItem('EP_LANG')==='en'?'en':'hi',T=(h,e)=>lang()==='hi'?h:e;
 function all(){const d=DB(),o=[];Object.entries(d?.panchayats||{}).forEach(([pid,p])=>{for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w];if(!wd)continue;(Array.isArray(wd.candidates)?wd.candidates:Object.values(wd.candidates||{})).forEach(c=>o.push({pid,p,w,wd,c,votes:Number(wd.votes?.[c.id]||0)}));}});return o}
@@ -7079,11 +7101,84 @@ function val(c,hi,en,f){const a=String(c?.[hi]??'').trim(),b=String(c?.[en]??'')
 const name=c=>val(c,'nameHi','nameEn',c?.name||'उम्मीदवार'),party=c=>val(c,'partyHi','partyEn',c?.partyName||c?.party||'Independent'),post=c=>val(c,'postHi','postEn',c?.post||'—'),cat=c=>val(c,'categoryHi','categoryEn',c?.category||'—');
 const village=p=>lang()==='hi'?(p?.nameHi||p?.name||p?.nameEn||'गाँव'):(p?.nameEn||p?.nameHi||p?.name||'Village');
 function fillFilters(){const d=DB(),vs=$('#ep-public-candidate-search-village'),ws=$('#ep-public-candidate-search-ward');if(!d||!vs||!ws)return;const ov=vs.value,ow=ws.value;vs.innerHTML=`<option value="">${T('सभी गाँव','All Villages')}</option>`;Object.entries(d.panchayats||{}).sort((a,b)=>String(a[1].name||a[0]).localeCompare(String(b[1].name||b[0]))).forEach(([id,p])=>{const o=document.createElement('option');o.value=id;o.textContent=village(p);vs.appendChild(o)});if(ov&&d.panchayats?.[ov])vs.value=ov;const p=d.panchayats?.[vs.value];ws.innerHTML=`<option value="">${T('सभी वार्ड','All Wards')}</option>`;if(p)for(let w=1;w<=Number(p.totalWards||0);w++)ws.add(new Option(`${T('वार्ड','Ward')} ${w}`,w));if(ow&&ws.querySelector(`option[value="${CSS.escape(ow)}"]`))ws.value=ow}
-function selectCandidate(pid,cid){const s=$('#user-panchayat-select');if(s){s.value=pid;s.dispatchEvent(new Event('change',{bubbles:true}))}localStorage.setItem('EP_SAVED_VILLAGE',pid);setTimeout(()=>{const safe=String(cid).replace(/[^a-zA-Z0-9_-]/g,'');const card=document.getElementById('ep-cand-card-'+safe);if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.click();card.classList.add('ep-candidate-selected');setTimeout(()=>card.classList.remove('ep-candidate-selected'),2200)}},100)}
-function renderSearch(){const q=String($('#ep-public-candidate-search')?.value||'').trim().toLowerCase(),pid=$('#ep-public-candidate-search-village')?.value||'',ward=String($('#ep-public-candidate-search-ward')?.value||''),box=$('#ep-public-candidate-search-results');if(!box)return;const rows=all().filter(x=>{if(pid&&x.pid!==pid)return false;if(ward&&String(x.w)!==ward)return false;if(!q)return true;const c=x.c,p=x.p;return [c.name,c.nameHi,c.nameEn,c.partyName,c.party,c.partyHi,c.partyEn,c.post,c.postHi,c.postEn,c.category,c.categoryHi,c.categoryEn,c.symbolName,c.symbolNameHi,c.symbolNameEn,p.name,p.nameHi,p.nameEn,String(x.w)].filter(Boolean).join(' ').toLowerCase().includes(q)}).slice(0,100);if(!q){box.innerHTML=`<div class="ep-search-empty">${esc(T('नाम लिखें; ऊपर फ़िल्टर से गाँव/वार्ड भी चुन सकते हैं।','Type a name, or use the village/ward filters.'))}</div>`;return}if(!rows.length){box.innerHTML=`<div class="ep-search-empty">${esc(T('कोई प्रकाशित उम्मीदवार नहीं मिला।','No published candidate matched your search.'))}</div>`;return}box.innerHTML=rows.map(x=>{const c=x.c,im=c.personImage||c.image||'';return `<article class="ep-search-result"><div class="ep-search-result-photo">${im?`<img class="ep-search-result-photo" src="${esc(im)}" alt="">`:`<i class="fa-solid fa-user"></i>`}</div><div class="ep-search-result-main"><div class="ep-search-result-name">${esc(name(c))}</div><div class="ep-search-result-sub">${esc(party(c))} · ${esc(village(x.p))}</div><div class="ep-search-result-meta"><span>${esc(T('वार्ड ','Ward ')+x.w)}</span><span>${esc(post(c))}</span><span>${esc(cat(c))}</span>${c.symbolName?`<span>${esc(T('चिन्ह: ','Symbol: ')+c.symbolName)}</span>`:''}</div><div class="ep-bilingual-extra">${esc(c.nameHi||c.name||'')} ${c.nameEn&&c.nameEn!==c.nameHi?` / ${esc(c.nameEn)}`:''}${c.partyHi?` · ${esc(c.partyHi)}`:''}${c.partyEn&&c.partyEn!==c.partyHi?` / ${esc(c.partyEn)}`:''}</div></div><button class="ep-search-result-action" type="button" data-open="${esc(x.pid)}" data-cid="${esc(c.id)}">${esc(T('वोटिंग में देखें','View in Voting'))}</button></article>`}).join('');box.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>selectCandidate(b.dataset.open,b.dataset.cid)))}
+async function selectCandidate(pid,cid){
+  try{
+    const s=$('#user-panchayat-select');
+    if(!s){window.location.hash='voting-section';return;}
+    if(s.value!==pid){
+      s.value=pid;
+      s.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+    localStorage.setItem('EP_SAVED_VILLAGE',pid);
+    if(typeof window.EPFinalWorking?.refresh==='function') window.EPFinalWorking.refresh();
+    else if(typeof window.renderCandidates==='function') window.renderCandidates();
+    const voting=document.getElementById('voting-section');
+    voting?.scrollIntoView({behavior:'smooth',block:'start'});
+    let card=null;
+    for(let i=0;i<20;i++){
+      await new Promise(r=>setTimeout(r,60));
+      card=[...document.querySelectorAll('#user-candidates-grid [data-cid]')].find(el=>String(el.dataset.cid)===String(cid));
+      if(card)break;
+    }
+    if(card){
+      card.scrollIntoView({behavior:'smooth',block:'center'});
+      const btn=card.querySelector('.ep-vote-select-button');
+      if(btn) btn.click(); else card.click();
+      card.classList.add('ep-candidate-selected');
+      setTimeout(()=>card.classList.remove('ep-candidate-selected'),2600);
+    }else{
+      toast(T('उम्मीदवार कार्ड नहीं मिला। कृपया पहले गाँव चुनकर उम्मीदवार सूची देखें।','Candidate card was not found. Please select the village and view the candidate list first.'),'error');
+    }
+  }catch(e){console.error('Tool 1 selection error',e);}
+}
+function renderSearch(){
+  const q=String($('#ep-public-candidate-search')?.value||'').trim().toLowerCase();
+  const pid=$('#ep-public-candidate-search-village')?.value||'';
+  const ward=String($('#ep-public-candidate-search-ward')?.value||'');
+  const box=$('#ep-public-candidate-search-results'); if(!box)return;
+  const rows=all().filter(x=>{
+    if(pid&&String(x.pid)!==String(pid))return false;
+    if(ward&&String(x.w)!==ward)return false;
+    if(!q)return true;
+    const c=x.c||{},p=x.p||{};
+    return [c.id,c.name,c.nameHi,c.nameEn,c.partyName,c.party,c.partyHi,c.partyEn,c.post,c.postHi,c.postEn,c.category,c.categoryHi,c.categoryEn,c.symbolName,c.symbolNameHi,c.symbolNameEn,p.id,p.name,p.nameHi,p.nameEn,String(x.w)]
+      .filter(v=>v!==undefined&&v!==null).join(' ').toLowerCase().includes(q);
+  }).slice(0,100);
+  if(!rows.length){box.innerHTML=`<div class="ep-search-empty">${esc(T('कोई उम्मीदवार नहीं मिला।','No candidate matched your search.'))}</div>`;return;}
+  box.innerHTML=rows.map(x=>{
+    const c=x.c||{},im=c.personImage||c.image||'',nm=name(c),pa=party(c),po=post(c),ca=cat(c);
+    const sy=val(c,'symbolNameHi','symbolNameEn',c.symbolName||'—');
+    return `<article class="ep-search-result" data-search-candidate="${esc(c.id)}">
+      <div class="ep-search-result-photo">${im?`<img class="ep-search-result-photo" src="${esc(im)}" alt="${esc(nm)}">`:`<i class="fa-solid fa-user" style="font-size:24px;color:#718394"></i>`}</div>
+      <div class="ep-search-result-main">
+        <div class="ep-search-result-name">${esc(nm)}</div>
+        <div class="ep-search-result-sub">${esc(pa)} · ${esc(village(x.p))}</div>
+        <div class="ep-search-result-meta"><span>${esc(T('वार्ड ','Ward ')+x.w)}</span><span>${esc(po)}</span><span>${esc(ca)}</span><span>${esc(T('चिन्ह: ','Symbol: ')+sy)}</span></div>
+        <div class="ep-bilingual-extra"><b>हिंदी:</b> ${esc(c.nameHi||c.name||'—')} · ${esc(c.partyHi||c.partyName||'—')} &nbsp; <b>English:</b> ${esc(c.nameEn||c.nameHi||c.name||'—')} · ${esc(c.partyEn||c.partyHi||c.partyName||'—')}</div>
+      </div>
+      <button class="ep-search-result-action" type="button" data-open="${esc(x.pid)}" data-cid="${esc(c.id)}">${esc(T('वोटिंग में देखें','View in Voting'))}</button>
+    </article>`;
+  }).join('');
+  box.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>selectCandidate(b.dataset.open,b.dataset.cid)));
+}
 function refresh(){fillFilters();renderSearch()}
+window.addEventListener('ep:candidates-updated',refresh);window.addEventListener('storage',e=>{if(e.key==='EP_LANG')refresh()});
 window.EPBilingualCandidatePatch={refresh,search:renderSearch};
+const si=$('#ep-public-candidate-search');if(si)si.addEventListener('input',renderSearch);
+const sc=$('#ep-public-candidate-search-clear');if(sc)sc.addEventListener('click',()=>{if(si)si.value='';renderSearch();si?.focus()});
+const sv=$('#ep-public-candidate-search-village');if(sv)sv.addEventListener('change',()=>{fillFilters();renderSearch()});
+const sw=$('#ep-public-candidate-search-ward');if(sw)sw.addEventListener('change',renderSearch);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(refresh,120),{once:true});else setTimeout(refresh,120);
+})();
+</script>
+
+<script id="ep-search-refresh-hook">
+(function(){
+  const fire=()=>window.dispatchEvent(new CustomEvent('ep:candidates-updated'));
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('user-panchayat-select')?.addEventListener('change',fire);
+    document.getElementById('ep-public-candidate-search-village')?.addEventListener('change',fire);
+  },{once:true});
 })();
 </script>
 </body>
