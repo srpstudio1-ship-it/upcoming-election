@@ -661,6 +661,9 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
 @media(max-width:760px){.ep-vote-candidate-card{min-height:0!important}.ep-vote-name-hi{font-size:22px}.ep-vote-details{grid-template-columns:1fr}.ep-vote-detail-wide{grid-column:auto}.ep-vote-photo-wrap{width:112px;height:112px}}
 @media(prefers-reduced-motion:reduce){.ep-vote-candidate-card,.ep-vote-candidate-card:hover{transition:none!important;transform:none!important}}
 </style>
+<script id="ep-50-election-poster-catalog">
+window.EP50ElectionPosters=['Sewing Machine','Bat','Ball','Balloon','Bicycle','Lotus','Tree','Chair','Table','Cup','Umbrella','Bell','Book','Pen','Key','Lock','Lamp','Fan','Clock','Mobile','Camera','Car','Bus','Tractor','Plough','Spade','Bucket','Jug','Glass','Basket','Ladder','Wheel','Star','Sun','Moon','Flower','Rose','Coconut','Mango','Banana','Apple','Kite','Boat','Airplane','House','Road Roller','Hand Pump','Bulb','Football','Cricket'];
+</script>
 </head>
 <body class="text-slate-800 h-full flex flex-col relative">
 <!-- TOAST NOTIFICATION CONTAINER -->
@@ -755,6 +758,7 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
       <input id="ep-public-candidate-search" type="search" autocomplete="off" placeholder="उम्मीदवार, व्यक्ति या पार्टी का नाम लिखें..." aria-label="Search person party or candidate">
       <button type="button" id="ep-public-candidate-search-clear" aria-label="Clear search">×</button>
     </div>
+    <button type="button" id="ep-public-candidate-search-button" class="ep-search-main-button"><i class="fa-solid fa-magnifying-glass"></i> खोजें / Search</button>
     <select id="ep-public-candidate-search-village" class="input-premium"><option value="">सभी गाँव / All Villages</option></select>
     <select id="ep-public-candidate-search-ward" class="input-premium"><option value="">सभी वार्ड / All Wards</option></select>
   </div>
@@ -2844,7 +2848,11 @@ ${question}`);
                                 <div class="bg-[#0F172A] border border-slate-700 rounded-xl p-4">
                                     <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Election Symbol Name *</span>
                                     <input id="t4-symbol-name" type="text" class="input-admin" placeholder="Example: Sewing Machine / सिलाई मशीन" oninput="AdminManager.previewSymbolNameDebounced()">
-                                    <div class="flex gap-2 mt-3 flex-wrap">
+                                    <input id="t4-symbol-name-hi" type="text" class="input-admin mt-2" placeholder="चुनाव चिन्ह का हिंदी नाम (स्वचालित)" readonly>
+                                    <label class="px-4 py-2 rounded-lg bg-slate-700 text-white text-[10px] font-bold cursor-pointer">
+                                            <i class="fa-solid fa-upload mr-1"></i> Upload Poster / पोस्टर अपलोड
+                                            <input id="t4-symbol-poster-upload" type="file" accept="image/*" class="hidden" onchange="AdminManager.previewSymbolPosterUpload()">
+                                        </label>
                                         <button type="button" onclick="AdminManager.generateSymbolFromName()" class="btn-gold px-4 py-2 rounded-lg text-[10px] font-black">
                                             <i class="fa-solid fa-sparkles mr-1"></i> Generate Symbol
                                         </button>
@@ -2859,7 +2867,7 @@ ${question}`);
 
                             <div class="mt-5 p-5 border border-emerald-500/20 bg-emerald-500/5 rounded-xl">
                                 <p class="text-xs text-emerald-300 leading-6"><i class="fa-solid fa-shield-check mr-1"></i>
-                                    Candidate records keep both Hindi and English fields. The photo defaults to a built-in icon, so photo upload is optional. The symbol field accepts a name instead of requiring an image upload. The generator first tries the configured Gemini image-capable model and falls back to a self-contained poster-style SVG, so the symbol still works on GitHub Pages without another upload service.
+                                    Candidate records keep both Hindi and English fields. The photo defaults to a built-in icon, so photo upload is optional. The symbol field accepts a name instead of requiring an image upload. The portal includes 50 built-in election-style poster templates plus poster image upload. The selected poster works locally without an AI image API, so symbol generation does not depend on Gemini.
                                 </p>
                             </div>
 
@@ -2920,30 +2928,94 @@ ${question}`);
                 return String(value||'Symbol').replace(/[<>&"]/g,m=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[m]));
             }
 
+            static normalizeSymbolName(symbolName) {
+                return String(symbolName||'').trim().toLowerCase().replace(/\s+/g,' ');
+            }
+
+            static symbolCanonicalName(symbolName) {
+                const n=this.normalizeSymbolName(symbolName);
+                const aliases={
+                    'silai machine':'sewing machine','सिलाई मशीन':'sewing machine','sewing':'sewing machine','silai':'sewing machine',
+                    'bat':'bat','बल्ला':'bat','ball':'ball','गेंद':'ball','balloon':'balloon','गुब्बारा':'balloon',
+                    'bicycle':'bicycle','cycle':'bicycle','साइकिल':'bicycle','lotus':'lotus','कमल':'lotus','tree':'tree','पेड़':'tree','वृक्ष':'tree',
+                    'chair':'chair','कुर्सी':'chair','table':'table','मेज':'table','cup':'cup','कप':'cup','umbrella':'umbrella','छाता':'umbrella',
+                    'bell':'bell','घंटी':'bell','book':'book','किताब':'book','पुस्तक':'book','pen':'pen','कलम':'pen','पेन':'pen',
+                    'key':'key','चाबी':'key','lock':'lock','ताला':'lock','lamp':'lamp','दीपक':'lamp','लालटेन':'lamp','fan':'fan','पंखा':'fan',
+                    'clock':'clock','घड़ी':'clock','mobile':'mobile','phone':'mobile','मोबाइल':'mobile','फोन':'mobile','camera':'camera','कैमरा':'camera',
+                    'car':'car','कार':'car','bus':'bus','बस':'bus','tractor':'tractor','ट्रैक्टर':'tractor','plough':'plough','हल':'plough',
+                    'spade':'spade','फावड़ा':'spade','bucket':'bucket','बाल्टी':'bucket','jug':'jug','घड़ा':'jug','कलश':'jug','glass':'glass','गिलास':'glass',
+                    'basket':'basket','टोकरी':'basket','ladder':'ladder','सीढ़ी':'ladder','wheel':'wheel','पहिया':'wheel','चक्र':'wheel',
+                    'star':'star','सितारा':'star','तारा':'star','sun':'sun','सूरज':'sun','सूर्य':'sun','moon':'moon','चाँद':'moon','चंद्रमा':'moon',
+                    'flower':'flower','फूल':'flower','rose':'rose','गुलाब':'rose','coconut':'coconut','नारियल':'coconut','mango':'mango','आम':'mango',
+                    'banana':'banana','केला':'banana','apple':'apple','सेब':'apple','kite':'kite','पतंग':'kite','boat':'boat','नाव':'boat',
+                    'airplane':'airplane','plane':'airplane','विमान':'airplane','हवाई जहाज':'airplane','house':'house','घर':'house','मकान':'house',
+                    'road roller':'road roller','रोड रोलर':'road roller','hand pump':'hand pump','पंप':'hand pump','नल':'hand pump',
+                    'bulb':'bulb','light':'bulb','बिजली का बल्ब':'bulb','बल्ब':'bulb','football':'football','फुटबॉल':'football','cricket':'cricket','क्रिकेट':'cricket'
+                };
+                return aliases[n]||n;
+            }
+
             static symbolSvgDataUrl(symbolName) {
                 const raw=String(symbolName||'Symbol').trim()||'Symbol';
-                const n=this.escapeSvgText(raw);
-                const lower=raw.toLowerCase();
-                let icon='';
-                if(/sewing|silai|सिलाई|machine|मशीन/.test(lower)){
-                    icon=`<g transform="translate(256 205)" fill="none" stroke="#0b2945" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M-105 90h210v52h-210z" fill="#ff9933" stroke="#0b2945"/><path d="M-70 90V-20h95c38 0 62 22 62 56v54"/><path d="M-2 36h66"/><path d="M40 36v44"/><path d="M40 80l-28 30"/><path d="M-75 90l28-35h42"/><circle cx="64" cy="36" r="15" fill="#138808"/></g>`;
-                } else if(/cycle|bicycle|साइकिल|cycle/.test(lower)){
-                    icon=`<g fill="none" stroke="#0b2945" stroke-width="15"><circle cx="165" cy="335" r="72"/><circle cx="347" cy="335" r="72"/><path d="M165 335l78-105 55 105h-133l78-105"/><path d="M243 230l-20-44h50"/></g>`;
-                } else if(/lotus|कमल/.test(lower)){
-                    icon=`<g fill="#ff9933" stroke="#0b2945" stroke-width="9"><path d="M256 345C195 300 143 240 160 185c45 18 78 52 96 100 18-48 51-82 96-100 17 55-35 115-96 160z"/><path d="M256 345c-53-35-105-40-145-12 34 48 92 57 145 12z"/><path d="M256 345c53-35 105-40 145-12-34 48-92 57-145 12z"/></g>`;
-                } else if(/tree|पेड़|वृक्ष/.test(lower)){
-                    icon=`<g><path d="M236 330h40v75h-40z" fill="#8b5a2b"/><circle cx="256" cy="205" r="115" fill="#138808"/><circle cx="185" cy="250" r="65" fill="#138808"/><circle cx="327" cy="250" r="65" fill="#138808"/></g>`;
-                } else {
-                    icon=`<g><circle cx="256" cy="250" r="112" fill="#fff" stroke="#0b2945" stroke-width="12"/><path d="M185 275h142v55H185z" fill="#ff9933"/><path d="M205 240h102v35H205z" fill="#138808"/><circle cx="256" cy="250" r="26" fill="#fff" stroke="#0b2945" stroke-width="8"/></g>`;
-                }
-                const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
-                    <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1df"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#eaf7ed"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-opacity=".18"/></filter></defs>
-                    <rect x="20" y="20" width="600" height="600" rx="80" fill="url(#bg)" stroke="#cbd9d0" stroke-width="6"/>
-                    <path d="M80 95h480" stroke="#ff9933" stroke-width="18" stroke-linecap="round"/><path d="M80 545h480" stroke="#138808" stroke-width="18" stroke-linecap="round"/>
-                    <g filter="url(#sh)">${icon}</g>
-                    <rect x="92" y="445" width="456" height="66" rx="22" fill="#0b2945"/>
-                    <text x="320" y="487" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="#fff">${n}</text>
-                </svg>`;
+                const low=raw.toLowerCase();
+                const canonical=this.symbolCanonicalName(raw);
+                const esc=this.escapeSvgText(raw);
+                const hit=(...terms)=>terms.some(t=>this.symbolCanonicalName(t)===canonical || low===String(t).toLowerCase());
+                let body='';
+                const stroke='#0b2945', orange='#ff9933', green='#138808';
+                const common=`stroke="${stroke}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"`;
+                if(hit('sewing','silai','सिलाई','machine','मशीन')) body=`<g fill="none" ${common}><path d="M130 440h380v70H130z" fill="${orange}"/><path d="M170 440V190h210c80 0 110 48 110 120v130"/><path d="M315 310h150M420 310v95M420 405l-48 50M175 440l70-105h105"/><circle cx="470" cy="310" r="22" fill="${green}"/></g>`;
+                else if(hit('bat','बल्ला')) body=`<g ${common} fill="${orange}"><path d="M225 465L395 160q18-32 50-10l18 13q22 18 5 48L295 500q-18 28-48 8l-16-12q-22-15-6-31z"/><path d="M360 230l60 38"/></g>`;
+                else if(hit('ball','गेंद')) body=`<circle cx="320" cy="320" r="145" fill="white" ${common}/><path d="M220 230q80 55 200 0M205 350q115-70 230 0M270 185q45 55 100 0M270 455q45-55 100 0" fill="none" ${common}/>`;
+                else if(hit('balloon','गुब्बारा')) body=`<g ${common}><path d="M320 125c-105 0-150 100-120 180 20 55 68 75 120 90 52-15 100-35 120-90 30-80-15-180-120-180z" fill="${orange}"/><path d="M320 395v120"/><path d="M320 515l-28 45h56z" fill="${green}"/></g>`;
+                else if(hit('cycle','bicycle','साइकिल')) body=`<g fill="none" ${common}><circle cx="170" cy="405" r="85"/><circle cx="470" cy="405" r="85"/><path d="M170 405l125-150 90 150H170l125-150M295 255l-25-55h62M385 255h65"/></g>`;
+                else if(hit('lotus','कमल')) body=`<g fill="${orange}" ${common}><path d="M320 445C250 390 160 350 145 260c72 5 125 48 175 120-2-75 28-145 90-185 38 75 8 165-90 250z"/><path d="M320 445c-75-50-145-45-200-5 40 70 125 75 200 5z"/><path d="M320 445c75-50 145-45 200-5-40 70-125 75-200 5z"/></g>`;
+                else if(hit('tree','पेड़','वृक्ष')) body=`<path d="M285 365h70v145h-70z" fill="#8b5a2b" ${common}/><circle cx="320" cy="230" r="145" fill="${green}"/><circle cx="205" cy="285" r="80" fill="${green}"/><circle cx="435" cy="285" r="80" fill="${green}"/>`;
+                else if(hit('chair','कुर्सी')) body=`<g fill="${orange}" ${common}><path d="M220 170h200v170H220z"/><path d="M220 340l-55 170M420 340l55 170M240 340l-20 170M400 340l20 170" fill="none"/></g>`;
+                else if(hit('table','मेज')) body=`<g fill="${orange}" ${common}><rect x="125" y="250" width="390" height="65" rx="15"/><path d="M170 315v190M470 315v190" fill="none"/></g>`;
+                else if(hit('cup','कप')) body=`<g ${common}><path d="M200 205h230v210c0 55-45 90-115 90s-115-35-115-90z" fill="${orange}"/><path d="M430 250h55c75 0 75 115 0 115h-55" fill="none"/></g>`;
+                else if(hit('umbrella','छाता')) body=`<g ${common} fill="${orange}"><path d="M125 315c20-130 110-195 195-195s175 65 195 195H125z"/><path d="M320 315v150c0 55 80 60 80 0" fill="none"/></g>`;
+                else if(hit('bell','घंटी')) body=`<g fill="${orange}" ${common}><path d="M170 420h300l-35-70V245c0-70-50-115-115-115s-115 45-115 115v105z"/><path d="M275 480h90"/><circle cx="320" cy="500" r="18"/></g>`;
+                else if(hit('book','किताब','पुस्तक')) body=`<g ${common}><path d="M150 180q85-45 170 10v300q-85-55-170-10z" fill="${orange}"/><path d="M490 180q-85-45-170 10v300q85-55 170-10z" fill="${green}"/><path d="M320 190v300"/></g>`;
+                else if(hit('pen','कलम','पेन')) body=`<g ${common}><path d="M190 455L410 150l65 48-220 305z" fill="${orange}"/><path d="M410 150l45-35 30 48-10 35z" fill="${green}"/><path d="M190 455l-28 55 65-7" fill="${orange}"/></g>`;
+                else if(hit('key','चाबी')) body=`<g fill="none" ${common}><circle cx="210" cy="300" r="75" fill="${orange}"/><circle cx="210" cy="300" r="25" fill="white"/><path d="M280 300h230v45h-45v45h-50v-45h-135z" fill="${green}"/></g>`;
+                else if(hit('lock','ताला')) body=`<g ${common}><rect x="185" y="270" width="270" height="220" rx="25" fill="${orange}"/><path d="M235 270v-70c0-115 170-115 170 0v70" fill="none"/><circle cx="320" cy="370" r="28" fill="white"/></g>`;
+                else if(hit('lamp','दीपक','लालटेन')) body=`<g ${common}><path d="M225 255h190l-35 230H260z" fill="${orange}"/><path d="M205 255h230M260 485h120"/><path d="M275 225q45-100 90 0" fill="${green}"/></g>`;
+                else if(hit('fan','पंखा')) body=`<g ${common} fill="${orange}"><circle cx="320" cy="320" r="45" fill="white"/><path d="M320 275c-100-20-135-120-45-125 70-4 75 75 45 125zM365 320c20-100 120-135 125-45 4 70-75 75-125 45zM320 365c100 20 135 120 45 125-70 4-75-75-45-125zM275 320c-20 100-120 135-125 45-4-70 75-75 125-45z"/></g>`;
+                else if(hit('clock','घड़ी')) body=`<g ${common}><circle cx="320" cy="320" r="155" fill="${orange}"/><circle cx="320" cy="320" r="125" fill="white"/><path d="M320 320V235M320 320l70 45"/><circle cx="320" cy="320" r="10" fill="${green}"/></g>`;
+                else if(hit('mobile','phone','मोबाइल','फोन')) body=`<g ${common}><rect x="220" y="115" width="200" height="390" rx="30" fill="${orange}"/><rect x="245" y="155" width="150" height="290" rx="8" fill="white"/><circle cx="320" cy="475" r="12" fill="${green}"/></g>`;
+                else if(hit('camera','कैमरा')) body=`<g ${common}><rect x="150" y="220" width="340" height="240" rx="35" fill="${orange}"/><path d="M220 220l35-55h130l35 55" fill="${green}"/><circle cx="320" cy="340" r="75" fill="white"/><circle cx="320" cy="340" r="45" fill="${green}"/></g>`;
+                else if(hit('car','कार')) body=`<g ${common}><path d="M130 385l55-125h270l75 125v85H130z" fill="${orange}"/><circle cx="215" cy="470" r="38" fill="white"/><circle cx="445" cy="470" r="38" fill="white"/><path d="M215 260l45-65h130l45 65" fill="${green}"/></g>`;
+                else if(hit('bus','बस')) body=`<g ${common}><rect x="125" y="165" width="390" height="320" rx="45" fill="${orange}"/><path d="M165 215h310v125H165z" fill="white"/><circle cx="215" cy="475" r="35"/><circle cx="425" cy="475" r="35"/></g>`;
+                else if(hit('tractor','ट्रैक्टर')) body=`<g ${common}><path d="M170 350h170l40-120h85l45 120v90H170z" fill="${orange}"/><circle cx="235" cy="470" r="65"/><circle cx="455" cy="440" r="42"/><path d="M340 350V210h80" fill="none"/></g>`;
+                else if(hit('plough','हल')) body=`<g fill="none" ${common}><path d="M160 180h190v80H260l100 220"/><path d="M350 260h120M360 480h80"/><path d="M470 260l-35 220"/></g>`;
+                else if(hit('spade','फावड़ा')) body=`<g ${common}><path d="M300 120h40v270h-40z" fill="${orange}"/><path d="M260 390h120l-25 120h-70z" fill="${green}"/></g>`;
+                else if(hit('bucket','बाल्टी')) body=`<g ${common}><path d="M180 230h280l-35 260H215z" fill="${orange}"/><path d="M220 230c0-125 200-125 200 0" fill="none"/></g>`;
+                else if(hit('jug','घड़ा','कलश')) body=`<g ${common}><path d="M245 175h150l-20 60q70 100 10 250H255q-60-150 10-250z" fill="${orange}"/><path d="M245 175h150M225 220h190"/></g>`;
+                else if(hit('glass','गिलास')) body=`<path d="M200 175h240l-35 330H235z" fill="${orange}" ${common}/><path d="M225 315h190" fill="none" ${common}/>`;
+                else if(hit('basket','टोकरी')) body=`<g ${common}><path d="M150 270h340l-45 230H195z" fill="${orange}"/><path d="M200 270c0-160 240-160 240 0" fill="none"/><path d="M190 340h260M180 410h280"/></g>`;
+                else if(hit('ladder','सीढ़ी')) body=`<g fill="none" ${common}><path d="M190 125l-30 390M450 125l30 390"/><path d="M178 190h285M168 260h300M160 330h310M150 400h325M145 470h330"/></g>`;
+                else if(hit('wheel','पहिया','चक्र')) body=`<g ${common}><circle cx="320" cy="320" r="155" fill="${orange}"/><circle cx="320" cy="320" r="48" fill="white"/><path d="M320 165v310M165 320h310M210 210l220 220M430 210L210 430"/></g>`;
+                else if(hit('star','सितारा','तारा')) body=`<path d="M320 115l50 135 145 10-112 92 35 145-118-78-118 78 35-145-112-92 145-10z" fill="${orange}" ${common}/>`;
+                else if(hit('sun','सूरज','सूर्य')) body=`<g ${common} fill="${orange}"><circle cx="320" cy="320" r="105"/>${Array.from({length:12},(_,i)=>{let a=i*Math.PI/6;return `<path d="M${320+140*Math.cos(a)} ${320+140*Math.sin(a)}L${320+205*Math.cos(a)} ${320+205*Math.sin(a)}"/>`}).join('')}</g>`;
+                else if(hit('moon','चाँद','चंद्रमा')) body=`<path d="M405 135c-110 40-145 160-90 260 45 80 145 105 220 55-70 125-245 135-320 15-80-130 5-300 190-330z" fill="${orange}" ${common}/>`;
+                else if(hit('flower','फूल','फूल')) body=`<g fill="${orange}" ${common}><circle cx="320" cy="320" r="55" fill="${green}"/><ellipse cx="320" cy="190" rx="60" ry="105"/><ellipse cx="320" cy="450" rx="60" ry="105"/><ellipse cx="190" cy="320" rx="105" ry="60"/><ellipse cx="450" cy="320" rx="105" ry="60"/></g>`;
+                else if(hit('rose','गुलाब')) body=`<g ${common}><path d="M320 285c-90-120 80-180 95-55 90-80 170 80 40 105 85 105-95 150-135 35-40 115-220 70-135-35-130-25-50-185 40-105-15-125 175-80 95 55z" fill="${orange}"/><path d="M320 350v160M320 450l-70 35M320 420l70 35" fill="none"/></g>`;
+                else if(hit('coconut','नारियल')) body=`<g ${common}><path d="M270 500h100l35-180H235z" fill="#8b5a2b"/><path d="M320 320Q150 250 160 140M320 320Q490 250 480 140M320 320Q260 170 300 100M320 320Q380 170 340 100" fill="none" stroke="${green}"/></g>`;
+                else if(hit('mango','आम')) body=`<path d="M410 155c-130-40-230 60-200 180 25 105 160 135 230 45 70-90 25-190-30-225z" fill="${orange}" ${common}/><path d="M370 170q50-100 115-65" fill="none" ${common}/>`;
+                else if(hit('banana','केला')) body=`<path d="M190 160q25 285 240 300 70 5 95-50-185 5-240-250z" fill="${orange}" ${common}/>`;
+                else if(hit('apple','सेब')) body=`<g ${common}><path d="M320 190c-105-75-180 15-150 135 30 125 105 185 150 140 45 45 120-15 150-140 30-120-45-210-150-135z" fill="${orange}"/><path d="M320 190q20-85 90-95" fill="none"/><path d="M370 110q80-20 95 50-65 20-95-50z" fill="${green}"/></g>`;
+                else if(hit('kite','पतंग')) body=`<g ${common}><path d="M320 120l150 180-150 180-150-180z" fill="${orange}"/><path d="M320 120v360M170 300h300M320 480l60 55" fill="none"/><path d="M380 535q-30 40 20 55" fill="none"/></g>`;
+                else if(hit('boat','नाव')) body=`<g ${common}><path d="M125 350h390l-65 105H190z" fill="${orange}"/><path d="M320 350V145M320 155l-110 150h110z" fill="${green}"/><path d="M170 470q150 70 300 0" fill="none"/></g>`;
+                else if(hit('airplane','plane','विमान','हवाई जहाज')) body=`<path d="M125 330l175-45V135l40-25 35 25v150l175 45v55l-175-25v105l65 45v35l-100-35-100 35v-35l65-45V360l-180 25z" fill="${orange}" ${common}/>`;
+                else if(hit('house','घर','मकान')) body=`<g ${common}><path d="M145 300l175-145 175 145v210H145z" fill="${orange}"/><path d="M260 510V365h120v145" fill="white"/><path d="M120 300l200-170 200 170" fill="none"/></g>`;
+                else if(hit('road roller','रोड रोलर')) body=`<g ${common}><rect x="160" y="260" width="250" height="180" rx="20" fill="${orange}"/><circle cx="225" cy="465" r="75" fill="${green}"/><circle cx="470" cy="420" r="50" fill="${green}"/><path d="M410 260h70v120" fill="none"/></g>`;
+                else if(hit('hand pump','पंप','नल')) body=`<g fill="none" ${common}><path d="M300 480V170h65l60 70M300 200H190v120h110M190 320v170M360 170v120h110"/><path d="M360 290h110" stroke="${orange}" stroke-width="28"/></g>`;
+                else if(hit('bulb','light','बिजली का बल्ब','बल्ब')) body=`<g ${common}><path d="M320 120c-95 0-150 105-95 180 30 40 55 55 55 95h80c0-40 25-55 55-95 55-75 0-180-95-180z" fill="${orange}"/><path d="M280 395h80M275 430h90"/><path d="M320 500v45"/></g>`;
+                else if(hit('football','फुटबॉल')) body=`<circle cx="320" cy="320" r="150" fill="white" ${common}/><path d="M320 255l-55 40 20 65h70l20-65z" fill="${orange}" ${common}/><path d="M265 295l-65-45M285 360l-35 80M355 360l35 80M375 295l65-45M320 255v-70" fill="none" ${common}/>`;
+                else if(hit('cricket','क्रिकेट')) body=`<g ${common}><path d="M250 470L410 155q18-30 48-12l25 14q25 16 8 48L300 500q-18 30-48 10z" fill="${orange}"/><circle cx="220" cy="405" r="55" fill="#d62828"/></g>`;
+                else { body=`<g ${common}><circle cx="320" cy="320" r="145" fill="white"/><path d="M205 350h230v75H205z" fill="${orange}"/><path d="M225 275h190v75H225z" fill="${green}"/><circle cx="320" cy="320" r="30" fill="white" stroke="${stroke}" stroke-width="9"/></g>`; }
+                const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0db"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f5eb"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-opacity=".2"/></filter></defs><rect x="18" y="18" width="604" height="604" rx="70" fill="url(#bg)" stroke="#cbd9d0" stroke-width="6"/><path d="M85 90h470" stroke="${orange}" stroke-width="16" stroke-linecap="round"/><path d="M85 550h470" stroke="${green}" stroke-width="16" stroke-linecap="round"/><g filter="url(#sh)">${body}</g><rect x="75" y="470" width="490" height="80" rx="20" fill="${stroke}"/><text x="320" y="520" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="white">${esc}</text></svg>`;
                 return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
             }
 
@@ -2962,47 +3034,29 @@ ${question}`);
                 Utils.showToast(`Preview ready for "${name}".`,'success');
             }
 
+            static async previewSymbolPosterUpload() {
+                const input=document.getElementById('t4-symbol-poster-upload');
+                if(!input?.files?.[0])return;
+                const data=await this.readImageFile('t4-symbol-poster-upload');
+                const img=document.getElementById('t4-symbol-preview');
+                const hidden=document.getElementById('t4-symbol');
+                if(data){if(img){img.src=data;img.classList.remove('hidden');}if(hidden)hidden.value=data;Utils.showToast('Poster uploaded and ready. / पोस्टर अपलोड होकर तैयार है।','success');}
+            }
+
             static async generateSymbolFromName() {
                 const name=document.getElementById('t4-symbol-name')?.value.trim();
                 if(!name)return Utils.showToast('Enter a symbol name first. / पहले चुनाव चिन्ह का नाम लिखें।','error');
                 const img=document.getElementById('t4-symbol-preview');
                 const hidden=document.getElementById('t4-symbol');
-                const fallback=this.symbolSvgDataUrl(name);
-                if(img){img.src=fallback;img.classList.remove('hidden');}
-                if(hidden)hidden.value=fallback;
-
-                const D=(()=>{try{if(window.DBManager?.get)return window.DBManager.get();}catch(e){}return window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null;})();
-                const key=String(D?.settings?.adminGeminiApiKey||D?.settings?.userGeminiApiKey||'').trim();
-                const configured=String(D?.settings?.geminiImageModel||'').trim();
-                const models=[configured,'gemini-3.1-flash-image','gemini-3.1-flash-image'].filter((v,i,a)=>v&&a.indexOf(v)===i);
-                if(!key){
-                    Utils.showToast('AI key is not configured. A working poster-style symbol was generated automatically.','info');
-                    return;
+                const uploaded=document.getElementById('t4-symbol-poster-upload');
+                if(uploaded?.files?.[0]){
+                    const data=await this.readImageFile('t4-symbol-poster-upload');
+                    if(data){if(img)img.src=data;if(hidden)hidden.value=data;Utils.showToast('Uploaded election poster selected. / अपलोड किया हुआ चुनाव पोस्टर चुना गया।','success');return;}
                 }
-                Utils.showToast('AI poster generation started. Please wait...','info');
-                let lastError='';
-                for(const model of models){
-                    try{
-                        const url=`${GEMINI_API_BASE}/models/${encodeURIComponent(model)}:generateContent`;
-                        const prompt=`Create ONLY a clean election/public-opinion symbol poster for the symbol named "${name}". The symbol itself must be the main subject and must be visually recognizable as ${name}. Center it large, front-facing, isolated, professional 3D/realistic poster style, high contrast, simple light background, no candidate, no person, no party logo, no political slogan, no extra objects, no extra text except the exact symbol name if absolutely necessary. Square 1:1 composition.`;
-                        const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseModalities:['IMAGE'],responseFormat:{image:{aspectRatio:'1:1',imageSize:'1K'}}}})});
-                        const data=await response.json().catch(()=>({}));
-                        if(!response.ok) throw new Error(data?.error?.message||`HTTP ${response.status}`);
-                        const parts=data?.candidates?.flatMap(c=>c?.content?.parts||[])||[];
-                        const part=parts.find(x=>x?.inlineData?.data||x?.inline_data?.data);
-                        const raw=part?.inlineData||part?.inline_data;
-                        if(raw?.data){
-                            const mime=raw.mimeType||raw.mime_type||'image/png';
-                            const aiData=`data:${mime};base64,${raw.data}`;
-                            if(img)img.src=aiData;
-                            if(hidden)hidden.value=aiData;
-                            Utils.showToast(`AI symbol poster generated using ${model}.`,'success');
-                            return;
-                        }
-                        throw new Error('The selected Gemini model returned no image data.');
-                    }catch(e){lastError=e?.message||String(e);console.warn('Gemini image model failed',model,e);}
-                }
-                Utils.showToast(`AI could not return an image. Working automatic poster kept instead. ${lastError||''}`,'info');
+                const data=this.symbolSvgDataUrl(name);
+                if(img){img.src=data;img.classList.remove('hidden');}
+                if(hidden)hidden.value=data;
+                Utils.showToast(`Election poster ready: ${name} / चुनाव पोस्टर तैयार है: ${name}`,'success');
             }
 
             static async Execute_ManualCandidate() {
@@ -3062,7 +3116,7 @@ ${question}`);
                     categoryEn,
                     personImage:image,
                     symbolName,
-                    symbolNameHi:symbolName,
+                    symbolNameHi:document.getElementById('t4-symbol-name-hi')?.value.trim() || symbolName,
                     symbolNameEn:symbolName,
                     symbolImage:symbol,
                     createdAt:new Date().toISOString(),
@@ -3075,8 +3129,8 @@ ${question}`);
                 DBManager.persist();
                 Utils.showToast(`Candidate ${nameHi} saved successfully. / उम्मीदवार सफलतापूर्वक सहेजा गया।`,'success');
 
-                ['t4-name-hi','t4-name-en','t4-age','t4-post-hi','t4-post-en','t4-party-hi','t4-party-en','t4-category-hi','t4-category-en','t4-symbol-name'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-                ['t4-image','t4-symbol'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+                ['t4-name-hi','t4-name-en','t4-age','t4-post-hi','t4-post-en','t4-party-hi','t4-party-en','t4-category-hi','t4-category-en','t4-symbol-name','t4-symbol-name-hi'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+                ['t4-image','t4-symbol','t4-symbol-poster-upload'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
                 const mode=document.getElementById('t4-image-mode');if(mode)mode.value='default';
                 const img=document.getElementById('t4-image-preview');if(img)img.src=this.defaultCandidateIconDataUrl();
                 const sym=document.getElementById('t4-symbol-preview');if(sym)sym.src='';
@@ -4129,7 +4183,69 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   }
   function saveVillage(){const v=villageId();if(!v)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');put('EP_SAVED_VILLAGE',v);toast(t('गाँव इस डिवाइस पर सेव हो गया।','Village saved on this device.'),'success')}
   async function shareVillage(){const v=villageId(),p=dbx()?.panchayats?.[v],url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p?.name||'Panchayat Portal',text:`${p?.name||v} — ${t('सार्वजनिक जनमत पोर्टल','Public opinion portal')}`,url})}else if(navigator.clipboard){await navigator.clipboard.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(String(e?.name)!=='AbortError')toast(t('शेयर करना पूरा नहीं हो सका।','Sharing could not be completed.'),'error')}}
-  function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
+  function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table>
+<script id="ep-final-translation-engine-v3">
+(function(){
+'use strict';
+/* Robust English -> Hindi engine. Works with dynamically-created admin forms. */
+const DICT={candidate:'उम्मीदवार',candidates:'उम्मीदवार',name:'नाम','candidate name':'उम्मीदवार का नाम',post:'पद',sarpanch:'सरपंच','ward member':'वार्ड सदस्य',member:'सदस्य',party:'दल','party name':'दल का नाम',independent:'निर्दलीय',category:'श्रेणी',general:'सामान्य','general category':'सामान्य वर्ग',obc:'ओबीसी','other backward class':'अन्य पिछड़ा वर्ग',sc:'एससी','scheduled caste':'अनुसूचित जाति',st:'एसटी','scheduled tribe':'अनुसूचित जनजाति',male:'पुरुष',female:'महिला',other:'अन्य',village:'गाँव','village name':'गाँव का नाम',ward:'वार्ड',age:'आयु',son:'पुत्र',daughter:'पुत्री',wife:'पत्नी',and:'और',or:'या',the:'',of:'का',for:'के लिए',in:'में',on:'पर',from:'से',to:'को',with:'के साथ',is:'है',are:'हैं','sewing machine':'सिलाई मशीन',sewing:'सिलाई',machine:'मशीन',bat:'बल्ला',balloon:'गुब्बारा',ball:'गेंद',bicycle:'साइकिल',cycle:'साइकिल',lotus:'कमल',tree:'पेड़',chair:'कुर्सी',table:'मेज',cup:'कप',umbrella:'छाता',bell:'घंटी',book:'किताब',pen:'कलम',key:'चाबी',lock:'ताला',lamp:'दीपक',fan:'पंखा',clock:'घड़ी',mobile:'मोबाइल','mobile phone':'मोबाइल फोन',phone:'फोन',camera:'कैमरा',car:'कार',bus:'बस',tractor:'ट्रैक्टर',plough:'हल',spade:'फावड़ा',bucket:'बाल्टी',jug:'घड़ा',glass:'गिलास',basket:'टोकरी',ladder:'सीढ़ी',wheel:'पहिया',star:'सितारा',sun:'सूर्य',moon:'चाँद',flower:'फूल',rose:'गुलाब',coconut:'नारियल',mango:'आम',banana:'केला',apple:'सेब',kite:'पतंग',boat:'नाव',airplane:'विमान',plane:'विमान',house:'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप',bulb:'बल्ब',football:'फुटबॉल',cricket:'क्रिकेट'};
+const PHRASES=Object.keys(DICT).sort((a,b)=>b.length-a.length);
+const VOW={a:'अ',aa:'आ',i:'इ',ee:'ई',ii:'ई',u:'उ',oo:'ऊ',uu:'ऊ',e:'ए',ai:'ऐ',o:'ओ',au:'औ'};
+const CONS={kh:'ख',gh:'घ',ch:'च',jh:'झ',th:'थ',dh:'ध',ph:'फ',bh:'भ',sh:'श',k:'क',g:'ग',c:'क',j:'ज',t:'त',d:'द',n:'न',p:'प',b:'ब',m:'म',y:'य',r:'र',l:'ल',v:'व',w:'व',s:'स',h:'ह',f:'फ',q:'क',x:'क्स',z:'ज़'};
+function clean(s){return String(s||'').trim().replace(/\s+/g,' ')}
+function transliterateWord(word){
+ if(!/^[A-Za-z]+$/.test(word))return word;
+ const w=word.toLowerCase(); if(DICT[w])return DICT[w];
+ let out='',i=0;
+ while(i<w.length){
+  let c=w[i];
+  if('aeiou'.includes(c)){
+   let v=c;
+   if(i+1<w.length && c==='a'&&w[i+1]==='a'){v='aa';i++}
+   else if(i+1<w.length&&c==='e'&&w[i+1]==='e'){v='ee';i++}
+   else if(i+1<w.length&&c==='i'&&w[i+1]==='i'){v='ii';i++}
+   else if(i+1<w.length&&c==='o'&&w[i+1]==='o'){v='oo';i++}
+   else if(i+1<w.length&&c==='a'&&w[i+1]==='i'){v='ai';i++}
+   else if(i+1<w.length&&c==='a'&&w[i+1]==='u'){v='au';i++}
+   else if(i+1<w.length&&c==='e'&&w[i+1]==='a'){v='ea';i++}
+   out+=VOW[v]||'अ'; i++; continue;
+  }
+  let pair=w.slice(i,i+2);
+  if(CONS[pair]){out+=CONS[pair];i+=2;continue}
+  out+=CONS[c]||c;i++;
+ }
+ return out;
+}
+function localTranslate(text){
+ let s=clean(text);if(!s)return '';
+ const exact=DICT[s.toLowerCase()];if(exact!==undefined)return exact;
+ let out=s;
+ for(const p of PHRASES){const idx=out.toLowerCase().indexOf(p);if(idx>=0){const re=new RegExp(p.replace(/[-/\\^$*+?.()|[\]{}]/g,'\\$&'),'gi');out=out.replace(re,DICT[p]);}}
+ out=out.split(/(\s+|[,.!?;:/()\-]+)/).map(t=>/^[A-Za-z]+$/.test(t)?(DICT[t.toLowerCase()]??transliterateWord(t)):t).join('');
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function onlineTranslate(text){
+ try{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),4500);const url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);const r=await fetch(url,{mode:'cors',cache:'no-store',signal:ctl.signal});clearTimeout(tm);if(!r.ok)return '';const j=await r.json();return Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>Array.isArray(x)?x[0]:'').join('').trim():'';}catch(e){return ''}
+}
+function target(en){if(!en||!en.id)return null;if(en.id==='t4-symbol-name')return document.getElementById('t4-symbol-name-hi');if(/-en$/.test(en.id))return document.getElementById(en.id.replace(/-en$/,'-hi'));return null}
+const pending=new WeakMap(),timers=new WeakMap();
+async function translateElement(en){const hi=target(en);if(!hi)return;const text=clean(en.value);if(!text){hi.value='';return;}const token={text};pending.set(en,token);hi.value=localTranslate(text);hi.setAttribute('data-auto-translated','true');const better=await onlineTranslate(text);if(pending.get(en)===token&&clean(en.value)===text&&better){hi.value=better;hi.setAttribute('data-auto-translated','true')}}
+function schedule(en){clearTimeout(timers.get(en));timers.set(en,setTimeout(()=>translateElement(en),220))}
+function translateAll(){document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(clean(e.value))translateElement(e)})}
+function installButton(){const en=document.getElementById('t4-name-en');if(!en||document.getElementById('ep-translate-all-button'))return;const host=en.parentElement||en;const b=document.createElement('button');b.type='button';b.id='ep-translate-all-button';b.style.cssText='margin-top:8px;padding:8px 12px;border:0;border-radius:9px;background:#087f5b;color:#fff;font-size:11px;font-weight:800;cursor:pointer';b.textContent='Translate English → Hindi / अंग्रेज़ी → हिंदी';b.onclick=translateAll;host.appendChild(b)}
+function boot(){
+ document.addEventListener('input',e=>{const x=e.target;if(x&&typeof x.id==='string'&&(/-en$/.test(x.id)||x.id==='t4-symbol-name'))schedule(x)},true);
+ document.addEventListener('change',e=>{const x=e.target;if(x&&typeof x.id==='string'&&(/-en$/.test(x.id)||x.id==='t4-symbol-name'))translateElement(x)},true);
+ document.addEventListener('blur',e=>{const x=e.target;if(x&&typeof x.id==='string'&&(/-en$/.test(x.id)||x.id==='t4-symbol-name'))translateElement(x)},true);
+ installButton();translateAll();
+ const root=document.getElementById('admin-dashboard-container')||document.body;new MutationObserver(()=>{installButton();}).observe(root,{childList:true,subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+window.EPBilingualTranslatorV3={translateElement,translateAll,localTranslate};
+})();
+</script>
+
+</body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
   function villageSummary(){const p=village();if(!p)return showHtml(['गाँव सारांश','Village Summary'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p);const total=rows.reduce((a,x)=>a+x.votes,0);showHtml(['गाँव सारांश','Village Summary'],`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div><strong>${p.totalWards}</strong><div style="font-size:11px;color:#687a8b">${esc(t('वार्ड','Wards'))}</div></div><div><strong>${rows.length}</strong><div style="font-size:11px;color:#687a8b">${esc(t('उम्मीदवार','Candidates'))}</div></div><div><strong>${total}</strong><div style="font-size:11px;color:#687a8b">${esc(t('दर्ज जनमत वोट','Recorded votes'))}</div></div></div>`)}
   function wardSnapshot(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['वार्ड स्थिति','Ward Snapshot'],`<div>${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rows=candidatesFor(p).filter(x=>x.w===w),votes=rows.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>Ward ${w}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(wd.reservation||'General')} · ${rows.length} ${esc(t('उम्मीदवार','candidates'))} · ${votes} ${esc(t('वोट','votes'))}</div></div>`}).join('')}</div>`)}
   function guide(){showHtml(['मतदान मार्गदर्शिका','Voting Guide'],`<div style="line-height:1.8;font-size:13px"><p><b>1.</b> ${esc(t('गाँव चुनें और पूरे गाँव के उम्मीदवार देखें।','Choose a village and review candidates across the whole village.'))}</p><p><b>2.</b> ${esc(t('उम्मीदवार की फोटो, नाम, पद, पार्टी और वार्ड जाँचें।','Review the candidate photo, name, post, party and ward.'))}</p><p><b>3.</b> ${esc(t('उम्मीदवार चुनें और अपना 10-अंकीय मोबाइल नंबर दर्ज करें।','Select a candidate and enter your 10-digit mobile number.'))}</p><p><b>4.</b> ${esc(t('यह केवल सार्वजनिक राय/जनमत रिकॉर्ड है।','This is only a public-opinion record.'))}</p><p><b>5.</b> ${esc(t('वास्तविक चुनाव के लिए संबंधित आधिकारिक चुनाव प्राधिकरण की जानकारी देखें।','For real elections, consult the relevant official election authority.'))}</p></div>`)}
@@ -5215,7 +5331,102 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   function featureCompare(){const list=Object.values(DB()?.panchayats||{}).flatMap(allCandidates);if(list.length<2)return toast(t('कम से कम दो उम्मीदवार चाहिए।','At least two candidates are required.'),'error');const opt=list.map((x,i)=>`<option value="${i}">${esc(x.c.name||'Candidate')} — ${esc(x.p.name)} W${x.w}</option>`).join('');const d=document.createElement('div');d.innerHTML=`<div class="ep-access-grid"><select id="ep-cmp-a" class="ep-full-select">${opt}</select><select id="ep-cmp-b" class="ep-full-select">${opt}</select></div><div id="ep-cmp-out" style="margin-top:14px"></div>`;showModal(t('उम्मीदवार तुलना','Candidate Comparison'),d);document.getElementById('ep-cmp-b').value='1';const render=()=>{const a=list[+document.getElementById('ep-cmp-a').value||0],b=list[+document.getElementById('ep-cmp-b').value||1],card=x=>`<div style="border:1px solid #dce6e0;border-radius:14px;padding:14px"><strong style="color:#0b2945">${esc(x.c.name||'')}</strong><div style="font-size:11px;line-height:1.75;color:#68798a;margin-top:6px">${esc(t('गाँव','Village'))}: ${esc(x.p.name)}<br>${esc(t('वार्ड','Ward'))}: ${x.w}<br>${esc(t('पद','Post'))}: ${esc(x.c.post||'—')}<br>${esc(t('पार्टी','Party'))}: ${esc(x.c.partyName||x.c.party||'Independent')}<br>${esc(t('श्रेणी','Category'))}: ${esc(x.c.category||'—')}<br>${esc(t('दर्ज वोट','Recorded votes'))}: ${x.votes}</div></div>`;document.getElementById('ep-cmp-out').innerHTML=`<div class="ep-access-grid">${card(a)}${card(b)}</div>`};document.getElementById('ep-cmp-a').onchange=render;document.getElementById('ep-cmp-b').onchange=render;render()}
   function featureSave(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');setLS('EP_SAVED_VILLAGE',p.id);toast(t('गाँव सेव हो गया।','Village saved.'),'success')}
   async function featureShare(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p.name,text:t('स्वतंत्र सार्वजनिक राय पोर्टल','Independent public-opinion portal'),url})}else{await navigator.clipboard?.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(e?.name!=='AbortError')toast(t('शेयर नहीं हो सका।','Could not share.'),'error')}}
-  function featurePrint(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक है।','Print window is blocked.'),'error');const rows=allCandidates(p);w.document.write(`<!doctype html><html><head><title>${esc(p.name)}</title><style>body{font-family:Arial;padding:25px;color:#17324a}h1{color:#0b2945}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d5e0db;padding:8px;font-size:12px}th{background:#fff0dc}</style></head><body><h1>${esc(p.name)}</h1><p>${esc(t('यह केवल स्वतंत्र सार्वजनिक राय है, आधिकारिक परिणाम नहीं।','Independent public opinion only; not an official result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>w.print(),200)}
+  function featurePrint(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक है।','Print window is blocked.'),'error');const rows=allCandidates(p);w.document.write(`<!doctype html><html><head><title>${esc(p.name)}</title><style>body{font-family:Arial;padding:25px;color:#17324a}h1{color:#0b2945}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d5e0db;padding:8px;font-size:12px}th{background:#fff0dc}</style></head><body><h1>${esc(p.name)}</h1><p>${esc(t('यह केवल स्वतंत्र सार्वजनिक राय है, आधिकारिक परिणाम नहीं।','Independent public opinion only; not an official result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table>
+<script id="ep-final-translation-engine-v2">
+(function(){
+'use strict';
+/* FINAL TRANSLATION ENGINE: delegated events work even when the admin form is
+   created later by JavaScript. It never depends on DOMContentLoaded timing. */
+const MAP={
+'candidate':'उम्मीदवार','candidates':'उम्मीदवार','name':'नाम','candidate name':'उम्मीदवार का नाम',
+'post':'पद','sarpanch':'सरपंच','ward member':'वार्ड सदस्य','member':'सदस्य',
+'party':'दल','party name':'दल का नाम','independent':'निर्दलीय','category':'श्रेणी',
+'general':'सामान्य','general category':'सामान्य वर्ग','obc':'ओबीसी','other backward class':'अन्य पिछड़ा वर्ग',
+'sc':'एससी','scheduled caste':'अनुसूचित जाति','st':'एसटी','scheduled tribe':'अनुसूचित जनजाति',
+'male':'पुरुष','female':'महिला','other':'अन्य','village':'गाँव','village name':'गाँव का नाम',
+'ward':'वार्ड','age':'आयु','son':'पुत्र','daughter':'पुत्री','wife':'पत्नी',
+'new':'नया','old':'पुराना','and':'और','or':'या','the':'','of':'का','for':'के लिए','in':'में','on':'पर','from':'से','to':'को','with':'के साथ','is':'है','are':'हैं',
+'sewing machine':'सिलाई मशीन','sewing':'सिलाई','machine':'मशीन','bat':'बल्ला','balloon':'गुब्बारा','ball':'गेंद','bicycle':'साइकिल','cycle':'साइकिल','lotus':'कमल','tree':'पेड़','chair':'कुर्सी','table':'मेज','cup':'कप','umbrella':'छाता','bell':'घंटी','book':'किताब','pen':'कलम','key':'चाबी','lock':'ताला','lamp':'दीपक','fan':'पंखा','clock':'घड़ी','mobile':'मोबाइल','mobile phone':'मोबाइल फोन','phone':'फोन','camera':'कैमरा','car':'कार','bus':'बस','tractor':'ट्रैक्टर','plough':'हल','spade':'फावड़ा','bucket':'बाल्टी','jug':'घड़ा','glass':'गिलास','basket':'टोकरी','ladder':'सीढ़ी','wheel':'पहिया','star':'सितारा','sun':'सूर्य','moon':'चाँद','flower':'फूल','rose':'गुलाब','coconut':'नारियल','mango':'आम','banana':'केला','apple':'सेब','kite':'पतंग','boat':'नाव','airplane':'विमान','plane':'विमान','house':'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप','bulb':'बल्ब','football':'फुटबॉल','cricket':'क्रिकेट'
+};
+const keys=Object.keys(MAP).sort((a,b)=>b.length-a.length);
+function local(text){
+ let s=String(text||'').trim();if(!s)return '';
+ const exact=MAP[s.toLowerCase().replace(/\s+/g,' ')];if(exact!==undefined)return exact;
+ let out=s;
+ for(const k of keys){out=out.replace(new RegExp('(^|[^A-Za-z])'+k+'(?=$|[^A-Za-z])','gi'),(m,a)=>a+MAP[k]);}
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function online(text){
+ try{
+  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5000);
+  const u='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);
+  const r=await fetch(u,{method:'GET',mode:'cors',cache:'no-store',signal:ctl.signal});clearTimeout(timer);
+  if(!r.ok)return '';
+  const j=await r.json();
+  return Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>Array.isArray(x)?x[0]:'').join('').trim():'';
+ }catch(e){return ''}
+}
+function targetFor(en){
+ if(!en||!en.id)return null;
+ let id=en.id;
+ let hi=null;
+ if(/-en$/.test(id))hi=document.getElementById(id.replace(/-en$/,'-hi'));
+ if(!hi && id==='t4-symbol-name')hi=document.getElementById('t4-symbol-name-hi');
+ return hi;
+}
+function write(hi,val){
+ if(!hi)return;hi.value=val||'';
+ hi.setAttribute('data-auto-translated','true');
+ // Do NOT dispatch input/change: other form logic could cause recursive work.
+}
+const busy=new WeakMap();
+async function translate(en){
+ const hi=targetFor(en);if(!hi)return;
+ const text=String(en.value||'').trim();
+ if(!text){write(hi,'');return;}
+ const token={text};busy.set(en,token);
+ write(hi,local(text));
+ const better=await online(text);
+ if(busy.get(en)!==token)return;
+ if(String(en.value||'').trim()!==text)return;
+ if(better)write(hi,better);
+}
+let timers=new WeakMap();
+function schedule(en,delay){
+ clearTimeout(timers.get(en));
+ timers.set(en,setTimeout(()=>translate(en),delay));
+}
+function addManualTranslateButton(){
+ const form=document.getElementById('t4-name-en');
+ if(!form||document.getElementById('ep-translate-all-button'))return;
+ const host=form.closest('div');
+ if(!host)return;
+ const b=document.createElement('button');b.type='button';b.id='ep-translate-all-button';b.className='mt-2 px-3 py-2 rounded-lg bg-emerald-700 text-white text-[10px] font-black';
+ b.innerHTML='<i class="fa-solid fa-language mr-1"></i> Translate English → Hindi';
+ b.onclick=()=>{
+  const ids=['t4-name-en','t4-post-en','t4-party-en','t4-category-en','t4-symbol-name','t4-village-en'];
+  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim())translate(e)});
+ };
+ host.appendChild(b);
+}
+function boot(){
+ document.addEventListener('input',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;schedule(en,180);},true);
+ document.addEventListener('change',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ document.addEventListener('blur',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ // Keep the button available when the admin panel is opened later.
+ addManualTranslateButton();
+ const obs=new MutationObserver(()=>addManualTranslateButton());
+ const root=document.getElementById('admin-dashboard-container')||document.body;
+ obs.observe(root,{childList:true,subtree:true});
+ // Translate already-filled English values after a dynamic render.
+ setTimeout(()=>{document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)});},300);
+ window.EPBilingualTranslator={translate,localTranslate:local,translateAll:function(){document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)})}};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+</body></html>`);w.document.close();setTimeout(()=>w.print(),200)}
   function featureSummary(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=allCandidates(p),votes=rows.reduce((s,x)=>s+x.votes,0);showModal(t('गाँव सारांश','Village Summary'),`<div class="ep-modal-stat-grid"><div><b>${p.totalWards||0}</b><small>${t('वार्ड','Wards')}</small></div><div><b>${rows.length}</b><small>${t('उम्मीदवार','Candidates')}</small></div><div><b>${votes}</b><small>${t('दर्ज वोट','Recorded votes')}</small></div></div><p class="ep-small-note">${esc(t('ये आँकड़े इसी ब्राउज़र में दर्ज जनमत पर आधारित हैं।','These totals are based on public-opinion records in this browser.'))}</p>`)}
   function featureWard(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const out=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,wd=p.wardsData?.[w]||{},rows=allCandidates(p).filter(x=>x.w===w),v=rows.reduce((s,x)=>s+x.votes,0);return `<div class="ep-modal-row"><strong>${t('वार्ड','Ward')} ${w}</strong><span>${rows.length} ${t('उम्मीदवार','candidates')} · ${v} ${t('वोट','votes')} · ${esc(wd.reservation||t('सामान्य','General'))}</span></div>`}).join('');showModal(t('वार्ड स्थिति','Ward Snapshot'),out)}
   function featureGuide(){showModal(t('मतदान मार्गदर्शिका','Voting Guide'),`<div class="ep-modal-copy"><ol><li>${t('गाँव चुनें।','Choose a village.')}</li><li>${t('पूरे गाँव के सभी वार्डों के उम्मीदवार देखें।','Review candidates across all wards of the village.')}</li><li>${t('उम्मीदवार चुनें और 10 अंकों का मोबाइल नंबर दर्ज करें।','Select a candidate and enter a 10-digit mobile number.')}</li><li>${t('सुरक्षित वोट दबाएँ।','Submit the secure vote.')}</li><li>${t('नीचे परिणाम और आँकड़े कभी भी देख सकते हैं।','View results and analytics at any time.')}</li></ol></div>`)}
@@ -6508,7 +6719,102 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <tr><td>Candidate</td><td>${esc(c?.name||record?.r?.candidate||'')}</td></tr>
       <tr><td>Party</td><td>${esc(c?.partyName||c?.party||record?.r?.party||'Independent')}</td></tr></table>
       <div class="note">This receipt is generated by an independent public-opinion website. The evidence number is portal-generated, not an official voter/EPIC number. Browser-side storage does not by itself provide an immutable court-grade chain of custody.</div>
-      </body></html>`;
+      
+<script id="ep-final-translation-engine-v2">
+(function(){
+'use strict';
+/* FINAL TRANSLATION ENGINE: delegated events work even when the admin form is
+   created later by JavaScript. It never depends on DOMContentLoaded timing. */
+const MAP={
+'candidate':'उम्मीदवार','candidates':'उम्मीदवार','name':'नाम','candidate name':'उम्मीदवार का नाम',
+'post':'पद','sarpanch':'सरपंच','ward member':'वार्ड सदस्य','member':'सदस्य',
+'party':'दल','party name':'दल का नाम','independent':'निर्दलीय','category':'श्रेणी',
+'general':'सामान्य','general category':'सामान्य वर्ग','obc':'ओबीसी','other backward class':'अन्य पिछड़ा वर्ग',
+'sc':'एससी','scheduled caste':'अनुसूचित जाति','st':'एसटी','scheduled tribe':'अनुसूचित जनजाति',
+'male':'पुरुष','female':'महिला','other':'अन्य','village':'गाँव','village name':'गाँव का नाम',
+'ward':'वार्ड','age':'आयु','son':'पुत्र','daughter':'पुत्री','wife':'पत्नी',
+'new':'नया','old':'पुराना','and':'और','or':'या','the':'','of':'का','for':'के लिए','in':'में','on':'पर','from':'से','to':'को','with':'के साथ','is':'है','are':'हैं',
+'sewing machine':'सिलाई मशीन','sewing':'सिलाई','machine':'मशीन','bat':'बल्ला','balloon':'गुब्बारा','ball':'गेंद','bicycle':'साइकिल','cycle':'साइकिल','lotus':'कमल','tree':'पेड़','chair':'कुर्सी','table':'मेज','cup':'कप','umbrella':'छाता','bell':'घंटी','book':'किताब','pen':'कलम','key':'चाबी','lock':'ताला','lamp':'दीपक','fan':'पंखा','clock':'घड़ी','mobile':'मोबाइल','mobile phone':'मोबाइल फोन','phone':'फोन','camera':'कैमरा','car':'कार','bus':'बस','tractor':'ट्रैक्टर','plough':'हल','spade':'फावड़ा','bucket':'बाल्टी','jug':'घड़ा','glass':'गिलास','basket':'टोकरी','ladder':'सीढ़ी','wheel':'पहिया','star':'सितारा','sun':'सूर्य','moon':'चाँद','flower':'फूल','rose':'गुलाब','coconut':'नारियल','mango':'आम','banana':'केला','apple':'सेब','kite':'पतंग','boat':'नाव','airplane':'विमान','plane':'विमान','house':'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप','bulb':'बल्ब','football':'फुटबॉल','cricket':'क्रिकेट'
+};
+const keys=Object.keys(MAP).sort((a,b)=>b.length-a.length);
+function local(text){
+ let s=String(text||'').trim();if(!s)return '';
+ const exact=MAP[s.toLowerCase().replace(/\s+/g,' ')];if(exact!==undefined)return exact;
+ let out=s;
+ for(const k of keys){out=out.replace(new RegExp('(^|[^A-Za-z])'+k+'(?=$|[^A-Za-z])','gi'),(m,a)=>a+MAP[k]);}
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function online(text){
+ try{
+  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5000);
+  const u='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);
+  const r=await fetch(u,{method:'GET',mode:'cors',cache:'no-store',signal:ctl.signal});clearTimeout(timer);
+  if(!r.ok)return '';
+  const j=await r.json();
+  return Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>Array.isArray(x)?x[0]:'').join('').trim():'';
+ }catch(e){return ''}
+}
+function targetFor(en){
+ if(!en||!en.id)return null;
+ let id=en.id;
+ let hi=null;
+ if(/-en$/.test(id))hi=document.getElementById(id.replace(/-en$/,'-hi'));
+ if(!hi && id==='t4-symbol-name')hi=document.getElementById('t4-symbol-name-hi');
+ return hi;
+}
+function write(hi,val){
+ if(!hi)return;hi.value=val||'';
+ hi.setAttribute('data-auto-translated','true');
+ // Do NOT dispatch input/change: other form logic could cause recursive work.
+}
+const busy=new WeakMap();
+async function translate(en){
+ const hi=targetFor(en);if(!hi)return;
+ const text=String(en.value||'').trim();
+ if(!text){write(hi,'');return;}
+ const token={text};busy.set(en,token);
+ write(hi,local(text));
+ const better=await online(text);
+ if(busy.get(en)!==token)return;
+ if(String(en.value||'').trim()!==text)return;
+ if(better)write(hi,better);
+}
+let timers=new WeakMap();
+function schedule(en,delay){
+ clearTimeout(timers.get(en));
+ timers.set(en,setTimeout(()=>translate(en),delay));
+}
+function addManualTranslateButton(){
+ const form=document.getElementById('t4-name-en');
+ if(!form||document.getElementById('ep-translate-all-button'))return;
+ const host=form.closest('div');
+ if(!host)return;
+ const b=document.createElement('button');b.type='button';b.id='ep-translate-all-button';b.className='mt-2 px-3 py-2 rounded-lg bg-emerald-700 text-white text-[10px] font-black';
+ b.innerHTML='<i class="fa-solid fa-language mr-1"></i> Translate English → Hindi';
+ b.onclick=()=>{
+  const ids=['t4-name-en','t4-post-en','t4-party-en','t4-category-en','t4-symbol-name','t4-village-en'];
+  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim())translate(e)});
+ };
+ host.appendChild(b);
+}
+function boot(){
+ document.addEventListener('input',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;schedule(en,180);},true);
+ document.addEventListener('change',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ document.addEventListener('blur',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ // Keep the button available when the admin panel is opened later.
+ addManualTranslateButton();
+ const obs=new MutationObserver(()=>addManualTranslateButton());
+ const root=document.getElementById('admin-dashboard-container')||document.body;
+ obs.observe(root,{childList:true,subtree:true});
+ // Translate already-filled English values after a dynamic render.
+ setTimeout(()=>{document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)});},300);
+ window.EPBilingualTranslator={translate,localTranslate:local,translateAll:function(){document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)})}};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+</body></html>`;
     w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
   }
 
@@ -6978,7 +7284,102 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .ep-vote-select-button{font-size:clamp(16px,1.8vw,21px)!important;min-height:58px!important;font-weight:950!important}
 .ep-search-result-name{font-size:18px!important}.ep-bilingual-extra{font-size:12px!important;line-height:1.7!important}
 </style>
-</head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div></body></html>`);
+</head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div>
+<script id="ep-final-translation-engine-v2">
+(function(){
+'use strict';
+/* FINAL TRANSLATION ENGINE: delegated events work even when the admin form is
+   created later by JavaScript. It never depends on DOMContentLoaded timing. */
+const MAP={
+'candidate':'उम्मीदवार','candidates':'उम्मीदवार','name':'नाम','candidate name':'उम्मीदवार का नाम',
+'post':'पद','sarpanch':'सरपंच','ward member':'वार्ड सदस्य','member':'सदस्य',
+'party':'दल','party name':'दल का नाम','independent':'निर्दलीय','category':'श्रेणी',
+'general':'सामान्य','general category':'सामान्य वर्ग','obc':'ओबीसी','other backward class':'अन्य पिछड़ा वर्ग',
+'sc':'एससी','scheduled caste':'अनुसूचित जाति','st':'एसटी','scheduled tribe':'अनुसूचित जनजाति',
+'male':'पुरुष','female':'महिला','other':'अन्य','village':'गाँव','village name':'गाँव का नाम',
+'ward':'वार्ड','age':'आयु','son':'पुत्र','daughter':'पुत्री','wife':'पत्नी',
+'new':'नया','old':'पुराना','and':'और','or':'या','the':'','of':'का','for':'के लिए','in':'में','on':'पर','from':'से','to':'को','with':'के साथ','is':'है','are':'हैं',
+'sewing machine':'सिलाई मशीन','sewing':'सिलाई','machine':'मशीन','bat':'बल्ला','balloon':'गुब्बारा','ball':'गेंद','bicycle':'साइकिल','cycle':'साइकिल','lotus':'कमल','tree':'पेड़','chair':'कुर्सी','table':'मेज','cup':'कप','umbrella':'छाता','bell':'घंटी','book':'किताब','pen':'कलम','key':'चाबी','lock':'ताला','lamp':'दीपक','fan':'पंखा','clock':'घड़ी','mobile':'मोबाइल','mobile phone':'मोबाइल फोन','phone':'फोन','camera':'कैमरा','car':'कार','bus':'बस','tractor':'ट्रैक्टर','plough':'हल','spade':'फावड़ा','bucket':'बाल्टी','jug':'घड़ा','glass':'गिलास','basket':'टोकरी','ladder':'सीढ़ी','wheel':'पहिया','star':'सितारा','sun':'सूर्य','moon':'चाँद','flower':'फूल','rose':'गुलाब','coconut':'नारियल','mango':'आम','banana':'केला','apple':'सेब','kite':'पतंग','boat':'नाव','airplane':'विमान','plane':'विमान','house':'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप','bulb':'बल्ब','football':'फुटबॉल','cricket':'क्रिकेट'
+};
+const keys=Object.keys(MAP).sort((a,b)=>b.length-a.length);
+function local(text){
+ let s=String(text||'').trim();if(!s)return '';
+ const exact=MAP[s.toLowerCase().replace(/\s+/g,' ')];if(exact!==undefined)return exact;
+ let out=s;
+ for(const k of keys){out=out.replace(new RegExp('(^|[^A-Za-z])'+k+'(?=$|[^A-Za-z])','gi'),(m,a)=>a+MAP[k]);}
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function online(text){
+ try{
+  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5000);
+  const u='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);
+  const r=await fetch(u,{method:'GET',mode:'cors',cache:'no-store',signal:ctl.signal});clearTimeout(timer);
+  if(!r.ok)return '';
+  const j=await r.json();
+  return Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>Array.isArray(x)?x[0]:'').join('').trim():'';
+ }catch(e){return ''}
+}
+function targetFor(en){
+ if(!en||!en.id)return null;
+ let id=en.id;
+ let hi=null;
+ if(/-en$/.test(id))hi=document.getElementById(id.replace(/-en$/,'-hi'));
+ if(!hi && id==='t4-symbol-name')hi=document.getElementById('t4-symbol-name-hi');
+ return hi;
+}
+function write(hi,val){
+ if(!hi)return;hi.value=val||'';
+ hi.setAttribute('data-auto-translated','true');
+ // Do NOT dispatch input/change: other form logic could cause recursive work.
+}
+const busy=new WeakMap();
+async function translate(en){
+ const hi=targetFor(en);if(!hi)return;
+ const text=String(en.value||'').trim();
+ if(!text){write(hi,'');return;}
+ const token={text};busy.set(en,token);
+ write(hi,local(text));
+ const better=await online(text);
+ if(busy.get(en)!==token)return;
+ if(String(en.value||'').trim()!==text)return;
+ if(better)write(hi,better);
+}
+let timers=new WeakMap();
+function schedule(en,delay){
+ clearTimeout(timers.get(en));
+ timers.set(en,setTimeout(()=>translate(en),delay));
+}
+function addManualTranslateButton(){
+ const form=document.getElementById('t4-name-en');
+ if(!form||document.getElementById('ep-translate-all-button'))return;
+ const host=form.closest('div');
+ if(!host)return;
+ const b=document.createElement('button');b.type='button';b.id='ep-translate-all-button';b.className='mt-2 px-3 py-2 rounded-lg bg-emerald-700 text-white text-[10px] font-black';
+ b.innerHTML='<i class="fa-solid fa-language mr-1"></i> Translate English → Hindi';
+ b.onclick=()=>{
+  const ids=['t4-name-en','t4-post-en','t4-party-en','t4-category-en','t4-symbol-name','t4-village-en'];
+  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim())translate(e)});
+ };
+ host.appendChild(b);
+}
+function boot(){
+ document.addEventListener('input',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;schedule(en,180);},true);
+ document.addEventListener('change',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ document.addEventListener('blur',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ // Keep the button available when the admin panel is opened later.
+ addManualTranslateButton();
+ const obs=new MutationObserver(()=>addManualTranslateButton());
+ const root=document.getElementById('admin-dashboard-container')||document.body;
+ obs.observe(root,{childList:true,subtree:true});
+ // Translate already-filled English values after a dynamic render.
+ setTimeout(()=>{document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)});},300);
+ window.EPBilingualTranslator={translate,localTranslate:local,translateAll:function(){document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)})}};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+</body></html>`);
     w.document.close();setTimeout(()=>w.print(),300);
   }
 
@@ -7082,93 +7483,104 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #ep-candidate-search-tool{margin:0 0 24px;background:linear-gradient(135deg,rgba(255,153,51,.16),rgba(255,255,255,.96) 48%,rgba(19,136,8,.14));border:1px solid #c6d8cc;border-radius:22px;padding:28px;box-shadow:0 18px 45px rgba(20,50,75,.08);position:relative;overflow:hidden}
 #ep-candidate-search-tool:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666% 100%)}
 .ep-search-tool-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}.ep-search-tool-head h2{margin:4px 0 5px;color:#082742;font-size:24px;font-weight:900}.ep-search-tool-head p{margin:0;color:#66788a;font-size:12px;line-height:1.6}.ep-search-tool-badge{white-space:nowrap;background:#082742;color:#fff;border-radius:999px;padding:9px 13px;font-size:10px;font-weight:900}
-.ep-search-box-row{display:grid;grid-template-columns:minmax(0,1fr) 220px 180px;gap:10px}.ep-search-input-wrap{position:relative;display:flex;align-items:center}.ep-search-input-wrap>i{position:absolute;left:15px;color:#668092;pointer-events:none}
+.ep-search-box-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 220px 180px;gap:10px}.ep-search-main-button{border:0;border-radius:12px;background:#0b2945;color:#fff;font-weight:900;font-size:12px;cursor:pointer;padding:0 14px;box-shadow:0 8px 18px rgba(11,41,69,.15)}.ep-search-main-button:hover{background:#163d5d;transform:translateY(-1px)}.ep-search-input-wrap{position:relative;display:flex;align-items:center}.ep-search-input-wrap>i{position:absolute;left:15px;color:#668092;pointer-events:none}
 #ep-public-candidate-search{width:100%;padding:13px 42px;border:2px solid #c4d7c9;border-radius:12px;outline:0;background:#fff;color:#17324a;font-size:13px;font-weight:600}#ep-public-candidate-search:focus{border-color:#ff9933;box-shadow:0 0 0 4px rgba(255,153,51,.12)}#ep-public-candidate-search-clear{position:absolute;right:8px;width:32px;height:32px;border:0;background:transparent;color:#7a8b99;font-size:20px;cursor:pointer}
 .ep-search-hints{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.ep-search-hints span{font-size:10px;font-weight:800;color:#52697b;background:#fff;border:1px solid #d8e4dc;border-radius:999px;padding:7px 10px}
 .ep-public-search-results{display:grid;gap:10px;max-height:460px;overflow:auto;padding-right:3px}.ep-search-empty{border:1px dashed #b9cfbf;border-radius:14px;padding:20px;text-align:center;color:#708394;font-size:12px;background:rgba(255,255,255,.7)}
 .ep-search-result{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:13px;align-items:center;background:#fff;border:1px solid #d5e1d9;border-radius:16px;padding:11px 13px;transition:.18s ease}.ep-search-result:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(11,41,69,.08);border-color:#ffb35c}
 .ep-search-result-photo{width:58px;height:58px;border-radius:14px;object-fit:cover;border:2px solid #fff;box-shadow:0 5px 14px rgba(11,41,69,.12);background:#f2f7f3}.ep-search-result-main{min-width:0}.ep-search-result-name{font-size:14px;font-weight:900;color:#082742}.ep-search-result-sub{font-size:10px;color:#66788a;margin-top:3px}.ep-search-result-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.ep-search-result-meta span{font-size:9px;font-weight:800;padding:4px 7px;border-radius:7px;background:#f3f8f4;color:#486173;border:1px solid #dce7df}.ep-search-result-action{border:1px solid #bfd3c6;background:linear-gradient(90deg,#fff3e3,#fff,#edf8ef);color:#082742;border-radius:10px;padding:8px 10px;font-size:10px;font-weight:900;cursor:pointer}.ep-search-result-action:hover{border-color:#ff9933}.ep-bilingual-extra{margin-top:6px;padding-top:6px;border-top:1px dashed #dce7df;font-size:9px;color:#718291}
-@media(max-width:900px){.ep-search-box-row{grid-template-columns:1fr 1fr}.ep-search-input-wrap{grid-column:1/-1}}@media(max-width:560px){#ep-candidate-search-tool{padding:20px}.ep-search-tool-head{flex-direction:column}.ep-search-box-row{grid-template-columns:1fr}.ep-search-result{grid-template-columns:48px minmax(0,1fr)}.ep-search-result-photo{width:48px;height:48px}.ep-search-result-action{grid-column:2;justify-self:start}}
+@media(max-width:900px){.ep-search-box-row{grid-template-columns:1fr 1fr 1fr}.ep-search-input-wrap{grid-column:1/-1}}@media(max-width:560px){#ep-candidate-search-tool{padding:20px}.ep-search-tool-head{flex-direction:column}.ep-search-box-row{grid-template-columns:1fr}.ep-search-result{grid-template-columns:48px minmax(0,1fr)}.ep-search-result-photo{width:48px;height:48px}.ep-search-result-action{grid-column:2;justify-self:start}}
 </style>
+<script id="ep-bilingual-auto-translator">
+(function(){
+'use strict';
+const PAIRS=[
+ ['t4-name-en','t4-name-hi'],['t4-post-en','t4-post-hi'],['t4-party-en','t4-party-hi'],
+ ['t4-category-en','t4-category-hi'],['t4-symbol-name','t4-symbol-name-hi'],['t4-village-en','t4-village-hi']
+];
+const DICT={
+ 'candidate':'उम्मीदवार','candidates':'उम्मीदवार','person':'व्यक्ति','party':'दल','independent':'निर्दलीय','sarpanch':'सरपंच','ward member':'वार्ड सदस्य','member':'सदस्य','general':'सामान्य','other':'अन्य','male':'पुरुष','female':'महिला','village':'गाँव','ward':'वार्ड','age':'आयु',
+ 'sewing machine':'सिलाई मशीन','sewing':'सिलाई','machine':'मशीन','bat':'बल्ला','balloon':'गुब्बारा','ball':'गेंद','bicycle':'साइकिल','bicycle':'साइकिल','cycle':'साइकिल','lotus':'कमल','tree':'पेड़','chair':'कुर्सी','table':'मेज','cup':'कप','umbrella':'छाता','bell':'घंटी','book':'किताब','pen':'कलम','key':'चाबी','lock':'ताला','lamp':'दीपक','fan':'पंखा','clock':'घड़ी','mobile phone':'मोबाइल फोन','mobile':'मोबाइल','phone':'फोन','camera':'कैमरा','car':'कार','bus':'बस','tractor':'ट्रैक्टर','plough':'हल','spade':'फावड़ा','bucket':'बाल्टी','jug':'घड़ा','glass':'गिलास','basket':'टोकरी','ladder':'सीढ़ी','wheel':'पहिया','star':'सितारा','sun':'सूर्य','moon':'चाँद','flower':'फूल','rose':'गुलाब','coconut':'नारियल','mango':'आम','banana':'केला','apple':'सेब','kite':'पतंग','boat':'नाव','airplane':'विमान','plane':'विमान','house':'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप','bulb':'बल्ब','football':'फुटबॉल','cricket':'क्रिकेट',
+ 'general category':'सामान्य वर्ग','other backward class':'अन्य पिछड़ा वर्ग','scheduled caste':'अनुसूचित जाति','scheduled tribe':'अनुसूचित जनजाति',
+ 'village name':'गाँव का नाम','ward number':'वार्ड संख्या','candidate name':'उम्मीदवार का नाम','party name':'दल का नाम','symbol name':'चुनाव चिन्ह का नाम','post':'पद','category':'श्रेणी','name':'नाम','age':'आयु'
+};
+const PHRASES=Object.keys(DICT).sort((a,b)=>b.length-a.length);
+function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function localTranslate(text){
+ let s=String(text||'').trim(); if(!s)return '';
+ const exact=DICT[norm(s)]; if(exact)return exact;
+ let out=s;
+ // phrase replacement, longest first
+ for(const p of PHRASES){const re=new RegExp('(^|[^a-z])'+p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=$|[^a-z])','gi');out=out.replace(re,(m,pre)=>pre+DICT[p]);}
+ const words={and:'और',or:'या',the:'',of:'का',for:'के लिए',in:'में',on:'पर',from:'से',to:'को',with:'के साथ',is:'है',are:'हैं',was:'था',were:'थे',my:'मेरा',your:'आपका',our:'हमारा',new:'नया',old:'पुराना',village:'गाँव',ward:'वार्ड',road:'सड़क',name:'नाम',son:'पुत्र',daughter:'पुत्री',wife:'पत्नी',independent:'निर्दलीय'};
+ out=out.split(/(\s+|[,.\-_/()]+)/).map(tok=>{const k=norm(tok);if(words[k]!==undefined)return words[k];if(DICT[k])return DICT[k];return tok}).join('');
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function remoteTranslate(text){
+ try{
+  const u='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);
+  const r=await fetch(u,{method:'GET',mode:'cors',cache:'no-store'}); if(!r.ok)throw new Error('translation http '+r.status);
+  const j=await r.json(); const out=Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>x&&x[0]||'').join(''):''; return out.trim();
+ }catch(e){return ''}
+}
+function setValue(el,value){if(!el)return;el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}
+let timers=new Map();
+async function translateField(enId,hiId){
+ const en=document.getElementById(enId),hi=document.getElementById(hiId);if(!en||!hi)return;
+ const text=en.value.trim();if(!text)return;
+ // Always show an immediate local translation; then improve it from the translator service.
+ setValue(hi,localTranslate(text));
+ const better=await remoteTranslate(text); if(better && en.value.trim()===text)setValue(hi,better);
+}
+function bindPair(enId,hiId){
+ const en=document.getElementById(enId),hi=document.getElementById(hiId);if(!en||!hi)return;
+ const run=()=>{clearTimeout(timers.get(enId));timers.set(enId,setTimeout(()=>translateField(enId,hiId),250));};
+ en.addEventListener('input',run);en.addEventListener('change',run);en.addEventListener('blur',()=>translateField(enId,hiId));
+}
+function addVillagePairIfNeeded(){
+ const v=document.getElementById('t4-village');
+ if(v&&!document.getElementById('t4-village-en')){
+  const p=v.parentElement;
+  const wrap=document.createElement('div');wrap.className='mt-2';
+  wrap.innerHTML='<label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Village — English / गाँव — English</label><input id="t4-village-en" type="text" class="input-admin" placeholder="Village name in English">';
+  p?.parentElement?.appendChild(wrap);
+ }
+}
+function init(){
+ addVillagePairIfNeeded();
+ PAIRS.forEach(([a,b])=>bindPair(a,b));
+ const gender=document.getElementById('t4-gender');
+ if(gender){gender.addEventListener('change',()=>{const hi=document.getElementById('t4-gender-hi');if(hi)hi.value=gender.value==='Male'?'पुरुष':gender.value==='Female'?'महिला':'अन्य';});
+  if(!document.getElementById('t4-gender-hi')){const h=document.createElement('input');h.type='hidden';h.id='t4-gender-hi';gender.parentNode.appendChild(h);}
+ }
+ // Re-bind after admin UI rerenders without MutationObserver overhead.
+ [300,1000,2500].forEach(ms=>setTimeout(()=>{addVillagePairIfNeeded();PAIRS.forEach(([a,b])=>bindPair(a,b));},ms));
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+window.EPBilingualTranslator={translate:translateField,localTranslate};
+})();
+</script>
 <script id="ep-candidate-upgrade-runtime">
 (function(){
 'use strict';
-const $=(s,r=document)=>r.querySelector(s), DB=()=>{try{if(window.DBManager?.get)return window.DBManager.get();}catch(e){}return window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null};
-const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const lang=()=>localStorage.getItem('EP_LANG')==='en'?'en':'hi',T=(h,e)=>lang()==='hi'?h:e;
-function all(){const d=DB(),o=[];Object.entries(d?.panchayats||{}).forEach(([pid,p])=>{for(let w=1;w<=Number(p.totalWards||0);w++){const wd=p.wardsData?.[w];if(!wd)continue;(Array.isArray(wd.candidates)?wd.candidates:Object.values(wd.candidates||{})).forEach(c=>o.push({pid,p,w,wd,c,votes:Number(wd.votes?.[c.id]||0)}));}});return o}
-function val(c,hi,en,f){const a=String(c?.[hi]??'').trim(),b=String(c?.[en]??'').trim();return lang()==='hi'?(a||b||f):(b||a||f)}
-const name=c=>val(c,'nameHi','nameEn',c?.name||'उम्मीदवार'),party=c=>val(c,'partyHi','partyEn',c?.partyName||c?.party||'Independent'),post=c=>val(c,'postHi','postEn',c?.post||'—'),cat=c=>val(c,'categoryHi','categoryEn',c?.category||'—');
-const village=p=>lang()==='hi'?(p?.nameHi||p?.name||p?.nameEn||'गाँव'):(p?.nameEn||p?.nameHi||p?.name||'Village');
-function fillFilters(){const d=DB(),vs=$('#ep-public-candidate-search-village'),ws=$('#ep-public-candidate-search-ward');if(!d||!vs||!ws)return;const ov=vs.value,ow=ws.value;vs.innerHTML=`<option value="">${T('सभी गाँव','All Villages')}</option>`;Object.entries(d.panchayats||{}).sort((a,b)=>String(a[1].name||a[0]).localeCompare(String(b[1].name||b[0]))).forEach(([id,p])=>{const o=document.createElement('option');o.value=id;o.textContent=village(p);vs.appendChild(o)});if(ov&&d.panchayats?.[ov])vs.value=ov;const p=d.panchayats?.[vs.value];ws.innerHTML=`<option value="">${T('सभी वार्ड','All Wards')}</option>`;if(p)for(let w=1;w<=Number(p.totalWards||0);w++)ws.add(new Option(`${T('वार्ड','Ward')} ${w}`,w));if(ow&&ws.querySelector(`option[value="${CSS.escape(ow)}"]`))ws.value=ow}
-async function selectCandidate(pid,cid){
-  try{
-    const s=$('#user-panchayat-select');
-    if(!s){window.location.hash='voting-section';return;}
-    if(s.value!==pid){
-      s.value=pid;
-      s.dispatchEvent(new Event('change',{bubbles:true}));
-    }
-    localStorage.setItem('EP_SAVED_VILLAGE',pid);
-    if(typeof window.EPFinalWorking?.refresh==='function') window.EPFinalWorking.refresh();
-    else if(typeof window.renderCandidates==='function') window.renderCandidates();
-    const voting=document.getElementById('voting-section');
-    voting?.scrollIntoView({behavior:'smooth',block:'start'});
-    let card=null;
-    for(let i=0;i<20;i++){
-      await new Promise(r=>setTimeout(r,60));
-      card=[...document.querySelectorAll('#user-candidates-grid [data-cid]')].find(el=>String(el.dataset.cid)===String(cid));
-      if(card)break;
-    }
-    if(card){
-      card.scrollIntoView({behavior:'smooth',block:'center'});
-      const btn=card.querySelector('.ep-vote-select-button');
-      if(btn) btn.click(); else card.click();
-      card.classList.add('ep-candidate-selected');
-      setTimeout(()=>card.classList.remove('ep-candidate-selected'),2600);
-    }else{
-      toast(T('उम्मीदवार कार्ड नहीं मिला। कृपया पहले गाँव चुनकर उम्मीदवार सूची देखें।','Candidate card was not found. Please select the village and view the candidate list first.'),'error');
-    }
-  }catch(e){console.error('Tool 1 selection error',e);}
-}
-function renderSearch(){
-  const q=String($('#ep-public-candidate-search')?.value||'').trim().toLowerCase();
-  const pid=$('#ep-public-candidate-search-village')?.value||'';
-  const ward=String($('#ep-public-candidate-search-ward')?.value||'');
-  const box=$('#ep-public-candidate-search-results'); if(!box)return;
-  const rows=all().filter(x=>{
-    if(pid&&String(x.pid)!==String(pid))return false;
-    if(ward&&String(x.w)!==ward)return false;
-    if(!q)return true;
-    const c=x.c||{},p=x.p||{};
-    return [c.id,c.name,c.nameHi,c.nameEn,c.partyName,c.party,c.partyHi,c.partyEn,c.post,c.postHi,c.postEn,c.category,c.categoryHi,c.categoryEn,c.symbolName,c.symbolNameHi,c.symbolNameEn,p.id,p.name,p.nameHi,p.nameEn,String(x.w)]
-      .filter(v=>v!==undefined&&v!==null).join(' ').toLowerCase().includes(q);
-  }).slice(0,100);
-  if(!rows.length){box.innerHTML=`<div class="ep-search-empty">${esc(T('कोई उम्मीदवार नहीं मिला।','No candidate matched your search.'))}</div>`;return;}
-  box.innerHTML=rows.map(x=>{
-    const c=x.c||{},im=c.personImage||c.image||'',nm=name(c),pa=party(c),po=post(c),ca=cat(c);
-    const sy=val(c,'symbolNameHi','symbolNameEn',c.symbolName||'—');
-    return `<article class="ep-search-result" data-search-candidate="${esc(c.id)}">
-      <div class="ep-search-result-photo">${im?`<img class="ep-search-result-photo" src="${esc(im)}" alt="${esc(nm)}">`:`<i class="fa-solid fa-user" style="font-size:24px;color:#718394"></i>`}</div>
-      <div class="ep-search-result-main">
-        <div class="ep-search-result-name">${esc(nm)}</div>
-        <div class="ep-search-result-sub">${esc(pa)} · ${esc(village(x.p))}</div>
-        <div class="ep-search-result-meta"><span>${esc(T('वार्ड ','Ward ')+x.w)}</span><span>${esc(po)}</span><span>${esc(ca)}</span><span>${esc(T('चिन्ह: ','Symbol: ')+sy)}</span></div>
-        <div class="ep-bilingual-extra"><b>हिंदी:</b> ${esc(c.nameHi||c.name||'—')} · ${esc(c.partyHi||c.partyName||'—')} &nbsp; <b>English:</b> ${esc(c.nameEn||c.nameHi||c.name||'—')} · ${esc(c.partyEn||c.partyHi||c.partyName||'—')}</div>
-      </div>
-      <button class="ep-search-result-action" type="button" data-open="${esc(x.pid)}" data-cid="${esc(c.id)}">${esc(T('वोटिंग में देखें','View in Voting'))}</button>
-    </article>`;
-  }).join('');
-  box.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>selectCandidate(b.dataset.open,b.dataset.cid)));
-}
+const $=(s,r=document)=>r.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const DB=()=>{try{return window.DBManager?.get?.()||window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null}catch(e){return null}};
+const lang=()=>localStorage.getItem('EP_LANG')==='en'?'en':'hi';
+const T=(h,e)=>lang()==='hi'?h:e;
+function text(c,hi,en,f){const a=String(c?.[hi]??'').trim(),b=String(c?.[en]??'').trim();return lang()==='hi'?(a||b||f):(b||a||f)}
+const name=c=>text(c,'nameHi','nameEn',c?.name||'उम्मीदवार');
+const party=c=>text(c,'partyHi','partyEn',c?.partyName||c?.party||'Independent');
+const post=c=>text(c,'postHi','postEn',c?.post||'—');
+const cat=c=>text(c,'categoryHi','categoryEn',c?.category||'—');
+const village=p=>text(p,'nameHi','nameEn',p?.name||'गाँव');
+function all(){const d=DB(),out=[];if(!d?.panchayats)return out;Object.entries(d.panchayats).forEach(([pid,p])=>{const wd=p?.wardsData||{};let entries=Object.entries(wd);entries.forEach(([wk,wdata])=>{if(!wdata||!Array.isArray(wdata.candidates))return;const wn=Number(wk);wdata.candidates.forEach(c=>out.push({pid,p,w:wn,wd:wdata,c}));});});return out;}
+function fillFilters(){const d=DB(),vs=$('#ep-public-candidate-search-village'),ws=$('#ep-public-candidate-search-ward');if(!d||!vs||!ws)return;const oldV=vs.value,oldW=ws.value;vs.innerHTML=`<option value="">${T('सभी गाँव','All Villages')}</option>`;Object.entries(d.panchayats||{}).forEach(([id,p])=>{const o=document.createElement('option');o.value=id;o.textContent=village(p);vs.appendChild(o)});if(oldV&&d.panchayats?.[oldV])vs.value=oldV;const p=d.panchayats?.[vs.value];ws.innerHTML=`<option value="">${T('सभी वार्ड','All Wards')}</option>`;if(p)Object.keys(p.wardsData||{}).sort((a,b)=>Number(a)-Number(b)).forEach(w=>ws.add(new Option(`${T('वार्ड','Ward')} ${w}`,w)));if(oldW&&ws.querySelector(`option[value="${CSS.escape(oldW)}"]`))ws.value=oldW;}
+async function selectCandidate(pid,cid){try{const s=$('#user-panchayat-select');if(!s)return;if(String(s.value)!==String(pid)){s.value=pid;s.dispatchEvent(new Event('change',{bubbles:true}));}localStorage.setItem('EP_SAVED_VILLAGE',pid);window.EPFinalWorking?.refresh?.();window.renderCandidates?.();document.getElementById('voting-section')?.scrollIntoView({behavior:'smooth',block:'start'});for(let i=0;i<30;i++){await new Promise(r=>setTimeout(r,50));const card=[...document.querySelectorAll('#user-candidates-grid [data-cid],#user-candidates-grid [data-v5-cid]')].find(x=>String(x.dataset.cid||x.dataset.v5Cid)===String(cid));if(card){card.scrollIntoView({behavior:'smooth',block:'center'});const b=card.querySelector('.ep-vote-select-button,button');if(b)b.click();card.classList.add('ep-candidate-selected');setTimeout(()=>card.classList.remove('ep-candidate-selected'),2200);return;}}alert(T('उम्मीदवार कार्ड नहीं मिला। गाँव और वार्ड फिर से चुनें।','Candidate card was not found. Please select the village and ward again.'));}catch(e){console.error(e)}}
+function renderSearch(){const q=String($('#ep-public-candidate-search')?.value||'').trim().toLowerCase(),pid=$('#ep-public-candidate-search-village')?.value||'',ward=String($('#ep-public-candidate-search-ward')?.value||''),box=$('#ep-public-candidate-search-results');if(!box)return;const rows=all().filter(x=>{if(pid&&String(x.pid)!==String(pid))return false;if(ward&&String(x.w)!==ward)return false;if(!q)return true;const c=x.c||{},p=x.p||{};return [c.id,c.name,c.nameHi,c.nameEn,c.partyName,c.party,c.partyHi,c.partyEn,c.post,c.postHi,c.postEn,c.category,c.categoryHi,c.categoryEn,c.symbolName,c.symbolNameHi,c.symbolNameEn,p.id,p.name,p.nameHi,p.nameEn,x.w].join(' ').toLowerCase().includes(q)}).slice(0,100);if(!rows.length){box.innerHTML=`<div class="ep-search-empty">${esc(T('कोई उम्मीदवार नहीं मिला।','No candidate matched your search.'))}</div>`;return;}box.innerHTML=rows.map(x=>{const c=x.c||{},im=c.personImage||c.image||'',nm=name(c),pa=party(c),po=post(c),ca=cat(c),sy=text(c,'symbolNameHi','symbolNameEn',c.symbolName||'—');return `<article class="ep-search-result"><div class="ep-search-result-photo">${im?`<img src="${esc(im)}" alt="${esc(nm)}">`:'<i class="fa-solid fa-user" style="font-size:24px;color:#718394"></i>'}</div><div class="ep-search-result-main"><div class="ep-search-result-name">${esc(nm)}</div><div class="ep-search-result-sub">${esc(pa)} · ${esc(village(x.p))}</div><div class="ep-search-result-meta"><span>${esc(T('वार्ड ','Ward ')+x.w)}</span><span>${esc(po)}</span><span>${esc(ca)}</span><span>${esc(T('चिन्ह: ','Symbol: ')+sy)}</span></div><div class="ep-bilingual-extra"><b>हिंदी:</b> ${esc(c.nameHi||c.name||'—')} · ${esc(c.partyHi||c.partyName||'—')} &nbsp; <b>English:</b> ${esc(c.nameEn||c.nameHi||c.name||'—')} · ${esc(c.partyEn||c.partyHi||c.partyName||'—')}</div></div><button class="ep-search-result-action" type="button" data-open="${esc(x.pid)}" data-cid="${esc(c.id)}">${esc(T('वोटिंग में देखें','View in Voting'))}</button></article>`}).join('');box.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>selectCandidate(b.dataset.open,b.dataset.cid)));}
 function refresh(){fillFilters();renderSearch()}
-window.addEventListener('ep:candidates-updated',refresh);window.addEventListener('storage',e=>{if(e.key==='EP_LANG')refresh()});
 window.EPBilingualCandidatePatch={refresh,search:renderSearch};
-const si=$('#ep-public-candidate-search');if(si)si.addEventListener('input',renderSearch);
-const sc=$('#ep-public-candidate-search-clear');if(sc)sc.addEventListener('click',()=>{if(si)si.value='';renderSearch();si?.focus()});
-const sv=$('#ep-public-candidate-search-village');if(sv)sv.addEventListener('change',()=>{fillFilters();renderSearch()});
-const sw=$('#ep-public-candidate-search-ward');if(sw)sw.addEventListener('change',renderSearch);
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(refresh,120),{once:true});else setTimeout(refresh,120);
+function bind(){const si=$('#ep-public-candidate-search'),btn=$('#ep-public-candidate-search-button'),sc=$('#ep-public-candidate-search-clear'),sv=$('#ep-public-candidate-search-village'),sw=$('#ep-public-candidate-search-ward');si?.addEventListener('input',()=>{if(si.value.trim().length>=1)renderSearch()});si?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();renderSearch()}});btn?.addEventListener('click',renderSearch);sc?.addEventListener('click',()=>{si.value='';renderSearch();si.focus()});sv?.addEventListener('change',()=>{fillFilters();renderSearch()});sw?.addEventListener('change',renderSearch);window.addEventListener('ep:candidates-updated',refresh);window.addEventListener('storage',e=>{if(e.key==='EP_LANG')refresh()});refresh();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(bind,150),{once:true});else setTimeout(bind,150);
 })();
 </script>
 
@@ -7181,5 +7593,100 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   },{once:true});
 })();
 </script>
+
+<script id="ep-final-translation-engine-v2">
+(function(){
+'use strict';
+/* FINAL TRANSLATION ENGINE: delegated events work even when the admin form is
+   created later by JavaScript. It never depends on DOMContentLoaded timing. */
+const MAP={
+'candidate':'उम्मीदवार','candidates':'उम्मीदवार','name':'नाम','candidate name':'उम्मीदवार का नाम',
+'post':'पद','sarpanch':'सरपंच','ward member':'वार्ड सदस्य','member':'सदस्य',
+'party':'दल','party name':'दल का नाम','independent':'निर्दलीय','category':'श्रेणी',
+'general':'सामान्य','general category':'सामान्य वर्ग','obc':'ओबीसी','other backward class':'अन्य पिछड़ा वर्ग',
+'sc':'एससी','scheduled caste':'अनुसूचित जाति','st':'एसटी','scheduled tribe':'अनुसूचित जनजाति',
+'male':'पुरुष','female':'महिला','other':'अन्य','village':'गाँव','village name':'गाँव का नाम',
+'ward':'वार्ड','age':'आयु','son':'पुत्र','daughter':'पुत्री','wife':'पत्नी',
+'new':'नया','old':'पुराना','and':'और','or':'या','the':'','of':'का','for':'के लिए','in':'में','on':'पर','from':'से','to':'को','with':'के साथ','is':'है','are':'हैं',
+'sewing machine':'सिलाई मशीन','sewing':'सिलाई','machine':'मशीन','bat':'बल्ला','balloon':'गुब्बारा','ball':'गेंद','bicycle':'साइकिल','cycle':'साइकिल','lotus':'कमल','tree':'पेड़','chair':'कुर्सी','table':'मेज','cup':'कप','umbrella':'छाता','bell':'घंटी','book':'किताब','pen':'कलम','key':'चाबी','lock':'ताला','lamp':'दीपक','fan':'पंखा','clock':'घड़ी','mobile':'मोबाइल','mobile phone':'मोबाइल फोन','phone':'फोन','camera':'कैमरा','car':'कार','bus':'बस','tractor':'ट्रैक्टर','plough':'हल','spade':'फावड़ा','bucket':'बाल्टी','jug':'घड़ा','glass':'गिलास','basket':'टोकरी','ladder':'सीढ़ी','wheel':'पहिया','star':'सितारा','sun':'सूर्य','moon':'चाँद','flower':'फूल','rose':'गुलाब','coconut':'नारियल','mango':'आम','banana':'केला','apple':'सेब','kite':'पतंग','boat':'नाव','airplane':'विमान','plane':'विमान','house':'घर','road roller':'रोड रोलर','hand pump':'हैंड पंप','bulb':'बल्ब','football':'फुटबॉल','cricket':'क्रिकेट'
+};
+const keys=Object.keys(MAP).sort((a,b)=>b.length-a.length);
+function local(text){
+ let s=String(text||'').trim();if(!s)return '';
+ const exact=MAP[s.toLowerCase().replace(/\s+/g,' ')];if(exact!==undefined)return exact;
+ let out=s;
+ for(const k of keys){out=out.replace(new RegExp('(^|[^A-Za-z])'+k+'(?=$|[^A-Za-z])','gi'),(m,a)=>a+MAP[k]);}
+ return out.replace(/\s{2,}/g,' ').trim();
+}
+async function online(text){
+ try{
+  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5000);
+  const u='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q='+encodeURIComponent(text);
+  const r=await fetch(u,{method:'GET',mode:'cors',cache:'no-store',signal:ctl.signal});clearTimeout(timer);
+  if(!r.ok)return '';
+  const j=await r.json();
+  return Array.isArray(j)&&Array.isArray(j[0])?j[0].map(x=>Array.isArray(x)?x[0]:'').join('').trim():'';
+ }catch(e){return ''}
+}
+function targetFor(en){
+ if(!en||!en.id)return null;
+ let id=en.id;
+ let hi=null;
+ if(/-en$/.test(id))hi=document.getElementById(id.replace(/-en$/,'-hi'));
+ if(!hi && id==='t4-symbol-name')hi=document.getElementById('t4-symbol-name-hi');
+ return hi;
+}
+function write(hi,val){
+ if(!hi)return;hi.value=val||'';
+ hi.setAttribute('data-auto-translated','true');
+ // Do NOT dispatch input/change: other form logic could cause recursive work.
+}
+const busy=new WeakMap();
+async function translate(en){
+ const hi=targetFor(en);if(!hi)return;
+ const text=String(en.value||'').trim();
+ if(!text){write(hi,'');return;}
+ const token={text};busy.set(en,token);
+ write(hi,local(text));
+ const better=await online(text);
+ if(busy.get(en)!==token)return;
+ if(String(en.value||'').trim()!==text)return;
+ if(better)write(hi,better);
+}
+let timers=new WeakMap();
+function schedule(en,delay){
+ clearTimeout(timers.get(en));
+ timers.set(en,setTimeout(()=>translate(en),delay));
+}
+function addManualTranslateButton(){
+ const form=document.getElementById('t4-name-en');
+ if(!form||document.getElementById('ep-translate-all-button'))return;
+ const host=form.closest('div');
+ if(!host)return;
+ const b=document.createElement('button');b.type='button';b.id='ep-translate-all-button';b.className='mt-2 px-3 py-2 rounded-lg bg-emerald-700 text-white text-[10px] font-black';
+ b.innerHTML='<i class="fa-solid fa-language mr-1"></i> Translate English → Hindi';
+ b.onclick=()=>{
+  const ids=['t4-name-en','t4-post-en','t4-party-en','t4-category-en','t4-symbol-name','t4-village-en'];
+  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim())translate(e)});
+ };
+ host.appendChild(b);
+}
+function boot(){
+ document.addEventListener('input',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;schedule(en,180);},true);
+ document.addEventListener('change',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ document.addEventListener('blur',e=>{const en=e.target;if(!(en instanceof HTMLInputElement||en instanceof HTMLTextAreaElement))return;if(!/-en$/.test(en.id)&&en.id!=='t4-symbol-name')return;translate(en);},true);
+ // Keep the button available when the admin panel is opened later.
+ addManualTranslateButton();
+ const obs=new MutationObserver(()=>addManualTranslateButton());
+ const root=document.getElementById('admin-dashboard-container')||document.body;
+ obs.observe(root,{childList:true,subtree:true});
+ // Translate already-filled English values after a dynamic render.
+ setTimeout(()=>{document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)});},300);
+ window.EPBilingualTranslator={translate,localTranslate:local,translateAll:function(){document.querySelectorAll('input[id$="-en"],textarea[id$="-en"],#t4-symbol-name').forEach(e=>{if(e.value.trim())translate(e)})}};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
 </body>
 </html>
