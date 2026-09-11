@@ -4245,6 +4245,81 @@ window.EPBilingualTranslatorV3={translateElement,translateAll,localTranslate};
 })();
 </script>
 
+
+<style id="ep-business-card-and-earnings-v1">
+/* ============================================================
+   BUSINESS-CARD CANDIDATE DESIGN
+   - compact card footprint
+   - smaller candidate photo / symbol
+   - larger bilingual text for village readability
+   - all existing candidate fields remain visible
+   ============================================================ */
+#user-candidates-grid{align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(350px,560px))!important;justify-content:center!important;gap:18px!important}
+.ep-business-candidate-card{width:100%!important;max-width:560px!important;min-height:0!important;height:auto!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;background:linear-gradient(135deg,#fffaf0 0%,#ffffff 48%,#f1fbf3 100%)!important;border:2px solid #d8e5dc!important;box-shadow:0 10px 28px rgba(6,35,61,.13)!important}
+.ep-business-candidate-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(6,35,61,.17)!important}
+.ep-biz-card-ribbon{height:34px;padding:6px 12px;background:linear-gradient(90deg,#ff9933 0 33.33%,#fff 33.33% 66.66%,#138808 66.66%);display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:950;color:#06233d}
+.ep-biz-card-ribbon span{background:rgba(255,255,255,.88);padding:4px 8px;border-radius:999px;box-shadow:0 1px 5px rgba(6,35,61,.10)}
+.ep-biz-main{padding:13px 14px 10px!important}
+.ep-biz-visuals{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+.ep-biz-photo-wrap{width:78px!important;height:78px!important;min-width:78px!important;border-radius:14px!important;border:2px solid #ffb15d!important;background:#fff!important;box-shadow:0 4px 12px rgba(6,35,61,.10)!important;overflow:hidden}
+.ep-biz-photo{width:100%!important;height:100%!important;object-fit:cover!important}
+.ep-biz-photo.ep-default-photo{display:flex!important;align-items:center;justify-content:center;font-size:30px!important;color:#718394!important;background:linear-gradient(135deg,#edf2f5,#fff)!important}
+.ep-biz-symbol-wrap{width:60px!important;height:60px!important;min-width:60px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d6e1db!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.ep-biz-symbol{width:48px!important;height:48px!important;object-fit:contain!important}
+.ep-biz-symbol-placeholder{width:48px;height:48px;border-radius:10px;background:#f5f8f6;display:flex;align-items:center;justify-content:center;font-size:25px;color:#d39a2f}
+.ep-biz-identity{text-align:center}
+.ep-biz-name-hi{font-size:clamp(20px,2.3vw,27px)!important;line-height:1.12!important;font-weight:950!important;color:#062b49!important;margin-top:2px!important}
+.ep-biz-name-en{font-size:clamp(15px,1.8vw,19px)!important;line-height:1.18!important;font-weight:900!important;color:#31536c!important;margin-top:3px!important}
+.ep-biz-party{margin:7px auto 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(255,255,255,.78)!important;border:1px solid #dce8df!important}
+.ep-biz-party span{font-size:10px!important;font-weight:950!important;color:#647786!important;text-transform:uppercase!important}
+.ep-biz-party strong{font-size:15px!important;line-height:1.2!important;color:#082742!important}
+.ep-biz-party em{font-size:13px!important;line-height:1.2!important;font-style:normal!important;font-weight:850!important;color:#41657b!important}
+.ep-biz-details{gap:7px!important}
+.ep-biz-details .ep-vote-detail{padding:7px 9px!important;border-radius:10px!important;background:rgba(250,252,250,.92)!important}
+.ep-biz-details .ep-vote-detail span{font-size:9px!important;line-height:1.1!important;margin-bottom:2px!important;color:#687b89!important}
+.ep-biz-details .ep-vote-detail b{font-size:15px!important;line-height:1.2!important;font-weight:950!important;color:#082742!important}
+.ep-biz-details .ep-vote-detail small{font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#4c687b!important;margin-top:2px!important;display:block!important}
+.ep-biz-select{width:calc(100% - 28px)!important;margin:0 14px 14px!important;min-height:48px!important;height:48px!important;border-radius:12px!important;font-size:15px!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(max-width:560px){#user-candidates-grid{grid-template-columns:minmax(0,1fr)!important}.ep-biz-main{padding:11px 10px 8px!important}.ep-biz-name-hi{font-size:21px!important}.ep-biz-name-en{font-size:15px!important}.ep-biz-details .ep-vote-detail b{font-size:14px!important}.ep-biz-details .ep-vote-detail small{font-size:10px!important}.ep-biz-select{width:calc(100% - 20px)!important;margin-left:10px!important;margin-right:10px!important;margin-bottom:10px!important}}
+
+/* ============================================================
+   FIVE TRANSPARENT EARNING SOURCES — separate from voting
+   ============================================================ */
+#ep-earning-sources-section{margin:28px auto 30px;max-width:1200px;padding:0 16px}
+.ep-earn-head{border-radius:20px;padding:18px;background:linear-gradient(135deg,#06233d,#0b4667);color:#fff;box-shadow:0 12px 30px rgba(6,35,61,.18)}
+.ep-earn-head h2{margin:0;font-size:clamp(21px,3vw,30px);font-weight:950}.ep-earn-head p{margin:7px 0 0;color:#dcecf4;font-size:13px;line-height:1.6}
+.ep-earn-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.ep-earn-card{background:#fff;border:1px solid #d9e5dd;border-radius:16px;padding:15px;box-shadow:0 7px 20px rgba(6,35,61,.08);min-height:205px;display:flex;flex-direction:column}
+.ep-earn-icon{width:42px;height:42px;border-radius:12px;background:#fff4e6;border:1px solid #ffd19d;display:flex;align-items:center;justify-content:center;color:#b65d00;font-size:19px;margin-bottom:9px}
+.ep-earn-card h3{font-size:15px;line-height:1.25;color:#062742;font-weight:950;margin:0}.ep-earn-card .hi{font-size:14px;font-weight:900;color:#173f57;margin-top:4px}.ep-earn-card p{font-size:11px;line-height:1.5;color:#607584;margin:7px 0 8px;flex:1}.ep-earn-price{font-size:12px;font-weight:950;color:#138808;background:#eef9ef;border:1px solid #cce7cf;border-radius:8px;padding:6px 8px}
+.ep-earn-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff9df;border:1px dashed #e1bd55;color:#67500b;font-size:11px;line-height:1.5;font-weight:750}
+@media(max-width:1050px){.ep-earn-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ep-earn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.ep-earn-grid{grid-template-columns:1fr}.ep-earn-card{min-height:0}}
+</style>
+<script id="ep-five-earning-sources-runtime">
+(function(){
+'use strict';
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function lang(){try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'}}
+function add(){
+ if(document.getElementById('ep-earning-sources-section'))return;
+ const vote=document.getElementById('voting-section');if(!vote||!vote.parentNode)return;
+ const box=document.createElement('section');box.id='ep-earning-sources-section';box.setAttribute('aria-labelledby','ep-earning-title');
+ box.innerHTML=`<div class="ep-earn-head"><h2 id="ep-earning-title">${lang()==='hi'?'पोर्टल की 5 कमाई के वास्तविक तरीके':'5 realistic earning sources for this portal'}</h2><p>${lang()==='hi'?'इन कमाई के तरीकों को मतदान, वोटों की गिनती और परिणाम रैंकिंग से पूरी तरह अलग रखें।':'Keep every monetization method completely separate from voting, vote counting and result ranking.'}</p></div>
+ <div class="ep-earn-grid">
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-store"></i></div><h3>Sponsored Local Business Cards</h3><div class="hi">स्थानीय व्यवसाय प्रायोजित कार्ड</div><p>Show clearly labelled sponsored profiles for shops, coaching centres, repair services and other local businesses.</p><div class="ep-earn-price">Example: ₹499–₹1,999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-list-check"></i></div><h3>Premium Business Directory</h3><div class="hi">प्रीमियम व्यवसाय डायरेक्टरी</div><p>Charge businesses for enhanced listings with photos, services, timings and contact/lead buttons.</p><div class="ep-earn-price">Example: ₹299–₹999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-rectangle-ad"></i></div><h3>Banner & Display Ads</h3><div class="hi">बैनर और डिस्प्ले विज्ञापन</div><p>Sell clearly marked ad slots on non-voting areas, or later connect an approved ad network.</p><div class="ep-earn-price">Example: ₹500–₹5,000 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>Local Event Promotion</h3><div class="hi">स्थानीय कार्यक्रम प्रचार</div><p>Offer paid promotion for fairs, classes, community events, local launches and public announcements.</p><div class="ep-earn-price">Example: ₹199–₹999 / post</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-address-card"></i></div><h3>Verified Business Lead Profiles</h3><div class="hi">सत्यापित व्यवसाय लीड प्रोफाइल</div><p>Create richer verified profiles that help villagers discover useful local services and generate enquiries.</p><div class="ep-earn-price">Example: ₹999–₹2,999 / month</div></article>
+ </div><div class="ep-earn-note"><i class="fa-solid fa-shield-halved mr-1"></i>${lang()==='hi'?'पारदर्शिता नियम: Sponsored/paid सामग्री को साफ़ लेबल करें। किसी उम्मीदवार को पैसे लेकर ऊपर न दिखाएँ, वोट न बेचें और विज्ञापन से वोटों या परिणामों को प्रभावित न करें। ऊपर दिए मूल्य केवल उदाहरण हैं, गारंटी की कमाई नहीं।':'Transparency rule: Clearly label sponsored/paid content. Never sell votes or pay-to-rank candidates, and never let advertising change vote totals or results. Prices above are examples, not guaranteed revenue.'}</div>`;
+ vote.parentNode.insertBefore(box,vote);
+}
+function boot(){add();window.addEventListener('storage',e=>{if(e.key==='EP_LANG')document.getElementById('ep-earning-sources-section')?.remove(),add()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180),{once:true});else setTimeout(boot,180);
+window.EPEarningSources={add};
+})();
+</script>
+
 </body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
   function villageSummary(){const p=village();if(!p)return showHtml(['गाँव सारांश','Village Summary'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p);const total=rows.reduce((a,x)=>a+x.votes,0);showHtml(['गाँव सारांश','Village Summary'],`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div><strong>${p.totalWards}</strong><div style="font-size:11px;color:#687a8b">${esc(t('वार्ड','Wards'))}</div></div><div><strong>${rows.length}</strong><div style="font-size:11px;color:#687a8b">${esc(t('उम्मीदवार','Candidates'))}</div></div><div><strong>${total}</strong><div style="font-size:11px;color:#687a8b">${esc(t('दर्ज जनमत वोट','Recorded votes'))}</div></div></div>`)}
   function wardSnapshot(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['वार्ड स्थिति','Ward Snapshot'],`<div>${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rows=candidatesFor(p).filter(x=>x.w===w),votes=rows.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>Ward ${w}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(wd.reservation||'General')} · ${rows.length} ${esc(t('उम्मीदवार','candidates'))} · ${votes} ${esc(t('वोट','votes'))}</div></div>`}).join('')}</div>`)}
@@ -5426,6 +5501,81 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="ep-business-card-and-earnings-v1">
+/* ============================================================
+   BUSINESS-CARD CANDIDATE DESIGN
+   - compact card footprint
+   - smaller candidate photo / symbol
+   - larger bilingual text for village readability
+   - all existing candidate fields remain visible
+   ============================================================ */
+#user-candidates-grid{align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(350px,560px))!important;justify-content:center!important;gap:18px!important}
+.ep-business-candidate-card{width:100%!important;max-width:560px!important;min-height:0!important;height:auto!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;background:linear-gradient(135deg,#fffaf0 0%,#ffffff 48%,#f1fbf3 100%)!important;border:2px solid #d8e5dc!important;box-shadow:0 10px 28px rgba(6,35,61,.13)!important}
+.ep-business-candidate-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(6,35,61,.17)!important}
+.ep-biz-card-ribbon{height:34px;padding:6px 12px;background:linear-gradient(90deg,#ff9933 0 33.33%,#fff 33.33% 66.66%,#138808 66.66%);display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:950;color:#06233d}
+.ep-biz-card-ribbon span{background:rgba(255,255,255,.88);padding:4px 8px;border-radius:999px;box-shadow:0 1px 5px rgba(6,35,61,.10)}
+.ep-biz-main{padding:13px 14px 10px!important}
+.ep-biz-visuals{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+.ep-biz-photo-wrap{width:78px!important;height:78px!important;min-width:78px!important;border-radius:14px!important;border:2px solid #ffb15d!important;background:#fff!important;box-shadow:0 4px 12px rgba(6,35,61,.10)!important;overflow:hidden}
+.ep-biz-photo{width:100%!important;height:100%!important;object-fit:cover!important}
+.ep-biz-photo.ep-default-photo{display:flex!important;align-items:center;justify-content:center;font-size:30px!important;color:#718394!important;background:linear-gradient(135deg,#edf2f5,#fff)!important}
+.ep-biz-symbol-wrap{width:60px!important;height:60px!important;min-width:60px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d6e1db!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.ep-biz-symbol{width:48px!important;height:48px!important;object-fit:contain!important}
+.ep-biz-symbol-placeholder{width:48px;height:48px;border-radius:10px;background:#f5f8f6;display:flex;align-items:center;justify-content:center;font-size:25px;color:#d39a2f}
+.ep-biz-identity{text-align:center}
+.ep-biz-name-hi{font-size:clamp(20px,2.3vw,27px)!important;line-height:1.12!important;font-weight:950!important;color:#062b49!important;margin-top:2px!important}
+.ep-biz-name-en{font-size:clamp(15px,1.8vw,19px)!important;line-height:1.18!important;font-weight:900!important;color:#31536c!important;margin-top:3px!important}
+.ep-biz-party{margin:7px auto 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(255,255,255,.78)!important;border:1px solid #dce8df!important}
+.ep-biz-party span{font-size:10px!important;font-weight:950!important;color:#647786!important;text-transform:uppercase!important}
+.ep-biz-party strong{font-size:15px!important;line-height:1.2!important;color:#082742!important}
+.ep-biz-party em{font-size:13px!important;line-height:1.2!important;font-style:normal!important;font-weight:850!important;color:#41657b!important}
+.ep-biz-details{gap:7px!important}
+.ep-biz-details .ep-vote-detail{padding:7px 9px!important;border-radius:10px!important;background:rgba(250,252,250,.92)!important}
+.ep-biz-details .ep-vote-detail span{font-size:9px!important;line-height:1.1!important;margin-bottom:2px!important;color:#687b89!important}
+.ep-biz-details .ep-vote-detail b{font-size:15px!important;line-height:1.2!important;font-weight:950!important;color:#082742!important}
+.ep-biz-details .ep-vote-detail small{font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#4c687b!important;margin-top:2px!important;display:block!important}
+.ep-biz-select{width:calc(100% - 28px)!important;margin:0 14px 14px!important;min-height:48px!important;height:48px!important;border-radius:12px!important;font-size:15px!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(max-width:560px){#user-candidates-grid{grid-template-columns:minmax(0,1fr)!important}.ep-biz-main{padding:11px 10px 8px!important}.ep-biz-name-hi{font-size:21px!important}.ep-biz-name-en{font-size:15px!important}.ep-biz-details .ep-vote-detail b{font-size:14px!important}.ep-biz-details .ep-vote-detail small{font-size:10px!important}.ep-biz-select{width:calc(100% - 20px)!important;margin-left:10px!important;margin-right:10px!important;margin-bottom:10px!important}}
+
+/* ============================================================
+   FIVE TRANSPARENT EARNING SOURCES — separate from voting
+   ============================================================ */
+#ep-earning-sources-section{margin:28px auto 30px;max-width:1200px;padding:0 16px}
+.ep-earn-head{border-radius:20px;padding:18px;background:linear-gradient(135deg,#06233d,#0b4667);color:#fff;box-shadow:0 12px 30px rgba(6,35,61,.18)}
+.ep-earn-head h2{margin:0;font-size:clamp(21px,3vw,30px);font-weight:950}.ep-earn-head p{margin:7px 0 0;color:#dcecf4;font-size:13px;line-height:1.6}
+.ep-earn-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.ep-earn-card{background:#fff;border:1px solid #d9e5dd;border-radius:16px;padding:15px;box-shadow:0 7px 20px rgba(6,35,61,.08);min-height:205px;display:flex;flex-direction:column}
+.ep-earn-icon{width:42px;height:42px;border-radius:12px;background:#fff4e6;border:1px solid #ffd19d;display:flex;align-items:center;justify-content:center;color:#b65d00;font-size:19px;margin-bottom:9px}
+.ep-earn-card h3{font-size:15px;line-height:1.25;color:#062742;font-weight:950;margin:0}.ep-earn-card .hi{font-size:14px;font-weight:900;color:#173f57;margin-top:4px}.ep-earn-card p{font-size:11px;line-height:1.5;color:#607584;margin:7px 0 8px;flex:1}.ep-earn-price{font-size:12px;font-weight:950;color:#138808;background:#eef9ef;border:1px solid #cce7cf;border-radius:8px;padding:6px 8px}
+.ep-earn-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff9df;border:1px dashed #e1bd55;color:#67500b;font-size:11px;line-height:1.5;font-weight:750}
+@media(max-width:1050px){.ep-earn-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ep-earn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.ep-earn-grid{grid-template-columns:1fr}.ep-earn-card{min-height:0}}
+</style>
+<script id="ep-five-earning-sources-runtime">
+(function(){
+'use strict';
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function lang(){try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'}}
+function add(){
+ if(document.getElementById('ep-earning-sources-section'))return;
+ const vote=document.getElementById('voting-section');if(!vote||!vote.parentNode)return;
+ const box=document.createElement('section');box.id='ep-earning-sources-section';box.setAttribute('aria-labelledby','ep-earning-title');
+ box.innerHTML=`<div class="ep-earn-head"><h2 id="ep-earning-title">${lang()==='hi'?'पोर्टल की 5 कमाई के वास्तविक तरीके':'5 realistic earning sources for this portal'}</h2><p>${lang()==='hi'?'इन कमाई के तरीकों को मतदान, वोटों की गिनती और परिणाम रैंकिंग से पूरी तरह अलग रखें।':'Keep every monetization method completely separate from voting, vote counting and result ranking.'}</p></div>
+ <div class="ep-earn-grid">
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-store"></i></div><h3>Sponsored Local Business Cards</h3><div class="hi">स्थानीय व्यवसाय प्रायोजित कार्ड</div><p>Show clearly labelled sponsored profiles for shops, coaching centres, repair services and other local businesses.</p><div class="ep-earn-price">Example: ₹499–₹1,999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-list-check"></i></div><h3>Premium Business Directory</h3><div class="hi">प्रीमियम व्यवसाय डायरेक्टरी</div><p>Charge businesses for enhanced listings with photos, services, timings and contact/lead buttons.</p><div class="ep-earn-price">Example: ₹299–₹999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-rectangle-ad"></i></div><h3>Banner & Display Ads</h3><div class="hi">बैनर और डिस्प्ले विज्ञापन</div><p>Sell clearly marked ad slots on non-voting areas, or later connect an approved ad network.</p><div class="ep-earn-price">Example: ₹500–₹5,000 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>Local Event Promotion</h3><div class="hi">स्थानीय कार्यक्रम प्रचार</div><p>Offer paid promotion for fairs, classes, community events, local launches and public announcements.</p><div class="ep-earn-price">Example: ₹199–₹999 / post</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-address-card"></i></div><h3>Verified Business Lead Profiles</h3><div class="hi">सत्यापित व्यवसाय लीड प्रोफाइल</div><p>Create richer verified profiles that help villagers discover useful local services and generate enquiries.</p><div class="ep-earn-price">Example: ₹999–₹2,999 / month</div></article>
+ </div><div class="ep-earn-note"><i class="fa-solid fa-shield-halved mr-1"></i>${lang()==='hi'?'पारदर्शिता नियम: Sponsored/paid सामग्री को साफ़ लेबल करें। किसी उम्मीदवार को पैसे लेकर ऊपर न दिखाएँ, वोट न बेचें और विज्ञापन से वोटों या परिणामों को प्रभावित न करें। ऊपर दिए मूल्य केवल उदाहरण हैं, गारंटी की कमाई नहीं।':'Transparency rule: Clearly label sponsored/paid content. Never sell votes or pay-to-rank candidates, and never let advertising change vote totals or results. Prices above are examples, not guaranteed revenue.'}</div>`;
+ vote.parentNode.insertBefore(box,vote);
+}
+function boot(){add();window.addEventListener('storage',e=>{if(e.key==='EP_LANG')document.getElementById('ep-earning-sources-section')?.remove(),add()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180),{once:true});else setTimeout(boot,180);
+window.EPEarningSources={add};
+})();
+</script>
+
 </body></html>`);w.document.close();setTimeout(()=>w.print(),200)}
   function featureSummary(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=allCandidates(p),votes=rows.reduce((s,x)=>s+x.votes,0);showModal(t('गाँव सारांश','Village Summary'),`<div class="ep-modal-stat-grid"><div><b>${p.totalWards||0}</b><small>${t('वार्ड','Wards')}</small></div><div><b>${rows.length}</b><small>${t('उम्मीदवार','Candidates')}</small></div><div><b>${votes}</b><small>${t('दर्ज वोट','Recorded votes')}</small></div></div><p class="ep-small-note">${esc(t('ये आँकड़े इसी ब्राउज़र में दर्ज जनमत पर आधारित हैं।','These totals are based on public-opinion records in this browser.'))}</p>`)}
   function featureWard(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const out=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,wd=p.wardsData?.[w]||{},rows=allCandidates(p).filter(x=>x.w===w),v=rows.reduce((s,x)=>s+x.votes,0);return `<div class="ep-modal-row"><strong>${t('वार्ड','Ward')} ${w}</strong><span>${rows.length} ${t('उम्मीदवार','candidates')} · ${v} ${t('वोट','votes')} · ${esc(wd.reservation||t('सामान्य','General'))}</span></div>`}).join('');showModal(t('वार्ड स्थिति','Ward Snapshot'),out)}
@@ -5719,22 +5869,23 @@ function v5RenderCandidates(){
   window.__EP_SELECTED_CANDIDATE=null;
   grid.innerHTML=rows.map(x=>{
     const c=x.c,nm=text(c,'nameHi','nameEn',c.name||V5.t('उम्मीदवार','Candidate')),pa=text(c,'partyHi','partyEn',c.partyName||c.party||V5.t('स्वतंत्र','Independent')),po=text(c,'postHi','postEn',c.post||'—'),ca=text(c,'categoryHi','categoryEn',c.category||x.wd.reservation||'—'),sy=text(c,'symbolNameHi','symbolNameEn',c.symbolName||'—'),ge=gender(c),img=c.personImage||c.image||'',sym=c.symbolImage||c.symbol||'',cid=V5.esc(c.id);
-    return `<article id="ep-cand-card-${cid}" data-cid="${cid}" data-v5-cid="${cid}" class="ep-pro-feature ep-vote-candidate-card" tabindex="0" role="button" aria-label="${V5.esc(nm.hi)} / ${V5.esc(nm.en)}">
-      <div class="ep-vote-card-inner">
-        <div class="ep-vote-card-top"><span class="ep-vote-ward">${V5.t('वार्ड','Ward')} ${x.w}</span><span class="ep-vote-badge">${V5.t('उम्मीदवार','Candidate')}</span></div>
-        <div class="ep-vote-photo-row"><div class="ep-vote-photo-wrap">${img?`<img src="${V5.esc(img)}" alt="${V5.esc(nm.hi)}" class="ep-vote-photo">`:'<div class="ep-vote-photo ep-default-photo"><i class="fa-solid fa-user"></i></div>'}</div>${sym?`<div class="ep-vote-symbol-wrap"><img src="${V5.esc(sym)}" alt="${V5.esc(sy.hi)}" class="ep-vote-symbol"></div>`:''}</div>
-        <div class="ep-vote-name-hi">${V5.esc(nm.hi)}</div><div class="ep-vote-name-en">${V5.esc(nm.en)}</div>
-        <div class="ep-vote-party"><span>${V5.t('दल / Party','Party')}</span><strong>${V5.esc(pa.hi)}</strong><em>${V5.esc(pa.en)}</em></div>
-        <div class="ep-vote-details">
+    const age=String(c.age||'—'), photo=img?`<img src="${V5.esc(img)}" alt="${V5.esc(nm.hi)}" class="ep-vote-photo ep-biz-photo">`:`<div class="ep-vote-photo ep-default-photo ep-biz-photo"><i class="fa-solid fa-user"></i></div>`;
+    const symbol=sym?`<img src="${V5.esc(sym)}" alt="${V5.esc(sy.hi)}" class="ep-vote-symbol ep-biz-symbol">`:`<div class="ep-biz-symbol-placeholder"><i class="fa-solid fa-star"></i></div>`;
+    return `<article id="ep-cand-card-${cid}" data-cid="${cid}" data-v5-cid="${cid}" class="ep-pro-feature ep-vote-candidate-card ep-business-candidate-card" tabindex="0" role="button" aria-label="${V5.esc(nm.hi)} / ${V5.esc(nm.en)}">
+      <div class="ep-biz-card-ribbon"><span>${V5.t('वार्ड','Ward')} ${x.w}</span><span>${V5.t('उम्मीदवार','Candidate')}</span></div>
+      <div class="ep-biz-main">
+        <div class="ep-biz-visuals"><div class="ep-vote-photo-wrap ep-biz-photo-wrap">${photo}</div><div class="ep-vote-symbol-wrap ep-biz-symbol-wrap">${symbol}</div></div>
+        <div class="ep-biz-identity"><div class="ep-vote-name-hi ep-biz-name-hi">${V5.esc(nm.hi)}</div><div class="ep-vote-name-en ep-biz-name-en">${V5.esc(nm.en)}</div><div class="ep-vote-party ep-biz-party"><span>${V5.t('दल / Party','Party')}</span><strong>${V5.esc(pa.hi)}</strong><em>${V5.esc(pa.en)}</em></div></div>
+        <div class="ep-vote-details ep-biz-details">
           <div class="ep-vote-detail"><span>पद / Post</span><b>${V5.esc(po.hi)}</b><small>${V5.esc(po.en)}</small></div>
           <div class="ep-vote-detail"><span>श्रेणी / Category</span><b>${V5.esc(ca.hi)}</b><small>${V5.esc(ca.en)}</small></div>
-          <div class="ep-vote-detail"><span>आयु / Age</span><b>${V5.esc(c.age||'—')}</b><small>${V5.t('वर्ष','Years')}</small></div>
+          <div class="ep-vote-detail"><span>आयु / Age</span><b>${V5.esc(age)}</b><small>${V5.t('वर्ष','Years')}</small></div>
           <div class="ep-vote-detail"><span>लिंग / Gender</span><b>${V5.esc(ge.hi)}</b><small>${V5.esc(ge.en)}</small></div>
           <div class="ep-vote-detail ep-vote-detail-wide"><span>गाँव / Village</span><b>${V5.esc(vhi)}</b><small>${V5.esc(ven)} · ${V5.t('वार्ड','Ward')} ${x.w}</small></div>
           <div class="ep-vote-detail ep-vote-detail-wide"><span>चुनाव चिन्ह / Symbol</span><b>${V5.esc(sy.hi)}</b><small>${V5.esc(sy.en)}</small></div>
         </div>
       </div>
-      <button type="button" class="ep-pro-action ep-vote-select-button"><span>${V5.t('इस उम्मीदवार को चुनें','Select This Candidate')}</span><i class="fa-solid fa-check-circle"></i></button>
+      <button type="button" class="ep-pro-action ep-vote-select-button ep-biz-select"><span>${V5.t('इस उम्मीदवार को चुनें','Select This Candidate')}</span><i class="fa-solid fa-check-circle"></i></button>
     </article>`;
   }).join('');
   const cards=grid.querySelectorAll('[data-v5-cid]');
@@ -6814,6 +6965,81 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="ep-business-card-and-earnings-v1">
+/* ============================================================
+   BUSINESS-CARD CANDIDATE DESIGN
+   - compact card footprint
+   - smaller candidate photo / symbol
+   - larger bilingual text for village readability
+   - all existing candidate fields remain visible
+   ============================================================ */
+#user-candidates-grid{align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(350px,560px))!important;justify-content:center!important;gap:18px!important}
+.ep-business-candidate-card{width:100%!important;max-width:560px!important;min-height:0!important;height:auto!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;background:linear-gradient(135deg,#fffaf0 0%,#ffffff 48%,#f1fbf3 100%)!important;border:2px solid #d8e5dc!important;box-shadow:0 10px 28px rgba(6,35,61,.13)!important}
+.ep-business-candidate-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(6,35,61,.17)!important}
+.ep-biz-card-ribbon{height:34px;padding:6px 12px;background:linear-gradient(90deg,#ff9933 0 33.33%,#fff 33.33% 66.66%,#138808 66.66%);display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:950;color:#06233d}
+.ep-biz-card-ribbon span{background:rgba(255,255,255,.88);padding:4px 8px;border-radius:999px;box-shadow:0 1px 5px rgba(6,35,61,.10)}
+.ep-biz-main{padding:13px 14px 10px!important}
+.ep-biz-visuals{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+.ep-biz-photo-wrap{width:78px!important;height:78px!important;min-width:78px!important;border-radius:14px!important;border:2px solid #ffb15d!important;background:#fff!important;box-shadow:0 4px 12px rgba(6,35,61,.10)!important;overflow:hidden}
+.ep-biz-photo{width:100%!important;height:100%!important;object-fit:cover!important}
+.ep-biz-photo.ep-default-photo{display:flex!important;align-items:center;justify-content:center;font-size:30px!important;color:#718394!important;background:linear-gradient(135deg,#edf2f5,#fff)!important}
+.ep-biz-symbol-wrap{width:60px!important;height:60px!important;min-width:60px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d6e1db!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.ep-biz-symbol{width:48px!important;height:48px!important;object-fit:contain!important}
+.ep-biz-symbol-placeholder{width:48px;height:48px;border-radius:10px;background:#f5f8f6;display:flex;align-items:center;justify-content:center;font-size:25px;color:#d39a2f}
+.ep-biz-identity{text-align:center}
+.ep-biz-name-hi{font-size:clamp(20px,2.3vw,27px)!important;line-height:1.12!important;font-weight:950!important;color:#062b49!important;margin-top:2px!important}
+.ep-biz-name-en{font-size:clamp(15px,1.8vw,19px)!important;line-height:1.18!important;font-weight:900!important;color:#31536c!important;margin-top:3px!important}
+.ep-biz-party{margin:7px auto 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(255,255,255,.78)!important;border:1px solid #dce8df!important}
+.ep-biz-party span{font-size:10px!important;font-weight:950!important;color:#647786!important;text-transform:uppercase!important}
+.ep-biz-party strong{font-size:15px!important;line-height:1.2!important;color:#082742!important}
+.ep-biz-party em{font-size:13px!important;line-height:1.2!important;font-style:normal!important;font-weight:850!important;color:#41657b!important}
+.ep-biz-details{gap:7px!important}
+.ep-biz-details .ep-vote-detail{padding:7px 9px!important;border-radius:10px!important;background:rgba(250,252,250,.92)!important}
+.ep-biz-details .ep-vote-detail span{font-size:9px!important;line-height:1.1!important;margin-bottom:2px!important;color:#687b89!important}
+.ep-biz-details .ep-vote-detail b{font-size:15px!important;line-height:1.2!important;font-weight:950!important;color:#082742!important}
+.ep-biz-details .ep-vote-detail small{font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#4c687b!important;margin-top:2px!important;display:block!important}
+.ep-biz-select{width:calc(100% - 28px)!important;margin:0 14px 14px!important;min-height:48px!important;height:48px!important;border-radius:12px!important;font-size:15px!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(max-width:560px){#user-candidates-grid{grid-template-columns:minmax(0,1fr)!important}.ep-biz-main{padding:11px 10px 8px!important}.ep-biz-name-hi{font-size:21px!important}.ep-biz-name-en{font-size:15px!important}.ep-biz-details .ep-vote-detail b{font-size:14px!important}.ep-biz-details .ep-vote-detail small{font-size:10px!important}.ep-biz-select{width:calc(100% - 20px)!important;margin-left:10px!important;margin-right:10px!important;margin-bottom:10px!important}}
+
+/* ============================================================
+   FIVE TRANSPARENT EARNING SOURCES — separate from voting
+   ============================================================ */
+#ep-earning-sources-section{margin:28px auto 30px;max-width:1200px;padding:0 16px}
+.ep-earn-head{border-radius:20px;padding:18px;background:linear-gradient(135deg,#06233d,#0b4667);color:#fff;box-shadow:0 12px 30px rgba(6,35,61,.18)}
+.ep-earn-head h2{margin:0;font-size:clamp(21px,3vw,30px);font-weight:950}.ep-earn-head p{margin:7px 0 0;color:#dcecf4;font-size:13px;line-height:1.6}
+.ep-earn-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.ep-earn-card{background:#fff;border:1px solid #d9e5dd;border-radius:16px;padding:15px;box-shadow:0 7px 20px rgba(6,35,61,.08);min-height:205px;display:flex;flex-direction:column}
+.ep-earn-icon{width:42px;height:42px;border-radius:12px;background:#fff4e6;border:1px solid #ffd19d;display:flex;align-items:center;justify-content:center;color:#b65d00;font-size:19px;margin-bottom:9px}
+.ep-earn-card h3{font-size:15px;line-height:1.25;color:#062742;font-weight:950;margin:0}.ep-earn-card .hi{font-size:14px;font-weight:900;color:#173f57;margin-top:4px}.ep-earn-card p{font-size:11px;line-height:1.5;color:#607584;margin:7px 0 8px;flex:1}.ep-earn-price{font-size:12px;font-weight:950;color:#138808;background:#eef9ef;border:1px solid #cce7cf;border-radius:8px;padding:6px 8px}
+.ep-earn-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff9df;border:1px dashed #e1bd55;color:#67500b;font-size:11px;line-height:1.5;font-weight:750}
+@media(max-width:1050px){.ep-earn-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ep-earn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.ep-earn-grid{grid-template-columns:1fr}.ep-earn-card{min-height:0}}
+</style>
+<script id="ep-five-earning-sources-runtime">
+(function(){
+'use strict';
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function lang(){try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'}}
+function add(){
+ if(document.getElementById('ep-earning-sources-section'))return;
+ const vote=document.getElementById('voting-section');if(!vote||!vote.parentNode)return;
+ const box=document.createElement('section');box.id='ep-earning-sources-section';box.setAttribute('aria-labelledby','ep-earning-title');
+ box.innerHTML=`<div class="ep-earn-head"><h2 id="ep-earning-title">${lang()==='hi'?'पोर्टल की 5 कमाई के वास्तविक तरीके':'5 realistic earning sources for this portal'}</h2><p>${lang()==='hi'?'इन कमाई के तरीकों को मतदान, वोटों की गिनती और परिणाम रैंकिंग से पूरी तरह अलग रखें।':'Keep every monetization method completely separate from voting, vote counting and result ranking.'}</p></div>
+ <div class="ep-earn-grid">
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-store"></i></div><h3>Sponsored Local Business Cards</h3><div class="hi">स्थानीय व्यवसाय प्रायोजित कार्ड</div><p>Show clearly labelled sponsored profiles for shops, coaching centres, repair services and other local businesses.</p><div class="ep-earn-price">Example: ₹499–₹1,999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-list-check"></i></div><h3>Premium Business Directory</h3><div class="hi">प्रीमियम व्यवसाय डायरेक्टरी</div><p>Charge businesses for enhanced listings with photos, services, timings and contact/lead buttons.</p><div class="ep-earn-price">Example: ₹299–₹999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-rectangle-ad"></i></div><h3>Banner & Display Ads</h3><div class="hi">बैनर और डिस्प्ले विज्ञापन</div><p>Sell clearly marked ad slots on non-voting areas, or later connect an approved ad network.</p><div class="ep-earn-price">Example: ₹500–₹5,000 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>Local Event Promotion</h3><div class="hi">स्थानीय कार्यक्रम प्रचार</div><p>Offer paid promotion for fairs, classes, community events, local launches and public announcements.</p><div class="ep-earn-price">Example: ₹199–₹999 / post</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-address-card"></i></div><h3>Verified Business Lead Profiles</h3><div class="hi">सत्यापित व्यवसाय लीड प्रोफाइल</div><p>Create richer verified profiles that help villagers discover useful local services and generate enquiries.</p><div class="ep-earn-price">Example: ₹999–₹2,999 / month</div></article>
+ </div><div class="ep-earn-note"><i class="fa-solid fa-shield-halved mr-1"></i>${lang()==='hi'?'पारदर्शिता नियम: Sponsored/paid सामग्री को साफ़ लेबल करें। किसी उम्मीदवार को पैसे लेकर ऊपर न दिखाएँ, वोट न बेचें और विज्ञापन से वोटों या परिणामों को प्रभावित न करें। ऊपर दिए मूल्य केवल उदाहरण हैं, गारंटी की कमाई नहीं।':'Transparency rule: Clearly label sponsored/paid content. Never sell votes or pay-to-rank candidates, and never let advertising change vote totals or results. Prices above are examples, not guaranteed revenue.'}</div>`;
+ vote.parentNode.insertBefore(box,vote);
+}
+function boot(){add();window.addEventListener('storage',e=>{if(e.key==='EP_LANG')document.getElementById('ep-earning-sources-section')?.remove(),add()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180),{once:true});else setTimeout(boot,180);
+window.EPEarningSources={add};
+})();
+</script>
+
 </body></html>`;
     w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
   }
@@ -7379,6 +7605,81 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="ep-business-card-and-earnings-v1">
+/* ============================================================
+   BUSINESS-CARD CANDIDATE DESIGN
+   - compact card footprint
+   - smaller candidate photo / symbol
+   - larger bilingual text for village readability
+   - all existing candidate fields remain visible
+   ============================================================ */
+#user-candidates-grid{align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(350px,560px))!important;justify-content:center!important;gap:18px!important}
+.ep-business-candidate-card{width:100%!important;max-width:560px!important;min-height:0!important;height:auto!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;background:linear-gradient(135deg,#fffaf0 0%,#ffffff 48%,#f1fbf3 100%)!important;border:2px solid #d8e5dc!important;box-shadow:0 10px 28px rgba(6,35,61,.13)!important}
+.ep-business-candidate-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(6,35,61,.17)!important}
+.ep-biz-card-ribbon{height:34px;padding:6px 12px;background:linear-gradient(90deg,#ff9933 0 33.33%,#fff 33.33% 66.66%,#138808 66.66%);display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:950;color:#06233d}
+.ep-biz-card-ribbon span{background:rgba(255,255,255,.88);padding:4px 8px;border-radius:999px;box-shadow:0 1px 5px rgba(6,35,61,.10)}
+.ep-biz-main{padding:13px 14px 10px!important}
+.ep-biz-visuals{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+.ep-biz-photo-wrap{width:78px!important;height:78px!important;min-width:78px!important;border-radius:14px!important;border:2px solid #ffb15d!important;background:#fff!important;box-shadow:0 4px 12px rgba(6,35,61,.10)!important;overflow:hidden}
+.ep-biz-photo{width:100%!important;height:100%!important;object-fit:cover!important}
+.ep-biz-photo.ep-default-photo{display:flex!important;align-items:center;justify-content:center;font-size:30px!important;color:#718394!important;background:linear-gradient(135deg,#edf2f5,#fff)!important}
+.ep-biz-symbol-wrap{width:60px!important;height:60px!important;min-width:60px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d6e1db!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.ep-biz-symbol{width:48px!important;height:48px!important;object-fit:contain!important}
+.ep-biz-symbol-placeholder{width:48px;height:48px;border-radius:10px;background:#f5f8f6;display:flex;align-items:center;justify-content:center;font-size:25px;color:#d39a2f}
+.ep-biz-identity{text-align:center}
+.ep-biz-name-hi{font-size:clamp(20px,2.3vw,27px)!important;line-height:1.12!important;font-weight:950!important;color:#062b49!important;margin-top:2px!important}
+.ep-biz-name-en{font-size:clamp(15px,1.8vw,19px)!important;line-height:1.18!important;font-weight:900!important;color:#31536c!important;margin-top:3px!important}
+.ep-biz-party{margin:7px auto 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(255,255,255,.78)!important;border:1px solid #dce8df!important}
+.ep-biz-party span{font-size:10px!important;font-weight:950!important;color:#647786!important;text-transform:uppercase!important}
+.ep-biz-party strong{font-size:15px!important;line-height:1.2!important;color:#082742!important}
+.ep-biz-party em{font-size:13px!important;line-height:1.2!important;font-style:normal!important;font-weight:850!important;color:#41657b!important}
+.ep-biz-details{gap:7px!important}
+.ep-biz-details .ep-vote-detail{padding:7px 9px!important;border-radius:10px!important;background:rgba(250,252,250,.92)!important}
+.ep-biz-details .ep-vote-detail span{font-size:9px!important;line-height:1.1!important;margin-bottom:2px!important;color:#687b89!important}
+.ep-biz-details .ep-vote-detail b{font-size:15px!important;line-height:1.2!important;font-weight:950!important;color:#082742!important}
+.ep-biz-details .ep-vote-detail small{font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#4c687b!important;margin-top:2px!important;display:block!important}
+.ep-biz-select{width:calc(100% - 28px)!important;margin:0 14px 14px!important;min-height:48px!important;height:48px!important;border-radius:12px!important;font-size:15px!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(max-width:560px){#user-candidates-grid{grid-template-columns:minmax(0,1fr)!important}.ep-biz-main{padding:11px 10px 8px!important}.ep-biz-name-hi{font-size:21px!important}.ep-biz-name-en{font-size:15px!important}.ep-biz-details .ep-vote-detail b{font-size:14px!important}.ep-biz-details .ep-vote-detail small{font-size:10px!important}.ep-biz-select{width:calc(100% - 20px)!important;margin-left:10px!important;margin-right:10px!important;margin-bottom:10px!important}}
+
+/* ============================================================
+   FIVE TRANSPARENT EARNING SOURCES — separate from voting
+   ============================================================ */
+#ep-earning-sources-section{margin:28px auto 30px;max-width:1200px;padding:0 16px}
+.ep-earn-head{border-radius:20px;padding:18px;background:linear-gradient(135deg,#06233d,#0b4667);color:#fff;box-shadow:0 12px 30px rgba(6,35,61,.18)}
+.ep-earn-head h2{margin:0;font-size:clamp(21px,3vw,30px);font-weight:950}.ep-earn-head p{margin:7px 0 0;color:#dcecf4;font-size:13px;line-height:1.6}
+.ep-earn-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.ep-earn-card{background:#fff;border:1px solid #d9e5dd;border-radius:16px;padding:15px;box-shadow:0 7px 20px rgba(6,35,61,.08);min-height:205px;display:flex;flex-direction:column}
+.ep-earn-icon{width:42px;height:42px;border-radius:12px;background:#fff4e6;border:1px solid #ffd19d;display:flex;align-items:center;justify-content:center;color:#b65d00;font-size:19px;margin-bottom:9px}
+.ep-earn-card h3{font-size:15px;line-height:1.25;color:#062742;font-weight:950;margin:0}.ep-earn-card .hi{font-size:14px;font-weight:900;color:#173f57;margin-top:4px}.ep-earn-card p{font-size:11px;line-height:1.5;color:#607584;margin:7px 0 8px;flex:1}.ep-earn-price{font-size:12px;font-weight:950;color:#138808;background:#eef9ef;border:1px solid #cce7cf;border-radius:8px;padding:6px 8px}
+.ep-earn-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff9df;border:1px dashed #e1bd55;color:#67500b;font-size:11px;line-height:1.5;font-weight:750}
+@media(max-width:1050px){.ep-earn-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ep-earn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.ep-earn-grid{grid-template-columns:1fr}.ep-earn-card{min-height:0}}
+</style>
+<script id="ep-five-earning-sources-runtime">
+(function(){
+'use strict';
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function lang(){try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'}}
+function add(){
+ if(document.getElementById('ep-earning-sources-section'))return;
+ const vote=document.getElementById('voting-section');if(!vote||!vote.parentNode)return;
+ const box=document.createElement('section');box.id='ep-earning-sources-section';box.setAttribute('aria-labelledby','ep-earning-title');
+ box.innerHTML=`<div class="ep-earn-head"><h2 id="ep-earning-title">${lang()==='hi'?'पोर्टल की 5 कमाई के वास्तविक तरीके':'5 realistic earning sources for this portal'}</h2><p>${lang()==='hi'?'इन कमाई के तरीकों को मतदान, वोटों की गिनती और परिणाम रैंकिंग से पूरी तरह अलग रखें।':'Keep every monetization method completely separate from voting, vote counting and result ranking.'}</p></div>
+ <div class="ep-earn-grid">
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-store"></i></div><h3>Sponsored Local Business Cards</h3><div class="hi">स्थानीय व्यवसाय प्रायोजित कार्ड</div><p>Show clearly labelled sponsored profiles for shops, coaching centres, repair services and other local businesses.</p><div class="ep-earn-price">Example: ₹499–₹1,999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-list-check"></i></div><h3>Premium Business Directory</h3><div class="hi">प्रीमियम व्यवसाय डायरेक्टरी</div><p>Charge businesses for enhanced listings with photos, services, timings and contact/lead buttons.</p><div class="ep-earn-price">Example: ₹299–₹999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-rectangle-ad"></i></div><h3>Banner & Display Ads</h3><div class="hi">बैनर और डिस्प्ले विज्ञापन</div><p>Sell clearly marked ad slots on non-voting areas, or later connect an approved ad network.</p><div class="ep-earn-price">Example: ₹500–₹5,000 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>Local Event Promotion</h3><div class="hi">स्थानीय कार्यक्रम प्रचार</div><p>Offer paid promotion for fairs, classes, community events, local launches and public announcements.</p><div class="ep-earn-price">Example: ₹199–₹999 / post</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-address-card"></i></div><h3>Verified Business Lead Profiles</h3><div class="hi">सत्यापित व्यवसाय लीड प्रोफाइल</div><p>Create richer verified profiles that help villagers discover useful local services and generate enquiries.</p><div class="ep-earn-price">Example: ₹999–₹2,999 / month</div></article>
+ </div><div class="ep-earn-note"><i class="fa-solid fa-shield-halved mr-1"></i>${lang()==='hi'?'पारदर्शिता नियम: Sponsored/paid सामग्री को साफ़ लेबल करें। किसी उम्मीदवार को पैसे लेकर ऊपर न दिखाएँ, वोट न बेचें और विज्ञापन से वोटों या परिणामों को प्रभावित न करें। ऊपर दिए मूल्य केवल उदाहरण हैं, गारंटी की कमाई नहीं।':'Transparency rule: Clearly label sponsored/paid content. Never sell votes or pay-to-rank candidates, and never let advertising change vote totals or results. Prices above are examples, not guaranteed revenue.'}</div>`;
+ vote.parentNode.insertBefore(box,vote);
+}
+function boot(){add();window.addEventListener('storage',e=>{if(e.key==='EP_LANG')document.getElementById('ep-earning-sources-section')?.remove(),add()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180),{once:true});else setTimeout(boot,180);
+window.EPEarningSources={add};
+})();
+</script>
+
 </body></html>`);
     w.document.close();setTimeout(()=>w.print(),300);
   }
@@ -7689,73 +7990,79 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </script>
 
 
-<!-- MONETIZATION MODULE: 5 realistic revenue channels; self-contained and feature-preserving -->
-<style id="ep-monetization-style">
-#ep-money-public{max-width:1180px;margin:24px auto;padding:0 16px;font-family:inherit}
-.ep-money-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.ep-money-card{border:1px solid #e2e8f0;border-radius:16px;padding:18px;background:#fff;box-shadow:0 4px 18px rgba(15,23,42,.06)}
-.ep-money-card h3{margin:0 0 7px;font-size:17px;font-weight:800}.ep-money-card p{margin:0 0 12px;color:#64748b;font-size:13px;line-height:1.55}
-.ep-money-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer;text-decoration:none;background:#0f172a;color:#fff}
-.ep-money-btn.alt{background:#e2e8f0;color:#0f172a}.ep-money-muted{font-size:11px;color:#94a3b8;margin-top:8px}
-#ep-money-admin{margin:18px 0;padding:18px;border:1px solid #cbd5e1;border-radius:16px;background:#f8fafc}
-.ep-money-admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.ep-money-admin-grid input,.ep-money-admin-grid textarea,.ep-money-admin-grid select{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}
-.ep-money-admin-grid textarea{min-height:72px}.ep-money-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ep-money-status{font-size:12px;font-weight:700;margin-top:8px}
+<style id="ep-business-card-and-earnings-v1">
+/* ============================================================
+   BUSINESS-CARD CANDIDATE DESIGN
+   - compact card footprint
+   - smaller candidate photo / symbol
+   - larger bilingual text for village readability
+   - all existing candidate fields remain visible
+   ============================================================ */
+#user-candidates-grid{align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(350px,560px))!important;justify-content:center!important;gap:18px!important}
+.ep-business-candidate-card{width:100%!important;max-width:560px!important;min-height:0!important;height:auto!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;background:linear-gradient(135deg,#fffaf0 0%,#ffffff 48%,#f1fbf3 100%)!important;border:2px solid #d8e5dc!important;box-shadow:0 10px 28px rgba(6,35,61,.13)!important}
+.ep-business-candidate-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(6,35,61,.17)!important}
+.ep-biz-card-ribbon{height:34px;padding:6px 12px;background:linear-gradient(90deg,#ff9933 0 33.33%,#fff 33.33% 66.66%,#138808 66.66%);display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:950;color:#06233d}
+.ep-biz-card-ribbon span{background:rgba(255,255,255,.88);padding:4px 8px;border-radius:999px;box-shadow:0 1px 5px rgba(6,35,61,.10)}
+.ep-biz-main{padding:13px 14px 10px!important}
+.ep-biz-visuals{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+.ep-biz-photo-wrap{width:78px!important;height:78px!important;min-width:78px!important;border-radius:14px!important;border:2px solid #ffb15d!important;background:#fff!important;box-shadow:0 4px 12px rgba(6,35,61,.10)!important;overflow:hidden}
+.ep-biz-photo{width:100%!important;height:100%!important;object-fit:cover!important}
+.ep-biz-photo.ep-default-photo{display:flex!important;align-items:center;justify-content:center;font-size:30px!important;color:#718394!important;background:linear-gradient(135deg,#edf2f5,#fff)!important}
+.ep-biz-symbol-wrap{width:60px!important;height:60px!important;min-width:60px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d6e1db!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.ep-biz-symbol{width:48px!important;height:48px!important;object-fit:contain!important}
+.ep-biz-symbol-placeholder{width:48px;height:48px;border-radius:10px;background:#f5f8f6;display:flex;align-items:center;justify-content:center;font-size:25px;color:#d39a2f}
+.ep-biz-identity{text-align:center}
+.ep-biz-name-hi{font-size:clamp(20px,2.3vw,27px)!important;line-height:1.12!important;font-weight:950!important;color:#062b49!important;margin-top:2px!important}
+.ep-biz-name-en{font-size:clamp(15px,1.8vw,19px)!important;line-height:1.18!important;font-weight:900!important;color:#31536c!important;margin-top:3px!important}
+.ep-biz-party{margin:7px auto 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(255,255,255,.78)!important;border:1px solid #dce8df!important}
+.ep-biz-party span{font-size:10px!important;font-weight:950!important;color:#647786!important;text-transform:uppercase!important}
+.ep-biz-party strong{font-size:15px!important;line-height:1.2!important;color:#082742!important}
+.ep-biz-party em{font-size:13px!important;line-height:1.2!important;font-style:normal!important;font-weight:850!important;color:#41657b!important}
+.ep-biz-details{gap:7px!important}
+.ep-biz-details .ep-vote-detail{padding:7px 9px!important;border-radius:10px!important;background:rgba(250,252,250,.92)!important}
+.ep-biz-details .ep-vote-detail span{font-size:9px!important;line-height:1.1!important;margin-bottom:2px!important;color:#687b89!important}
+.ep-biz-details .ep-vote-detail b{font-size:15px!important;line-height:1.2!important;font-weight:950!important;color:#082742!important}
+.ep-biz-details .ep-vote-detail small{font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#4c687b!important;margin-top:2px!important;display:block!important}
+.ep-biz-select{width:calc(100% - 28px)!important;margin:0 14px 14px!important;min-height:48px!important;height:48px!important;border-radius:12px!important;font-size:15px!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(max-width:560px){#user-candidates-grid{grid-template-columns:minmax(0,1fr)!important}.ep-biz-main{padding:11px 10px 8px!important}.ep-biz-name-hi{font-size:21px!important}.ep-biz-name-en{font-size:15px!important}.ep-biz-details .ep-vote-detail b{font-size:14px!important}.ep-biz-details .ep-vote-detail small{font-size:10px!important}.ep-biz-select{width:calc(100% - 20px)!important;margin-left:10px!important;margin-right:10px!important;margin-bottom:10px!important}}
+
+/* ============================================================
+   FIVE TRANSPARENT EARNING SOURCES — separate from voting
+   ============================================================ */
+#ep-earning-sources-section{margin:28px auto 30px;max-width:1200px;padding:0 16px}
+.ep-earn-head{border-radius:20px;padding:18px;background:linear-gradient(135deg,#06233d,#0b4667);color:#fff;box-shadow:0 12px 30px rgba(6,35,61,.18)}
+.ep-earn-head h2{margin:0;font-size:clamp(21px,3vw,30px);font-weight:950}.ep-earn-head p{margin:7px 0 0;color:#dcecf4;font-size:13px;line-height:1.6}
+.ep-earn-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.ep-earn-card{background:#fff;border:1px solid #d9e5dd;border-radius:16px;padding:15px;box-shadow:0 7px 20px rgba(6,35,61,.08);min-height:205px;display:flex;flex-direction:column}
+.ep-earn-icon{width:42px;height:42px;border-radius:12px;background:#fff4e6;border:1px solid #ffd19d;display:flex;align-items:center;justify-content:center;color:#b65d00;font-size:19px;margin-bottom:9px}
+.ep-earn-card h3{font-size:15px;line-height:1.25;color:#062742;font-weight:950;margin:0}.ep-earn-card .hi{font-size:14px;font-weight:900;color:#173f57;margin-top:4px}.ep-earn-card p{font-size:11px;line-height:1.5;color:#607584;margin:7px 0 8px;flex:1}.ep-earn-price{font-size:12px;font-weight:950;color:#138808;background:#eef9ef;border:1px solid #cce7cf;border-radius:8px;padding:6px 8px}
+.ep-earn-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff9df;border:1px dashed #e1bd55;color:#67500b;font-size:11px;line-height:1.5;font-weight:750}
+@media(max-width:1050px){.ep-earn-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ep-earn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.ep-earn-grid{grid-template-columns:1fr}.ep-earn-card{min-height:0}}
 </style>
-<script>
+<script id="ep-five-earning-sources-runtime">
 (function(){
 'use strict';
-const KEY='EP_MONETIZATION_V1';
-const defaults={
- adsense:{enabled:false,publisherId:'',slotId:'',label:'Advertisement / विज्ञापन'},
- sponsor:{enabled:false,title:'Local Business Sponsor / स्थानीय व्यवसाय प्रायोजक',business:'',description:'',url:'',phone:''},
- featured:{enabled:false,title:'Featured Local Listing / प्रमुख स्थानीय सूची',description:'',url:'',price:'',contact:''},
- announcement:{enabled:false,title:'Sponsored Announcement / प्रायोजित सूचना',text:'',url:'',price:'',contact:''},
- donation:{enabled:false,title:'Support This Portal / पोर्टल का सहयोग करें',upi:'',amount:'',note:'यदि यह पोर्टल उपयोगी लगे तो स्वेच्छा से सहयोग करें।'}
-};
-function load(){try{return Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return JSON.parse(JSON.stringify(defaults))}}
-function save(d){localStorage.setItem(KEY,JSON.stringify(d));return d}
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function moneyClick(channel){try{const d=load();d.stats=d.stats||{};d.stats[channel]=(d.stats[channel]||0)+1;save(d)}catch(e){}}
-function renderPublic(){
- let host=document.getElementById('ep-money-public'); if(!host)return;
- const d=load(); let cards=[];
- if(d.adsense.enabled){
-   cards.push(`<div class="ep-money-card"><h3>${esc(d.adsense.label)}</h3><div id="ep-adsense-slot" style="min-height:70px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:10px;color:#94a3b8;font-size:12px">Ad space</div><div class="ep-money-muted">Requires an approved Google AdSense account and its publisher/slot IDs.</div></div>`);
- }
- if(d.sponsor.enabled&&d.sponsor.business){cards.push(`<div class="ep-money-card"><h3>🤝 ${esc(d.sponsor.title)}</h3><p><b>${esc(d.sponsor.business)}</b><br>${esc(d.sponsor.description)}</p>${d.sponsor.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.sponsor.url)}" onclick="EPMoney.click('sponsor')">Visit Sponsor</a>`:''}${d.sponsor.phone?` <a class="ep-money-btn alt" href="tel:${esc(d.sponsor.phone)}" onclick="EPMoney.click('sponsor')">Call</a>`:''}</div>`)}
- if(d.featured.enabled&&d.featured.title){cards.push(`<div class="ep-money-card"><h3>⭐ ${esc(d.featured.title)}</h3><p>${esc(d.featured.description)}</p>${d.featured.price?`<p><b>Listing price: ${esc(d.featured.price)}</b></p>`:''}${d.featured.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.featured.url)}" onclick="EPMoney.click('featured')">View Listing</a>`:''}</div>`)}
- if(d.announcement.enabled&&d.announcement.title){cards.push(`<div class="ep-money-card"><h3>📢 ${esc(d.announcement.title)}</h3><p>${esc(d.announcement.text)}</p>${d.announcement.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.announcement.url)}" onclick="EPMoney.click('announcement')">Read More</a>`:''}</div>`)}
- if(d.donation.enabled&&d.donation.upi){const uri='upi://pay?pa='+encodeURIComponent(d.donation.upi)+'&pn='+encodeURIComponent(d.donation.title)+'&am='+encodeURIComponent(d.donation.amount||'')+'&cu=INR';cards.push(`<div class="ep-money-card"><h3>❤️ ${esc(d.donation.title)}</h3><p>${esc(d.donation.note)}</p><a class="ep-money-btn" href="${esc(uri)}" onclick="EPMoney.click('donation')">Pay via UPI</a><div class="ep-money-muted">UPI ID: ${esc(d.donation.upi)}</div></div>`)}
- host.innerHTML=cards.length?`<div class="ep-money-grid">${cards.join('')}</div>`:'';
+function lang(){try{return localStorage.getItem('EP_LANG')==='en'?'en':'hi'}catch{return'hi'}}
+function add(){
+ if(document.getElementById('ep-earning-sources-section'))return;
+ const vote=document.getElementById('voting-section');if(!vote||!vote.parentNode)return;
+ const box=document.createElement('section');box.id='ep-earning-sources-section';box.setAttribute('aria-labelledby','ep-earning-title');
+ box.innerHTML=`<div class="ep-earn-head"><h2 id="ep-earning-title">${lang()==='hi'?'पोर्टल की 5 कमाई के वास्तविक तरीके':'5 realistic earning sources for this portal'}</h2><p>${lang()==='hi'?'इन कमाई के तरीकों को मतदान, वोटों की गिनती और परिणाम रैंकिंग से पूरी तरह अलग रखें।':'Keep every monetization method completely separate from voting, vote counting and result ranking.'}</p></div>
+ <div class="ep-earn-grid">
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-store"></i></div><h3>Sponsored Local Business Cards</h3><div class="hi">स्थानीय व्यवसाय प्रायोजित कार्ड</div><p>Show clearly labelled sponsored profiles for shops, coaching centres, repair services and other local businesses.</p><div class="ep-earn-price">Example: ₹499–₹1,999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-list-check"></i></div><h3>Premium Business Directory</h3><div class="hi">प्रीमियम व्यवसाय डायरेक्टरी</div><p>Charge businesses for enhanced listings with photos, services, timings and contact/lead buttons.</p><div class="ep-earn-price">Example: ₹299–₹999 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-rectangle-ad"></i></div><h3>Banner & Display Ads</h3><div class="hi">बैनर और डिस्प्ले विज्ञापन</div><p>Sell clearly marked ad slots on non-voting areas, or later connect an approved ad network.</p><div class="ep-earn-price">Example: ₹500–₹5,000 / month</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>Local Event Promotion</h3><div class="hi">स्थानीय कार्यक्रम प्रचार</div><p>Offer paid promotion for fairs, classes, community events, local launches and public announcements.</p><div class="ep-earn-price">Example: ₹199–₹999 / post</div></article>
+  <article class="ep-earn-card"><div class="ep-earn-icon"><i class="fa-solid fa-address-card"></i></div><h3>Verified Business Lead Profiles</h3><div class="hi">सत्यापित व्यवसाय लीड प्रोफाइल</div><p>Create richer verified profiles that help villagers discover useful local services and generate enquiries.</p><div class="ep-earn-price">Example: ₹999–₹2,999 / month</div></article>
+ </div><div class="ep-earn-note"><i class="fa-solid fa-shield-halved mr-1"></i>${lang()==='hi'?'पारदर्शिता नियम: Sponsored/paid सामग्री को साफ़ लेबल करें। किसी उम्मीदवार को पैसे लेकर ऊपर न दिखाएँ, वोट न बेचें और विज्ञापन से वोटों या परिणामों को प्रभावित न करें। ऊपर दिए मूल्य केवल उदाहरण हैं, गारंटी की कमाई नहीं।':'Transparency rule: Clearly label sponsored/paid content. Never sell votes or pay-to-rank candidates, and never let advertising change vote totals or results. Prices above are examples, not guaranteed revenue.'}</div>`;
+ vote.parentNode.insertBefore(box,vote);
 }
-function renderAdmin(){
- let host=document.getElementById('ep-money-admin');if(!host)return;const d=load();
- host.innerHTML=`<details><summary style="cursor:pointer;font-weight:900;font-size:16px">💰 Monetization / कमाई के साधन</summary>
- <p style="font-size:12px;color:#64748b;margin:10px 0">Enable only the channels you actually configure. AdSense requires Google approval; payments should be handled through your own verified payment provider.</p>
- <div class="ep-money-admin-grid" style="margin-top:10px">
- <label><input id="pm-ads" type="checkbox" ${d.adsense.enabled?'checked':''}> Enable AdSense space</label>
- <input id="pm-pub" placeholder="AdSense Publisher ID" value="${esc(d.adsense.publisherId)}"><input id="pm-slot" placeholder="Ad slot ID" value="${esc(d.adsense.slotId)}">
- <label><input id="pm-sp" type="checkbox" ${d.sponsor.enabled?'checked':''}> Enable sponsor</label>
- <input id="pm-spb" placeholder="Sponsor business name" value="${esc(d.sponsor.business)}"><input id="pm-spu" placeholder="Sponsor website URL" value="${esc(d.sponsor.url)}"><input id="pm-spp" placeholder="Sponsor phone" value="${esc(d.sponsor.phone)}"><textarea id="pm-spd" placeholder="Sponsor description">${esc(d.sponsor.description)}</textarea>
- <label><input id="pm-fe" type="checkbox" ${d.featured.enabled?'checked':''}> Enable paid featured listing</label>
- <input id="pm-fet" placeholder="Featured listing title" value="${esc(d.featured.title)}"><input id="pm-fep" placeholder="Price / package" value="${esc(d.featured.price)}"><input id="pm-feu" placeholder="Listing URL" value="${esc(d.featured.url)}"><textarea id="pm-fed" placeholder="Listing description">${esc(d.featured.description)}</textarea>
- <label><input id="pm-an" type="checkbox" ${d.announcement.enabled?'checked':''}> Enable sponsored announcement</label>
- <input id="pm-ant" placeholder="Announcement title" value="${esc(d.announcement.title)}"><input id="pm-anp" placeholder="Price / package" value="${esc(d.announcement.price)}"><input id="pm-anu" placeholder="Announcement URL" value="${esc(d.announcement.url)}"><textarea id="pm-anx" placeholder="Announcement text">${esc(d.announcement.text)}</textarea>
- <label><input id="pm-do" type="checkbox" ${d.donation.enabled?'checked':''}> Enable UPI support/donation</label>
- <input id="pm-upi" placeholder="Your UPI ID e.g. name@upi" value="${esc(d.donation.upi)}"><input id="pm-amt" placeholder="Optional fixed INR amount" value="${esc(d.donation.amount)}"><input id="pm-dtitle" placeholder="Donation title" value="${esc(d.donation.title)}"><textarea id="pm-note" placeholder="Donation note">${esc(d.donation.note)}</textarea>
- </div><div class="ep-money-actions"><button type="button" class="ep-money-btn" onclick="EPMoney.saveAdmin()">Save Monetization Settings</button><button type="button" class="ep-money-btn alt" onclick="EPMoney.reset()">Reset</button></div><div id="pm-status" class="ep-money-status"></div>
- </details>`;
-}
-function val(id){return document.getElementById(id)?.value?.trim()||''}function chk(id){return !!document.getElementById(id)?.checked}
-window.EPMoney={click:moneyClick,saveAdmin:function(){const d=load();d.adsense={enabled:chk('pm-ads'),publisherId:val('pm-pub'),slotId:val('pm-slot'),label:d.adsense.label};d.sponsor={enabled:chk('pm-sp'),business:val('pm-spb'),description:val('pm-spd'),url:val('pm-spu'),phone:val('pm-spp'),title:d.sponsor.title};d.featured={enabled:chk('pm-fe'),title:val('pm-fet')||defaults.featured.title,description:val('pm-fed'),url:val('pm-feu'),price:val('pm-fep'),contact:''};d.announcement={enabled:chk('pm-an'),title:val('pm-ant')||defaults.announcement.title,text:val('pm-anx'),url:val('pm-anu'),price:val('pm-anp'),contact:''};d.donation={enabled:chk('pm-do'),title:val('pm-dtitle')||defaults.donation.title,upi:val('pm-upi'),amount:val('pm-amt'),note:val('pm-note')||defaults.donation.note};save(d);renderPublic();const st=document.getElementById('pm-status');if(st)st.textContent='Saved successfully / सफलतापूर्वक सेव हुआ';},reset:function(){save(JSON.parse(JSON.stringify(defaults)));renderAdmin();renderPublic()},renderPublic,renderAdmin};
-function boot(){
- if(!document.getElementById('ep-money-public')){const x=document.createElement('section');x.id='ep-money-public';document.body.appendChild(x)}
- renderPublic();
- const obs=new MutationObserver(()=>{if(!document.getElementById('ep-money-admin')){const admin=document.querySelector('#admin-dashboard-container, #admin-dashboard, .admin-dashboard');if(admin){const x=document.createElement('div');x.id='ep-money-admin';admin.appendChild(x);renderAdmin()}}});obs.observe(document.body,{childList:true,subtree:true});
- setTimeout(()=>{const admin=document.querySelector('#admin-dashboard-container, #admin-dashboard, .admin-dashboard');if(admin&&!document.getElementById('ep-money-admin')){const x=document.createElement('div');x.id='ep-money-admin';admin.appendChild(x);renderAdmin()}},500);
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+function boot(){add();window.addEventListener('storage',e=>{if(e.key==='EP_LANG')document.getElementById('ep-earning-sources-section')?.remove(),add()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180),{once:true});else setTimeout(boot,180);
+window.EPEarningSources={add};
 })();
 </script>
+
 </body>
 </html>
