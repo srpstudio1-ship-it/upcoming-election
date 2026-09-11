@@ -61,7 +61,7 @@ main{max-width:1380px;margin:auto;padding:12px}.section{margin:12px 0}.panel{bac
     <div class="hero-actions"><button class="primary" onclick="scrollToId('voting-section')">🗳️ जनमत दें / Vote</button><button class="secondary" onclick="openUserAI()">🤖 AI सहायता / AI Help</button></div>
   </div>
   <div class="panel">
-    <div class="section-head"><div><h3>Live Status / लाइव स्थिति</h3><p>Browser-local live counters and current portal status.</p></div><span class="live-badge"><span class="dot"></span>LIVE</span></div>
+    <div class="section-head"><div><h3>Live Status / लाइव स्थिति</h3><p>Live counters and current portal status. Cross-tab updates use BroadcastChannel; multi-device live mode requires a server API.</p></div><span class="live-badge"><span class="dot"></span>LIVE</span></div>
     <div class="metrics">
       <div class="metric"><b id="stat-villages">2</b><span>गाँव / Villages</span></div>
       <div class="metric"><b id="stat-wards">24</b><span>कुल वार्ड / Total wards</span></div>
@@ -90,7 +90,7 @@ main{max-width:1380px;margin:auto;padding:12px}.section{margin:12px 0}.panel{bac
 </section>
 
 <section class="section panel" id="voting-section">
-  <div class="section-head"><div><h3>Public Opinion Voting Booth / सार्वजनिक जनमत मतदान</h3><p>एक गाँव में एक verified mobile से एक जनमत। यह आधिकारिक चुनाव नहीं है।</p></div><span class="live-badge"><span class="dot"></span>LIVE VOTING</span></div>
+  <div class="section-head"><div><h3>Public Opinion Voting Booth / सार्वजनिक जनमत मतदान</h3><p>एक गाँव में एक verified mobile से एक जनमत। पहचान रिकॉर्ड और ballot choice अलग रखे जाते हैं। यह आधिकारिक चुनाव नहीं है।</p></div><span class="live-badge"><span class="dot"></span>LIVE VOTING</span></div>
   <div class="grid g2">
     <div class="form"><label>गाँव / Village</label><select id="vote-village" onchange="renderVotingCandidates()"></select></div>
     <div class="form"><label>मोबाइल / Mobile</label><input id="vote-mobile" maxlength="10" inputmode="numeric" placeholder="10 digit mobile"></div>
@@ -140,6 +140,7 @@ main{max-width:1380px;margin:auto;padding:12px}.section{margin:12px 0}.panel{bac
 <script>
 'use strict';
 const KEY='MN_PUBLIC_OPINION_V3_0004';
+const API_CONFIG={enabled:false,baseUrl:'',pollMs:5000,mode:'static-demo'};
 const CITY={hi:'जालौर',en:'Jalore'};
 const VILLAGES=[
   {id:'morseem',hi:'मोरसीम',en:'Morseem',cityHi:'जालौर',cityEn:'Jalore',wards:13},
@@ -164,10 +165,10 @@ const ADMIN_GROUPS=[
 {g:'A. Core Election & Candidate Management',items:['Village master','Ward master','Reservation update','Candidate add','Candidate edit','Candidate remove','Candidate approval','Candidate search','Candidate bulk import','Candidate CSV export']},
 {g:'B. Voting & Results Control',items:['Voting enable/disable','Public results toggle','Vote audit','Ward vote reset','Village vote reset','All vote reset','Duplicate voter lookup','Voter register export','Receipt lookup','Vote correction log']},
 {g:'C. Notifications & Live Updates',items:['Publish notification','Edit notification','Delete notification','Notification priority','Notification expiry','Live ticker control','Emergency banner','Activity feed manager','Promotion banner','Promotion cards']},
-{g:'D. Promotions & Revenue Settings',items:['Promotion 1 homepage','Promotion 2 sponsored card','Promotion 3 ticker promotion','Promotion 4 schedule','Promotion 5 performance','Ad frequency control','Ad placement control','Sponsored link manager','Promotion click report','Revenue notes']},
+{g:'D. Promotions & Revenue Settings',items:['Promotion 1 homepage','Promotion 2 sponsored card','Promotion 3 ticker promotion','Promotion 4 schedule','Sponsored link manager','Promotion click report']},
 {g:'E. Court / Authorized Verification',items:['Court 1 mobile lookup','Court 2 transaction verification','Court 3 SHA-256 fingerprint','Court 4 print verification','Court 5 JSON verification export','Court 6 lookup history','Authorized viewer note','Evidence package export']},
-{g:'F. Security & Access',items:['Admin password','Session timeout','Failed login counter','Security event log','Admin action history','Read-only mode','Maintenance mode','Emergency public lock','Device fingerprint','Security health']},
-{g:'G. Analytics / Visitors / System',items:['Live dashboard','Day visitors','Week visitors','Hourly activity','Daily activity','Ward analytics','Candidate analytics','Village analytics','Database backup','Database restore']}
+{g:'F. Security & Access',items:['Admin password','Session timeout','Security event log','Admin action history','Read-only mode','Maintenance mode','Emergency public lock','Security health']},
+{g:'G. Analytics / Visitors / System',items:['Live dashboard','Day visitors','Week visitors','Ward analytics','Candidate analytics','Village analytics','Database backup','Database restore']}
 ];
 const FEATURES_ADMIN=ADMIN_GROUPS.flatMap((g,i)=>g.items.map((title,j)=>({group:g.g,no:j+1,title,type:i,titleKey:title})));
 /* Ensure exactly 60 admin feature slots. */
@@ -177,22 +178,24 @@ function q(s){return document.querySelector(s)}
 function qa(s){return [...document.querySelectorAll(s)]}
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function now(){return new Date().toISOString()}
-function saveDB(){db.meta.updatedAt=now();localStorage.setItem(KEY,JSON.stringify(db));window.dispatchEvent(new Event('mn-db-updated'))}
+function saveDB(){db.meta.updatedAt=now();localStorage.setItem(KEY,JSON.stringify(db));window.dispatchEvent(new Event('mn-db-updated'));MN_CHANNEL?.postMessage({type:'db-updated',at:db.meta.updatedAt})}
 function loadDB(){
   const raw=localStorage.getItem(KEY);
   if(raw){try{return normalize(JSON.parse(raw))}catch(e){}}
-  const x={meta:{version:'3.0004',createdAt:now(),updatedAt:now()},settings:{masterPassword:'sarpanch2026',votingEnabled:true,publicResultsVisible:true,maintenance:false,readOnly:false,portalTitleHi:'मोरसीम एवं नया मोरसीम जनमत पोर्टल',portalTitleEn:'Morseem & Naya Morseem Public Opinion Portal',subtitleHi:'स्वतंत्र सार्वजनिक राय मंच · आधिकारिक चुनाव पोर्टल नहीं',subtitleEn:'Independent public-opinion platform · not an official election portal',liveTickerHi:'जनमत पोर्टल सक्रिय है।',liveTickerEn:'Public-opinion portal is active.'},villages:{},candidates:[],votes:[],notifications:[],suggestions:[],securityEvents:[],visitors:[],promotions:[]};
+  const x={meta:{version:'3.0004',createdAt:now(),updatedAt:now()},settings:{masterPassword:'sarpanch2026',votingEnabled:true,publicResultsVisible:true,maintenance:false,readOnly:false,portalTitleHi:'मोरसीम एवं नया मोरसीम जनमत पोर्टल',portalTitleEn:'Morseem & Naya Morseem Public Opinion Portal',subtitleHi:'स्वतंत्र सार्वजनिक राय मंच · आधिकारिक चुनाव पोर्टल नहीं',subtitleEn:'Independent public-opinion platform · not an official election portal',liveTickerHi:'जनमत पोर्टल सक्रिय है।',liveTickerEn:'Public-opinion portal is active.'},villages:{},candidates:[],votes:[],voterRegistry:[],notifications:[],suggestions:[],securityEvents:[],visitors:[],promotions:[],activity:[]};
   VILLAGES.forEach(v=>{x.villages[v.id]={...v,wards:{}};for(let i=1;i<=v.wards;i++)x.villages[v.id].wards[i]={number:i,nameHi:`वार्ड ${i}`,nameEn:`Ward ${i}`,reservationHi:'सामान्य',reservationEn:'General',candidates:[]}})
   localStorage.setItem(KEY,JSON.stringify(x));return x
 }
 function normalize(x){
   x.meta ||= {version:'3.0004',updatedAt:now()};
   x.settings ||= {}; Object.assign(x.settings,{masterPassword:'sarpanch2026',votingEnabled:true,publicResultsVisible:true,maintenance:false,readOnly:false,portalTitleHi:'मोरसीम एवं नया मोरसीम जनमत पोर्टल',portalTitleEn:'Morseem & Naya Morseem Public Opinion Portal',subtitleHi:'स्वतंत्र सार्वजनिक राय मंच · आधिकारिक चुनाव पोर्टल नहीं',subtitleEn:'Independent public-opinion platform · not an official election portal',liveTickerHi:'जनमत पोर्टल सक्रिय है।',liveTickerEn:'Public-opinion portal is active.'},x.settings)
-  x.villages ||= {}; x.candidates ||= []; x.votes ||= []; x.notifications ||= []; x.suggestions ||= []; x.securityEvents ||= []; x.visitors ||= []; x.promotions ||= [];
+  x.villages ||= {}; x.candidates ||= []; x.votes ||= []; x.voterRegistry ||= []; if(!Array.isArray(x.voterRegistry))x.voterRegistry=[]; x.notifications ||= []; x.suggestions ||= []; x.securityEvents ||= []; x.visitors ||= []; x.promotions ||= []; x.activity ||= [];
   VILLAGES.forEach(v=>{if(!x.villages[v.id]){x.villages[v.id]={...v,wards:{}}}for(let i=1;i<=v.wards;i++)if(!x.villages[v.id].wards[i])x.villages[v.id].wards[i]={number:i,nameHi:`वार्ड ${i}`,nameEn:`Ward ${i}`,reservationHi:'सामान्य',reservationEn:'General',candidates:[]}})
   return x
 }
 let db=loadDB();
+const MN_CHANNEL=window.BroadcastChannel?new BroadcastChannel('morseem-live-sync'):null;
+if(MN_CHANNEL)MN_CHANNEL.onmessage=()=>{db=loadDB();renderAll();if(q('#admin-modal')?.classList.contains('open')){renderAdminList();renderAdminTool(state.adminFeature)}};
 
 function toast(msg,type='ok'){const d=document.createElement('div');d.className='toast '+(type==='error'?'err':'ok');d.textContent=msg;q('#toast-wrap').appendChild(d);setTimeout(()=>d.remove(),3200)}
 function t(hi,en){return lang==='hi'?hi:en}
@@ -259,16 +262,30 @@ function voteCard(c){
     </div><div class="candidate-footer"><button class="select-btn">${sel?'✓ Selected / चुना गया':'Select / चुनें'}</button></div></article>`
 }
 function selectCandidate(id){state.selectedCandidate=id;renderVotingCandidates()}
-function castVote(){
+async function hashText(value){
+  const data=new TextEncoder().encode(String(value));
+  if(window.crypto?.subtle){const h=await crypto.subtle.digest('SHA-256',data);return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+  let h=2166136261;for(const ch of String(value)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return ('00000000'+(h>>>0).toString(16)).slice(-8);
+}
+function maskMobile(m){return m?m.slice(0,2)+'******'+m.slice(-2):''}
+async function castVote(){
   if(db.settings.maintenance||!db.settings.votingEnabled||db.settings.readOnly)return toast('Voting is currently paused. / मतदान अभी बंद है।','error');
   const c=candidateById(state.selectedCandidate),mob=(q('#vote-mobile').value||'').replace(/\D/g,'');
   if(!c)return toast('Candidate चुनें / Select a candidate.','error');
   if(!/^\d{10}$/.test(mob))return toast('10 digit mobile required. / 10 अंकों का मोबाइल जरूरी है।','error');
-  if(db.votes.some(v=>v.villageId===c.villageId&&v.mobile===mob))return toast('इस गाँव में यह मोबाइल पहले वोट कर चुका है। / This mobile already voted in this village.','error');
-  const rec={id:'V'+Date.now().toString(36)+Math.random().toString(36).slice(2,8),candidateId:c.id,villageId:c.villageId,ward:c.ward,mobile:mob,at:now()};
-  db.votes.push(rec);saveDB();q('#vote-mobile').value='';state.selectedCandidate=null;renderAll();
-  showUserModal('Vote Receipt / मतदान रसीद',`<div class="notice"><b>Vote ID:</b> ${esc(rec.id)}<br><b>Candidate:</b> ${esc(c.nameHi)} / ${esc(c.nameEn)}<br><b>Village:</b> ${esc(villageName(c.villageId).hi)} / ${esc(villageName(c.villageId).en)}<br><b>Ward:</b> ${c.ward}<br><b>Time:</b> ${new Date(rec.at).toLocaleString()}</div><p class="muted" style="font-size:10px">यह जनमत पोर्टल का रिकॉर्ड है, आधिकारिक चुनाव परिणाम नहीं।</p>`)
+  const voterKey=await hashText(c.villageId+'|'+mob);
+  const duplicate=db.voterRegistry.some(v=>v.voterKey===voterKey);
+  if(duplicate)return toast('इस गाँव में यह मोबाइल पहले वोट कर चुका है। / This mobile already voted in this village.','error');
+  const ballotId='B'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+  const participationId='P'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+  const rec={id:ballotId,candidateId:c.id,villageId:c.villageId,ward:c.ward,at:now(),ballotHash:await hashText(ballotId+'|'+c.id+'|'+now())};
+  const participation={id:participationId,villageId:c.villageId,ward:c.ward,voterKey,receiptId:ballotId,maskedMobile:maskMobile(mob),at:rec.at};
+  db.votes.push(rec);db.voterRegistry.push(participation);
+  db.securityEvents.push({at:now(),event:'Vote cast',detail:'Participation and ballot records stored separately.'});
+  saveDB();q('#vote-mobile').value='';state.selectedCandidate=null;renderAll();
+  showUserModal('Vote Receipt / मतदान रसीद',`<div class="notice"><b>Receipt / रसीद:</b> ${esc(rec.id)}<br><b>Participation reference:</b> ${esc(participation.id)}<br><b>Village / गाँव:</b> ${esc(villageName(c.villageId).hi)} / ${esc(villageName(c.villageId).en)}<br><b>Ward / वार्ड:</b> ${c.ward}<br><b>Time / समय:</b> ${new Date(rec.at).toLocaleString()}<br><b>Verification hash:</b> ${esc(rec.ballotHash)}</div><div class="notice" style="margin-top:8px">Secret-ballot design: the participation register does not store the selected candidate. The tally record is separate. यह आधिकारिक चुनाव प्रमाण नहीं है।</div><button class="primary" onclick="printReceipt('${esc(rec.id)}')">Print voting card / मतदान कार्ड प्रिंट करें</button>`);
 }
+function printReceipt(id){const v=db.votes.find(x=>x.id===id);if(!v)return;const c=candidateById(v.candidateId);const w=window.open('','_blank','width=700,height=700');if(!w)return;w.document.write('<!doctype html><html><head><title>Vote Receipt</title><style>body{font-family:Arial;padding:30px} .card{border:2px solid #123e5e;border-radius:16px;padding:24px;max-width:560px;margin:auto}h1{font-size:22px}.line{padding:8px 0;border-bottom:1px solid #ddd}</style></head><body onload="window.print()"><div class="card"><h1>जनमत मतदान कार्ड / Public Opinion Voting Card</h1><div class="line"><b>Receipt:</b> '+esc(v.id)+'</div><div class="line"><b>Village:</b> '+esc(villageName(v.villageId).en)+' / '+esc(villageName(v.villageId).hi)+'</div><div class="line"><b>Ward:</b> '+v.ward+'</div><div class="line"><b>Recorded:</b> '+esc(new Date(v.at).toLocaleString())+'</div><div class="line"><b>Verification:</b> '+esc(v.ballotHash)+'</div><p>This is a public-opinion portal receipt, not an official election document.</p></div></body></html>');w.document.close()}
 function renderResults(){
   if(!db.settings.publicResultsVisible){q('#result-list').innerHTML='<div class="notice">Results hidden by admin / परिणाम प्रशासन द्वारा छिपाए गए हैं।</div>';return}
   const rows=allCandidates().map(c=>({...c,v: votesForCandidate(c.id)})).sort((a,b)=>b.v-a.v),total=rows.reduce((n,r)=>n+r.v,0),top=rows[0],pct=top&&total?Math.round(top.v/total*100):0;
@@ -413,6 +430,8 @@ function renderAdminSpecific(f,el){
  if(n==='device fingerprint')return el.innerHTML=`<div class="notice">Device fingerprint (local): ${esc(localStorage.getItem('MN_FP')||createFP())}</div>`;
  if(n==='security health')return el.innerHTML=`<div class="metrics"><div class="metric"><b>${db.securityEvents.length}</b><span>Security events</span></div><div class="metric"><b>${db.votes.length}</b><span>Votes</span></div><div class="metric"><b>${Object.keys(localStorage).length}</b><span>LocalStorage keys</span></div><div class="metric"><b>OK</b><span>Database</span></div></div>`;
  if(n==='live dashboard')return el.innerHTML=adminDashboardHTML();
+ if(n==='database backup')return el.innerHTML=downloadButtons('JSON backup','downloadBackup()');
+ if(n==='database restore')return el.innerHTML=`<input id="restore-file" type="file" accept="application/json"><button class="primary" style="margin-top:7px" onclick="restoreBackup()">Restore</button>`;
  if(n==='day visitors'||n==='week visitors'||n==='hourly activity'||n==='daily activity')return el.innerHTML=visitorDashboard();
  if(n==='ward analytics'||n==='candidate analytics'||n==='village analytics')return el.innerHTML=analyticsDashboard();
  if(n==='database backup')return el.innerHTML=downloadButtons('JSON backup','downloadBackup()');
@@ -425,11 +444,11 @@ function fillResWards(){const v=q('#res-village').value,p=db.villages[v];q('#res
 function initReservationEditor(){const v=q('#res-village');if(!v)return;v.innerHTML=VILLAGES.map(x=>'<option value="'+x.id+'">'+esc(x.hi)+' / '+esc(x.en)+'</option>').join('');fillResWards()}
 function saveReservation(){const v=q('#res-village').value,w=+q('#res-ward').value;db.villages[v].wards[w].reservationHi=q('#res-hi').value.trim()||'सामान्य';db.villages[v].wards[w].reservationEn=q('#res-en').value.trim()||'General';saveDB();toast('Reservation saved.','ok');renderAll()}
 function candidateForm(){
-return `<div class="form"><select id="cf-village">${VILLAGES.map(v=>`<option value="${v.id}">${v.hi}/${v.en}</option>`).join('')}</select><select id="cf-ward"></select><div class="grid g2">
+return `<div class="form"><select id="cf-village" onchange="fillCandidateWards()">${VILLAGES.map(v=>`<option value="${v.id}">${v.hi}/${v.en}</option>`).join('')}</select><select id="cf-ward"></select><div class="grid g2">
 ${adminInput('cf-name-hi','नाम — Hindi *')}${adminInput('cf-name-en','Name — English *')}${adminInput('cf-person-hi','पिता/पति — Hindi')}${adminInput('cf-person-en','Father/Spouse — English')}${adminInput('cf-post-hi','पद — Hindi')}${adminInput('cf-post-en','Post — English')}${adminInput('cf-party-hi','दल — Hindi')}${adminInput('cf-party-en','Party — English')}${adminInput('cf-cat-hi','वर्ग — Hindi')}${adminInput('cf-cat-en','Category — English')}${adminInput('cf-symbol','Election symbol name / चुनाव चिन्ह')}
 ${adminInput('cf-city-hi','शहर — Hindi','जालौर')}${adminInput('cf-city-en','City — English','Jalore')}
 </div><label>Candidate photo / उम्मीदवार फोटो</label><input id="cf-photo" type="file" accept="image/*"><label>Symbol poster (optional)</label><input id="cf-symbol-file" type="file" accept="image/*"><button class="primary" onclick="saveCandidate()">Save candidate</button></div>
-<script>setTimeout(()=>fillCandidateWards(),0)</script>`
+`
 }
 function fillCandidateWards(){const v=q('#cf-village');if(!v||!q('#cf-ward'))return;q('#cf-ward').innerHTML=Object.values(db.villages[v.value].wards).map(w=>`<option value="${w.number}">Ward ${w.number}</option>`).join('')}
 async function fileData(input){const f=q(input)?.files?.[0];if(!f)return'';return await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
@@ -452,9 +471,9 @@ function downloadButtons(label,fn){return `<button class="primary" onclick="${fn
 function csv(rows){return rows.map(r=>r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\\n')}
 function dl(text,name,type='text/plain'){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([text],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function exportCandidatesCSV(){dl(csv([['Village','Ward','Hindi Name','English Name','Party','Symbol'],...db.candidates.map(c=>[villageName(c.villageId).en,c.ward,c.nameHi,c.nameEn,c.partyEn,c.symbolNameEn])]),'candidates.csv','text/csv')}
-function exportVoterCSV(){dl(csv([['Vote ID','Village','Ward','Candidate','Mobile','Time'],...db.votes.map(v=>{const c=candidateById(v.candidateId);return[v.id,villageName(v.villageId).en,v.ward,c?.nameEn||'',v.mobile,v.at]})]),'voter-register.csv','text/csv')}
+function exportVoterCSV(){dl(csv([['Participation ID','Village','Ward','Masked Mobile','Receipt ID','Time'],...db.voterRegistry.map(v=>[v.id,villageName(v.villageId).en,v.ward,v.maskedMobile,v.receiptId,v.at])]),'participation-register.csv','text/csv')}
 function toggleTool(key,label){return `<div class="notice"><b>${esc(label)}</b><br>Current: ${db.settings[key]?'ON':'OFF'}</div><button class="primary" style="margin-top:7px" onclick="db.settings['${key}']=!db.settings['${key}'];saveDB();renderAll();renderAdminTool(state.adminFeature)">Toggle</button>`}
-function voteAuditTable(){return `<div class="table-wrap"><table class="table"><thead><tr><th>Vote ID</th><th>Village</th><th>Ward</th><th>Candidate</th><th>Mobile</th><th>Time</th></tr></thead><tbody>${db.votes.map(v=>{const c=candidateById(v.candidateId);return `<tr><td>${esc(v.id)}</td><td>${esc(villageName(v.villageId).en)}</td><td>${v.ward}</td><td>${esc(c?.nameEn||'Removed')}</td><td>${esc(v.mobile)}</td><td>${esc(v.at)}</td></tr>`}).join('')||'<tr><td colspan="6">No votes</td></tr>'}</tbody></table></div>`}
+function voteAuditTable(){return `<div class="table-wrap"><table class="table"><thead><tr><th>Ballot ID</th><th>Village</th><th>Ward</th><th>Candidate</th><th>Recorded</th><th>Hash</th></tr></thead><tbody>${db.votes.map(v=>{const c=candidateById(v.candidateId);return `<tr><td>${esc(v.id)}</td><td>${esc(villageName(v.villageId).en)}</td><td>${v.ward}</td><td>${esc(c?.nameEn||'Removed')}</td><td>${esc(v.at)}</td><td style="word-break:break-all">${esc(v.ballotHash||'')}</td></tr>`}).join('')||'<tr><td colspan="6">No votes</td></tr>'}</tbody></table></div><div class="notice" style="margin-top:8px">Participation identity data is intentionally separated from ballot choice data.</div>`}
 function resetByWardForm(){return `<div class="form"><select id="rv-v">${VILLAGES.map(v=>`<option value="${v.id}">${v.hi}/${v.en}</option>`).join('')}</select><input id="rv-w" type="number" min="1" placeholder="Ward number"><button class="danger" onclick="resetWardVotes()">Reset ward votes</button></div>`}
 function resetWardVotes(){const v=q('#rv-v').value,w=+q('#rv-w').value;db.votes=db.votes.filter(x=>!(x.villageId===v&&x.ward===w));saveDB();renderAll();renderAdminTool(state.adminFeature);toast('Ward votes reset.','ok')}
 function resetByVillageForm(){return `<div class="form"><select id="rvl-v">${VILLAGES.map(v=>`<option value="${v.id}">${v.hi}/${v.en}</option>`).join('')}</select><button class="danger" onclick="resetVillageVotes()">Reset village votes</button></div>`}
@@ -468,12 +487,14 @@ function deleteNotification(id){db.notifications=db.notifications.filter(x=>x.id
 function notificationSettings(){return `<div class="grid g2">${adminInput('ticker-hi','Live ticker Hindi',db.settings.liveTickerHi)}${adminInput('ticker-en','Live ticker English',db.settings.liveTickerEn)}</div><button class="primary" style="margin-top:7px" onclick="db.settings.liveTickerHi=q('#ticker-hi').value;db.settings.liveTickerEn=q('#ticker-en').value;saveDB();renderAll();toast('Ticker updated.','ok')">Save ticker</button>`}
 function promotionTool(n){return `<div class="form">${adminInput('promo-hi','Promotion Hindi',db.promotions[0]?.hi||'')}${adminInput('promo-en','Promotion English',db.promotions[0]?.en||'')}<button class="primary" onclick="db.promotions[0]={hi:q('#promo-hi').value,en:q('#promo-en').value,at:now()};saveDB();toast('Promotion saved.','ok')">Save promotion</button><div class="notice" style="margin-top:7px">Promotion controls are configuration only. Payment/ad-network processing is not included in a single-file browser app.</div></div>`}
 function courtTool(n){return `<div class="notice">Authorized verification only. Browser-local storage is not immutable legal evidence.</div><div class="form" style="margin-top:8px">${adminInput('court-mobile','Voter mobile')}<button class="primary" onclick="courtLookup()">Verify record</button><button class="secondary" onclick="exportVerification()">Export JSON</button><button class="secondary" onclick="window.print()">Print report</button><div id="court-out"></div></div>`}
-function courtLookup(){const m=(q('#court-mobile').value||'').replace(/\D/g,'');const rows=db.votes.filter(v=>v.mobile===m);q('#court-out').innerHTML=`<div class="notice" style="margin-top:8px"><b>${rows.length?'RECORD PRESENT':'NO MATCH'}</b><br>${rows.map(v=>`${esc(v.id)} · ${esc(villageName(v.villageId).en)} · Ward ${v.ward} · ${esc(candidateById(v.candidateId)?.nameEn||'Removed')} · ${esc(v.at)}`).join('<br>')}</div>`;db.securityEvents.push({at:now(),event:'Court lookup',detail:`Mobile ${m} · matches ${rows.length}`});saveDB()}
+async function courtLookup(){const m=(q('#court-mobile').value||'').replace(/\D/g,'');if(!/^\d{10}$/.test(m))return toast('Enter a 10 digit mobile.','error');const rows=[];for(const v of Object.values(db.villages)){const key=await hashText(v.id+'|'+m);rows.push(...db.voterRegistry.filter(x=>x.voterKey===key));}q('#court-out').innerHTML=`<div class="notice" style="margin-top:8px"><b>${rows.length?'PARTICIPATION RECORD PRESENT':'NO PARTICIPATION MATCH'}</b><br>${rows.map(v=>`${esc(v.id)} · ${esc(villageName(v.villageId).en)} · Ward ${v.ward} · Receipt ${esc(v.receiptId)} · ${esc(v.at)}`).join('<br>')}<br><br>Candidate choice is intentionally not displayed in participation verification.</div>`;db.securityEvents.push({at:now(),event:'Court participation lookup',detail:`matches ${rows.length}`});saveDB()}
 async function exportVerification(){const text=JSON.stringify({generatedAt:now(),official:false,records:db.votes},null,2);dl(text,'verification.json','application/json')}
 function securityTable(){return `<div class="table-wrap"><table class="table"><thead><tr><th>Time</th><th>Event</th><th>Detail</th></tr></thead><tbody>${db.securityEvents.slice().reverse().map(x=>`<tr><td>${esc(x.at)}</td><td>${esc(x.event)}</td><td>${esc(x.detail)}</td></tr>`).join('')||'<tr><td colspan="3">No security events.</td></tr>'}</tbody></table></div>`}
 function saveAdminPassword(){const p=q('#new-pass').value;if(p.length<6)return toast('Use at least 6 characters.','error');db.settings.masterPassword=p;saveDB();toast('Password changed.','ok')}
 function saveSettingNumber(key,id){db.settings[key]=Math.max(1,+q('#'+id).value||30);saveDB();toast('Setting saved.','ok')}
 function createFP(){let fp=localStorage.getItem('MN_FP');if(!fp){fp='FP-'+Date.now()+'-'+navigator.userAgent.length+'-'+screen.width;localStorage.setItem('MN_FP',fp)}return fp}
+
+function liveSyncStatus(){return `<div class="metrics"><div class="metric"><b>${MN_CHANNEL?'ON':'OFF'}</b><span>Cross-tab live sync</span></div><div class="metric"><b>${db.meta.updatedAt||'—'}</b><span>Last local update</span></div></div><div class="notice" style="margin-top:8px">For real multi-device live results, connect a server endpoint in API_CONFIG. A static HTML file cannot securely share one database among all visitors.</div>`}
 function adminDashboardHTML(){const s=visitorStats();return `<div class="metrics"><div class="metric"><b>${db.votes.length}</b><span>Votes</span></div><div class="metric"><b>${db.candidates.length}</b><span>Candidates</span></div><div class="metric"><b>${s.day}</b><span>Day visitors</span></div><div class="metric"><b>${s.week}</b><span>Week visitors</span></div></div><div class="notice" style="margin-top:8px">Last DB update: ${esc(db.meta.updatedAt)}</div>`}
 function visitorDashboard(){const s=visitorStats();return `<div class="metrics"><div class="metric"><b>${s.day}</b><span>Day visitors</span></div><div class="metric"><b>${s.week}</b><span>Week visitors</span></div><div class="metric"><b>${db.visitors.length}</b><span>Stored sessions</span></div></div>`}
 function analyticsDashboard(){return `<div class="grid g2"><div class="panel"><h4>Candidate analytics</h4>${db.candidates.slice(0,20).map(c=>`<div class="notice" style="margin:5px 0">${esc(c.nameHi)} · ${votesForCandidate(c.id)}</div>`).join('')}</div><div class="panel"><h4>Village analytics</h4>${VILLAGES.map(v=>`<div class="notice" style="margin:5px 0">${esc(v.hi)} · ${db.votes.filter(x=>x.villageId===v.id).length} votes</div>`).join('')}</div></div>`}
