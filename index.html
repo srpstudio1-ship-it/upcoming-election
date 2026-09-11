@@ -7688,5 +7688,74 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<!-- MONETIZATION MODULE: 5 realistic revenue channels; self-contained and feature-preserving -->
+<style id="ep-monetization-style">
+#ep-money-public{max-width:1180px;margin:24px auto;padding:0 16px;font-family:inherit}
+.ep-money-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.ep-money-card{border:1px solid #e2e8f0;border-radius:16px;padding:18px;background:#fff;box-shadow:0 4px 18px rgba(15,23,42,.06)}
+.ep-money-card h3{margin:0 0 7px;font-size:17px;font-weight:800}.ep-money-card p{margin:0 0 12px;color:#64748b;font-size:13px;line-height:1.55}
+.ep-money-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer;text-decoration:none;background:#0f172a;color:#fff}
+.ep-money-btn.alt{background:#e2e8f0;color:#0f172a}.ep-money-muted{font-size:11px;color:#94a3b8;margin-top:8px}
+#ep-money-admin{margin:18px 0;padding:18px;border:1px solid #cbd5e1;border-radius:16px;background:#f8fafc}
+.ep-money-admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.ep-money-admin-grid input,.ep-money-admin-grid textarea,.ep-money-admin-grid select{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}
+.ep-money-admin-grid textarea{min-height:72px}.ep-money-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ep-money-status{font-size:12px;font-weight:700;margin-top:8px}
+</style>
+<script>
+(function(){
+'use strict';
+const KEY='EP_MONETIZATION_V1';
+const defaults={
+ adsense:{enabled:false,publisherId:'',slotId:'',label:'Advertisement / विज्ञापन'},
+ sponsor:{enabled:false,title:'Local Business Sponsor / स्थानीय व्यवसाय प्रायोजक',business:'',description:'',url:'',phone:''},
+ featured:{enabled:false,title:'Featured Local Listing / प्रमुख स्थानीय सूची',description:'',url:'',price:'',contact:''},
+ announcement:{enabled:false,title:'Sponsored Announcement / प्रायोजित सूचना',text:'',url:'',price:'',contact:''},
+ donation:{enabled:false,title:'Support This Portal / पोर्टल का सहयोग करें',upi:'',amount:'',note:'यदि यह पोर्टल उपयोगी लगे तो स्वेच्छा से सहयोग करें।'}
+};
+function load(){try{return Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return JSON.parse(JSON.stringify(defaults))}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));return d}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function moneyClick(channel){try{const d=load();d.stats=d.stats||{};d.stats[channel]=(d.stats[channel]||0)+1;save(d)}catch(e){}}
+function renderPublic(){
+ let host=document.getElementById('ep-money-public'); if(!host)return;
+ const d=load(); let cards=[];
+ if(d.adsense.enabled){
+   cards.push(`<div class="ep-money-card"><h3>${esc(d.adsense.label)}</h3><div id="ep-adsense-slot" style="min-height:70px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:10px;color:#94a3b8;font-size:12px">Ad space</div><div class="ep-money-muted">Requires an approved Google AdSense account and its publisher/slot IDs.</div></div>`);
+ }
+ if(d.sponsor.enabled&&d.sponsor.business){cards.push(`<div class="ep-money-card"><h3>🤝 ${esc(d.sponsor.title)}</h3><p><b>${esc(d.sponsor.business)}</b><br>${esc(d.sponsor.description)}</p>${d.sponsor.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.sponsor.url)}" onclick="EPMoney.click('sponsor')">Visit Sponsor</a>`:''}${d.sponsor.phone?` <a class="ep-money-btn alt" href="tel:${esc(d.sponsor.phone)}" onclick="EPMoney.click('sponsor')">Call</a>`:''}</div>`)}
+ if(d.featured.enabled&&d.featured.title){cards.push(`<div class="ep-money-card"><h3>⭐ ${esc(d.featured.title)}</h3><p>${esc(d.featured.description)}</p>${d.featured.price?`<p><b>Listing price: ${esc(d.featured.price)}</b></p>`:''}${d.featured.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.featured.url)}" onclick="EPMoney.click('featured')">View Listing</a>`:''}</div>`)}
+ if(d.announcement.enabled&&d.announcement.title){cards.push(`<div class="ep-money-card"><h3>📢 ${esc(d.announcement.title)}</h3><p>${esc(d.announcement.text)}</p>${d.announcement.url?`<a class="ep-money-btn" target="_blank" rel="noopener" href="${esc(d.announcement.url)}" onclick="EPMoney.click('announcement')">Read More</a>`:''}</div>`)}
+ if(d.donation.enabled&&d.donation.upi){const uri='upi://pay?pa='+encodeURIComponent(d.donation.upi)+'&pn='+encodeURIComponent(d.donation.title)+'&am='+encodeURIComponent(d.donation.amount||'')+'&cu=INR';cards.push(`<div class="ep-money-card"><h3>❤️ ${esc(d.donation.title)}</h3><p>${esc(d.donation.note)}</p><a class="ep-money-btn" href="${esc(uri)}" onclick="EPMoney.click('donation')">Pay via UPI</a><div class="ep-money-muted">UPI ID: ${esc(d.donation.upi)}</div></div>`)}
+ host.innerHTML=cards.length?`<div class="ep-money-grid">${cards.join('')}</div>`:'';
+}
+function renderAdmin(){
+ let host=document.getElementById('ep-money-admin');if(!host)return;const d=load();
+ host.innerHTML=`<details><summary style="cursor:pointer;font-weight:900;font-size:16px">💰 Monetization / कमाई के साधन</summary>
+ <p style="font-size:12px;color:#64748b;margin:10px 0">Enable only the channels you actually configure. AdSense requires Google approval; payments should be handled through your own verified payment provider.</p>
+ <div class="ep-money-admin-grid" style="margin-top:10px">
+ <label><input id="pm-ads" type="checkbox" ${d.adsense.enabled?'checked':''}> Enable AdSense space</label>
+ <input id="pm-pub" placeholder="AdSense Publisher ID" value="${esc(d.adsense.publisherId)}"><input id="pm-slot" placeholder="Ad slot ID" value="${esc(d.adsense.slotId)}">
+ <label><input id="pm-sp" type="checkbox" ${d.sponsor.enabled?'checked':''}> Enable sponsor</label>
+ <input id="pm-spb" placeholder="Sponsor business name" value="${esc(d.sponsor.business)}"><input id="pm-spu" placeholder="Sponsor website URL" value="${esc(d.sponsor.url)}"><input id="pm-spp" placeholder="Sponsor phone" value="${esc(d.sponsor.phone)}"><textarea id="pm-spd" placeholder="Sponsor description">${esc(d.sponsor.description)}</textarea>
+ <label><input id="pm-fe" type="checkbox" ${d.featured.enabled?'checked':''}> Enable paid featured listing</label>
+ <input id="pm-fet" placeholder="Featured listing title" value="${esc(d.featured.title)}"><input id="pm-fep" placeholder="Price / package" value="${esc(d.featured.price)}"><input id="pm-feu" placeholder="Listing URL" value="${esc(d.featured.url)}"><textarea id="pm-fed" placeholder="Listing description">${esc(d.featured.description)}</textarea>
+ <label><input id="pm-an" type="checkbox" ${d.announcement.enabled?'checked':''}> Enable sponsored announcement</label>
+ <input id="pm-ant" placeholder="Announcement title" value="${esc(d.announcement.title)}"><input id="pm-anp" placeholder="Price / package" value="${esc(d.announcement.price)}"><input id="pm-anu" placeholder="Announcement URL" value="${esc(d.announcement.url)}"><textarea id="pm-anx" placeholder="Announcement text">${esc(d.announcement.text)}</textarea>
+ <label><input id="pm-do" type="checkbox" ${d.donation.enabled?'checked':''}> Enable UPI support/donation</label>
+ <input id="pm-upi" placeholder="Your UPI ID e.g. name@upi" value="${esc(d.donation.upi)}"><input id="pm-amt" placeholder="Optional fixed INR amount" value="${esc(d.donation.amount)}"><input id="pm-dtitle" placeholder="Donation title" value="${esc(d.donation.title)}"><textarea id="pm-note" placeholder="Donation note">${esc(d.donation.note)}</textarea>
+ </div><div class="ep-money-actions"><button type="button" class="ep-money-btn" onclick="EPMoney.saveAdmin()">Save Monetization Settings</button><button type="button" class="ep-money-btn alt" onclick="EPMoney.reset()">Reset</button></div><div id="pm-status" class="ep-money-status"></div>
+ </details>`;
+}
+function val(id){return document.getElementById(id)?.value?.trim()||''}function chk(id){return !!document.getElementById(id)?.checked}
+window.EPMoney={click:moneyClick,saveAdmin:function(){const d=load();d.adsense={enabled:chk('pm-ads'),publisherId:val('pm-pub'),slotId:val('pm-slot'),label:d.adsense.label};d.sponsor={enabled:chk('pm-sp'),business:val('pm-spb'),description:val('pm-spd'),url:val('pm-spu'),phone:val('pm-spp'),title:d.sponsor.title};d.featured={enabled:chk('pm-fe'),title:val('pm-fet')||defaults.featured.title,description:val('pm-fed'),url:val('pm-feu'),price:val('pm-fep'),contact:''};d.announcement={enabled:chk('pm-an'),title:val('pm-ant')||defaults.announcement.title,text:val('pm-anx'),url:val('pm-anu'),price:val('pm-anp'),contact:''};d.donation={enabled:chk('pm-do'),title:val('pm-dtitle')||defaults.donation.title,upi:val('pm-upi'),amount:val('pm-amt'),note:val('pm-note')||defaults.donation.note};save(d);renderPublic();const st=document.getElementById('pm-status');if(st)st.textContent='Saved successfully / सफलतापूर्वक सेव हुआ';},reset:function(){save(JSON.parse(JSON.stringify(defaults)));renderAdmin();renderPublic()},renderPublic,renderAdmin};
+function boot(){
+ if(!document.getElementById('ep-money-public')){const x=document.createElement('section');x.id='ep-money-public';document.body.appendChild(x)}
+ renderPublic();
+ const obs=new MutationObserver(()=>{if(!document.getElementById('ep-money-admin')){const admin=document.querySelector('#admin-dashboard-container, #admin-dashboard, .admin-dashboard');if(admin){const x=document.createElement('div');x.id='ep-money-admin';admin.appendChild(x);renderAdmin()}}});obs.observe(document.body,{childList:true,subtree:true});
+ setTimeout(()=>{const admin=document.querySelector('#admin-dashboard-container, #admin-dashboard, .admin-dashboard');if(admin&&!document.getElementById('ep-money-admin')){const x=document.createElement('div');x.id='ep-money-admin';admin.appendChild(x);renderAdmin()}},500);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
 </body>
 </html>
