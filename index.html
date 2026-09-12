@@ -4183,7 +4183,95 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   }
   function saveVillage(){const v=villageId();if(!v)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');put('EP_SAVED_VILLAGE',v);toast(t('गाँव इस डिवाइस पर सेव हो गया।','Village saved on this device.'),'success')}
   async function shareVillage(){const v=villageId(),p=dbx()?.panchayats?.[v],url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p?.name||'Panchayat Portal',text:`${p?.name||v} — ${t('सार्वजनिक जनमत पोर्टल','Public opinion portal')}`,url})}else if(navigator.clipboard){await navigator.clipboard.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(String(e?.name)!=='AbortError')toast(t('शेयर करना पूरा नहीं हो सका।','Sharing could not be completed.'),'error')}}
-  function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
+  function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table>
+<!-- ============================================================
+     RAJASTHAN STATE > DISTRICT > TEHSIL > VILLAGE DIRECTORY
+     ADDITIVE MODULE: does not delete or replace existing features.
+     Uses Rajasthan Government GIS village layer when available and
+     caches the hierarchy locally for subsequent visits.
+     ============================================================ -->
+<style id="ep-rajasthan-hierarchy-style">
+#ep-rajasthan-directory{margin:24px 0;background:linear-gradient(135deg,#fff4e5,#fff 48%,#edf8ef);border:1px solid #c8d9ce;border-radius:22px;box-shadow:0 18px 45px rgba(6,35,61,.08);padding:24px;position:relative;overflow:hidden}
+#ep-rajasthan-directory:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-rj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.ep-rj-field label{display:block;font-size:11px;font-weight:900;color:#36536a;margin-bottom:6px}.ep-rj-field select{width:100%;min-height:46px;border:1px solid #bcd1c3;border-radius:12px;padding:10px 12px;background:#fff;color:#102f47;font-weight:700;outline:none}.ep-rj-field select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.14)}
+.ep-rj-status{margin-top:14px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid #d6e2d9;font-size:11px;color:#526a7b}.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ep-rj-btn{border:1px solid #b9cfc0;border-radius:10px;background:#fff;padding:9px 12px;font-size:11px;font-weight:900;color:#082742;cursor:pointer}.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808)}.ep-rj-btn:disabled{opacity:.5;cursor:not-allowed}
+#ep-rj-election-catalog{margin-top:16px;border-top:1px solid #d8e4db;padding-top:16px}.ep-rj-election-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.ep-rj-election-card{background:#fff;border:1px solid #d6e2da;border-radius:14px;padding:12px}.ep-rj-election-card strong{display:block;color:#082742;font-size:12px}.ep-rj-election-card span{display:block;color:#667b8b;font-size:10px;margin-top:4px;line-height:1.5}
+@media(max-width:950px){.ep-rj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-election-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ep-rj-grid,.ep-rj-election-grid{grid-template-columns:1fr}}
+</style>
+<script id="ep-rajasthan-hierarchy-module">
+(function(){
+'use strict';
+const RJ={
+  state:'Rajasthan',
+  // Current 41-district state structure, aligned with the CEO Rajasthan 2026 fact sheet.
+  districts:['Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Sawai Madhopur','Salumbar','Sanchore','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'],
+  elections:[
+   ['General Election of State Assembly-2003','State Assembly','2003'],['General Election of State Assembly-2008','State Assembly','2008'],['General Election of State Assembly-2013','State Assembly','2013'],['General Election of State Assembly-2018','State Assembly','2018'],['General Election of State Assembly-2023','State Assembly','2023'],
+   ['General Election of Lok Sabha-2004','Lok Sabha','2004'],['General Election of Lok Sabha-2009','Lok Sabha','2009'],['General Election of Lok Sabha-2014','Lok Sabha','2014'],['General Election of Lok Sabha-2019','Lok Sabha','2019'],['General Elections of Lok Sabha-2024','Lok Sabha','2024'],
+   ['Assembly Bye-Election-2014','Assembly Bye-Election','2014'],['Assembly Bye-Election-2017','Assembly Bye-Election','2017'],['Bye-Election-2018 (Ajmer & Alwar; Mandalgarh)','Assembly Bye-Election','2018'],['Assembly Bye-Election-Oct/Nov-2021','Assembly Bye-Election','2021'],['Assembly Bye-Election-Nov/Dec-2022','Assembly Bye-Election','2022'],['Assembly Bye-Election-Nov-2024','Assembly Bye-Election','2024'],
+   ['Rajya Sabha Election-2016','Rajya Sabha','2016'],['Rajya Sabha Bye-Election-2019','Rajya Sabha Bye-Election','2019'],['Rajya Sabha Election-2020','Rajya Sabha','2020'],['Rajya Sabha Bye-Election-2024','Rajya Sabha Bye-Election','2024'],['Rajya Sabha Election-2026','Rajya Sabha','2026'],
+   ['16th Presidential Election-2022','Presidential','2022'],
+   ['Rajasthan Panchayati Raj Elections','Local Body: Panchayati Raj','Multiple cycles'],['Zila Parishad Election','Local Body: Panchayati Raj','Multiple cycles'],['Panchayat Samiti Election','Local Body: Panchayati Raj','Multiple cycles'],['Gram Panchayat / Sarpanch Election','Local Body: Panchayati Raj','Multiple cycles'],['Ward Panch Election','Local Body: Panchayati Raj','Multiple cycles'],
+   ['Municipal Corporation Election','Local Body: Urban','Multiple cycles'],['Municipal Council Election','Local Body: Urban','Multiple cycles'],['Municipality / Nagar Palika Election','Local Body: Urban','Multiple cycles'],['Nagar Parishad Election','Local Body: Urban','Multiple cycles']
+  ]
+};
+const API='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/rest/services/Common/BaseMap/MapServer/205/query';
+let records=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+function cache(){try{localStorage.setItem('EP_RJ_HIERARCHY_V2',JSON.stringify({savedAt:Date.now(),records}));}catch(e){}}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem('EP_RJ_HIERARCHY_V2')||'null');if(x?.records?.length){records=x.records;return true}}catch(e){}return false}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))}
+function values(field,filter){let r=records;if(filter)r=r.filter(filter);return uniq(r.map(x=>x[field]));}
+function fieldVal(x,en,hi){return x[en]||x[hi]||''}
+function html(){
+ const main=document.querySelector('main'); if(!main||document.getElementById('ep-rajasthan-directory'))return;
+ const sec=document.createElement('section');sec.id='ep-rajasthan-directory';sec.innerHTML=`<div><span style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#d66b14">RAJASTHAN ADMINISTRATIVE DIRECTORY</span><h2 style="margin:4px 0 0;font-size:22px;font-weight:950;color:#082742">State → District → Tehsil → Village</h2><p style="margin:5px 0 0;font-size:11px;color:#607587">राजस्थान के लिए जिला, तहसील और गाँव को उनके वास्तविक प्रशासनिक क्रम में चुनें। उपलब्ध होने पर आधिकारिक राजस्थान GIS village directory से नाम लोड किए जाते हैं।</p></div>
+ <div class="ep-rj-grid"><div class="ep-rj-field"><label>STATE / राज्य</label><select id="ep-rj-state"><option value="Rajasthan">Rajasthan / राजस्थान</option></select></div><div class="ep-rj-field"><label>DISTRICT / जिला</label><select id="ep-rj-district"><option value="">Select District</option></select></div><div class="ep-rj-field"><label>TEHSIL / तहसील</label><select id="ep-rj-tehsil"><option value="">Select Tehsil</option></select></div><div class="ep-rj-field"><label>VILLAGE / गाँव</label><select id="ep-rj-village"><option value="">Select Village</option></select></div></div>
+ <div class="ep-rj-actions"><button class="ep-rj-btn primary" id="ep-rj-apply">Use Village in Portal</button><button class="ep-rj-btn" id="ep-rj-refresh">Refresh Official Directory</button><button class="ep-rj-btn" id="ep-rj-clear">Clear</button></div><div class="ep-rj-status" id="ep-rj-status">Directory is initializing…</div>
+ <div id="ep-rj-election-catalog"><strong style="font-size:14px;color:#082742">Rajasthan Election Catalogue / राजस्थान चुनाव सूची</strong><div class="ep-rj-election-grid" id="ep-rj-election-grid"></div></div>`;
+ main.insertBefore(sec,main.firstElementChild?.nextSibling||main.firstChild);
+ document.getElementById('ep-rj-election-grid').innerHTML=RJ.elections.map(e=>`<div class="ep-rj-election-card"><strong>${esc(e[0])}</strong><span>${esc(e[1])} · ${esc(e[2])}</span></div>`).join('');
+ bind();
+}
+function fillDistricts(){const d=document.getElementById('ep-rj-district');if(!d)return;const names=records.length?values('district'):RJ.districts;d.innerHTML='<option value="">Select District</option>'+names.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillTehsils(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;const district=d.value;t.innerHTML='<option value="">Select Tehsil</option>';v.innerHTML='<option value="">Select Village</option>';if(!district)return;let a=values('tehsil',x=>norm(x.district)===norm(district));t.innerHTML+='<option value="__ALL__">All Tehsils</option>'+a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillVillages(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;v.innerHTML='<option value="">Select Village</option>';if(!d.value||!t.value||t.value==='__ALL__')return;const a=values('village',x=>norm(x.district)===norm(d.value)&&norm(x.tehsil)===norm(t.value));v.innerHTML+=a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function bind(){
+ document.getElementById('ep-rj-district').onchange=fillTehsils;document.getElementById('ep-rj-tehsil').onchange=fillVillages;
+ document.getElementById('ep-rj-clear').onclick=()=>{document.getElementById('ep-rj-district').value='';fillTehsils();setStatus('Selection cleared.')};
+ document.getElementById('ep-rj-apply').onclick=applyVillage;
+ document.getElementById('ep-rj-refresh').onclick=()=>loadOfficial(true);
+}
+function setStatus(s){const e=document.getElementById('ep-rj-status');if(e)e.textContent=s}
+function applyVillage(){const village=document.getElementById('ep-rj-village')?.value;if(!village)return setStatus('Select a village first.');let row=records.find(x=>norm(x.village)===norm(village)&&norm(x.tehsil)===norm(document.getElementById('ep-rj-tehsil')?.value));if(!row)return setStatus('Village is not available in the loaded directory.');let pId=Object.keys(window.DBManager?.get?.()?.panchayats||{}).find(k=>norm(window.DBManager.get().panchayats[k]?.name)===norm(village));if(pId){const sel=document.getElementById('user-panchayat-select');if(sel){sel.value=pId;window.UserInterface?.handleVillageSelection?.()}}else{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(row));setStatus(`${row.district} → ${row.tehsil} → ${row.village} selected. Add/manage its portal candidate data through Admin tools.`);}
+ const top=document.getElementById('voting-section');if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadOfficial(force){
+ if(!force&&loadCache()){fillDistricts();setStatus(`Cached Rajasthan directory loaded (${records.length.toLocaleString()} village records). Checking official source in background…`);loadOfficial(true);return}
+ setStatus('Loading Rajasthan official GIS village directory…');
+ try{
+  const all=[];let offset=0;const batch=1000;
+  for(let i=0;i<100;i++){
+   const u=new URL(API);u.searchParams.set('where','1=1');u.searchParams.set('outFields','DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_NAME,TEHSIL_NAME_H,VILLAGE_NM_H,CENSUS_NM_2011,GP_FINAL,GP_HINDI');u.searchParams.set('returnGeometry','false');u.searchParams.set('f','json');u.searchParams.set('resultRecordCount',String(batch));u.searchParams.set('resultOffset',String(offset));
+   const r=await fetch(u.toString(),{mode:'cors'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS error');const fs=j.features||[];if(!fs.length)break;
+   fs.forEach(f=>{const a=f.attributes||{};all.push({district:fieldVal(a,'DISTRICT_NAME_EN','DISTRICT_NAME_HI'),tehsil:fieldVal(a,'TEHSIL_NAME','TEHSIL_NAME_H'),village:fieldVal(a,'CENSUS_NM_2011','VILLAGE_NM_H')||fieldVal(a,'GP_FINAL','GP_HINDI'),gp:fieldVal(a,'GP_FINAL','GP_HINDI')})});
+   offset+=fs.length;if(fs.length<batch)break;
+  }
+  records=all.filter(x=>x.district&&x.tehsil&&x.village);cache();fillDistricts();setStatus(`Official Rajasthan directory loaded: ${records.length.toLocaleString()} village records across ${values('district').length} districts and ${values('tehsil').length} tehsils.`);
+ }catch(e){
+  if(!records.length){records=[];fillDistricts();setStatus('Official directory could not be reached right now. The 41-district Rajasthan list remains available; retry when online to load every tehsil and village.');}
+  else setStatus(`Official refresh failed; keeping the last cached directory (${records.length.toLocaleString()} records).`);
+  console.warn('Rajasthan hierarchy load:',e);
+ }
+}
+function init(){html();fillDistricts();loadOfficial(false)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,180),{once:true});else setTimeout(init,180);
+window.RajasthanHierarchy={refresh:()=>loadOfficial(true),getRecords:()=>records.slice(),elections:RJ.elections.slice()};
+})();
+</script>
+
+</body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
   function villageSummary(){const p=village();if(!p)return showHtml(['गाँव सारांश','Village Summary'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p);const total=rows.reduce((a,x)=>a+x.votes,0);showHtml(['गाँव सारांश','Village Summary'],`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div><strong>${p.totalWards}</strong><div style="font-size:11px;color:#687a8b">${esc(t('वार्ड','Wards'))}</div></div><div><strong>${rows.length}</strong><div style="font-size:11px;color:#687a8b">${esc(t('उम्मीदवार','Candidates'))}</div></div><div><strong>${total}</strong><div style="font-size:11px;color:#687a8b">${esc(t('दर्ज जनमत वोट','Recorded votes'))}</div></div></div>`)}
   function wardSnapshot(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['वार्ड स्थिति','Ward Snapshot'],`<div>${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rows=candidatesFor(p).filter(x=>x.w===w),votes=rows.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>Ward ${w}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(wd.reservation||'General')} · ${rows.length} ${esc(t('उम्मीदवार','candidates'))} · ${votes} ${esc(t('वोट','votes'))}</div></div>`}).join('')}</div>`)}
   function guide(){showHtml(['मतदान मार्गदर्शिका','Voting Guide'],`<div style="line-height:1.8;font-size:13px"><p><b>1.</b> ${esc(t('गाँव चुनें और पूरे गाँव के उम्मीदवार देखें।','Choose a village and review candidates across the whole village.'))}</p><p><b>2.</b> ${esc(t('उम्मीदवार की फोटो, नाम, पद, पार्टी और वार्ड जाँचें।','Review the candidate photo, name, post, party and ward.'))}</p><p><b>3.</b> ${esc(t('उम्मीदवार चुनें और अपना 10-अंकीय मोबाइल नंबर दर्ज करें।','Select a candidate and enter your 10-digit mobile number.'))}</p><p><b>4.</b> ${esc(t('यह केवल सार्वजनिक राय/जनमत रिकॉर्ड है।','This is only a public-opinion record.'))}</p><p><b>5.</b> ${esc(t('वास्तविक चुनाव के लिए संबंधित आधिकारिक चुनाव प्राधिकरण की जानकारी देखें।','For real elections, consult the relevant official election authority.'))}</p></div>`)}
@@ -5269,7 +5357,95 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   function featureCompare(){const list=Object.values(DB()?.panchayats||{}).flatMap(allCandidates);if(list.length<2)return toast(t('कम से कम दो उम्मीदवार चाहिए।','At least two candidates are required.'),'error');const opt=list.map((x,i)=>`<option value="${i}">${esc(x.c.name||'Candidate')} — ${esc(x.p.name)} W${x.w}</option>`).join('');const d=document.createElement('div');d.innerHTML=`<div class="ep-access-grid"><select id="ep-cmp-a" class="ep-full-select">${opt}</select><select id="ep-cmp-b" class="ep-full-select">${opt}</select></div><div id="ep-cmp-out" style="margin-top:14px"></div>`;showModal(t('उम्मीदवार तुलना','Candidate Comparison'),d);document.getElementById('ep-cmp-b').value='1';const render=()=>{const a=list[+document.getElementById('ep-cmp-a').value||0],b=list[+document.getElementById('ep-cmp-b').value||1],card=x=>`<div style="border:1px solid #dce6e0;border-radius:14px;padding:14px"><strong style="color:#0b2945">${esc(x.c.name||'')}</strong><div style="font-size:11px;line-height:1.75;color:#68798a;margin-top:6px">${esc(t('गाँव','Village'))}: ${esc(x.p.name)}<br>${esc(t('वार्ड','Ward'))}: ${x.w}<br>${esc(t('पद','Post'))}: ${esc(x.c.post||'—')}<br>${esc(t('पार्टी','Party'))}: ${esc(x.c.partyName||x.c.party||'Independent')}<br>${esc(t('श्रेणी','Category'))}: ${esc(x.c.category||'—')}<br>${esc(t('दर्ज वोट','Recorded votes'))}: ${x.votes}</div></div>`;document.getElementById('ep-cmp-out').innerHTML=`<div class="ep-access-grid">${card(a)}${card(b)}</div>`};document.getElementById('ep-cmp-a').onchange=render;document.getElementById('ep-cmp-b').onchange=render;render()}
   function featureSave(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');setLS('EP_SAVED_VILLAGE',p.id);toast(t('गाँव सेव हो गया।','Village saved.'),'success')}
   async function featureShare(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p.name,text:t('स्वतंत्र सार्वजनिक राय पोर्टल','Independent public-opinion portal'),url})}else{await navigator.clipboard?.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(e?.name!=='AbortError')toast(t('शेयर नहीं हो सका।','Could not share.'),'error')}}
-  function featurePrint(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक है।','Print window is blocked.'),'error');const rows=allCandidates(p);w.document.write(`<!doctype html><html><head><title>${esc(p.name)}</title><style>body{font-family:Arial;padding:25px;color:#17324a}h1{color:#0b2945}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d5e0db;padding:8px;font-size:12px}th{background:#fff0dc}</style></head><body><h1>${esc(p.name)}</h1><p>${esc(t('यह केवल स्वतंत्र सार्वजनिक राय है, आधिकारिक परिणाम नहीं।','Independent public opinion only; not an official result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>w.print(),200)}
+  function featurePrint(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक है।','Print window is blocked.'),'error');const rows=allCandidates(p);w.document.write(`<!doctype html><html><head><title>${esc(p.name)}</title><style>body{font-family:Arial;padding:25px;color:#17324a}h1{color:#0b2945}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d5e0db;padding:8px;font-size:12px}th{background:#fff0dc}</style></head><body><h1>${esc(p.name)}</h1><p>${esc(t('यह केवल स्वतंत्र सार्वजनिक राय है, आधिकारिक परिणाम नहीं।','Independent public opinion only; not an official result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table>
+<!-- ============================================================
+     RAJASTHAN STATE > DISTRICT > TEHSIL > VILLAGE DIRECTORY
+     ADDITIVE MODULE: does not delete or replace existing features.
+     Uses Rajasthan Government GIS village layer when available and
+     caches the hierarchy locally for subsequent visits.
+     ============================================================ -->
+<style id="ep-rajasthan-hierarchy-style">
+#ep-rajasthan-directory{margin:24px 0;background:linear-gradient(135deg,#fff4e5,#fff 48%,#edf8ef);border:1px solid #c8d9ce;border-radius:22px;box-shadow:0 18px 45px rgba(6,35,61,.08);padding:24px;position:relative;overflow:hidden}
+#ep-rajasthan-directory:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-rj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.ep-rj-field label{display:block;font-size:11px;font-weight:900;color:#36536a;margin-bottom:6px}.ep-rj-field select{width:100%;min-height:46px;border:1px solid #bcd1c3;border-radius:12px;padding:10px 12px;background:#fff;color:#102f47;font-weight:700;outline:none}.ep-rj-field select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.14)}
+.ep-rj-status{margin-top:14px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid #d6e2d9;font-size:11px;color:#526a7b}.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ep-rj-btn{border:1px solid #b9cfc0;border-radius:10px;background:#fff;padding:9px 12px;font-size:11px;font-weight:900;color:#082742;cursor:pointer}.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808)}.ep-rj-btn:disabled{opacity:.5;cursor:not-allowed}
+#ep-rj-election-catalog{margin-top:16px;border-top:1px solid #d8e4db;padding-top:16px}.ep-rj-election-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.ep-rj-election-card{background:#fff;border:1px solid #d6e2da;border-radius:14px;padding:12px}.ep-rj-election-card strong{display:block;color:#082742;font-size:12px}.ep-rj-election-card span{display:block;color:#667b8b;font-size:10px;margin-top:4px;line-height:1.5}
+@media(max-width:950px){.ep-rj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-election-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ep-rj-grid,.ep-rj-election-grid{grid-template-columns:1fr}}
+</style>
+<script id="ep-rajasthan-hierarchy-module">
+(function(){
+'use strict';
+const RJ={
+  state:'Rajasthan',
+  // Current 41-district state structure, aligned with the CEO Rajasthan 2026 fact sheet.
+  districts:['Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Sawai Madhopur','Salumbar','Sanchore','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'],
+  elections:[
+   ['General Election of State Assembly-2003','State Assembly','2003'],['General Election of State Assembly-2008','State Assembly','2008'],['General Election of State Assembly-2013','State Assembly','2013'],['General Election of State Assembly-2018','State Assembly','2018'],['General Election of State Assembly-2023','State Assembly','2023'],
+   ['General Election of Lok Sabha-2004','Lok Sabha','2004'],['General Election of Lok Sabha-2009','Lok Sabha','2009'],['General Election of Lok Sabha-2014','Lok Sabha','2014'],['General Election of Lok Sabha-2019','Lok Sabha','2019'],['General Elections of Lok Sabha-2024','Lok Sabha','2024'],
+   ['Assembly Bye-Election-2014','Assembly Bye-Election','2014'],['Assembly Bye-Election-2017','Assembly Bye-Election','2017'],['Bye-Election-2018 (Ajmer & Alwar; Mandalgarh)','Assembly Bye-Election','2018'],['Assembly Bye-Election-Oct/Nov-2021','Assembly Bye-Election','2021'],['Assembly Bye-Election-Nov/Dec-2022','Assembly Bye-Election','2022'],['Assembly Bye-Election-Nov-2024','Assembly Bye-Election','2024'],
+   ['Rajya Sabha Election-2016','Rajya Sabha','2016'],['Rajya Sabha Bye-Election-2019','Rajya Sabha Bye-Election','2019'],['Rajya Sabha Election-2020','Rajya Sabha','2020'],['Rajya Sabha Bye-Election-2024','Rajya Sabha Bye-Election','2024'],['Rajya Sabha Election-2026','Rajya Sabha','2026'],
+   ['16th Presidential Election-2022','Presidential','2022'],
+   ['Rajasthan Panchayati Raj Elections','Local Body: Panchayati Raj','Multiple cycles'],['Zila Parishad Election','Local Body: Panchayati Raj','Multiple cycles'],['Panchayat Samiti Election','Local Body: Panchayati Raj','Multiple cycles'],['Gram Panchayat / Sarpanch Election','Local Body: Panchayati Raj','Multiple cycles'],['Ward Panch Election','Local Body: Panchayati Raj','Multiple cycles'],
+   ['Municipal Corporation Election','Local Body: Urban','Multiple cycles'],['Municipal Council Election','Local Body: Urban','Multiple cycles'],['Municipality / Nagar Palika Election','Local Body: Urban','Multiple cycles'],['Nagar Parishad Election','Local Body: Urban','Multiple cycles']
+  ]
+};
+const API='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/rest/services/Common/BaseMap/MapServer/205/query';
+let records=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+function cache(){try{localStorage.setItem('EP_RJ_HIERARCHY_V2',JSON.stringify({savedAt:Date.now(),records}));}catch(e){}}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem('EP_RJ_HIERARCHY_V2')||'null');if(x?.records?.length){records=x.records;return true}}catch(e){}return false}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))}
+function values(field,filter){let r=records;if(filter)r=r.filter(filter);return uniq(r.map(x=>x[field]));}
+function fieldVal(x,en,hi){return x[en]||x[hi]||''}
+function html(){
+ const main=document.querySelector('main'); if(!main||document.getElementById('ep-rajasthan-directory'))return;
+ const sec=document.createElement('section');sec.id='ep-rajasthan-directory';sec.innerHTML=`<div><span style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#d66b14">RAJASTHAN ADMINISTRATIVE DIRECTORY</span><h2 style="margin:4px 0 0;font-size:22px;font-weight:950;color:#082742">State → District → Tehsil → Village</h2><p style="margin:5px 0 0;font-size:11px;color:#607587">राजस्थान के लिए जिला, तहसील और गाँव को उनके वास्तविक प्रशासनिक क्रम में चुनें। उपलब्ध होने पर आधिकारिक राजस्थान GIS village directory से नाम लोड किए जाते हैं।</p></div>
+ <div class="ep-rj-grid"><div class="ep-rj-field"><label>STATE / राज्य</label><select id="ep-rj-state"><option value="Rajasthan">Rajasthan / राजस्थान</option></select></div><div class="ep-rj-field"><label>DISTRICT / जिला</label><select id="ep-rj-district"><option value="">Select District</option></select></div><div class="ep-rj-field"><label>TEHSIL / तहसील</label><select id="ep-rj-tehsil"><option value="">Select Tehsil</option></select></div><div class="ep-rj-field"><label>VILLAGE / गाँव</label><select id="ep-rj-village"><option value="">Select Village</option></select></div></div>
+ <div class="ep-rj-actions"><button class="ep-rj-btn primary" id="ep-rj-apply">Use Village in Portal</button><button class="ep-rj-btn" id="ep-rj-refresh">Refresh Official Directory</button><button class="ep-rj-btn" id="ep-rj-clear">Clear</button></div><div class="ep-rj-status" id="ep-rj-status">Directory is initializing…</div>
+ <div id="ep-rj-election-catalog"><strong style="font-size:14px;color:#082742">Rajasthan Election Catalogue / राजस्थान चुनाव सूची</strong><div class="ep-rj-election-grid" id="ep-rj-election-grid"></div></div>`;
+ main.insertBefore(sec,main.firstElementChild?.nextSibling||main.firstChild);
+ document.getElementById('ep-rj-election-grid').innerHTML=RJ.elections.map(e=>`<div class="ep-rj-election-card"><strong>${esc(e[0])}</strong><span>${esc(e[1])} · ${esc(e[2])}</span></div>`).join('');
+ bind();
+}
+function fillDistricts(){const d=document.getElementById('ep-rj-district');if(!d)return;const names=records.length?values('district'):RJ.districts;d.innerHTML='<option value="">Select District</option>'+names.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillTehsils(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;const district=d.value;t.innerHTML='<option value="">Select Tehsil</option>';v.innerHTML='<option value="">Select Village</option>';if(!district)return;let a=values('tehsil',x=>norm(x.district)===norm(district));t.innerHTML+='<option value="__ALL__">All Tehsils</option>'+a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillVillages(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;v.innerHTML='<option value="">Select Village</option>';if(!d.value||!t.value||t.value==='__ALL__')return;const a=values('village',x=>norm(x.district)===norm(d.value)&&norm(x.tehsil)===norm(t.value));v.innerHTML+=a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function bind(){
+ document.getElementById('ep-rj-district').onchange=fillTehsils;document.getElementById('ep-rj-tehsil').onchange=fillVillages;
+ document.getElementById('ep-rj-clear').onclick=()=>{document.getElementById('ep-rj-district').value='';fillTehsils();setStatus('Selection cleared.')};
+ document.getElementById('ep-rj-apply').onclick=applyVillage;
+ document.getElementById('ep-rj-refresh').onclick=()=>loadOfficial(true);
+}
+function setStatus(s){const e=document.getElementById('ep-rj-status');if(e)e.textContent=s}
+function applyVillage(){const village=document.getElementById('ep-rj-village')?.value;if(!village)return setStatus('Select a village first.');let row=records.find(x=>norm(x.village)===norm(village)&&norm(x.tehsil)===norm(document.getElementById('ep-rj-tehsil')?.value));if(!row)return setStatus('Village is not available in the loaded directory.');let pId=Object.keys(window.DBManager?.get?.()?.panchayats||{}).find(k=>norm(window.DBManager.get().panchayats[k]?.name)===norm(village));if(pId){const sel=document.getElementById('user-panchayat-select');if(sel){sel.value=pId;window.UserInterface?.handleVillageSelection?.()}}else{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(row));setStatus(`${row.district} → ${row.tehsil} → ${row.village} selected. Add/manage its portal candidate data through Admin tools.`);}
+ const top=document.getElementById('voting-section');if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadOfficial(force){
+ if(!force&&loadCache()){fillDistricts();setStatus(`Cached Rajasthan directory loaded (${records.length.toLocaleString()} village records). Checking official source in background…`);loadOfficial(true);return}
+ setStatus('Loading Rajasthan official GIS village directory…');
+ try{
+  const all=[];let offset=0;const batch=1000;
+  for(let i=0;i<100;i++){
+   const u=new URL(API);u.searchParams.set('where','1=1');u.searchParams.set('outFields','DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_NAME,TEHSIL_NAME_H,VILLAGE_NM_H,CENSUS_NM_2011,GP_FINAL,GP_HINDI');u.searchParams.set('returnGeometry','false');u.searchParams.set('f','json');u.searchParams.set('resultRecordCount',String(batch));u.searchParams.set('resultOffset',String(offset));
+   const r=await fetch(u.toString(),{mode:'cors'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS error');const fs=j.features||[];if(!fs.length)break;
+   fs.forEach(f=>{const a=f.attributes||{};all.push({district:fieldVal(a,'DISTRICT_NAME_EN','DISTRICT_NAME_HI'),tehsil:fieldVal(a,'TEHSIL_NAME','TEHSIL_NAME_H'),village:fieldVal(a,'CENSUS_NM_2011','VILLAGE_NM_H')||fieldVal(a,'GP_FINAL','GP_HINDI'),gp:fieldVal(a,'GP_FINAL','GP_HINDI')})});
+   offset+=fs.length;if(fs.length<batch)break;
+  }
+  records=all.filter(x=>x.district&&x.tehsil&&x.village);cache();fillDistricts();setStatus(`Official Rajasthan directory loaded: ${records.length.toLocaleString()} village records across ${values('district').length} districts and ${values('tehsil').length} tehsils.`);
+ }catch(e){
+  if(!records.length){records=[];fillDistricts();setStatus('Official directory could not be reached right now. The 41-district Rajasthan list remains available; retry when online to load every tehsil and village.');}
+  else setStatus(`Official refresh failed; keeping the last cached directory (${records.length.toLocaleString()} records).`);
+  console.warn('Rajasthan hierarchy load:',e);
+ }
+}
+function init(){html();fillDistricts();loadOfficial(false)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,180),{once:true});else setTimeout(init,180);
+window.RajasthanHierarchy={refresh:()=>loadOfficial(true),getRecords:()=>records.slice(),elections:RJ.elections.slice()};
+})();
+</script>
+
+</body></html>`);w.document.close();setTimeout(()=>w.print(),200)}
   function featureSummary(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=allCandidates(p),votes=rows.reduce((s,x)=>s+x.votes,0);showModal(t('गाँव सारांश','Village Summary'),`<div class="ep-modal-stat-grid"><div><b>${p.totalWards||0}</b><small>${t('वार्ड','Wards')}</small></div><div><b>${rows.length}</b><small>${t('उम्मीदवार','Candidates')}</small></div><div><b>${votes}</b><small>${t('दर्ज वोट','Recorded votes')}</small></div></div><p class="ep-small-note">${esc(t('ये आँकड़े इसी ब्राउज़र में दर्ज जनमत पर आधारित हैं।','These totals are based on public-opinion records in this browser.'))}</p>`)}
   function featureWard(){const p=currentVillage();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const out=Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,wd=p.wardsData?.[w]||{},rows=allCandidates(p).filter(x=>x.w===w),v=rows.reduce((s,x)=>s+x.votes,0);return `<div class="ep-modal-row"><strong>${t('वार्ड','Ward')} ${w}</strong><span>${rows.length} ${t('उम्मीदवार','candidates')} · ${v} ${t('वोट','votes')} · ${esc(wd.reservation||t('सामान्य','General'))}</span></div>`}).join('');showModal(t('वार्ड स्थिति','Ward Snapshot'),out)}
   function featureGuide(){showModal(t('मतदान मार्गदर्शिका','Voting Guide'),`<div class="ep-modal-copy"><ol><li>${t('गाँव चुनें।','Choose a village.')}</li><li>${t('पूरे गाँव के सभी वार्डों के उम्मीदवार देखें।','Review candidates across all wards of the village.')}</li><li>${t('उम्मीदवार चुनें और 10 अंकों का मोबाइल नंबर दर्ज करें।','Select a candidate and enter a 10-digit mobile number.')}</li><li>${t('सुरक्षित वोट दबाएँ।','Submit the secure vote.')}</li><li>${t('नीचे परिणाम और आँकड़े कभी भी देख सकते हैं।','View results and analytics at any time.')}</li></ol></div>`)}
@@ -6562,7 +6738,95 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <tr><td>Candidate</td><td>${esc(c?.name||record?.r?.candidate||'')}</td></tr>
       <tr><td>Party</td><td>${esc(c?.partyName||c?.party||record?.r?.party||'Independent')}</td></tr></table>
       <div class="note">This receipt is generated by an independent public-opinion website. The evidence number is portal-generated, not an official voter/EPIC number. Browser-side storage does not by itself provide an immutable court-grade chain of custody.</div>
-      </body></html>`;
+      
+<!-- ============================================================
+     RAJASTHAN STATE > DISTRICT > TEHSIL > VILLAGE DIRECTORY
+     ADDITIVE MODULE: does not delete or replace existing features.
+     Uses Rajasthan Government GIS village layer when available and
+     caches the hierarchy locally for subsequent visits.
+     ============================================================ -->
+<style id="ep-rajasthan-hierarchy-style">
+#ep-rajasthan-directory{margin:24px 0;background:linear-gradient(135deg,#fff4e5,#fff 48%,#edf8ef);border:1px solid #c8d9ce;border-radius:22px;box-shadow:0 18px 45px rgba(6,35,61,.08);padding:24px;position:relative;overflow:hidden}
+#ep-rajasthan-directory:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-rj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.ep-rj-field label{display:block;font-size:11px;font-weight:900;color:#36536a;margin-bottom:6px}.ep-rj-field select{width:100%;min-height:46px;border:1px solid #bcd1c3;border-radius:12px;padding:10px 12px;background:#fff;color:#102f47;font-weight:700;outline:none}.ep-rj-field select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.14)}
+.ep-rj-status{margin-top:14px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid #d6e2d9;font-size:11px;color:#526a7b}.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ep-rj-btn{border:1px solid #b9cfc0;border-radius:10px;background:#fff;padding:9px 12px;font-size:11px;font-weight:900;color:#082742;cursor:pointer}.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808)}.ep-rj-btn:disabled{opacity:.5;cursor:not-allowed}
+#ep-rj-election-catalog{margin-top:16px;border-top:1px solid #d8e4db;padding-top:16px}.ep-rj-election-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.ep-rj-election-card{background:#fff;border:1px solid #d6e2da;border-radius:14px;padding:12px}.ep-rj-election-card strong{display:block;color:#082742;font-size:12px}.ep-rj-election-card span{display:block;color:#667b8b;font-size:10px;margin-top:4px;line-height:1.5}
+@media(max-width:950px){.ep-rj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-election-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ep-rj-grid,.ep-rj-election-grid{grid-template-columns:1fr}}
+</style>
+<script id="ep-rajasthan-hierarchy-module">
+(function(){
+'use strict';
+const RJ={
+  state:'Rajasthan',
+  // Current 41-district state structure, aligned with the CEO Rajasthan 2026 fact sheet.
+  districts:['Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Sawai Madhopur','Salumbar','Sanchore','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'],
+  elections:[
+   ['General Election of State Assembly-2003','State Assembly','2003'],['General Election of State Assembly-2008','State Assembly','2008'],['General Election of State Assembly-2013','State Assembly','2013'],['General Election of State Assembly-2018','State Assembly','2018'],['General Election of State Assembly-2023','State Assembly','2023'],
+   ['General Election of Lok Sabha-2004','Lok Sabha','2004'],['General Election of Lok Sabha-2009','Lok Sabha','2009'],['General Election of Lok Sabha-2014','Lok Sabha','2014'],['General Election of Lok Sabha-2019','Lok Sabha','2019'],['General Elections of Lok Sabha-2024','Lok Sabha','2024'],
+   ['Assembly Bye-Election-2014','Assembly Bye-Election','2014'],['Assembly Bye-Election-2017','Assembly Bye-Election','2017'],['Bye-Election-2018 (Ajmer & Alwar; Mandalgarh)','Assembly Bye-Election','2018'],['Assembly Bye-Election-Oct/Nov-2021','Assembly Bye-Election','2021'],['Assembly Bye-Election-Nov/Dec-2022','Assembly Bye-Election','2022'],['Assembly Bye-Election-Nov-2024','Assembly Bye-Election','2024'],
+   ['Rajya Sabha Election-2016','Rajya Sabha','2016'],['Rajya Sabha Bye-Election-2019','Rajya Sabha Bye-Election','2019'],['Rajya Sabha Election-2020','Rajya Sabha','2020'],['Rajya Sabha Bye-Election-2024','Rajya Sabha Bye-Election','2024'],['Rajya Sabha Election-2026','Rajya Sabha','2026'],
+   ['16th Presidential Election-2022','Presidential','2022'],
+   ['Rajasthan Panchayati Raj Elections','Local Body: Panchayati Raj','Multiple cycles'],['Zila Parishad Election','Local Body: Panchayati Raj','Multiple cycles'],['Panchayat Samiti Election','Local Body: Panchayati Raj','Multiple cycles'],['Gram Panchayat / Sarpanch Election','Local Body: Panchayati Raj','Multiple cycles'],['Ward Panch Election','Local Body: Panchayati Raj','Multiple cycles'],
+   ['Municipal Corporation Election','Local Body: Urban','Multiple cycles'],['Municipal Council Election','Local Body: Urban','Multiple cycles'],['Municipality / Nagar Palika Election','Local Body: Urban','Multiple cycles'],['Nagar Parishad Election','Local Body: Urban','Multiple cycles']
+  ]
+};
+const API='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/rest/services/Common/BaseMap/MapServer/205/query';
+let records=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+function cache(){try{localStorage.setItem('EP_RJ_HIERARCHY_V2',JSON.stringify({savedAt:Date.now(),records}));}catch(e){}}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem('EP_RJ_HIERARCHY_V2')||'null');if(x?.records?.length){records=x.records;return true}}catch(e){}return false}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))}
+function values(field,filter){let r=records;if(filter)r=r.filter(filter);return uniq(r.map(x=>x[field]));}
+function fieldVal(x,en,hi){return x[en]||x[hi]||''}
+function html(){
+ const main=document.querySelector('main'); if(!main||document.getElementById('ep-rajasthan-directory'))return;
+ const sec=document.createElement('section');sec.id='ep-rajasthan-directory';sec.innerHTML=`<div><span style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#d66b14">RAJASTHAN ADMINISTRATIVE DIRECTORY</span><h2 style="margin:4px 0 0;font-size:22px;font-weight:950;color:#082742">State → District → Tehsil → Village</h2><p style="margin:5px 0 0;font-size:11px;color:#607587">राजस्थान के लिए जिला, तहसील और गाँव को उनके वास्तविक प्रशासनिक क्रम में चुनें। उपलब्ध होने पर आधिकारिक राजस्थान GIS village directory से नाम लोड किए जाते हैं।</p></div>
+ <div class="ep-rj-grid"><div class="ep-rj-field"><label>STATE / राज्य</label><select id="ep-rj-state"><option value="Rajasthan">Rajasthan / राजस्थान</option></select></div><div class="ep-rj-field"><label>DISTRICT / जिला</label><select id="ep-rj-district"><option value="">Select District</option></select></div><div class="ep-rj-field"><label>TEHSIL / तहसील</label><select id="ep-rj-tehsil"><option value="">Select Tehsil</option></select></div><div class="ep-rj-field"><label>VILLAGE / गाँव</label><select id="ep-rj-village"><option value="">Select Village</option></select></div></div>
+ <div class="ep-rj-actions"><button class="ep-rj-btn primary" id="ep-rj-apply">Use Village in Portal</button><button class="ep-rj-btn" id="ep-rj-refresh">Refresh Official Directory</button><button class="ep-rj-btn" id="ep-rj-clear">Clear</button></div><div class="ep-rj-status" id="ep-rj-status">Directory is initializing…</div>
+ <div id="ep-rj-election-catalog"><strong style="font-size:14px;color:#082742">Rajasthan Election Catalogue / राजस्थान चुनाव सूची</strong><div class="ep-rj-election-grid" id="ep-rj-election-grid"></div></div>`;
+ main.insertBefore(sec,main.firstElementChild?.nextSibling||main.firstChild);
+ document.getElementById('ep-rj-election-grid').innerHTML=RJ.elections.map(e=>`<div class="ep-rj-election-card"><strong>${esc(e[0])}</strong><span>${esc(e[1])} · ${esc(e[2])}</span></div>`).join('');
+ bind();
+}
+function fillDistricts(){const d=document.getElementById('ep-rj-district');if(!d)return;const names=records.length?values('district'):RJ.districts;d.innerHTML='<option value="">Select District</option>'+names.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillTehsils(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;const district=d.value;t.innerHTML='<option value="">Select Tehsil</option>';v.innerHTML='<option value="">Select Village</option>';if(!district)return;let a=values('tehsil',x=>norm(x.district)===norm(district));t.innerHTML+='<option value="__ALL__">All Tehsils</option>'+a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillVillages(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;v.innerHTML='<option value="">Select Village</option>';if(!d.value||!t.value||t.value==='__ALL__')return;const a=values('village',x=>norm(x.district)===norm(d.value)&&norm(x.tehsil)===norm(t.value));v.innerHTML+=a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function bind(){
+ document.getElementById('ep-rj-district').onchange=fillTehsils;document.getElementById('ep-rj-tehsil').onchange=fillVillages;
+ document.getElementById('ep-rj-clear').onclick=()=>{document.getElementById('ep-rj-district').value='';fillTehsils();setStatus('Selection cleared.')};
+ document.getElementById('ep-rj-apply').onclick=applyVillage;
+ document.getElementById('ep-rj-refresh').onclick=()=>loadOfficial(true);
+}
+function setStatus(s){const e=document.getElementById('ep-rj-status');if(e)e.textContent=s}
+function applyVillage(){const village=document.getElementById('ep-rj-village')?.value;if(!village)return setStatus('Select a village first.');let row=records.find(x=>norm(x.village)===norm(village)&&norm(x.tehsil)===norm(document.getElementById('ep-rj-tehsil')?.value));if(!row)return setStatus('Village is not available in the loaded directory.');let pId=Object.keys(window.DBManager?.get?.()?.panchayats||{}).find(k=>norm(window.DBManager.get().panchayats[k]?.name)===norm(village));if(pId){const sel=document.getElementById('user-panchayat-select');if(sel){sel.value=pId;window.UserInterface?.handleVillageSelection?.()}}else{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(row));setStatus(`${row.district} → ${row.tehsil} → ${row.village} selected. Add/manage its portal candidate data through Admin tools.`);}
+ const top=document.getElementById('voting-section');if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadOfficial(force){
+ if(!force&&loadCache()){fillDistricts();setStatus(`Cached Rajasthan directory loaded (${records.length.toLocaleString()} village records). Checking official source in background…`);loadOfficial(true);return}
+ setStatus('Loading Rajasthan official GIS village directory…');
+ try{
+  const all=[];let offset=0;const batch=1000;
+  for(let i=0;i<100;i++){
+   const u=new URL(API);u.searchParams.set('where','1=1');u.searchParams.set('outFields','DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_NAME,TEHSIL_NAME_H,VILLAGE_NM_H,CENSUS_NM_2011,GP_FINAL,GP_HINDI');u.searchParams.set('returnGeometry','false');u.searchParams.set('f','json');u.searchParams.set('resultRecordCount',String(batch));u.searchParams.set('resultOffset',String(offset));
+   const r=await fetch(u.toString(),{mode:'cors'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS error');const fs=j.features||[];if(!fs.length)break;
+   fs.forEach(f=>{const a=f.attributes||{};all.push({district:fieldVal(a,'DISTRICT_NAME_EN','DISTRICT_NAME_HI'),tehsil:fieldVal(a,'TEHSIL_NAME','TEHSIL_NAME_H'),village:fieldVal(a,'CENSUS_NM_2011','VILLAGE_NM_H')||fieldVal(a,'GP_FINAL','GP_HINDI'),gp:fieldVal(a,'GP_FINAL','GP_HINDI')})});
+   offset+=fs.length;if(fs.length<batch)break;
+  }
+  records=all.filter(x=>x.district&&x.tehsil&&x.village);cache();fillDistricts();setStatus(`Official Rajasthan directory loaded: ${records.length.toLocaleString()} village records across ${values('district').length} districts and ${values('tehsil').length} tehsils.`);
+ }catch(e){
+  if(!records.length){records=[];fillDistricts();setStatus('Official directory could not be reached right now. The 41-district Rajasthan list remains available; retry when online to load every tehsil and village.');}
+  else setStatus(`Official refresh failed; keeping the last cached directory (${records.length.toLocaleString()} records).`);
+  console.warn('Rajasthan hierarchy load:',e);
+ }
+}
+function init(){html();fillDistricts();loadOfficial(false)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,180),{once:true});else setTimeout(init,180);
+window.RajasthanHierarchy={refresh:()=>loadOfficial(true),getRecords:()=>records.slice(),elections:RJ.elections.slice()};
+})();
+</script>
+
+</body></html>`;
     w.document.open();w.document.write(html);w.document.close();setTimeout(()=>w.print(),250);
   }
 
@@ -7032,7 +7296,95 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .ep-vote-select-button{font-size:clamp(16px,1.8vw,21px)!important;min-height:58px!important;font-weight:950!important}
 .ep-search-result-name{font-size:18px!important}.ep-bilingual-extra{font-size:12px!important;line-height:1.7!important}
 </style>
-</head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div></body></html>`);
+</head><body><h1>Court / Authorized Voter Verification</h1><div class="sub">Independent public-opinion portal · Generated ${esc(new Date().toLocaleString())}</div><div class="status">Searched mobile: ${esc(payload.search.mobile)} · ${status}</div>${body}<div class="note">This report describes the current browser-side database only. It is not an official voter-roll certificate, and a missing record is not independent proof of non-voting. Court-grade evidence requires a server-side, access-controlled, immutable audit trail.</div>
+<!-- ============================================================
+     RAJASTHAN STATE > DISTRICT > TEHSIL > VILLAGE DIRECTORY
+     ADDITIVE MODULE: does not delete or replace existing features.
+     Uses Rajasthan Government GIS village layer when available and
+     caches the hierarchy locally for subsequent visits.
+     ============================================================ -->
+<style id="ep-rajasthan-hierarchy-style">
+#ep-rajasthan-directory{margin:24px 0;background:linear-gradient(135deg,#fff4e5,#fff 48%,#edf8ef);border:1px solid #c8d9ce;border-radius:22px;box-shadow:0 18px 45px rgba(6,35,61,.08);padding:24px;position:relative;overflow:hidden}
+#ep-rajasthan-directory:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-rj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.ep-rj-field label{display:block;font-size:11px;font-weight:900;color:#36536a;margin-bottom:6px}.ep-rj-field select{width:100%;min-height:46px;border:1px solid #bcd1c3;border-radius:12px;padding:10px 12px;background:#fff;color:#102f47;font-weight:700;outline:none}.ep-rj-field select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.14)}
+.ep-rj-status{margin-top:14px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid #d6e2d9;font-size:11px;color:#526a7b}.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ep-rj-btn{border:1px solid #b9cfc0;border-radius:10px;background:#fff;padding:9px 12px;font-size:11px;font-weight:900;color:#082742;cursor:pointer}.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808)}.ep-rj-btn:disabled{opacity:.5;cursor:not-allowed}
+#ep-rj-election-catalog{margin-top:16px;border-top:1px solid #d8e4db;padding-top:16px}.ep-rj-election-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.ep-rj-election-card{background:#fff;border:1px solid #d6e2da;border-radius:14px;padding:12px}.ep-rj-election-card strong{display:block;color:#082742;font-size:12px}.ep-rj-election-card span{display:block;color:#667b8b;font-size:10px;margin-top:4px;line-height:1.5}
+@media(max-width:950px){.ep-rj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-election-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ep-rj-grid,.ep-rj-election-grid{grid-template-columns:1fr}}
+</style>
+<script id="ep-rajasthan-hierarchy-module">
+(function(){
+'use strict';
+const RJ={
+  state:'Rajasthan',
+  // Current 41-district state structure, aligned with the CEO Rajasthan 2026 fact sheet.
+  districts:['Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Sawai Madhopur','Salumbar','Sanchore','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'],
+  elections:[
+   ['General Election of State Assembly-2003','State Assembly','2003'],['General Election of State Assembly-2008','State Assembly','2008'],['General Election of State Assembly-2013','State Assembly','2013'],['General Election of State Assembly-2018','State Assembly','2018'],['General Election of State Assembly-2023','State Assembly','2023'],
+   ['General Election of Lok Sabha-2004','Lok Sabha','2004'],['General Election of Lok Sabha-2009','Lok Sabha','2009'],['General Election of Lok Sabha-2014','Lok Sabha','2014'],['General Election of Lok Sabha-2019','Lok Sabha','2019'],['General Elections of Lok Sabha-2024','Lok Sabha','2024'],
+   ['Assembly Bye-Election-2014','Assembly Bye-Election','2014'],['Assembly Bye-Election-2017','Assembly Bye-Election','2017'],['Bye-Election-2018 (Ajmer & Alwar; Mandalgarh)','Assembly Bye-Election','2018'],['Assembly Bye-Election-Oct/Nov-2021','Assembly Bye-Election','2021'],['Assembly Bye-Election-Nov/Dec-2022','Assembly Bye-Election','2022'],['Assembly Bye-Election-Nov-2024','Assembly Bye-Election','2024'],
+   ['Rajya Sabha Election-2016','Rajya Sabha','2016'],['Rajya Sabha Bye-Election-2019','Rajya Sabha Bye-Election','2019'],['Rajya Sabha Election-2020','Rajya Sabha','2020'],['Rajya Sabha Bye-Election-2024','Rajya Sabha Bye-Election','2024'],['Rajya Sabha Election-2026','Rajya Sabha','2026'],
+   ['16th Presidential Election-2022','Presidential','2022'],
+   ['Rajasthan Panchayati Raj Elections','Local Body: Panchayati Raj','Multiple cycles'],['Zila Parishad Election','Local Body: Panchayati Raj','Multiple cycles'],['Panchayat Samiti Election','Local Body: Panchayati Raj','Multiple cycles'],['Gram Panchayat / Sarpanch Election','Local Body: Panchayati Raj','Multiple cycles'],['Ward Panch Election','Local Body: Panchayati Raj','Multiple cycles'],
+   ['Municipal Corporation Election','Local Body: Urban','Multiple cycles'],['Municipal Council Election','Local Body: Urban','Multiple cycles'],['Municipality / Nagar Palika Election','Local Body: Urban','Multiple cycles'],['Nagar Parishad Election','Local Body: Urban','Multiple cycles']
+  ]
+};
+const API='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/rest/services/Common/BaseMap/MapServer/205/query';
+let records=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+function cache(){try{localStorage.setItem('EP_RJ_HIERARCHY_V2',JSON.stringify({savedAt:Date.now(),records}));}catch(e){}}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem('EP_RJ_HIERARCHY_V2')||'null');if(x?.records?.length){records=x.records;return true}}catch(e){}return false}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))}
+function values(field,filter){let r=records;if(filter)r=r.filter(filter);return uniq(r.map(x=>x[field]));}
+function fieldVal(x,en,hi){return x[en]||x[hi]||''}
+function html(){
+ const main=document.querySelector('main'); if(!main||document.getElementById('ep-rajasthan-directory'))return;
+ const sec=document.createElement('section');sec.id='ep-rajasthan-directory';sec.innerHTML=`<div><span style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#d66b14">RAJASTHAN ADMINISTRATIVE DIRECTORY</span><h2 style="margin:4px 0 0;font-size:22px;font-weight:950;color:#082742">State → District → Tehsil → Village</h2><p style="margin:5px 0 0;font-size:11px;color:#607587">राजस्थान के लिए जिला, तहसील और गाँव को उनके वास्तविक प्रशासनिक क्रम में चुनें। उपलब्ध होने पर आधिकारिक राजस्थान GIS village directory से नाम लोड किए जाते हैं।</p></div>
+ <div class="ep-rj-grid"><div class="ep-rj-field"><label>STATE / राज्य</label><select id="ep-rj-state"><option value="Rajasthan">Rajasthan / राजस्थान</option></select></div><div class="ep-rj-field"><label>DISTRICT / जिला</label><select id="ep-rj-district"><option value="">Select District</option></select></div><div class="ep-rj-field"><label>TEHSIL / तहसील</label><select id="ep-rj-tehsil"><option value="">Select Tehsil</option></select></div><div class="ep-rj-field"><label>VILLAGE / गाँव</label><select id="ep-rj-village"><option value="">Select Village</option></select></div></div>
+ <div class="ep-rj-actions"><button class="ep-rj-btn primary" id="ep-rj-apply">Use Village in Portal</button><button class="ep-rj-btn" id="ep-rj-refresh">Refresh Official Directory</button><button class="ep-rj-btn" id="ep-rj-clear">Clear</button></div><div class="ep-rj-status" id="ep-rj-status">Directory is initializing…</div>
+ <div id="ep-rj-election-catalog"><strong style="font-size:14px;color:#082742">Rajasthan Election Catalogue / राजस्थान चुनाव सूची</strong><div class="ep-rj-election-grid" id="ep-rj-election-grid"></div></div>`;
+ main.insertBefore(sec,main.firstElementChild?.nextSibling||main.firstChild);
+ document.getElementById('ep-rj-election-grid').innerHTML=RJ.elections.map(e=>`<div class="ep-rj-election-card"><strong>${esc(e[0])}</strong><span>${esc(e[1])} · ${esc(e[2])}</span></div>`).join('');
+ bind();
+}
+function fillDistricts(){const d=document.getElementById('ep-rj-district');if(!d)return;const names=records.length?values('district'):RJ.districts;d.innerHTML='<option value="">Select District</option>'+names.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillTehsils(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;const district=d.value;t.innerHTML='<option value="">Select Tehsil</option>';v.innerHTML='<option value="">Select Village</option>';if(!district)return;let a=values('tehsil',x=>norm(x.district)===norm(district));t.innerHTML+='<option value="__ALL__">All Tehsils</option>'+a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillVillages(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;v.innerHTML='<option value="">Select Village</option>';if(!d.value||!t.value||t.value==='__ALL__')return;const a=values('village',x=>norm(x.district)===norm(d.value)&&norm(x.tehsil)===norm(t.value));v.innerHTML+=a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function bind(){
+ document.getElementById('ep-rj-district').onchange=fillTehsils;document.getElementById('ep-rj-tehsil').onchange=fillVillages;
+ document.getElementById('ep-rj-clear').onclick=()=>{document.getElementById('ep-rj-district').value='';fillTehsils();setStatus('Selection cleared.')};
+ document.getElementById('ep-rj-apply').onclick=applyVillage;
+ document.getElementById('ep-rj-refresh').onclick=()=>loadOfficial(true);
+}
+function setStatus(s){const e=document.getElementById('ep-rj-status');if(e)e.textContent=s}
+function applyVillage(){const village=document.getElementById('ep-rj-village')?.value;if(!village)return setStatus('Select a village first.');let row=records.find(x=>norm(x.village)===norm(village)&&norm(x.tehsil)===norm(document.getElementById('ep-rj-tehsil')?.value));if(!row)return setStatus('Village is not available in the loaded directory.');let pId=Object.keys(window.DBManager?.get?.()?.panchayats||{}).find(k=>norm(window.DBManager.get().panchayats[k]?.name)===norm(village));if(pId){const sel=document.getElementById('user-panchayat-select');if(sel){sel.value=pId;window.UserInterface?.handleVillageSelection?.()}}else{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(row));setStatus(`${row.district} → ${row.tehsil} → ${row.village} selected. Add/manage its portal candidate data through Admin tools.`);}
+ const top=document.getElementById('voting-section');if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadOfficial(force){
+ if(!force&&loadCache()){fillDistricts();setStatus(`Cached Rajasthan directory loaded (${records.length.toLocaleString()} village records). Checking official source in background…`);loadOfficial(true);return}
+ setStatus('Loading Rajasthan official GIS village directory…');
+ try{
+  const all=[];let offset=0;const batch=1000;
+  for(let i=0;i<100;i++){
+   const u=new URL(API);u.searchParams.set('where','1=1');u.searchParams.set('outFields','DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_NAME,TEHSIL_NAME_H,VILLAGE_NM_H,CENSUS_NM_2011,GP_FINAL,GP_HINDI');u.searchParams.set('returnGeometry','false');u.searchParams.set('f','json');u.searchParams.set('resultRecordCount',String(batch));u.searchParams.set('resultOffset',String(offset));
+   const r=await fetch(u.toString(),{mode:'cors'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS error');const fs=j.features||[];if(!fs.length)break;
+   fs.forEach(f=>{const a=f.attributes||{};all.push({district:fieldVal(a,'DISTRICT_NAME_EN','DISTRICT_NAME_HI'),tehsil:fieldVal(a,'TEHSIL_NAME','TEHSIL_NAME_H'),village:fieldVal(a,'CENSUS_NM_2011','VILLAGE_NM_H')||fieldVal(a,'GP_FINAL','GP_HINDI'),gp:fieldVal(a,'GP_FINAL','GP_HINDI')})});
+   offset+=fs.length;if(fs.length<batch)break;
+  }
+  records=all.filter(x=>x.district&&x.tehsil&&x.village);cache();fillDistricts();setStatus(`Official Rajasthan directory loaded: ${records.length.toLocaleString()} village records across ${values('district').length} districts and ${values('tehsil').length} tehsils.`);
+ }catch(e){
+  if(!records.length){records=[];fillDistricts();setStatus('Official directory could not be reached right now. The 41-district Rajasthan list remains available; retry when online to load every tehsil and village.');}
+  else setStatus(`Official refresh failed; keeping the last cached directory (${records.length.toLocaleString()} records).`);
+  console.warn('Rajasthan hierarchy load:',e);
+ }
+}
+function init(){html();fillDistricts();loadOfficial(false)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,180),{once:true});else setTimeout(init,180);
+window.RajasthanHierarchy={refresh:()=>loadOfficial(true),getRecords:()=>records.slice(),elections:RJ.elections.slice()};
+})();
+</script>
+
+</body></html>`);
     w.document.close();setTimeout(()=>w.print(),300);
   }
 
@@ -7246,5 +7598,93 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   },{once:true});
 })();
 </script>
+
+<!-- ============================================================
+     RAJASTHAN STATE > DISTRICT > TEHSIL > VILLAGE DIRECTORY
+     ADDITIVE MODULE: does not delete or replace existing features.
+     Uses Rajasthan Government GIS village layer when available and
+     caches the hierarchy locally for subsequent visits.
+     ============================================================ -->
+<style id="ep-rajasthan-hierarchy-style">
+#ep-rajasthan-directory{margin:24px 0;background:linear-gradient(135deg,#fff4e5,#fff 48%,#edf8ef);border:1px solid #c8d9ce;border-radius:22px;box-shadow:0 18px 45px rgba(6,35,61,.08);padding:24px;position:relative;overflow:hidden}
+#ep-rajasthan-directory:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-rj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.ep-rj-field label{display:block;font-size:11px;font-weight:900;color:#36536a;margin-bottom:6px}.ep-rj-field select{width:100%;min-height:46px;border:1px solid #bcd1c3;border-radius:12px;padding:10px 12px;background:#fff;color:#102f47;font-weight:700;outline:none}.ep-rj-field select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.14)}
+.ep-rj-status{margin-top:14px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid #d6e2d9;font-size:11px;color:#526a7b}.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ep-rj-btn{border:1px solid #b9cfc0;border-radius:10px;background:#fff;padding:9px 12px;font-size:11px;font-weight:900;color:#082742;cursor:pointer}.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808)}.ep-rj-btn:disabled{opacity:.5;cursor:not-allowed}
+#ep-rj-election-catalog{margin-top:16px;border-top:1px solid #d8e4db;padding-top:16px}.ep-rj-election-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.ep-rj-election-card{background:#fff;border:1px solid #d6e2da;border-radius:14px;padding:12px}.ep-rj-election-card strong{display:block;color:#082742;font-size:12px}.ep-rj-election-card span{display:block;color:#667b8b;font-size:10px;margin-top:4px;line-height:1.5}
+@media(max-width:950px){.ep-rj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-election-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ep-rj-grid,.ep-rj-election-grid{grid-template-columns:1fr}}
+</style>
+<script id="ep-rajasthan-hierarchy-module">
+(function(){
+'use strict';
+const RJ={
+  state:'Rajasthan',
+  // Current 41-district state structure, aligned with the CEO Rajasthan 2026 fact sheet.
+  districts:['Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Sawai Madhopur','Salumbar','Sanchore','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'],
+  elections:[
+   ['General Election of State Assembly-2003','State Assembly','2003'],['General Election of State Assembly-2008','State Assembly','2008'],['General Election of State Assembly-2013','State Assembly','2013'],['General Election of State Assembly-2018','State Assembly','2018'],['General Election of State Assembly-2023','State Assembly','2023'],
+   ['General Election of Lok Sabha-2004','Lok Sabha','2004'],['General Election of Lok Sabha-2009','Lok Sabha','2009'],['General Election of Lok Sabha-2014','Lok Sabha','2014'],['General Election of Lok Sabha-2019','Lok Sabha','2019'],['General Elections of Lok Sabha-2024','Lok Sabha','2024'],
+   ['Assembly Bye-Election-2014','Assembly Bye-Election','2014'],['Assembly Bye-Election-2017','Assembly Bye-Election','2017'],['Bye-Election-2018 (Ajmer & Alwar; Mandalgarh)','Assembly Bye-Election','2018'],['Assembly Bye-Election-Oct/Nov-2021','Assembly Bye-Election','2021'],['Assembly Bye-Election-Nov/Dec-2022','Assembly Bye-Election','2022'],['Assembly Bye-Election-Nov-2024','Assembly Bye-Election','2024'],
+   ['Rajya Sabha Election-2016','Rajya Sabha','2016'],['Rajya Sabha Bye-Election-2019','Rajya Sabha Bye-Election','2019'],['Rajya Sabha Election-2020','Rajya Sabha','2020'],['Rajya Sabha Bye-Election-2024','Rajya Sabha Bye-Election','2024'],['Rajya Sabha Election-2026','Rajya Sabha','2026'],
+   ['16th Presidential Election-2022','Presidential','2022'],
+   ['Rajasthan Panchayati Raj Elections','Local Body: Panchayati Raj','Multiple cycles'],['Zila Parishad Election','Local Body: Panchayati Raj','Multiple cycles'],['Panchayat Samiti Election','Local Body: Panchayati Raj','Multiple cycles'],['Gram Panchayat / Sarpanch Election','Local Body: Panchayati Raj','Multiple cycles'],['Ward Panch Election','Local Body: Panchayati Raj','Multiple cycles'],
+   ['Municipal Corporation Election','Local Body: Urban','Multiple cycles'],['Municipal Council Election','Local Body: Urban','Multiple cycles'],['Municipality / Nagar Palika Election','Local Body: Urban','Multiple cycles'],['Nagar Parishad Election','Local Body: Urban','Multiple cycles']
+  ]
+};
+const API='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/rest/services/Common/BaseMap/MapServer/205/query';
+let records=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+function cache(){try{localStorage.setItem('EP_RJ_HIERARCHY_V2',JSON.stringify({savedAt:Date.now(),records}));}catch(e){}}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem('EP_RJ_HIERARCHY_V2')||'null');if(x?.records?.length){records=x.records;return true}}catch(e){}return false}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))}
+function values(field,filter){let r=records;if(filter)r=r.filter(filter);return uniq(r.map(x=>x[field]));}
+function fieldVal(x,en,hi){return x[en]||x[hi]||''}
+function html(){
+ const main=document.querySelector('main'); if(!main||document.getElementById('ep-rajasthan-directory'))return;
+ const sec=document.createElement('section');sec.id='ep-rajasthan-directory';sec.innerHTML=`<div><span style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#d66b14">RAJASTHAN ADMINISTRATIVE DIRECTORY</span><h2 style="margin:4px 0 0;font-size:22px;font-weight:950;color:#082742">State → District → Tehsil → Village</h2><p style="margin:5px 0 0;font-size:11px;color:#607587">राजस्थान के लिए जिला, तहसील और गाँव को उनके वास्तविक प्रशासनिक क्रम में चुनें। उपलब्ध होने पर आधिकारिक राजस्थान GIS village directory से नाम लोड किए जाते हैं।</p></div>
+ <div class="ep-rj-grid"><div class="ep-rj-field"><label>STATE / राज्य</label><select id="ep-rj-state"><option value="Rajasthan">Rajasthan / राजस्थान</option></select></div><div class="ep-rj-field"><label>DISTRICT / जिला</label><select id="ep-rj-district"><option value="">Select District</option></select></div><div class="ep-rj-field"><label>TEHSIL / तहसील</label><select id="ep-rj-tehsil"><option value="">Select Tehsil</option></select></div><div class="ep-rj-field"><label>VILLAGE / गाँव</label><select id="ep-rj-village"><option value="">Select Village</option></select></div></div>
+ <div class="ep-rj-actions"><button class="ep-rj-btn primary" id="ep-rj-apply">Use Village in Portal</button><button class="ep-rj-btn" id="ep-rj-refresh">Refresh Official Directory</button><button class="ep-rj-btn" id="ep-rj-clear">Clear</button></div><div class="ep-rj-status" id="ep-rj-status">Directory is initializing…</div>
+ <div id="ep-rj-election-catalog"><strong style="font-size:14px;color:#082742">Rajasthan Election Catalogue / राजस्थान चुनाव सूची</strong><div class="ep-rj-election-grid" id="ep-rj-election-grid"></div></div>`;
+ main.insertBefore(sec,main.firstElementChild?.nextSibling||main.firstChild);
+ document.getElementById('ep-rj-election-grid').innerHTML=RJ.elections.map(e=>`<div class="ep-rj-election-card"><strong>${esc(e[0])}</strong><span>${esc(e[1])} · ${esc(e[2])}</span></div>`).join('');
+ bind();
+}
+function fillDistricts(){const d=document.getElementById('ep-rj-district');if(!d)return;const names=records.length?values('district'):RJ.districts;d.innerHTML='<option value="">Select District</option>'+names.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillTehsils(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;const district=d.value;t.innerHTML='<option value="">Select Tehsil</option>';v.innerHTML='<option value="">Select Village</option>';if(!district)return;let a=values('tehsil',x=>norm(x.district)===norm(district));t.innerHTML+='<option value="__ALL__">All Tehsils</option>'+a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function fillVillages(){const d=document.getElementById('ep-rj-district'),t=document.getElementById('ep-rj-tehsil'),v=document.getElementById('ep-rj-village');if(!d||!t||!v)return;v.innerHTML='<option value="">Select Village</option>';if(!d.value||!t.value||t.value==='__ALL__')return;const a=values('village',x=>norm(x.district)===norm(d.value)&&norm(x.tehsil)===norm(t.value));v.innerHTML+=a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}
+function bind(){
+ document.getElementById('ep-rj-district').onchange=fillTehsils;document.getElementById('ep-rj-tehsil').onchange=fillVillages;
+ document.getElementById('ep-rj-clear').onclick=()=>{document.getElementById('ep-rj-district').value='';fillTehsils();setStatus('Selection cleared.')};
+ document.getElementById('ep-rj-apply').onclick=applyVillage;
+ document.getElementById('ep-rj-refresh').onclick=()=>loadOfficial(true);
+}
+function setStatus(s){const e=document.getElementById('ep-rj-status');if(e)e.textContent=s}
+function applyVillage(){const village=document.getElementById('ep-rj-village')?.value;if(!village)return setStatus('Select a village first.');let row=records.find(x=>norm(x.village)===norm(village)&&norm(x.tehsil)===norm(document.getElementById('ep-rj-tehsil')?.value));if(!row)return setStatus('Village is not available in the loaded directory.');let pId=Object.keys(window.DBManager?.get?.()?.panchayats||{}).find(k=>norm(window.DBManager.get().panchayats[k]?.name)===norm(village));if(pId){const sel=document.getElementById('user-panchayat-select');if(sel){sel.value=pId;window.UserInterface?.handleVillageSelection?.()}}else{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(row));setStatus(`${row.district} → ${row.tehsil} → ${row.village} selected. Add/manage its portal candidate data through Admin tools.`);}
+ const top=document.getElementById('voting-section');if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadOfficial(force){
+ if(!force&&loadCache()){fillDistricts();setStatus(`Cached Rajasthan directory loaded (${records.length.toLocaleString()} village records). Checking official source in background…`);loadOfficial(true);return}
+ setStatus('Loading Rajasthan official GIS village directory…');
+ try{
+  const all=[];let offset=0;const batch=1000;
+  for(let i=0;i<100;i++){
+   const u=new URL(API);u.searchParams.set('where','1=1');u.searchParams.set('outFields','DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_NAME,TEHSIL_NAME_H,VILLAGE_NM_H,CENSUS_NM_2011,GP_FINAL,GP_HINDI');u.searchParams.set('returnGeometry','false');u.searchParams.set('f','json');u.searchParams.set('resultRecordCount',String(batch));u.searchParams.set('resultOffset',String(offset));
+   const r=await fetch(u.toString(),{mode:'cors'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS error');const fs=j.features||[];if(!fs.length)break;
+   fs.forEach(f=>{const a=f.attributes||{};all.push({district:fieldVal(a,'DISTRICT_NAME_EN','DISTRICT_NAME_HI'),tehsil:fieldVal(a,'TEHSIL_NAME','TEHSIL_NAME_H'),village:fieldVal(a,'CENSUS_NM_2011','VILLAGE_NM_H')||fieldVal(a,'GP_FINAL','GP_HINDI'),gp:fieldVal(a,'GP_FINAL','GP_HINDI')})});
+   offset+=fs.length;if(fs.length<batch)break;
+  }
+  records=all.filter(x=>x.district&&x.tehsil&&x.village);cache();fillDistricts();setStatus(`Official Rajasthan directory loaded: ${records.length.toLocaleString()} village records across ${values('district').length} districts and ${values('tehsil').length} tehsils.`);
+ }catch(e){
+  if(!records.length){records=[];fillDistricts();setStatus('Official directory could not be reached right now. The 41-district Rajasthan list remains available; retry when online to load every tehsil and village.');}
+  else setStatus(`Official refresh failed; keeping the last cached directory (${records.length.toLocaleString()} records).`);
+  console.warn('Rajasthan hierarchy load:',e);
+ }
+}
+function init(){html();fillDistricts();loadOfficial(false)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,180),{once:true});else setTimeout(init,180);
+window.RajasthanHierarchy={refresh:()=>loadOfficial(true),getRecords:()=>records.slice(),elections:RJ.elections.slice()};
+})();
+</script>
+
 </body>
 </html>
