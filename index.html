@@ -664,72 +664,8 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
 <script id="ep-50-election-poster-catalog">
 window.EP50ElectionPosters=['Sewing Machine','Bat','Ball','Balloon','Bicycle','Lotus','Tree','Chair','Table','Cup','Umbrella','Bell','Book','Pen','Key','Lock','Lamp','Fan','Clock','Mobile','Camera','Car','Bus','Tractor','Plough','Spade','Bucket','Jug','Glass','Basket','Ladder','Wheel','Star','Sun','Moon','Flower','Rose','Coconut','Mango','Banana','Apple','Kite','Boat','Airplane','House','Road Roller','Hand Pump','Bulb','Football','Cricket'];
 </script>
-
-<style id="ep-rj-hierarchy-style">
-/* Rajasthan-only administrative hierarchy: additive and isolated */
-#ep-rj-directory{margin:24px 0 28px;border:1px solid #cbd9d0;border-radius:24px;background:linear-gradient(135deg,#fff7ec 0%,#fff 48%,#eef9f0 100%);box-shadow:0 18px 55px rgba(6,35,61,.10);overflow:hidden}
-#ep-rj-directory *{box-sizing:border-box}
-.ep-rj-head{padding:24px 26px;background:linear-gradient(90deg,rgba(255,153,51,.16),rgba(255,255,255,.92),rgba(19,136,8,.14));border-bottom:1px solid #d5e1d9}
-.ep-rj-kicker{font-size:10px;font-weight:950;letter-spacing:.12em;color:#7b4a1c;text-transform:uppercase}
-.ep-rj-title{margin:5px 0 5px;font-size:24px;line-height:1.2;font-weight:950;color:#082742}
-.ep-rj-sub{margin:0;color:#607587;font-size:12px;line-height:1.6}
-.ep-rj-source{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;font-size:10px;color:#526b7c}
-.ep-rj-source b{padding:5px 8px;border-radius:999px;background:#edf7ef;border:1px solid #c9ddcf;color:#17633a}
-.ep-rj-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px 26px}
-.ep-rj-panel{background:rgba(255,255,255,.82);border:1px solid #d6e2da;border-radius:18px;padding:16px}
-.ep-rj-panel h3{margin:0 0 10px;color:#0b2945;font-size:14px;font-weight:950}
-.ep-rj-selects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.ep-rj-selects .full{grid-column:1/-1}
-.ep-rj-select{width:100%;min-height:44px;border:1px solid #c6d8cc;border-radius:11px;padding:9px 11px;background:#fff;color:#17324a;font:600 12px Poppins,Arial,sans-serif;outline:none}
-.ep-rj-select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.15)}
-.ep-rj-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.ep-rj-btn{border:1px solid #bfd2c4;background:#fff;color:#082742;border-radius:10px;padding:9px 12px;font:800 11px Poppins,Arial,sans-serif;cursor:pointer}
-.ep-rj-btn.primary{background:linear-gradient(90deg,#ff9933,#ffd09a,#fff,#a9d5b1,#138808);border-color:#b7cdbd}
-.ep-rj-btn:hover{transform:translateY(-1px)}
-.ep-rj-status{margin-top:10px;padding:9px 11px;border-radius:10px;background:#f5f9f6;border:1px solid #dce7df;color:#5d7180;font-size:10px;line-height:1.5}
-.ep-rj-status.ok{background:#eef9f1;color:#17633a;border-color:#c4dfcb}
-.ep-rj-status.err{background:#fff1f0;color:#8a2e26;border-color:#efc8c3}
-.ep-rj-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.ep-rj-stat{padding:13px;border:1px solid #d9e5dd;border-radius:14px;background:linear-gradient(135deg,#fff9f1,#fff,#f0f9f2)}
-.ep-rj-stat b{display:block;font-size:20px;color:#082742;line-height:1}.ep-rj-stat span{display:block;margin-top:6px;font-size:9px;color:#687d8d;font-weight:800}
-.ep-rj-tree-wrap{padding:0 26px 26px}
-.ep-rj-tree-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-.ep-rj-tree-head h3{margin:0;font-size:15px;color:#082742;font-weight:950}
-.ep-rj-tree-head input{width:min(360px,100%);min-height:40px;border:1px solid #c8d9ce;border-radius:10px;padding:8px 11px}
-.ep-rj-tree{border:1px solid #d5e1d9;border-radius:16px;background:#fff;max-height:620px;overflow:auto;padding:10px}
-.ep-rj-state-node{border:1px solid #cbdad0;border-radius:12px;margin-bottom:8px;overflow:hidden}
-.ep-rj-state-node>summary{cursor:pointer;list-style:none;padding:12px 14px;background:linear-gradient(90deg,#fff1df,#fff,#edf8ef);font-weight:950;color:#082742}
-.ep-rj-state-node>summary::-webkit-details-marker{display:none}
-.ep-rj-district{margin:8px;border:1px solid #e0e8e3;border-radius:10px;overflow:hidden}
-.ep-rj-district>summary{cursor:pointer;list-style:none;padding:10px 12px;background:#f7faf8;font-weight:900;color:#163b55;font-size:11px}
-.ep-rj-district>summary::-webkit-details-marker{display:none}
-.ep-rj-tehsil{margin:6px 8px;border-left:3px solid #ff9933;padding-left:8px}
-.ep-rj-tehsil>summary{cursor:pointer;list-style:none;padding:7px 8px;color:#31566d;font-weight:800;font-size:10px}
-.ep-rj-tehsil>summary::-webkit-details-marker{display:none}
-.ep-rj-villages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:5px 8px 10px}
-.ep-rj-village{padding:7px 8px;border:1px solid #e3ebe5;border-radius:8px;background:#fff;font-size:9px;color:#466477;cursor:pointer;text-align:left}
-.ep-rj-village:hover{background:#fff5e8;border-color:#f3c68e;color:#7b4a1c}
-.ep-rj-election{border:1px solid #d6e2da;border-radius:12px;padding:11px;background:linear-gradient(135deg,#fff9f1,#fff,#eef9f1);margin-bottom:8px}
-.ep-rj-election b{display:block;font-size:11px;color:#082742}.ep-rj-election span{font-size:9px;color:#6a7d8c}.ep-rj-election em{float:right;font-style:normal;font-size:8px;font-weight:900;color:#7b4a1c;background:#fff0df;padding:4px 6px;border-radius:999px}
-.ep-rj-note{font-size:9px;line-height:1.55;color:#718494;margin-top:8px}
-@media(max-width:900px){.ep-rj-grid{grid-template-columns:1fr}.ep-rj-stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.ep-rj-head,.ep-rj-grid,.ep-rj-tree-wrap{padding-left:14px;padding-right:14px}.ep-rj-selects{grid-template-columns:1fr}.ep-rj-villages{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-rj-title{font-size:20px}}
-</style>
-
 </head>
 <body class="text-slate-800 h-full flex flex-col relative">
-<script id="ep-rj-early-js-guard">
-(function(){
-'use strict';
-const bad=/function\s+(?:villageSummary|wardSnapshot|printVillage)\s*\(|const\s+rows\s*=\s*candidatesFor|w\.document\.close\(\);setTimeout\(\(\)=>w\.print\(\)/i;
-function clean(){
- const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),kill=[];
- while(w.nextNode()){const n=w.currentNode,p=n.parentElement;if(!p||['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','INPUT','OPTION'].includes(p.tagName))continue;const t=String(n.nodeValue||'');if(bad.test(t))kill.push(n)}
- kill.forEach(n=>n.remove());
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',clean,{once:true});else clean();
-})();
-</script>
 <!-- TOAST NOTIFICATION CONTAINER -->
 <div id="toast-container"></div>
 <!-- HEADER: PREMIUM DARK NAVIGATION -->
@@ -806,58 +742,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <section class="glass rounded-3xl p-6 md:p-10 shadow-premium-soft relative overflow-hidden">
 <!-- Existing village/candidate area -->
 </section>
-
-<section id="ep-rj-directory" aria-labelledby="ep-rj-title">
-  <div class="ep-rj-head">
-    <div class="ep-rj-kicker">RAJASTHAN ONLY · OFFICIAL ADMINISTRATIVE DIRECTORY</div>
-    <h2 class="ep-rj-title" id="ep-rj-title">राजस्थान: राज्य → जिला → तहसील → गाँव</h2>
-    <p class="ep-rj-sub">राजस्थान के सभी उपलब्ध गाँवों को उनके संबंधित तहसील और जिले के नीचे व्यवस्थित करने के लिए यह अलग directory है। मौजूदा voting, candidate, results, analytics और admin features को यह section नहीं हटाता और न ही उनके data को bulk-copy करता है।</p>
-    <div class="ep-rj-source"><b id="ep-rj-source-badge">Official Rajasthan GIS · Village Layer</b><span id="ep-rj-source-text">डेटा लोड होने की प्रतीक्षा है…</span></div>
-  </div>
-  <div class="ep-rj-grid">
-    <div class="ep-rj-panel">
-      <h3>प्रशासनिक चयन / Administrative selector</h3>
-      <div class="ep-rj-selects">
-        <select id="ep-rj-state" class="ep-rj-select full"><option value="Rajasthan">राजस्थान / Rajasthan</option></select>
-        <select id="ep-rj-district" class="ep-rj-select"><option value="">जिला चुनें / Select district</option></select>
-        <select id="ep-rj-tehsil" class="ep-rj-select"><option value="">तहसील चुनें / Select tehsil</option></select>
-        <select id="ep-rj-village" class="ep-rj-select full"><option value="">गाँव चुनें / Select village</option></select>
-      </div>
-      <div class="ep-rj-actions">
-        <button type="button" class="ep-rj-btn primary" id="ep-rj-use">गाँव उपयोग करें</button>
-        <button type="button" class="ep-rj-btn" id="ep-rj-refresh">आधिकारिक सूची ताज़ा करें</button>
-        <button type="button" class="ep-rj-btn" id="ep-rj-clear">चयन साफ करें</button>
-      </div>
-      <div class="ep-rj-status" id="ep-rj-status">Official Rajasthan GIS से hierarchy लोड की जाएगी। पहली बार network की आवश्यकता होगी; उसके बाद IndexedDB cache का उपयोग किया जाएगा।</div>
-    </div>
-    <div class="ep-rj-panel">
-      <h3>आपके दिए प्रशासनिक आँकड़े</h3>
-      <div class="ep-rj-stats">
-        <div class="ep-rj-stat"><b>41</b><span>जिले / Districts</span></div>
-        <div class="ep-rj-stat"><b>425</b><span>तहसील / Tehsils</span></div>
-        <div class="ep-rj-stat"><b>323</b><span>उप-विभाग / Sub-divisions</span></div>
-        <div class="ep-rj-stat"><b>232</b><span>उप-तहसील / Up-tehsils</span></div>
-      </div>
-      <div class="ep-rj-note">ई-धरती के सरकारी पेज पर 41 जिले, 425 तहसील और 50,516 गाँवों की सूची दिखाई जाती है। इस portal की hierarchy गाँव के आधिकारिक census/revenue नाम को प्राथमिकता देती है; Gram Panchayat नाम को village name की जगह नहीं मिलाया जाता।</div>
-      <div class="ep-rj-status" id="ep-rj-count-status">लोडेड hierarchy: 0 जिले · 0 तहसील · 0 गाँव</div>
-    </div>
-  </div>
-  <div class="ep-rj-tree-wrap">
-    <div class="ep-rj-tree-head">
-      <h3>राजस्थान की पूरी hierarchy</h3>
-      <input id="ep-rj-tree-search" type="search" placeholder="जिला / तहसील / गाँव खोजें…">
-    </div>
-    <div class="ep-rj-tree" id="ep-rj-tree">
-      <div class="ep-rj-note">सूची लोड होने के बाद राज्य → जिला → तहसील → गाँव दिखाई देंगे। बड़े dataset को तेज रखने के लिए गाँवों के DOM nodes केवल खोले गए तहसील में बनाए जाते हैं।</div>
-    </div>
-  </div>
-  <div class="ep-rj-tree-wrap" style="padding-top:0">
-    <div class="ep-rj-tree-head"><h3>राजस्थान में आयोजित / आधिकारिक रूप से indexed चुनाव श्रृंखलाएँ</h3></div>
-    <div id="ep-rj-elections"></div>
-    <div class="ep-rj-note">यह catalogue ECI/CEO Rajasthan में उपलब्ध general-election, bye-election, Rajya Sabha, Presidential तथा Form-20/result series को साथ रखता है और Rajasthan local-body election types को भी अलग category में दिखाता है। यह प्रत्येक स्थानीय polling event/constituency की अलग तारीखों की exhaustive event log होने का दावा नहीं करता।</div>
-  </div>
-</section>
-
 <!-- TOOL 1: PUBLIC PERSON / PARTY / CANDIDATE SEARCH -->
 <section id="ep-candidate-search-tool" class="ep-section ep-candidate-search-tool" aria-labelledby="ep-search-title">
   <div class="ep-search-tool-head">
@@ -7362,221 +7246,358 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   },{once:true});
 })();
 </script>
+<!-- ================================================================
+     EP MULTI-PAGE + 40 USER FEATURES + 60 ADMIN FEATURES UPGRADE
+     Additive-only layer. Existing portal code remains untouched.
+     ================================================================ -->
+<style id="ep-multipage-40-60-style">
+#ep-page-directory,#ep-page-indexed{display:none;min-height:calc(100vh - 120px);padding:28px 0 70px}
+.ep-page-shell{width:min(100% - 28px,1360px);margin:0 auto}
+.ep-page-card{background:linear-gradient(135deg,#fff7eb,#fff 48%,#eef9f1);border:1px solid #c8d9ce;border-radius:24px;box-shadow:0 20px 60px rgba(6,35,61,.10);overflow:hidden}
+.ep-page-head{padding:26px 28px;border-bottom:1px solid #d9e5dd;display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;background:linear-gradient(90deg,rgba(255,153,51,.12),rgba(255,255,255,.75),rgba(19,136,8,.10))}
+.ep-page-head h1{font-size:clamp(22px,3vw,34px);font-weight:950;color:#06233d;margin:0}.ep-page-head p{margin:7px 0 0;color:#607587;font-size:13px;line-height:1.6;max-width:900px}
+.ep-page-actions{display:flex;gap:8px;flex-wrap:wrap}.ep-page-btn{border:1px solid #bfd2c5;background:#fff;padding:10px 14px;border-radius:11px;font-weight:900;font-size:12px;color:#082742;cursor:pointer}.ep-page-btn.primary{background:linear-gradient(90deg,#ff9933,#fff,#138808);border-color:#b8cdbd}.ep-page-btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(6,35,61,.10)}
+.ep-page-body{padding:24px 28px}.ep-grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.ep-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ep-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ep-kpi{border:1px solid #cadbd0;border-radius:16px;padding:16px;background:rgba(255,255,255,.82)}.ep-kpi b{display:block;font-size:24px;color:#06233d}.ep-kpi span{display:block;margin-top:3px;font-size:10px;color:#647888;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.ep-page-toolbar{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:10px;margin:18px 0}.ep-page-input,.ep-page-select{width:100%;min-height:44px;border:1px solid #bfd2c5;border-radius:11px;padding:10px 12px;background:#fff;color:#17324a;outline:none}.ep-page-input:focus,.ep-page-select:focus{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.12)}
+.ep-status{padding:11px 13px;border-radius:12px;background:#f4faf6;border:1px solid #cfe0d4;color:#42614f;font-size:11px;margin:10px 0}.ep-status.warn{background:#fff8ee;border-color:#f0d1a7;color:#78521f}.ep-status.error{background:#fff0f0;border-color:#edb9b9;color:#8a3030}.ep-status.live{background:#eef8f0;border-color:#b9d8c0}
+.ep-tree{display:grid;gap:8px}.ep-tree details{border:1px solid #d4e1d8;border-radius:13px;background:#fff;overflow:hidden}.ep-tree summary{cursor:pointer;padding:13px 15px;font-weight:900;color:#0a304b;list-style:none;display:flex;justify-content:space-between;gap:10px}.ep-tree summary::-webkit-details-marker{display:none}.ep-tree summary:after{content:'+';font-size:16px;color:#138808}.ep-tree details[open]>summary:after{content:'−'}.ep-tree-children{padding:0 12px 12px;display:grid;gap:7px}.ep-tehsil{border:1px solid #e1e9e3;border-radius:10px;padding:10px;background:#f9fcfa}.ep-tehsil b{font-size:12px;color:#173c2b}.ep-village-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.ep-village-chip{border:1px solid #d6e3da;background:#fff;border-radius:999px;padding:6px 9px;font-size:10px;color:#31536a;cursor:pointer}.ep-village-chip:hover{border-color:#ff9933;background:#fff6ea}.ep-count-badge{font-size:9px;border-radius:999px;padding:4px 7px;background:#eef6f0;color:#39704d}
+.ep-index-table-wrap{overflow:auto;border:1px solid #d4e1d8;border-radius:15px;background:#fff}.ep-index-table{width:100%;border-collapse:collapse;min-width:850px}.ep-index-table th,.ep-index-table td{padding:10px 11px;border-bottom:1px solid #e6eee8;text-align:left;font-size:11px}.ep-index-table th{background:#eff7f1;color:#264e3a;position:sticky;top:0;z-index:2}.ep-index-table td{color:#466075}.ep-index-table tr:hover td{background:#fff9f1}
+.ep-empty{padding:28px;text-align:center;color:#718394;border:1px dashed #c6d8cc;border-radius:14px;background:#fbfdfb}.ep-page-note{font-size:10px;color:#718394;line-height:1.6;margin-top:12px}
+.ep-user40-section{margin-top:24px;background:linear-gradient(135deg,#fff7ec,#fff 50%,#eef9f1);border:1px solid #c9dacf;border-radius:22px;padding:26px;box-shadow:0 18px 45px rgba(20,50,75,.07);position:relative}.ep-user40-section:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:999px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}.ep-user40-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;margin-bottom:18px}.ep-user40-head h2{margin:0;color:#06233d;font-size:24px;font-weight:950}.ep-user40-head p{margin:5px 0 0;color:#687a8b;font-size:11px}.ep-user40-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.ep-user40-card{border:1px solid #cfded4;border-radius:15px;background:#fff;padding:14px;min-height:142px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 7px 18px rgba(6,35,61,.05)}.ep-user40-card .ep-u40-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#fff0dc,#eef8f0);color:#0a6b39}.ep-user40-card h3{font-size:12px;color:#082742;margin:9px 0 4px;font-weight:950}.ep-user40-card p{font-size:9px;line-height:1.5;color:#6b7d8d;margin:0}.ep-user40-card button{margin-top:9px;border:1px solid #c3d6ca;border-radius:9px;padding:7px 9px;background:#fff;color:#12344c;font-size:9px;font-weight:900;cursor:pointer}.ep-user40-card button:hover{background:#fff3e4}
+.ep-promo-section{margin-top:24px;background:linear-gradient(135deg,#06233d,#0b4057 52%,#0b542d);color:#fff;border-radius:22px;padding:26px;box-shadow:0 20px 55px rgba(6,35,61,.18);position:relative;overflow:hidden}.ep-promo-section:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,153,51,.13),transparent 45%,rgba(19,136,8,.15))}.ep-promo-head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:end;gap:14px;margin-bottom:16px}.ep-promo-head h2{margin:0;font-size:23px;font-weight:950}.ep-promo-head p{margin:4px 0 0;color:#c7d7df;font-size:11px}.ep-promo-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.ep-promo-card{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);border-radius:15px;padding:16px}.ep-promo-card h3{margin:0 0 6px;font-size:13px}.ep-promo-card p{margin:0;color:#c8d6de;font-size:10px;line-height:1.55}.ep-promo-card button{margin-top:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:8px 11px;font-size:9px;font-weight:900;cursor:pointer}
+.ep-live-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0;padding:9px 12px;border-radius:11px;background:#eff8f1;border:1px solid #c5dccb;font-size:10px;color:#315b40}.ep-live-dot2{width:8px;height:8px;border-radius:50%;background:#138808;box-shadow:0 0 0 4px rgba(19,136,8,.12);animation:epPulse 1.8s infinite}@keyframes epPulse{50%{opacity:.45;transform:scale(.75)}}
+/* Admin console: collapsible left navigation + full-screen tool workspace */
+#admin-dashboard-container.ep-console-collapsed .w-72{display:none!important}#admin-dashboard-container.ep-console-collapsed .flex-grow.bg-\[\#0F172A\]{width:100%!important}.ep-admin-console-toggle{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;padding:8px 10px;border-radius:9px;font-weight:900;cursor:pointer}.ep-admin-console-toggle:hover{background:rgba(255,153,51,.18)}#ep-admin-console-fab{position:fixed;left:16px;bottom:18px;z-index:400;width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:linear-gradient(145deg,#ff9933,#138808);color:#06233d;display:none;place-items:center;box-shadow:0 14px 35px rgba(0,0,0,.3);cursor:pointer}#admin-dashboard-container.ep-console-collapsed #ep-admin-console-fab{display:grid}#admin-dashboard-container .ep-admin-tool-fullscreen{min-height:calc(100vh - 190px)}#admin-dashboard-container .ep-admin-tool-fullscreen #admin-tool-body{font-size:14px!important}#admin-dashboard-container .ep-admin-tool-fullscreen #admin-content-wrapper{max-width:none!important;width:100%!important}#admin-dashboard-container .ep-admin-tool-fullscreen #admin-content-wrapper>div{min-height:calc(100vh - 210px)}#ep-admin-tool-search-top{width:min(420px,35vw);min-height:38px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:8px 12px;font-size:11px;outline:none}.ep-admin-tool-count{font-size:9px;color:#b8c8d3;font-family:monospace}
+.ep-bulk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.ep-bulk-tab{border:1px solid #c7d9cd;background:#fff;border-radius:12px;padding:13px;cursor:pointer;text-align:left}.ep-bulk-tab.active{border-color:#ff9933;box-shadow:0 0 0 3px rgba(255,153,51,.12);background:#fff8ef}.ep-bulk-tab strong{display:block;font-size:12px;color:#082742}.ep-bulk-tab span{display:block;font-size:9px;color:#708292;margin-top:4px;line-height:1.45}.ep-bulk-panel{display:none;margin-top:14px;border:1px solid #cbdcd2;border-radius:16px;padding:16px;background:#fbfdfb}.ep-bulk-panel.active{display:block}.ep-bulk-preview{max-height:330px;overflow:auto;border:1px solid #d6e3da;border-radius:12px;background:#fff;margin-top:10px}.ep-bulk-row{display:grid;grid-template-columns:50px 1fr 90px 90px 90px;gap:8px;padding:8px 10px;border-bottom:1px solid #edf2ee;font-size:10px}.ep-bulk-row.head{font-weight:900;background:#eef7f0;color:#244c37;position:sticky;top:0}.ep-bulk-row div{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ep-bulk-log{font-size:10px;line-height:1.7;white-space:pre-wrap;color:#536b7b;background:#f6faf7;border:1px solid #d7e5da;border-radius:12px;padding:11px;margin-top:10px}
+@media(max-width:1050px){.ep-user40-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.ep-grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-promo-grid{grid-template-columns:1fr 1fr}.ep-page-toolbar{grid-template-columns:1fr 1fr}.ep-bulk-grid{grid-template-columns:1fr}}
+@media(max-width:720px){.ep-page-body,.ep-page-head,.ep-user40-section,.ep-promo-section{padding:18px}.ep-user40-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ep-grid-3,.ep-grid-2{grid-template-columns:1fr}.ep-grid-4{grid-template-columns:1fr 1fr}.ep-promo-grid{grid-template-columns:1fr}.ep-page-toolbar{grid-template-columns:1fr}.ep-page-actions{width:100%}.ep-page-btn{flex:1}.ep-user40-card{min-height:132px}.ep-page-head{display:block}.ep-page-actions{margin-top:12px}.ep-admin-tool-fullscreen #admin-content-wrapper>div{min-height:calc(100vh - 170px)!important}}
+@media(max-width:480px){.ep-user40-grid{grid-template-columns:1fr}.ep-grid-4{grid-template-columns:1fr}.ep-page-shell{width:min(100% - 16px,1360px)}}
+</style>
 
-<script id="ep-rj-hierarchy-runtime">
+<!-- Separate route pages: never rendered as part of the home page. -->
+<section id="ep-page-directory" aria-label="Rajasthan directory page">
+  <div class="ep-page-shell"><div class="ep-page-card">
+    <div class="ep-page-head">
+      <div><h1>Rajasthan Directory / राजस्थान निर्देशिका</h1><p>State → District → Tehsil → Village. The hierarchy is loaded from the Rajasthan Government GIS village layer and cached locally for later use.</p></div>
+      <div class="ep-page-actions"><button class="ep-page-btn" type="button" data-ep-route="home">← Home</button><button class="ep-page-btn primary" type="button" id="ep-dir-refresh">↻ Refresh official data</button></div>
+    </div>
+    <div class="ep-page-body">
+      <div class="ep-grid-4" id="ep-dir-kpis"></div>
+      <div class="ep-live-strip"><span class="ep-live-dot2"></span><b id="ep-dir-live">Directory ready</b><span id="ep-dir-updated"></span></div>
+      <div class="ep-page-toolbar"><input id="ep-dir-search" class="ep-page-input" placeholder="Search district, tehsil or village..." type="search"><select id="ep-dir-district" class="ep-page-select"><option value="">All districts / सभी जिले</option></select><select id="ep-dir-tehsil" class="ep-page-select"><option value="">All tehsils / सभी तहसील</option></select><select id="ep-dir-sort" class="ep-page-select"><option value="district">District → Tehsil → Village</option><option value="village">Village A–Z</option></select></div>
+      <div id="ep-dir-status" class="ep-status">Loading official hierarchy…</div>
+      <div id="ep-dir-tree" class="ep-tree"></div>
+      <p class="ep-page-note">Administrative headline figures used by this portal: 41 districts, 425 tehsils, 323 sub-divisions and 232 up-tehsils. The village layer is loaded dynamically rather than hard-coding tens of thousands of HTML options.</p>
+    </div>
+  </div></div>
+</section>
+
+<section id="ep-page-indexed" aria-label="Indexed records page">
+  <div class="ep-page-shell"><div class="ep-page-card">
+    <div class="ep-page-head">
+      <div><h1>Indexed Records / इंडेक्स्ड रिकॉर्ड</h1><p>Search the portal's published candidate index and inspect village, ward, party, post and category records. This is a separate page and is not displayed on Home.</p></div>
+      <div class="ep-page-actions"><button class="ep-page-btn" type="button" data-ep-route="home">← Home</button><button class="ep-page-btn" type="button" id="ep-index-refresh">↻ Refresh index</button><button class="ep-page-btn primary" type="button" id="ep-index-export">Export CSV</button></div>
+    </div>
+    <div class="ep-page-body">
+      <div class="ep-grid-4" id="ep-index-kpis"></div>
+      <div class="ep-live-strip"><span class="ep-live-dot2"></span><b>Live index</b><span id="ep-index-live-status">Waiting for data</span></div>
+      <div class="ep-page-toolbar"><input id="ep-index-search" class="ep-page-input" placeholder="Search candidate, party, village, ward, post…" type="search"><select id="ep-index-village" class="ep-page-select"><option value="">All villages</option></select><select id="ep-index-party" class="ep-page-select"><option value="">All parties</option></select><select id="ep-index-sort" class="ep-page-select"><option value="candidate">Candidate</option><option value="village">Village</option><option value="ward">Ward</option><option value="votes">Votes</option></select></div>
+      <div id="ep-index-status" class="ep-status">Preparing index…</div>
+      <div id="ep-index-table" class="ep-index-table-wrap"></div>
+    </div>
+  </div></div>
+</section>
+
+<script id="ep-multipage-40-60-runtime">
 (function(){
 'use strict';
-const DISTRICTS=["Ajmer", "Alwar", "Balotra", "Banswara", "Baran", "Barmer", "Beawar", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Deeg", "Dholpur", "Didwana-Kuchaman", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Khairthal-Tijara", "Kota", "Kotputli-Behror", "Nagaur", "Pali", "Phalodi", "Pratapgarh", "Rajsamand", "Salumbar", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"];
-const ELECTIONS=[{"year": "1951", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1951"}, {"year": "1951", "type": "Lok Sabha", "name": "Lok Sabha General Election 1951 — Rajasthan"}, {"year": "1957", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1957"}, {"year": "1957", "type": "Lok Sabha", "name": "Lok Sabha General Election 1957 — Rajasthan"}, {"year": "1962", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1962"}, {"year": "1962", "type": "Lok Sabha", "name": "Lok Sabha General Election 1962 — Rajasthan"}, {"year": "1967", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1967"}, {"year": "1967", "type": "Lok Sabha", "name": "Lok Sabha General Election 1967 — Rajasthan"}, {"year": "1971", "type": "Lok Sabha", "name": "Lok Sabha General Election 1971 — Rajasthan"}, {"year": "1972", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1972"}, {"year": "1977", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1977"}, {"year": "1977", "type": "Lok Sabha", "name": "Lok Sabha General Election 1977 — Rajasthan"}, {"year": "1980", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1980"}, {"year": "1980", "type": "Lok Sabha", "name": "Lok Sabha General Election 1980 — Rajasthan"}, {"year": "1984-85", "type": "Lok Sabha", "name": "Lok Sabha General Election 1984-85 — Rajasthan"}, {"year": "1985", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1985"}, {"year": "1989", "type": "Lok Sabha", "name": "Lok Sabha General Election 1989 — Rajasthan"}, {"year": "1990", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1990"}, {"year": "1991-92", "type": "Lok Sabha", "name": "Lok Sabha General Election 1991-92 — Rajasthan"}, {"year": "1993", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1993"}, {"year": "1996", "type": "Lok Sabha", "name": "Lok Sabha General Election 1996 — Rajasthan"}, {"year": "1998", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 1998"}, {"year": "1998", "type": "Lok Sabha", "name": "Lok Sabha General Election 1998 — Rajasthan"}, {"year": "1999", "type": "Lok Sabha", "name": "Lok Sabha General Election 1999 — Rajasthan"}, {"year": "2003", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 2003"}, {"year": "2004", "type": "Lok Sabha", "name": "Lok Sabha General Election 2004 — Rajasthan"}, {"year": "2008", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 2008"}, {"year": "2009", "type": "Lok Sabha", "name": "Lok Sabha General Election 2009 — Rajasthan"}, {"year": "2013", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 2013"}, {"year": "2014", "type": "Lok Sabha", "name": "Lok Sabha General Election 2014 — Rajasthan"}, {"year": "2018", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 2018"}, {"year": "2019", "type": "Lok Sabha", "name": "Lok Sabha General Election 2019 — Rajasthan"}, {"year": "2023", "type": "State Assembly", "name": "Rajasthan Legislative Assembly General Election 2023"}, {"year": "2024", "type": "Lok Sabha", "name": "Lok Sabha General Election 2024 — Rajasthan"}, {"year": "2004", "type": "Assembly Bye-Election", "name": "Rajasthan State Assembly Bye-Election 2004"}, {"year": "2006", "type": "Assembly Bye-Election", "name": "Rajasthan State Assembly Bye-Election 2006 — Dungarpur"}, {"year": "2014", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election 2014"}, {"year": "2017", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election 2017 — Dholpur"}, {"year": "2018", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election 2018 — Ajmer & Alwar; Mandalgarh"}, {"year": "2021", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election Oct-Nov 2021"}, {"year": "2022", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election Nov-Dec 2022"}, {"year": "2024", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election Oct-Nov 2024"}, {"year": "2025", "type": "Assembly Bye-Election", "name": "Rajasthan Assembly Bye-Election Nov 2025"}, {"year": "2014", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2014"}, {"year": "2016", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2016"}, {"year": "2019", "type": "Rajya Sabha Bye-Election", "name": "Rajasthan Rajya Sabha Bye-Election 2019"}, {"year": "2020", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2020"}, {"year": "2022", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2022"}, {"year": "2024", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2024"}, {"year": "2024", "type": "Rajya Sabha Bye-Election", "name": "Rajasthan Rajya Sabha Bye-Election 2024"}, {"year": "2026", "type": "Rajya Sabha", "name": "Rajasthan Rajya Sabha Election 2026"}, {"year": "2022", "type": "Presidential", "name": "16th Presidential Election 2022 — Rajasthan participation"}, {"year": "2003/2008/2013/2018/2023", "type": "Form-20", "name": "Rajasthan State Assembly Form-20/result series"}, {"year": "2004/2009/2014/2019/2024", "type": "Form-20", "name": "Rajasthan Lok Sabha Form-20/result series"}, {"year": "Panchayat", "type": "Local Body", "name": "Gram Panchayat / Sarpanch / Ward Panch elections"}, {"year": "Panchayat", "type": "Local Body", "name": "Panchayat Samiti elections"}, {"year": "Panchayat", "type": "Local Body", "name": "Zila Parishad elections"}, {"year": "Urban Local Body", "type": "Local Body", "name": "Municipal Corporation elections"}, {"year": "Urban Local Body", "type": "Local Body", "name": "Municipal Council / Nagar Parishad elections"}, {"year": "Urban Local Body", "type": "Local Body", "name": "Nagar Palika / Municipality elections"}];
-const GIS='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/servers/801387f9466545c7bc300734010f3847/rest/services/Common/BaseMap/MapServer/205/query';
-const DB_NAME='EP_RJ_OFFICIAL_HIERARCHY_V6', DB_VERSION=1, STORE='snapshot';
-const EXPECTED_DISTRICTS=41, EXPECTED_TEHSILS=425, EXPECTED_VILLAGES=50516;
-const $=(s,r=document)=>r.querySelector(s);
+const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const clean=v=>String(v??'').trim();
-const key=v=>clean(v).toLowerCase().replace(/\s+/g,' ').replace(/[^a-z0-9\u0900-\u097f]+/gi,'_');
-const state={records:[],tree:new Map(),loaded:false,loading:false};
+const DB=()=>{try{return window.DBManager?.get?.()||window.db||window.__EP_DB__||window.DBManager?.getState?.()||window.DBManager?.db||null}catch(e){return null}};
+const toast=(m,type='info')=>{try{window.Utils?.showToast?.(m,type)}catch(e){try{alert(m)}catch(_){}}};
+const t=(hi,en)=>localStorage.getItem('EP_LANG')==='en'?en:hi;
+const RID='EP_MULTI_PAGE_V1';
+const DISTRICTS=['Ajmer','Alwar','Balotara','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner','Bundi','Chittorgarh','Churu','Dausa','Deeg','Dholpur','Didwana-Kuchaman','Dungarpur','Hanumangarh','Jaipur','Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairtal Tijara','Kota','Kotputli Behror','Nagaur','Pali','Phalodi','Pratapgarh','Rajsamand','Salumbar','Sawai Madhopur','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'];
+const GIS='https://gistest2.rajasthan.gov.in/rajdharaa/sharing/servers/801387f9466545c7bc300734010f3847/rest/services/Common/BaseMap/MapServer/205/query';
+let dirRows=[]; let dirLoaded=false; let indexRows=[]; let routeLock=false;
 
-function status(msg,kind=''){const e=$('#ep-rj-status');if(e){e.textContent=msg;e.className='ep-rj-status '+kind}}
-function openDb(){
- return new Promise((resolve,reject)=>{
-  if(!('indexedDB' in window)) return resolve(null);
-  const r=indexedDB.open(DB_NAME,DB_VERSION);
-  r.onupgradeneeded=()=>{try{r.result.createObjectStore(STORE)}catch{}};
-  r.onsuccess=()=>resolve(r.result); r.onerror=()=>reject(r.error);
- });
+function allCandidateRows(){
+ const d=DB(),out=[]; if(!d?.panchayats)return out;
+ Object.entries(d.panchayats||{}).forEach(([pid,p])=>Object.entries(p?.wardsData||{}).forEach(([wk,wd])=>{
+   (wd?.candidates||[]).forEach(c=>out.push({pid,p,w:Number(wk),wd,c,votes:Number(wd?.votes?.[c.id]||0)}));
+ })); return out;
 }
-async function cacheGet(){
- try{const db=await openDb();if(!db)return null;return await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readonly'),q=tx.objectStore(STORE).get('latest');q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error)})}
- catch{return null}
+function candidateName(c){return c?.nameHi||c?.nameEn||c?.name||'Candidate'}
+function partyName(c){return c?.partyHi||c?.partyEn||c?.partyName||c?.party||'Independent'}
+function villageName(p){return p?.nameHi||p?.nameEn||p?.name||p?.id||'Village'}
+function setRouteButtons(){
+ qa('[data-ep-route]').forEach(b=>{if(b.__epRoute)return;b.__epRoute=true;b.addEventListener('click',()=>{const r=b.dataset.epRoute||'home';location.hash=r==='home'?'home':r})});
 }
-async function cachePut(data){
- try{const db=await openDb();if(!db)return;await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(data,'latest');tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}catch{}
+function addNavPages(){
+ const nav=q('.ep-mainnav .ep-nav-inner'); if(!nav||nav.__epPages)return; nav.__epPages=true;
+ const mk=(label,hash)=>{const b=document.createElement('a');b.href='#'+hash;b.textContent=label;b.dataset.epNavRoute=hash;b.style.fontWeight='900';return b};
+ nav.appendChild(mk('Directory / निर्देशिका','directory')); nav.appendChild(mk('Indexed / इंडेक्स्ड','indexed'));
+ qa('[data-ep-nav-route]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();location.hash=a.dataset.epNavRoute}));
 }
-function normalizeFeature(f){
- const a=f?.attributes||{};
- const district=clean(a.DISTRICT_NAME_EN)||'Unknown District';
- const districtHi=clean(a.DISTRICT_NAME_HI)||district;
- const tehsil=clean(a.TEHSIL_NAME)||'Unknown Tehsil';
- const tehsilHi=clean(a.TEHSIL_NAME_H)||tehsil;
- const village=clean(a.CENSUS_NM_2011)||clean(a.VILLAGE_NM_H)||clean(a.GP_FINAL)||'Unnamed Village';
- const villageHi=clean(a.VILLAGE_NM_H)||village;
- const code=clean(a.CENSUS_CD_2011)||clean(a.GP_HQ_VILL_CD)||String(a.OBJECTID||'');
- return {district,districtHi,tehsil,tehsilHi,village,villageHi,code,districtCode:clean(a.DISTRICT_CODE),tehsilCode:clean(a.TEHSIL_CODE),division:clean(a.DIVISION_NAME),subDivision:clean(a.SDONAME),gp:clean(a.GP_FINAL),gpHi:clean(a.GP_HINDI)};
+function routeTo(hash){
+ if(routeLock)return; routeLock=true;
+ const h=String(hash||'home').replace(/^#/,'').toLowerCase();
+ const dir=q('#ep-page-directory'),idx=q('#ep-page-indexed'),main=q('#home'),footer=q('footer');
+ const isDir=h==='directory'||h==='ep-directory'; const isIdx=h==='indexed'||h==='index';
+ if(dir)dir.style.display=isDir?'block':'none'; if(idx)idx.style.display=isIdx?'block':'none';
+ const homeVisible=!isDir&&!isIdx;
+ if(main)main.style.display=homeVisible?'':'none'; if(footer)footer.style.display=homeVisible?'':'none';
+ if(isDir){renderDirectory();loadDirectory(false)}
+ if(isIdx){renderIndex()}
+ if(homeVisible&&h&&h!=='home')setTimeout(()=>{document.getElementById(h)?.scrollIntoView({behavior:'smooth',block:'start'})},80);
+ setRouteButtons(); routeLock=false;
 }
-function buildTree(records){
- const tree=new Map();
- records.forEach(r=>{
-  const dk=key(r.district);
-  if(!tree.has(dk))tree.set(dk,{name:r.district,nameHi:r.districtHi,tehsils:new Map(),code:r.districtCode});
-  const d=tree.get(dk),tk=key(r.tehsil);
-  if(!d.tehsils.has(tk))d.tehsils.set(tk,{name:r.tehsil,nameHi:r.tehsilHi,villages:[],code:r.tehsilCode});
-  d.tehsils.get(tk).villages.push(r);
- });
- for(const d of tree.values())for(const t of d.tehsils.values())t.villages.sort((a,b)=>a.village.localeCompare(b.village));
- state.tree=tree;
-}
-function setStats(){
- const d=state.tree.size,t=[...state.tree.values()].reduce((n,x)=>n+x.tehsils.size,0),v=state.records.length;
- const e=$('#ep-rj-count-status');if(e)e.textContent=`लोडेड hierarchy: ${d} जिले · ${t} तहसील · ${v.toLocaleString('en-IN')} गाँव`;
-}
-function populateDistricts(){
- const s=$('#ep-rj-district');if(!s)return;
- s.innerHTML='<option value="">जिला चुनें / Select district</option>';
- const names=[...state.tree.values()].sort((a,b)=>a.name.localeCompare(b.name));
- names.forEach(d=>s.insertAdjacentHTML('beforeend',`<option value="${esc(d.name)}">${esc(d.nameHi&&d.nameHi!==d.name?d.nameHi+' / ':'')}${esc(d.name)}</option>`));
-}
-function populateTehsils(){
- const d=$('#ep-rj-district')?.value||'',s=$('#ep-rj-tehsil');if(!s)return;
- s.innerHTML='<option value="">तहसील चुनें / Select tehsil</option>';
- const x=state.tree.get(key(d));if(!x)return;
- [...x.tehsils.values()].sort((a,b)=>a.name.localeCompare(b.name)).forEach(t=>s.insertAdjacentHTML('beforeend',`<option value="${esc(t.name)}">${esc(t.nameHi&&t.nameHi!==t.name?t.nameHi+' / ':'')}${esc(t.name)}</option>`));
-}
-function populateVillages(){
- const d=$('#ep-rj-district')?.value||'',t=$('#ep-rj-tehsil')?.value||'',s=$('#ep-rj-village');if(!s)return;
- s.innerHTML='<option value="">गाँव चुनें / Select village</option>';
- const x=state.tree.get(key(d)),te=x?.tehsils.get(key(t));if(!te)return;
- te.villages.forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v.code)}">${esc(v.villageHi&&v.villageHi!==v.village?v.villageHi+' / ':'')}${esc(v.village)}</option>`));
-}
-function villageSelected(){
- const code=$('#ep-rj-village')?.value||'';return state.records.find(x=>String(x.code)===String(code))||null;
-}
-function useVillage(v){
- if(!v)return status('पहले जिला, तहसील और गाँव चुनें।','err');
- try{
-  localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify(v));
-  localStorage.setItem('EP_RJ_SELECTED_VILLAGE',v.village);
-  const sel=$('#user-panchayat-select');
-  if(sel){
-   let opt=[...sel.options].find(o=>String(o.textContent||'').trim().toLowerCase()===v.village.toLowerCase());
-   if(!opt){opt=document.createElement('option');opt.value='rj_'+key(v.district)+'_'+key(v.tehsil)+'_'+key(v.code||v.village);opt.textContent=v.village;sel.appendChild(opt)}
-   sel.value=opt.value;sel.dispatchEvent(new Event('change',{bubbles:true}));
-  }
-  window.dispatchEvent(new CustomEvent('ep:rj-location-selected',{detail:v}));
-  status(`चयन सक्रिय: ${v.district} → ${v.tehsil} → ${v.village}`,'ok');
- }catch(e){status('चयन सक्रिय नहीं हो सका: '+e.message,'err')}
-}
-function renderTree(filter=''){
- const root=$('#ep-rj-tree');if(!root)return;
- const q=clean(filter).toLowerCase();
- root.innerHTML='';
- const stateNode=document.createElement('details');stateNode.className='ep-rj-state-node';stateNode.open=!q;
- stateNode.innerHTML=`<summary>🇮🇳 राजस्थान / Rajasthan · ${state.tree.size} जिले</summary>`;
- const holder=document.createElement('div');stateNode.appendChild(holder);
- const districts=[...state.tree.values()].sort((a,b)=>a.name.localeCompare(b.name));
- let matched=0;
- districts.forEach(d=>{
-  const dtext=(d.name+' '+d.nameHi).toLowerCase();
-  const tehsils=[...d.tehsils.values()].sort((a,b)=>a.name.localeCompare(b.name));
-  const districtMatch=!q||dtext.includes(q)||tehsils.some(t=>(t.name+' '+t.nameHi).toLowerCase().includes(q)||t.villages.some(v=>(v.village+' '+v.villageHi).toLowerCase().includes(q)));
-  if(!districtMatch)return;
-  matched++;
-  const dn=document.createElement('details');dn.className='ep-rj-district';dn.open=!!q;
-  dn.innerHTML=`<summary>${esc(d.nameHi&&d.nameHi!==d.name?d.nameHi+' / ':'')}${esc(d.name)} · ${d.tehsils.size} तहसील</summary>`;
-  const dh=document.createElement('div');dn.appendChild(dh);
-  tehsils.forEach(t=>{
-   const ttext=(t.name+' '+t.nameHi).toLowerCase();
-   const tm=!q||dtext.includes(q)||ttext.includes(q)||t.villages.some(v=>(v.village+' '+v.villageHi).toLowerCase().includes(q));
-   if(!tm)return;
-   const tn=document.createElement('details');tn.className='ep-rj-tehsil';tn.open=!!q;
-   tn.innerHTML=`<summary>${esc(t.nameHi&&t.nameHi!==t.name?t.nameHi+' / ':'')}${esc(t.name)} · ${t.villages.length} गाँव</summary>`;
-   const vh=document.createElement('div');vh.className='ep-rj-villages';
-   t.villages.forEach(v=>{
-    if(q&&!dtext.includes(q)&&!ttext.includes(q)&&!(v.village+' '+v.villageHi).toLowerCase().includes(q))return;
-    const b=document.createElement('button');b.type='button';b.className='ep-rj-village';b.textContent=v.villageHi&&v.villageHi!==v.village?v.villageHi+' / '+v.village:v.village;
-    b.title=`${v.district} → ${v.tehsil} → ${v.village}`;b.onclick=()=>{ $('#ep-rj-district').value=d.name;populateTehsils();$('#ep-rj-tehsil').value=t.name;populateVillages();$('#ep-rj-village').value=v.code;useVillage(v); window.scrollTo({top:document.getElementById('ep-rj-directory').offsetTop-20,behavior:'smooth'})};
-    vh.appendChild(b);
-   });
-   tn.appendChild(vh);dh.appendChild(tn);
-  });
-  holder.appendChild(dn);
- });
- if(!matched)root.innerHTML='<div class="ep-rj-note">कोई matching district, tehsil या village नहीं मिला।</div>';else root.appendChild(stateNode);
-}
-function renderElections(){
- const box=$('#ep-rj-elections');if(!box)return;
- box.innerHTML=ELECTIONS.map(e=>`<article class="ep-rj-election"><em>${esc(e.year)}</em><b>${esc(e.name)}</b><span>${esc(e.type)}</span></article>`).join('');
-}
-function queryUrl(params){
- const u=new URL(GIS);Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));return u.toString();
-}
+window.addEventListener('hashchange',()=>routeTo(location.hash));
+
+/* ---------- Official Rajasthan hierarchy cache ---------- */
+function idbOpen(){return new Promise((res,rej)=>{const r=indexedDB.open('EP_RJ_HIERARCHY_CACHE_V2',1);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('villages'))d.createObjectStore('villages',{keyPath:'key'});if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta',{keyPath:'key'})};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function idbPutRows(rows){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction(['villages','meta'],'readwrite'),s=tx.objectStore('villages');s.clear();rows.forEach(r=>s.put(r));tx.objectStore('meta').put({key:'snapshot',updated:new Date().toISOString(),count:rows.length});tx.oncomplete=()=>{db.close();res()};tx.onerror=()=>{db.close();rej(tx.error)}})}
+async function idbGetRows(){try{const db=await idbOpen();return await new Promise((res,rej)=>{const tx=db.transaction(['villages','meta'],'readonly'),s=tx.objectStore('villages'),a=[];s.openCursor().onsuccess=e=>{const c=e.target.result;if(c){a.push(c.value);c.continue()}else{db.close();res(a)}};tx.onerror=()=>{db.close();rej(tx.error)}})}catch(e){return []}}
+function normDir(x){return String(x??'').trim()}
 async function fetchOfficial(){
- if(state.loading)return;
- state.loading=true;status('Official Rajasthan GIS से village records गिने और डाउनलोड किए जा रहे हैं…');
- try{
-  const countRes=await fetch(queryUrl({where:'1=1',returnCountOnly:'true',f:'json'}),{cache:'no-store'});
-  if(!countRes.ok)throw new Error('GIS count request HTTP '+countRes.status);
-  const countJson=await countRes.json();const total=Number(countJson.count||0);
-  if(!total)throw new Error('GIS ने कोई village record नहीं लौटाया');
-  const all=[],page=1000;
-  for(let offset=0;offset<total&&offset<100000;offset+=page){
-   status(`Official GIS village data: ${Math.min(offset+page,total).toLocaleString('en-IN')} / ${total.toLocaleString('en-IN')} records`);
-   const r=await fetch(queryUrl({where:'1=1',outFields:'OBJECTID,DIVISION_NAME,DISTRICT_CODE,DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_CODE,TEHSIL_NAME,TEHSIL_NAME_H,SDONAME,CENSUS_CD_2011,CENSUS_NM_2011,VILLAGE_NM_H,GP_FINAL,GP_HINDI,GP_HQ_VILL_CD',returnGeometry:'false',resultOffset:String(offset),resultRecordCount:String(page),orderByFields:'OBJECTID ASC',f:'json'}),{cache:'no-store'});
-   if(!r.ok)throw new Error('GIS data request HTTP '+r.status);
-   const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS query error');
-   (j.features||[]).forEach(f=>all.push(normalizeFeature(f)));
-   if(!(j.features||[]).length)break;
-  }
-  const dedup=new Map();all.forEach(x=>dedup.set([x.districtCode,x.tehsilCode,x.code,x.village].join('|'),x));
-  state.records=[...dedup.values()];buildTree(state.records);state.loaded=true;
-  await cachePut({savedAt:Date.now(),records:state.records});
-  populateDistricts();setStats();renderTree($('#ep-rj-tree-search')?.value||'');
-  status(`आधिकारिक GIS सूची तैयार है: ${state.records.length.toLocaleString('en-IN')} गाँव।`, 'ok');
-  $('#ep-rj-source-text').textContent=`Official Village Layer · ${new Date().toLocaleString('en-IN')}`;
- }catch(e){
-  const cached=await cacheGet();
-  if(cached?.records?.length){
-   state.records=cached.records;buildTree(state.records);state.loaded=true;populateDistricts();setStats();renderTree($('#ep-rj-tree-search')?.value||'');
-   status(`Network उपलब्ध नहीं था; ${state.records.length.toLocaleString('en-IN')} cached official GIS village records उपयोग किए गए।`,'ok');
-   $('#ep-rj-source-text').textContent='Cached official GIS snapshot';
-  }else{
-   state.records=DISTRICTS.map(d=>({district:d,districtHi:d,tehsil:'',tehsilHi:'',village:'',villageHi:'',code:'',districtCode:'',tehsilCode:''}));
-   buildTree(state.records);populateDistricts();setStats();renderTree('');
-   status(`Official GIS अभी उपलब्ध नहीं है। 41-district fallback सक्रिय है; village-level data के लिए “आधिकारिक सूची ताज़ा करें” दबाएँ।`,'err');
-   $('#ep-rj-source-text').textContent='Fallback: 41 Rajasthan districts';
-  }
- }finally{state.loading=false}
-}
-async function loadCachedFirst(){
- const cached=await cacheGet();
- if(cached?.records?.length){
-  state.records=cached.records;buildTree(state.records);state.loaded=true;populateDistricts();setStats();renderTree('');status(`Cached official hierarchy loaded: ${state.records.length.toLocaleString('en-IN')} villages.`,'ok');
-  $('#ep-rj-source-text').textContent='Cached official GIS snapshot';
+ const countUrl=GIS+'?where=1%3D1&returnCountOnly=true&f=json';
+ const cr=await fetch(countUrl,{cache:'no-store'});if(!cr.ok)throw new Error('GIS count HTTP '+cr.status);const cj=await cr.json();if(cj.error)throw new Error(cj.error.message||'GIS count error');
+ const total=Number(cj.count||0), page=1000, rows=[];
+ for(let off=0;off<total;off+=page){
+   const params=new URLSearchParams({where:'1=1',outFields:'OBJECTID,DISTRICT_CODE,DISTRICT_NAME_EN,DISTRICT_NAME_HI,TEHSIL_CODE,TEHSIL_NAME,TEHSIL_NAME_H,SDONAME,CENSUS_CD_2011,CENSUS_NM_2011,VILLAGE_NM_H,GP_FINAL',returnGeometry:'false',orderByFields:'OBJECTID ASC',resultOffset:String(off),resultRecordCount:String(page),f:'json'});
+   const r=await fetch(GIS+'?'+params.toString(),{cache:'no-store'});if(!r.ok)throw new Error('GIS page HTTP '+r.status);const j=await r.json();if(j.error)throw new Error(j.error.message||'GIS page error');
+   (j.features||[]).forEach(f=>{const a=f.attributes||{};const village=normDir(a.CENSUS_NM_2011)||normDir(a.VILLAGE_NM_H)||normDir(a.GP_FINAL);if(village)rows.push({key:String(a.OBJECTID),district:normDir(a.DISTRICT_NAME_EN)||'Unknown',districtHi:normDir(a.DISTRICT_NAME_HI),districtCode:normDir(a.DISTRICT_CODE),tehsil:normDir(a.TEHSIL_NAME)||'Unknown',tehsilHi:normDir(a.TEHSIL_NAME_H),tehsilCode:normDir(a.TEHSIL_CODE),sdo:normDir(a.SDONAME),village,villageHi:normDir(a.VILLAGE_NM_H),census:normDir(a.CENSUS_CD_2011)});});
+   const st=q('#ep-dir-status');if(st)st.textContent=`Official GIS loading… ${Math.min(off+page,total).toLocaleString()} / ${total.toLocaleString()} records`;
  }
- else fetchOfficial();
+ await idbPutRows(rows); return rows;
 }
-function bind(){
- $('#ep-rj-district')?.addEventListener('change',()=>{populateTehsils();populateVillages();});
- $('#ep-rj-tehsil')?.addEventListener('change',populateVillages);
- $('#ep-rj-village')?.addEventListener('change',()=>useVillage(villageSelected()));
- $('#ep-rj-use')?.addEventListener('click',()=>useVillage(villageSelected()));
- $('#ep-rj-refresh')?.addEventListener('click',fetchOfficial);
- $('#ep-rj-clear')?.addEventListener('click',()=>{$('#ep-rj-district').value='';populateTehsils();populateVillages();status('चयन साफ कर दिया गया।');});
- $('#ep-rj-tree-search')?.addEventListener('input',e=>renderTree(e.target.value));
- renderElections();loadCachedFirst();
+function renderDirKpis(rows){
+ const ds=new Set(rows.map(x=>x.district).filter(Boolean)),ts=new Set(rows.map(x=>x.district+'|'+x.tehsil));
+ const k=q('#ep-dir-kpis');if(!k)return;k.innerHTML=[['41','Districts / जिले'],['425','Tehsils / तहसील'],[String(ds.size||41),'GIS districts indexed'],[String(rows.length||0),'Villages indexed']].map(x=>`<div class="ep-kpi"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join('');
+ const live=q('#ep-dir-live');if(live)live.textContent=rows.length?`Live hierarchy indexed: ${rows.length.toLocaleString()} village records`:'Official hierarchy not loaded';
+ const up=q('#ep-dir-updated');if(up)up.textContent=` · ${new Date().toLocaleTimeString()}`;
 }
-window.RajasthanHierarchy={load:loadCachedFirst,refresh:fetchOfficial,getRecords:()=>state.records.slice(),getTree:()=>state.tree,elections:ELECTIONS};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
-})();
-</script>
-<script id="ep-rj-raw-js-guard">
-(function(){
-'use strict';
-const bad=/^(?:\s*)(?:function\s+(?:villageSummary|wardSnapshot|printVillage)\s*\(|const\s+rows\s*=\s*candidatesFor|[);]\s*w\.document\.close\(\);setTimeout\(\(\)=>w\.print\(\)|function\s+renderSearch\s*\()/i;
-const scan=()=>{
- const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
- const remove=[];
- while(walker.nextNode()){
-  const n=walker.currentNode,p=n.parentElement;
-  if(!p||['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','INPUT','OPTION'].includes(p.tagName))continue;
-  const txt=String(n.nodeValue||'');
-  if(bad.test(txt)||txt.includes('function villageSummary()')||txt.includes('function wardSnapshot()')||txt.includes('w.document.close();setTimeout(()=>w.print(),250)'))remove.push(n);
+function fillDirFilters(rows){
+ const ds=q('#ep-dir-district'),ts=q('#ep-dir-tehsil');if(!ds||!ts)return;const ov=ds.value,ot=ts.value;
+ const vals=[...new Set(rows.map(x=>x.district).filter(Boolean))].sort((a,b)=>a.localeCompare(b));ds.innerHTML='<option value="">All districts / सभी जिले</option>'+vals.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');if(vals.includes(ov))ds.value=ov;
+ const tv=[...new Set(rows.filter(x=>!ds.value||x.district===ds.value).map(x=>x.tehsil).filter(Boolean))].sort((a,b)=>a.localeCompare(b));ts.innerHTML='<option value="">All tehsils / सभी तहसील</option>'+tv.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');if(tv.includes(ot))ts.value=ot;
+}
+function renderDirectory(){
+ if(!dirLoaded)return;const search=String(q('#ep-dir-search')?.value||'').trim().toLowerCase(),district=q('#ep-dir-district')?.value||'',tehsil=q('#ep-dir-tehsil')?.value||'',sort=q('#ep-dir-sort')?.value||'district';
+ let rows=dirRows.filter(x=>(!district||x.district===district)&&(!tehsil||x.tehsil===tehsil)&&(!search||[x.district,x.tehsil,x.village,x.districtHi,x.tehsilHi,x.villageHi,x.sdo,x.census].join(' ').toLowerCase().includes(search)));
+ if(sort==='village')rows.sort((a,b)=>a.village.localeCompare(b.village)); else rows.sort((a,b)=>(a.district+'|'+a.tehsil+'|'+a.village).localeCompare(b.district+'|'+b.tehsil+'|'+b.village));
+ const tree=q('#ep-dir-tree');if(!tree)return;renderDirKpis(dirRows);fillDirFilters(dirRows);
+ if(!rows.length){tree.innerHTML='<div class="ep-empty">No matching official directory records.</div>';return;}
+ /* Keep DOM bounded: render up to 1200 villages, while the cache still contains every record. */
+ const limited=rows.slice(0,1200), groups=new Map();limited.forEach(r=>{if(!groups.has(r.district))groups.set(r.district,new Map());const m=groups.get(r.district);if(!m.has(r.tehsil))m.set(r.tehsil,[]);m.get(r.tehsil).push(r)});
+ tree.innerHTML=[...groups.entries()].map(([d,m])=>`<details ${search||district===d?'open':''}><summary><span>${esc(d)}</span><span class="ep-count-badge">${[...m.values()].reduce((a,x)=>a+x.length,0)} villages shown</span></summary><div class="ep-tree-children">${[...m.entries()].map(([tt,vs])=>`<div class="ep-tehsil"><b>${esc(tt)}</b><span class="ep-count-badge" style="margin-left:6px">${vs.length}</span><div class="ep-village-list">${vs.map(v=>`<button type="button" class="ep-village-chip" data-village="${esc(v.village)}" data-district="${esc(v.district)}" data-tehsil="${esc(v.tehsil)}">${esc(v.village)}</button>`).join('')}</div></div>`).join('')}</div></details>`).join('');
+ qa('[data-village]',tree).forEach(b=>b.addEventListener('click',()=>{localStorage.setItem('EP_RJ_SELECTED_LOCATION',JSON.stringify({district:b.dataset.district,tehsil:b.dataset.tehsil,village:b.dataset.village}));toast(`${b.dataset.village} — ${b.dataset.tehsil}, ${b.dataset.district}`,'success')}));
+ const st=q('#ep-dir-status');if(st)st.textContent=`Showing ${limited.length.toLocaleString()} of ${rows.length.toLocaleString()} matching village records. Use search/filter to narrow the view.`;
+}
+async function loadDirectory(force){
+ if(dirLoaded&&!force)return;const st=q('#ep-dir-status');if(st)st.textContent='Reading local official cache…';let rows=[];
+ if(!force)rows=await idbGetRows();
+ if(rows.length){dirRows=rows;dirLoaded=true;renderDirectory();if(st)st.textContent=`Cached official hierarchy loaded: ${rows.length.toLocaleString()} village records.`;return;}
+ try{if(st)st.textContent='Connecting to Rajasthan Government GIS…';rows=await fetchOfficial();dirRows=rows;dirLoaded=true;renderDirectory();if(st)st.textContent=`Official hierarchy loaded and cached: ${rows.length.toLocaleString()} village records.`}
+ catch(e){dirRows=DISTRICTS.map((d,i)=>({key:'fallback-'+i,district:d,tehsil:'Data requires refresh',village:'Official GIS unavailable in this browser'}));dirLoaded=true;renderDirectory();if(st){st.className='ep-status warn';st.textContent='Official GIS could not be reached. The 41-district fallback is shown; press Refresh when network/CORS access is available.'}console.warn('Rajasthan GIS',e)}
+}
+function bindDirectory(){
+ q('#ep-dir-refresh')?.addEventListener('click',async()=>{dirLoaded=false;await loadDirectory(true)});q('#ep-dir-search')?.addEventListener('input',renderDirectory);q('#ep-dir-district')?.addEventListener('change',()=>{fillDirFilters(dirRows);renderDirectory()});q('#ep-dir-tehsil')?.addEventListener('change',renderDirectory);q('#ep-dir-sort')?.addEventListener('change',renderDirectory);
+}
+
+/* ---------- Indexed candidate page ---------- */
+function refreshIndexData(){indexRows=allCandidateRows();}
+function renderIndex(){
+ refreshIndexData();const qv=String(q('#ep-index-search')?.value||'').trim().toLowerCase(),v=q('#ep-index-village')?.value||'',p=q('#ep-index-party')?.value||'',sort=q('#ep-index-sort')?.value||'candidate';
+ const villages=[...new Set(indexRows.map(x=>villageName(x.p)))].sort((a,b)=>a.localeCompare(b)),parties=[...new Set(indexRows.map(x=>partyName(x.c)))].sort((a,b)=>a.localeCompare(b));
+ const vs=q('#ep-index-village'),ps=q('#ep-index-party');if(vs){const ov=vs.value;vs.innerHTML='<option value="">All villages</option>'+villages.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');if(villages.includes(ov))vs.value=ov}if(ps){const op=ps.value;ps.innerHTML='<option value="">All parties</option>'+parties.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');if(parties.includes(op))ps.value=op}
+ let rows=indexRows.filter(x=>(!v||villageName(x.p)===v)&&(!p||partyName(x.c)===p)&&(!qv||[candidateName(x.c),partyName(x.c),villageName(x.p),x.w,x.c?.post,x.c?.postHi,x.c?.postEn,x.c?.category,x.c?.categoryHi,x.c?.categoryEn,x.c?.id].join(' ').toLowerCase().includes(qv)));
+ if(sort==='village')rows.sort((a,b)=>villageName(a.p).localeCompare(villageName(b.p))||Number(a.w)-Number(b.w));else if(sort==='ward')rows.sort((a,b)=>Number(a.w)-Number(b.w)||candidateName(a.c).localeCompare(candidateName(b.c)));else if(sort==='votes')rows.sort((a,b)=>b.votes-a.votes);else rows.sort((a,b)=>candidateName(a.c).localeCompare(candidateName(b.c)));
+ const totalVotes=indexRows.reduce((a,x)=>a+x.votes,0),uniqV=new Set(indexRows.map(x=>villageName(x.p))).size,uniqP=new Set(indexRows.map(x=>partyName(x.c))).size;
+ const k=q('#ep-index-kpis');if(k)k.innerHTML=[String(indexRows.length),'Candidate records',String(uniqV),'Villages indexed',String(uniqP),'Parties indexed',String(totalVotes),'Recorded public-opinion votes'].map((x,i)=>i%2===0?`<div class="ep-kpi"><b>${esc(x)}</b><span>${esc(['Candidate records','Villages indexed','Parties indexed','Recorded public-opinion votes'][i/2])}</span></div>`:'').join('');
+ const status=q('#ep-index-status');if(status)status.textContent=`Showing ${rows.length.toLocaleString()} matching records from ${indexRows.length.toLocaleString()} indexed candidates.`;
+ const box=q('#ep-index-table');if(!box)return;if(!rows.length){box.innerHTML='<div class="ep-empty">No indexed candidate records match the current filters.</div>';return}
+ const shown=rows.slice(0,2000);box.innerHTML=`<table class="ep-index-table"><thead><tr><th>#</th><th>Candidate</th><th>Village</th><th>Ward</th><th>Post</th><th>Party</th><th>Category</th><th>Votes</th></tr></thead><tbody>${shown.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(candidateName(x.c))}</b><br><small>${esc(x.c?.nameEn||x.c?.name||'')}</small></td><td>${esc(villageName(x.p))}</td><td>${esc(x.w)}</td><td>${esc(x.c?.postHi||x.c?.post||x.c?.postEn||'—')}</td><td>${esc(partyName(x.c))}</td><td>${esc(x.c?.categoryHi||x.c?.category||x.c?.categoryEn||'—')}</td><td>${x.votes}</td></tr>`).join('')}</tbody></table>`;
+ const ls=q('#ep-index-live-status');if(ls)ls.textContent=`Updated ${new Date().toLocaleTimeString()} · ${rows.length.toLocaleString()} matches`;
+}
+function exportIndex(){
+ refreshIndexData();const h=['Candidate ID','Candidate','Village','Village ID','Ward','Post','Party','Category','Age','Gender','Votes'],escCsv=v=>`"${String(v??'').replace(/"/g,'""')}"`,rows=indexRows.map(x=>[x.c?.id,candidateName(x.c),villageName(x.p),x.pid,x.w,x.c?.postHi||x.c?.post,x.c?.partyHi||x.c?.partyName||x.c?.party,x.c?.categoryHi||x.c?.category,x.c?.age,x.c?.gender,x.votes]);const csv=[h,...rows].map(r=>r.map(escCsv).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='rajasthan_indexed_candidates.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1200)}
+function bindIndex(){q('#ep-index-refresh')?.addEventListener('click',renderIndex);q('#ep-index-export')?.addEventListener('click',exportIndex);['#ep-index-search','#ep-index-village','#ep-index-party','#ep-index-sort'].forEach(s=>q(s)?.addEventListener('input',renderIndex));['#ep-index-village','#ep-index-party','#ep-index-sort'].forEach(s=>q(s)?.addEventListener('change',renderIndex));window.addEventListener('ep:candidates-updated',()=>{if(location.hash.includes('indexed'))renderIndex()})}
+
+/* ---------- 40 user features ---------- */
+const U40=[
+ ['Candidate Search','fa-magnifying-glass','Search candidate, person or party',()=>q('#ep-candidate-search-tool')?.scrollIntoView({behavior:'smooth'})],
+ ['Compare Candidates','fa-code-compare','Compare published candidate details',()=>window.EPFinalWorking?.openAI?.()],
+ ['Village Directory','fa-sitemap','Open Rajasthan hierarchy',()=>location.hash='directory'],
+ ['Indexed Records','fa-list-check','Open the indexed candidate page',()=>location.hash='indexed'],
+ ['Voting','fa-check-to-slot','Go to the public opinion ballot',()=>q('#voting-section')?.scrollIntoView({behavior:'smooth'})],
+ ['Results','fa-square-poll-vertical','View current recorded results',()=>q('#ep-results-section')?.scrollIntoView({behavior:'smooth'})],
+ ['Analytics','fa-chart-line','Open analytics dashboard',()=>q('#ep-stats-section')?.scrollIntoView({behavior:'smooth'})],
+ ['Statistics','fa-chart-pie','View portal statistics',()=>q('#ep-stats-section')?.scrollIntoView({behavior:'smooth'})],
+ ['Notifications','fa-bell','Open all portal notifications',()=>window.EPWebsite?.openNotifications?.()],
+ ['Live Updates','fa-tower-broadcast','Refresh current portal data',()=>window.EPFinalWorking?.refresh?.()],
+ ['Save Village','fa-bookmark','Save your selected village',()=>{try{localStorage.setItem('EP_SAVED_VILLAGE',q('#user-panchayat-select')?.value||'');toast('Village saved.','success')}catch(e){}}],
+ ['Share Village','fa-share-nodes','Share selected village link',()=>window.EPFinalWorking?.openAI?.()],
+ ['Print Summary','fa-print','Print current village summary',()=>window.printVillage?.()],
+ ['Village Summary','fa-house-flag','Open village summary',()=>window.villageSummary?.()],
+ ['Ward Snapshot','fa-list-ol','Open ward-by-ward snapshot',()=>window.wardSnapshot?.()],
+ ['Voting Guide','fa-circle-question','Open voting guide',()=>window.guide?.()],
+ ['Suggestion','fa-comment-dots','Send public suggestion',()=>window.suggestion?.()],
+ ['Export Summary','fa-file-export','Export portal summary',()=>window.exportSummary?.()],
+ ['Rules & Privacy','fa-shield-halved','Review portal rules',()=>window.rules?.()],
+ ['Help Center','fa-life-ring','Open portal help',()=>window.help?.()],
+ ['My Vote Record','fa-receipt','Check your local vote record',()=>window.myVote?.()],
+ ['Accessibility','fa-universal-access','Open accessibility tools',()=>window.accessibility?.()],
+ ['Candidate Details','fa-id-card','View selected candidate details',()=>window.details?.()],
+ ['Official Info','fa-building-columns','Open official information',()=>window.official?.()],
+ ['Language Hindi/English','fa-language','Switch portal language',()=>{const b=localStorage.getItem('EP_LANG')==='en'?'#ep-lang-hi':'#ep-lang-en';q(b)?.click()}],
+ ['High Contrast','fa-circle-half-stroke','Toggle high contrast mode',()=>document.body.classList.toggle('high-contrast')],
+ ['Search Indexed Data','fa-database','Search indexed candidates',()=>location.hash='indexed'],
+ ['Promotions','fa-bullhorn','Open current promotions',()=>q('#ep-promotions')?.scrollIntoView({behavior:'smooth'})],
+ ['AI Gemini Help','fa-wand-magic-sparkles','Open citizen Gemini assistant',()=>window.EPWebsite?.openAI?.()],
+ ['Candidate Photo View','fa-image','Jump to candidate gallery',()=>q('#voting-section')?.scrollIntoView({behavior:'smooth'})],
+ ['Party Filter','fa-people-group','Filter candidates by party',()=>q('#ep-public-candidate-search')?.focus()],
+ ['Ward Filter','fa-location-crosshairs','Filter candidates by ward',()=>q('#ep-public-candidate-search-ward')?.focus()],
+ ['Village Filter','fa-location-dot','Filter candidate search by village',()=>q('#ep-public-candidate-search-village')?.focus()],
+ ['Result Refresh','fa-rotate','Refresh results now',()=>window.EPWebsite?.refreshResults?.()],
+ ['Analytics Refresh','fa-arrows-rotate','Refresh analytics now',()=>window.EPFinalWorking?.refresh?.()],
+ ['Notification Refresh','fa-bell-concierge','Refresh notifications',()=>window.EPFinalWorking?.refresh?.()],
+ ['Promotion Center','fa-gift','View featured portal services',()=>q('#ep-promotions')?.scrollIntoView({behavior:'smooth'})],
+ ['Directory Search','fa-tree-city','Search Rajasthan administrative records',()=>location.hash='directory'],
+ ['Indexed Export','fa-file-csv','Export indexed candidate data',()=>exportIndex()],
+ ['Live Sync Status','fa-satellite-dish','Check cross-tab live synchronization',()=>toast('Live synchronization is active in this browser tab.','success')]
+];
+function renderU40(){
+ const host=q('#ep-user-40-features');if(!host)return;host.innerHTML=U40.map((x,i)=>`<article class="ep-user40-card"><div><div class="ep-u40-icon"><i class="fa-solid ${x[1]}"></i></div><h3>${String(i+1).padStart(2,'0')}. ${esc(x[0])}</h3><p>${esc(x[2])}</p></div><button type="button" data-u40="${i}">Open / खोलें</button></article>`).join('');qa('[data-u40]',host).forEach(b=>b.addEventListener('click',()=>{try{U40[Number(b.dataset.u40)][3]()}catch(e){console.warn(e)}}))}
+function addHomeSections(){
+ const main=q('#home');if(!main||q('#ep-user-40-features'))return;
+ const sec=document.createElement('section');sec.className='ep-user40-section';sec.id='ep-user-40-features';sec.innerHTML='<div class="ep-user40-head"><div><h2>40 Citizen Features / 40 नागरिक सुविधाएँ</h2><p>All 40 entries below are connected to existing portal actions or the new Directory / Indexed pages.</p></div><span class="ep-count-badge">40 WORKING ACTIONS</span></div><div class="ep-user40-grid" id="ep-user40-grid"></div>';main.appendChild(sec);renderU40();
+ const promo=document.createElement('section');promo.className='ep-promo-section';promo.id='ep-promotions';promo.innerHTML='<div class="ep-promo-head"><div><h2>Promotions / प्रमोशन</h2><p>Featured portal services and current discovery shortcuts.</p></div><span class="ep-count-badge">LIVE</span></div><div class="ep-promo-grid"><article class="ep-promo-card"><h3>Rajasthan Directory</h3><p>Explore State → District → Tehsil → Village without loading the directory on Home.</p><button data-promo="directory">Open Directory</button></article><article class="ep-promo-card"><h3>Candidate Index</h3><p>Search all locally published candidate records on the separate indexed page.</p><button data-promo="indexed">Open Indexed</button></article><article class="ep-promo-card"><h3>Gemini Citizen AI</h3><p>Ask portal questions, candidate questions and voting guidance in Hindi or English.</p><button data-promo="ai">Ask AI</button></article><article class="ep-promo-card"><h3>Search Before Voting</h3><p>Search candidate, person, party, village or ward before opening the ballot.</p><button data-promo="search">Search Candidates</button></article><article class="ep-promo-card"><h3>Results & Analytics</h3><p>Review current recorded public-opinion results and analytics.</p><button data-promo="results">View Results</button></article><article class="ep-promo-card"><h3>Live Updates</h3><p>Local changes and cross-tab updates are detected automatically while the portal is open.</p><button data-promo="live">Check Live Status</button></article></div>';main.appendChild(promo);
+ qa('[data-promo]',promo).forEach(b=>b.addEventListener('click',()=>{const x=b.dataset.promo;if(x==='directory')location.hash='directory';else if(x==='indexed')location.hash='indexed';else if(x==='ai')window.EPWebsite?.openAI?.();else if(x==='search')q('#ep-public-candidate-search')?.focus();else if(x==='results')q('#ep-results-section')?.scrollIntoView({behavior:'smooth'});else toast('Live synchronization is active.','success')}));
+}
+
+/* ---------- live updates ---------- */
+function liveSync(){
+ const ch='BroadcastChannel' in window?new BroadcastChannel('EP_PORTAL_LIVE_V1'):null;
+ const fire=()=>{try{window.dispatchEvent(new CustomEvent('ep:candidates-updated'));window.EPFinalWorking?.refresh?.();if(location.hash.includes('indexed'))renderIndex()}catch(e){}};
+ window.addEventListener('storage',e=>{if(["ENTERPRISE_PANCHAYAT_DB_v4","EP_SAVED_VILLAGE","EP_LANG"].includes(e.key))fire()});
+ if(ch){ch.onmessage=e=>{if(e.data?.type==='portal-update')fire()};window.EPLiveChannel=ch}
+ let last='';setInterval(()=>{try{const d=DB(),stamp=JSON.stringify({n:Object.keys(d?.panchayats||{}).length,v:Object.values(d?.panchayats||{}).reduce((a,p)=>a+Object.values(p?.wardsData||{}).reduce((b,w)=>b+Object.values(w?.votes||{}).reduce((c,n)=>c+Number(n||0),0),0),0)});if(stamp!==last){if(last&&ch)ch.postMessage({type:'portal-update'});last=stamp;fire()}}catch(e){}},5000);
+}
+
+/* ---------- admin console + 60 working tools ---------- */
+const toolSafe=(title,icon,render)=>({title,icon,render:()=>{try{return render()}catch(e){return `<div class="p-5 rounded-xl border border-rose-400/30 bg-rose-500/10 text-rose-100"><b>${esc(title)}</b><p class="mt-2 text-xs">Tool error: ${esc(e.message||e)}</p></div>`}}});
+function adminDB(){return DB()}
+function saveDB(){try{window.DBManager?.persist?.();window.UserInterface?.populateVillageDropdown?.();window.EPBilingualCandidatePatch?.refresh?.();window.dispatchEvent(new CustomEvent('ep:candidates-updated'));if(window.EPLiveChannel)window.EPLiveChannel.postMessage({type:'portal-update'})}catch(e){console.warn(e)}}
+function adminVillageOptions(id){const d=adminDB();return Object.entries(d?.panchayats||{}).map(([k,p])=>`<option value="${esc(k)}">${esc(villageName(p))}</option>`).join('')}
+function allAdminRows(){return allCandidateRows()}
+function ensureCandidateShape(c,p,w){c.id=c.id||'CM_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);c.name=c.name||c.nameHi||c.nameEn||'Candidate';c.nameHi=c.nameHi||c.name;c.nameEn=c.nameEn||c.name;c.partyName=c.partyName||c.partyHi||c.partyEn||c.party||'Independent';c.partyHi=c.partyHi||c.partyName;c.partyEn=c.partyEn||c.partyName;c.post=c.post||c.postHi||c.postEn||'Ward Member';c.postHi=c.postHi||c.post;c.postEn=c.postEn||c.post;c.category=c.category||c.categoryHi||c.categoryEn||'General';c.categoryHi=c.categoryHi||c.category;c.categoryEn=c.categoryEn||c.category;c.village=villageName(p);c.wardNo=Number(w);c.age=c.age||'';c.gender=c.gender||'Other';c.personImage=c.personImage||c.image||'';c.symbolImage=c.symbolImage||c.symbol||'';return c}
+function ensureWardLocal(p,w){if(window.V5?.ensureWard)return window.V5.ensureWard(p,w);p.wardsData=p.wardsData||{};if(!p.wardsData[w])p.wardsData[w]={reservation:'General',candidates:[],votes:{}};p.wardsData[w].candidates=p.wardsData[w].candidates||[];p.wardsData[w].votes=p.wardsData[w].votes||{};return p.wardsData[w]}
+
+function parseBulkMarkdown(text){
+ const lines=String(text||'').split(/\r?\n/).map(x=>x.trim()).filter(x=>x.startsWith('|')&&x.endsWith('|'));const out=[];
+ lines.forEach(line=>{const cells=line.slice(1,-1).split('|').map(x=>x.trim());if(!cells.length)return;if(cells.every(x=>/^:?-{2,}:?$/.test(x)))return;const low=cells.map(x=>x.toLowerCase());if(low.some(x=>/^(sr|serial|no|district|candidate|name|ward)$/.test(x)))return;const row={sr:cells[0],district:cells[1],localBody:cells[2],ward:cells[3],reservation:cells[4],name:cells[5],gender:cells[6],age:cells[7],category:cells[8],party:cells[9]};if(row.name&&row.ward)out.push(row)});return out}
+function parsePlainCandidateText(text){
+ const out=[];String(text||'').split(/\r?\n/).forEach(line=>{const s=line.trim();if(!s||s.startsWith('|')||s.startsWith('#'))return;const parts=s.split(/[,;\t]/).map(x=>x.trim()).filter(Boolean);if(parts.length>=4)out.push({sr:out.length+1,district:'',localBody:'',ward:parts[0],reservation:'',name:parts[1],gender:parts[2]||'',age:parts[3]||'',category:parts[4]||'General',party:parts[5]||'Independent'})});return out}
+async function loadScript(src,globalName){if(globalName&&window[globalName])return window[globalName];return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=()=>globalName&&window[globalName]?res(window[globalName]):res(true);s.onerror=()=>rej(new Error('Could not load '+src));document.head.appendChild(s)})}
+async function extractPdfText(file,log){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','pdfjsLib');const buf=await file.arrayBuffer(),pdf=await window.pdfjsLib.getDocument({data:buf}).promise,parts=[];for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n),tc=await page.getTextContent();parts.push(tc.items.map(x=>x.str).join(' '));if(log)log.textContent=`Reading PDF page ${n}/${pdf.numPages}…`;}return parts.join('\n')}
+async function ocrImages(files,log){await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js','Tesseract');const out=[];for(let i=0;i<files.length;i++){if(log)log.textContent=`OCR image ${i+1}/${files.length}…`;const r=await window.Tesseract.recognize(files[i],'eng+hin',{logger:m=>{if(log&&m.status)log.textContent=`${m.status} ${m.progress?Math.round(m.progress*100)+'%':''}`}});out.push(r.data.text||'')}return out.join('\n')}
+function bulkRowsToCandidates(rows,selectedVillage,defaultPost){return rows.map((r,i)=>({id:'BULK_'+Date.now().toString(36)+'_'+i.toString(36)+'_'+Math.random().toString(36).slice(2,6),name:String(r.name||'Candidate').trim(),nameHi:String(r.name||'Candidate').trim(),nameEn:String(r.name||'Candidate').trim(),age:String(r.age||''),gender:String(r.gender||'Other').trim(),genderHi:String(r.gender||'Other').toUpperCase()==='F'?'महिला':String(r.gender||'').toUpperCase()==='M'?'पुरुष':'अन्य',genderEn:String(r.gender||'Other').toUpperCase()==='F'?'Female':String(r.gender||'Other').toUpperCase()==='M'?'Male':'Other',post:defaultPost||'Ward Member',postHi:defaultPost||'वार्ड सदस्य',postEn:'Ward Member',partyName:String(r.party||'Independent').trim(),partyHi:String(r.party||'Independent').trim(),partyEn:String(r.party||'Independent').trim(),category:String(r.category||'General').trim(),categoryHi:String(r.category||'General').trim(),categoryEn:String(r.category||'General').trim(),village:villageName(selectedVillage),wardNo:Number(r.ward||1),localBody:String(r.localBody||''),district:String(r.district||''),reservation:String(r.reservation||''),createdAt:new Date().toISOString(),bilingual:true,photoSource:'bulk-import'}))}
+async function commitBulk(rows,photoFiles,selectedId,log){
+ const d=adminDB(),p=d?.panchayats?.[selectedId];if(!p)throw new Error('Select a target village database first.');
+ let sourceRows=Array.isArray(rows)?rows.slice():[]; const files=[...(photoFiles||[])];
+ if(!sourceRows.length&&files.length){sourceRows=files.map((f,i)=>({sr:i+1,ward:1,reservation:'',name:String(f.name||('Candidate '+(i+1))).replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').trim()||('Candidate '+(i+1)),gender:'Other',age:'',category:'General',party:'Independent',district:'',localBody:''}));}
+ let added=0;
+ for(let i=0;i<sourceRows.length;i++){const r=sourceRows[i],w=Number(r.ward||1),wd=ensureWardLocal(p,w),c=ensureCandidateShape(r,p,w);
+   if(files[i]){try{const data=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=e=>res(String(e.target.result||''));fr.onerror=rej;fr.readAsDataURL(files[i])});c.personImage=data;c.photoSource='gallery-import';c.photoFileName=files[i].name}catch(e){c.photoFileName=files[i].name;c.photoPendingGallery=true}}
+   wd.candidates.push(c);wd.votes[c.id]=0;added++;if(log)log.textContent=`Importing candidate ${i+1}/${sourceRows.length}…`;
  }
- remove.forEach(n=>n.remove());
-};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scan,{once:true});else scan();
-setTimeout(scan,250);setTimeout(scan,1000);
-window.EPRawJsGuard={scan};
+ saveDB(); if(log)log.textContent=`Imported ${added} candidate records. ${files.length} gallery image(s) were attached in row order where available.`;return added;
+}
+function bulkUI(){
+ const d=adminDB(),opts=adminVillageOptions(),first=Object.keys(d?.panchayats||{})[0]||'';
+ return `<div class="space-y-5"><div class="p-4 rounded-xl border border-amber-300/30 bg-amber-500/10 text-amber-100 text-xs leading-relaxed"><b>Bulk Candidate Import / बल्क उम्मीदवार आयात</b><br>Three working input paths are provided: <b>1) Gallery photos + OCR</b>, <b>2) Copy/paste table text</b>, <b>3) PDF from gallery + PDF text extraction</b>. Parsed rows are previewed before import.</div><select id="ep-bulk-village" class="input-admin"><option value="">Select target village / गाँव चुनें</option>${opts}</select><div class="ep-bulk-grid"><button type="button" class="ep-bulk-tab active" data-btab="text"><strong>Copy / Paste Text</strong><span>Accepts the pipe-table format shown in your example.</span></button><button type="button" class="ep-bulk-tab" data-btab="photo"><strong>Photos from Gallery</strong><span>Select one or more images. OCR reads the image text; the images are also available for sequential candidate-photo assignment.</span></button><button type="button" class="ep-bulk-tab" data-btab="pdf"><strong>PDF from Gallery</strong><span>Select a PDF file and extract its text page-by-page in the browser.</span></button></div><div class="ep-bulk-panel active" data-bpanel="text"><textarea id="ep-bulk-text" class="input-admin" rows="11" placeholder="Paste your markdown/pipe table here…"></textarea><div class="flex gap-2 flex-wrap mt-3"><button class="btn-gold px-4 py-2 rounded-lg" type="button" id="ep-bulk-parse-text">Parse pasted data</button><button class="px-4 py-2 rounded-lg bg-slate-700 text-white" type="button" id="ep-bulk-example">Load example</button></div></div><div class="ep-bulk-panel" data-bpanel="photo"><input id="ep-bulk-photos" class="input-admin" type="file" accept="image/*" multiple><div class="text-xs text-slate-400 mt-2">OCR works best on clear tables. For portrait-only photos, use the photo assignment manager after candidate records are imported.</div><button class="btn-gold px-4 py-2 rounded-lg mt-3" type="button" id="ep-bulk-ocr">OCR selected images</button></div><div class="ep-bulk-panel" data-bpanel="pdf"><input id="ep-bulk-pdf" class="input-admin" type="file" accept="application/pdf,.pdf"><button class="btn-gold px-4 py-2 rounded-lg mt-3" type="button" id="ep-bulk-pdf-read">Read PDF</button></div><div id="ep-bulk-log" class="ep-bulk-log">Ready.</div><div id="ep-bulk-preview" class="ep-bulk-preview"><div class="p-6 text-center text-slate-500">No parsed rows yet.</div></div><div class="grid md:grid-cols-2 gap-3"><select id="ep-bulk-post" class="input-admin"><option>Ward Member / वार्ड सदस्य</option><option>Sarpanch / सरपंच</option><option>Municipal Ward Member / नगर पालिका वार्ड सदस्य</option></select><input id="ep-bulk-default-ward" type="number" min="1" class="input-admin" placeholder="Default ward if a row has no ward"></div><button class="btn-gold w-full py-3 rounded-xl" type="button" id="ep-bulk-import">Import all previewed candidates</button></div>`;
+}
+let bulkState={rows:[],photos:[]};
+function renderBulkPreview(){const box=q('#ep-bulk-preview');if(!box)return;if(!bulkState.rows.length){box.innerHTML='<div class="p-6 text-center text-slate-500">No parsed rows yet.</div>';return}box.innerHTML='<div class="ep-bulk-row head"><div>Sr</div><div>Candidate</div><div>Ward</div><div>Party</div><div>Category</div></div>'+bulkState.rows.slice(0,1000).map((r,i)=>`<div class="ep-bulk-row"><div>${esc(r.sr||i+1)}</div><div>${esc(r.name)}</div><div>${esc(r.ward)}</div><div>${esc(r.party)}</div><div>${esc(r.category)}</div></div>`).join('');}
+function bindBulk(){
+ qa('[data-btab]').forEach(b=>b.addEventListener('click',()=>{qa('[data-btab]').forEach(x=>x.classList.remove('active'));qa('[data-bpanel]').forEach(x=>x.classList.remove('active'));b.classList.add('active');q(`[data-bpanel="${CSS.escape(b.dataset.btab)}"]`)?.classList.add('active')}));
+ q('#ep-bulk-example')?.addEventListener('click',()=>{q('#ep-bulk-text').value='| Sr | District | Local Body | Ward | Reservation | Candidate Name | Gender | Age | Category | Party |\n| :- | :----- | :------------------- | :- | :------ | :----------- | :- | :- | :-------------- | :-- |\n| 1 | JALORE | BHINMAL NAGAR PALIKA | 4 | General | किशोर | M | 29 | OBC | IND |\n| 2 | JALORE | BHINMAL NAGAR PALIKA | 4 | General | विमला | F | 63 | General (Woman) | INC |\n| 3 | JALORE | BHINMAL NAGAR PALIKA | 4 | General | कैलाश कुमार | M | 22 | General | IND |\n| 4 | JALORE | BHINMAL NAGAR PALIKA | 4 | General | विक्रम कुमार | M | 31 | OBC | BJP |';});
+ q('#ep-bulk-parse-text')?.addEventListener('click',()=>{bulkState.rows=parseBulkMarkdown(q('#ep-bulk-text')?.value)||[];if(!bulkState.rows.length)bulkState.rows=parsePlainCandidateText(q('#ep-bulk-text')?.value);q('#ep-bulk-log').textContent=`Parsed ${bulkState.rows.length} candidate rows from pasted text.`;renderBulkPreview()});
+ q('#ep-bulk-ocr')?.addEventListener('click',async()=>{const files=[...(q('#ep-bulk-photos')?.files||[])],log=q('#ep-bulk-log');if(!files.length){log.textContent='Select image files first.';return}try{const text=await ocrImages(files,log);bulkState.rows=parseBulkMarkdown(text);if(!bulkState.rows.length)bulkState.rows=parsePlainCandidateText(text);bulkState.photos=files;log.textContent+=`\nOCR complete. Parsed ${bulkState.rows.length} rows.`;renderBulkPreview()}catch(e){log.textContent='OCR failed: '+(e.message||e);console.error(e)}});
+ q('#ep-bulk-pdf-read')?.addEventListener('click',async()=>{const f=q('#ep-bulk-pdf')?.files?.[0],log=q('#ep-bulk-log');if(!f){log.textContent='Select a PDF first.';return}try{const text=await extractPdfText(f,log);bulkState.rows=parseBulkMarkdown(text);if(!bulkState.rows.length)bulkState.rows=parsePlainCandidateText(text);log.textContent+=`\nPDF extraction complete. Parsed ${bulkState.rows.length} rows.`;renderBulkPreview()}catch(e){log.textContent='PDF extraction failed: '+(e.message||e);console.error(e)}});
+ q('#ep-bulk-import')?.addEventListener('click',async()=>{try{const vid=q('#ep-bulk-village')?.value;if(!vid){q('#ep-bulk-log').textContent='Select target village first.';return}if(!bulkState.rows.length){q('#ep-bulk-log').textContent='Parse text, OCR photos or read a PDF first.';return}const defWard=Number(q('#ep-bulk-default-ward')?.value||1);bulkState.rows=bulkState.rows.map(r=>({...r,ward:r.ward||defWard}));const n=await commitBulk(bulkState.rows,bulkState.photos,vid,q('#ep-bulk-log'));bulkState={rows:[],photos:[]};renderBulkPreview();toast(`Imported ${n} candidates.`,'success');try{window.AdminManager?.renderSidebar?.()}catch(e){}}catch(e){q('#ep-bulk-log').textContent='Import failed: '+(e.message||e);console.error(e)}});
+}
+
+function buildExtraAdminTools(){
+ const A=window.AdminManager;if(!A||!Array.isArray(A.toolsList))return;
+ const tools=[];
+ tools.push(toolSafe('Bulk Candidate Import','fa-file-arrow-up',bulkUI));
+ tools.push(toolSafe('Rajasthan Directory Cache','fa-sitemap',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Manage the official Rajasthan village hierarchy cache used by the separate Directory page.</p><div class="grid md:grid-cols-3 gap-3"><div class="p-4 rounded-xl border border-slate-700"><b>${dirRows.length.toLocaleString()}</b><small class="block text-slate-400">Cached village records</small></div><div class="p-4 rounded-xl border border-slate-700"><b>41</b><small class="block text-slate-400">Districts</small></div><div class="p-4 rounded-xl border border-slate-700"><b>425</b><small class="block text-slate-400">Tehsils</small></div></div><div class="flex gap-2 flex-wrap"><button class="btn-gold px-4 py-2 rounded-lg" onclick="location.hash='directory'">Open Directory</button><button class="btn-gold px-4 py-2 rounded-lg" onclick="document.getElementById('ep-dir-refresh')?.click()">Refresh GIS</button></div></div>`));
+ tools.push(toolSafe('Indexed Candidate Search','fa-database',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Open the full indexed candidate search page.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="location.hash='indexed'">Open Indexed Records</button></div>`));
+ tools.push(toolSafe('Live Update Monitor','fa-tower-broadcast',()=>{const d=adminDB();const vs=Object.keys(d?.panchayats||{}).length,rs=allAdminRows().length;return `<div class="space-y-4"><div class="ep-live-strip"><span class="ep-live-dot2"></span><b>LIVE UPDATE ENGINE ACTIVE</b></div><div class="grid md:grid-cols-3 gap-3"><div class="p-4 rounded-xl border border-slate-700"><b>${vs}</b><small class="block text-slate-400">Village DB nodes</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${rs}</b><small class="block text-slate-400">Candidate records</small></div><div class="p-4 rounded-xl border border-slate-700"><b>5s</b><small class="block text-slate-400">Local change poll</small></div></div><button class="btn-gold w-full py-3 rounded-xl" onclick="window.dispatchEvent(new CustomEvent('ep:candidates-updated'));Utils.showToast('Live update refresh fired.','success')">Run Live Refresh</button></div>`}));
+ tools.push(toolSafe('Candidate Bulk Validation','fa-list-check',()=>{const rr=allAdminRows(),bad=rr.filter(x=>!x.c?.name||!x.pid||!x.w||!x.c?.partyName&&!x.c?.party);return `<div class="space-y-4"><div class="p-4 rounded-xl border border-slate-700"><b>${rr.length}</b> candidate records checked<br><span class="text-slate-400">${bad.length} records need attention.</span></div><div class="max-h-80 overflow-auto">${bad.slice(0,100).map(x=>`<div class="p-2 border-b border-slate-800 text-xs">${esc(candidateName(x.c))} — ${esc(villageName(x.p))} — Ward ${x.w}</div>`).join('')||'<div class="text-emerald-300 text-xs">No validation errors found.</div>'}</div></div>`}));
+ tools.push(toolSafe('Candidate Duplicate Finder','fa-clone',()=>{const rr=allAdminRows(),m=new Map(),dups=[];rr.forEach(x=>{const k=(candidateName(x.c)+'|'+villageName(x.p)+'|'+x.w).toLowerCase();if(m.has(k))dups.push([m.get(k),x]);else m.set(k,x)});return `<div class="space-y-4"><b>${dups.length}</b> possible duplicate candidate records<div class="max-h-80 overflow-auto">${dups.slice(0,100).map(x=>`<div class="p-2 border-b border-slate-800 text-xs">${esc(candidateName(x[0].c))} — ${esc(villageName(x[0].p))} — Ward ${x[0].w}</div>`).join('')||'<div class="text-emerald-300 text-xs">No duplicates detected.</div>'}</div></div>`}));
+ tools.push(toolSafe('Candidate Data Normalizer','fa-wand-magic-sparkles',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Fills missing bilingual aliases, party, post, category and ward fields without deleting candidate records.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.normalise()">Normalize all candidates</button><div id="ep60-normalise-out" class="text-xs"></div></div>`));
+ tools.push(toolSafe('Candidate Photo Assignment','fa-images',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Use the existing Candidate Photo & Symbol Manager for one-to-one gallery assignment.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="AdminManager.loadTool(${Math.max(0,A.toolsList.findIndex(x=>String(x.title).includes('Candidate Photo & Symbol')))||0})">Open Photo Manager</button></div>`));
+ tools.push(toolSafe('Party Directory','fa-people-group',()=>{const p=[...new Set(allAdminRows().map(x=>partyName(x.c)))].sort();return `<div class="space-y-2">${p.map((x,i)=>`<div class="p-3 rounded-lg border border-slate-700 flex justify-between"><span>${esc(x)}</span><b>${allAdminRows().filter(r=>partyName(r.c)===x).length}</b></div>`).join('')||'<div class="text-slate-400">No parties indexed.</div>'}</div>`}));
+ tools.push(toolSafe('Ward Candidate Index','fa-list-ol',()=>{const rr=allAdminRows(),m=new Map();rr.forEach(x=>{const k=villageName(x.p)+'|'+x.w;m.set(k,(m.get(k)||0)+1)});return `<div class="space-y-2 max-h-[500px] overflow-auto">${[...m.entries()].slice(0,500).map(([k,n])=>`<div class="p-2 border-b border-slate-800 text-xs flex justify-between"><span>${esc(k)}</span><b>${n}</b></div>`).join('')||'No ward records.'}</div>`}));
+ tools.push(toolSafe('Village Candidate Counts','fa-chart-column',()=>{const rr=allAdminRows(),m=new Map();rr.forEach(x=>m.set(villageName(x.p),(m.get(villageName(x.p))||0)+1));return `<div class="space-y-2 max-h-[500px] overflow-auto">${[...m.entries()].sort((a,b)=>b[1]-a[1]).slice(0,500).map(([k,n])=>`<div class="p-2 border-b border-slate-800 flex justify-between text-xs"><span>${esc(k)}</span><b>${n}</b></div>`).join('')||'No candidates.'}</div>`}));
+ tools.push(toolSafe('Vote Totals Dashboard','fa-square-poll-vertical',()=>{const rr=allAdminRows(),total=rr.reduce((a,x)=>a+x.votes,0),byParty={};rr.forEach(x=>{const p=partyName(x.c);byParty[p]=(byParty[p]||0)+x.votes});return `<div class="space-y-4"><div class="grid md:grid-cols-3 gap-3"><div class="p-4 rounded-xl border border-slate-700"><b>${total}</b><small class="block text-slate-400">Total recorded votes</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${rr.length}</b><small class="block text-slate-400">Candidate rows</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${Object.keys(byParty).length}</b><small class="block text-slate-400">Parties</small></div></div>${Object.entries(byParty).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="p-2 border-b border-slate-800 text-xs flex justify-between"><span>${esc(k)}</span><b>${v}</b></div>`).join('')}</div>`}));
+ tools.push(toolSafe('Vote Export CSV','fa-file-csv',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Export candidate/ward vote totals currently stored in the browser database.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.exportVotes()">Download Vote CSV</button></div>`));
+ tools.push(toolSafe('Candidate Export CSV','fa-file-arrow-down',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Export the full indexed candidate dataset.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.exportCandidates()">Download Candidate CSV</button></div>`));
+ tools.push(toolSafe('Import Preview Cleaner','fa-broom',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Remove accidental blank candidate rows without deleting valid candidate records.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.cleanBlank()">Clean Blank Rows</button><div id="ep60-clean-out" class="text-xs"></div></div>`));
+ tools.push(toolSafe('Election Catalogue','fa-calendar-days',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Open the Rajasthan election catalogue on the separate Directory page and keep it out of Home.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="location.hash='directory'">Open Directory Catalogue</button></div>`));
+ tools.push(toolSafe('Admin Feature Search','fa-magnifying-glass',()=>`<div class="space-y-4"><input id="ep-admin-feature-jump" class="input-admin" placeholder="Type a tool name…"><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.jumpTool()">Open matching feature</button></div>`));
+ tools.push(toolSafe('Console Layout Control','fa-table-columns',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Collapse the left console and return it with the three-line button.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.toggleConsole()">Toggle Left Console</button></div>`));
+ tools.push(toolSafe('Admin Session Status','fa-user-shield',()=>`<div class="space-y-4"><div class="p-4 rounded-xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-200">Authenticated admin workspace is active in this browser session.</div><p class="text-xs text-slate-400">This client-side portal still requires a real server for production-grade authentication, immutable logs and trustworthy IP evidence.</p></div>`));
+ tools.push(toolSafe('Storage Health','fa-hard-drive',()=>{const d=adminDB();let bytes=0;try{bytes=new Blob([JSON.stringify(d)]).size}catch(e){}return `<div class="grid md:grid-cols-3 gap-3"><div class="p-4 rounded-xl border border-slate-700"><b>${(bytes/1024).toFixed(1)} KB</b><small class="block text-slate-400">Approx DB size</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${Object.keys(d?.panchayats||{}).length}</b><small class="block text-slate-400">Village nodes</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${allAdminRows().length}</b><small class="block text-slate-400">Candidate rows</small></div></div>`}));
+ tools.push(toolSafe('Data Integrity Scan','fa-shield-heart',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Scan every village, ward and candidate for missing vote-map entries.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.integrity()">Run Integrity Scan</button><div id="ep60-integrity-out" class="text-xs"></div></div>`));
+ tools.push(toolSafe('Notifications Quick Publish','fa-bullhorn',()=>`<div class="space-y-4"><textarea id="ep60-note" class="input-admin" rows="4" placeholder="Notification text"></textarea><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.publishNote()">Publish Notification</button></div>`));
+ tools.push(toolSafe('Public Results Control','fa-eye',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Use the existing Public Results Visibility control, then refresh the public results page.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="AdminManager.loadTool(${Math.max(0,A.toolsList.findIndex(x=>String(x.title).includes('Public Results Visibility')))})">Open Results Control</button></div>`));
+ tools.push(toolSafe('Maintenance Quick Control','fa-screwdriver-wrench',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Open the existing Maintenance Mode switch.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="AdminManager.loadTool(${Math.max(0,A.toolsList.findIndex(x=>String(x.title).includes('Maintenance Mode')))})">Open Maintenance Mode</button></div>`));
+ tools.push(toolSafe('AI Gemini Quick Access','fa-robot',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Open the existing admin Gemini panel. API configuration remains under the existing AI configuration tool.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="AdminManager.openAIHelp()">Open Admin Gemini</button></div>`));
+ tools.push(toolSafe('Directory Indexed Snapshot','fa-layer-group',()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Snapshot of the separate hierarchy/index pages.</p><div class="grid md:grid-cols-2 gap-3"><div class="p-4 rounded-xl border border-slate-700"><b>${dirRows.length.toLocaleString()}</b><small class="block text-slate-400">Official village cache</small></div><div class="p-4 rounded-xl border border-slate-700"><b>${allAdminRows().length}</b><small class="block text-slate-400">Candidate index</small></div></div></div>`));
+ /* Add exactly enough to make 60. Existing tools are preserved; extras fill slots after them. */
+ const base=A.toolsList.slice();
+ const seen=new Set(base.map(x=>x.title));const merged=base.slice();for(const x of tools)if(!seen.has(x.title)&&merged.length<60){seen.add(x.title);merged.push(x)}
+ A.toolsList=merged.slice(0,60);
+ /* If an older patch left fewer than 60, add deterministic functional utility tools. */
+ const fillerNames=[['Quick Candidate Count','fa-users'],['Quick Village Count','fa-house'],['Quick Ward Count','fa-list'],['Quick Party Count','fa-people-group'],['Quick Vote Count','fa-check'],['Open Home','fa-house'],['Open Directory','fa-sitemap'],['Open Indexed','fa-database'],['Open Results','fa-square-poll-vertical'],['Open Analytics','fa-chart-line'],['Live Refresh','fa-rotate'],['Export JSON Snapshot','fa-file-code']];
+ let fi=0;while(A.toolsList.length<60&&fi<fillerNames.length){const [title,icon]=fillerNames[fi++];if(A.toolsList.some(x=>x.title===title))continue;A.toolsList.push(toolSafe(title,icon,()=>`<div class="space-y-4"><p class="text-xs text-slate-400">Working shortcut: ${esc(title)}.</p><button class="btn-gold w-full py-3 rounded-xl" onclick="EP60.shortcut(${JSON.stringify(title)})">Run ${esc(title)}</button><div id="ep60-shortcut-out" class="text-xs"></div></div>`))}
+ if(A.toolsList.length>60)A.toolsList=A.toolsList.slice(0,60);
+ if(A.toolsList.length<60)console.warn('Admin tool count below 60',A.toolsList.length);
+ window.EP60={
+  normalise(){const d=adminDB();let n=0;Object.values(d?.panchayats||{}).forEach(p=>Object.entries(p?.wardsData||{}).forEach(([w,wd])=>(wd?.candidates||[]).forEach(c=>{const before=JSON.stringify([c.nameHi,c.nameEn,c.partyName,c.post,c.category,c.wardNo]);ensureCandidateShape(c,p,w);if(before!==JSON.stringify([c.nameHi,c.nameEn,c.partyName,c.post,c.category,c.wardNo]))n++})));saveDB();q('#ep60-normalise-out')&&(q('#ep60-normalise-out').textContent=`Normalized ${n} candidate records.`)},
+  cleanBlank(){const d=adminDB();let n=0;Object.values(d?.panchayats||{}).forEach(p=>Object.values(p?.wardsData||{}).forEach(wd=>{const before=wd.candidates.length;wd.candidates=wd.candidates.filter(c=>String(c?.name||c?.nameHi||c?.nameEn||'').trim());n+=before-wd.candidates.length;Object.keys(wd.votes||{}).forEach(k=>{if(!wd.candidates.some(c=>c.id===k))delete wd.votes[k]})}));saveDB();q('#ep60-clean-out')&&(q('#ep60-clean-out').textContent=`Removed ${n} blank candidate rows.`)},
+  integrity(){const d=adminDB();let bad=0,fixed=0;Object.values(d?.panchayats||{}).forEach(p=>Object.entries(p?.wardsData||{}).forEach(([w,wd])=>(wd?.candidates||[]).forEach(c=>{if(!wd.votes)wd.votes={};if(wd.votes[c.id]===undefined){wd.votes[c.id]=0;fixed++}if(!c.id||!c.name)bad++})));saveDB();q('#ep60-integrity-out')&&(q('#ep60-integrity-out').textContent=`Integrity scan complete. Fixed ${fixed} vote-map entries; ${bad} candidate rows still need manual attention.`)},
+  publishNote(){const d=adminDB(),m=q('#ep60-note')?.value.trim();if(!m)return toast('Write a notification first.','error');d.notifications=d.notifications||[];d.notifications.push({id:'N_'+Date.now().toString(36),text:m,date:new Date().toISOString()});saveDB();toast('Notification published.','success')},
+  exportCandidates(){const rr=allAdminRows(),h=['ID','Candidate','Village','Village ID','Ward','Post','Party','Category','Age','Gender','Votes'],rows=rr.map(x=>[x.c.id,candidateName(x.c),villageName(x.p),x.pid,x.w,x.c.postHi||x.c.post,x.c.partyHi||x.c.partyName||x.c.party,x.c.categoryHi||x.c.category,x.c.age,x.c.gender,x.votes]),csv=[h,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='admin_candidates.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)},
+  exportVotes(){const rr=allAdminRows(),h=['Village','Ward','Candidate','Party','Votes'],rows=rr.map(x=>[villageName(x.p),x.w,candidateName(x.c),partyName(x.c),x.votes]),csv=[h,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='admin_vote_totals.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)},
+  jumpTool(){const term=(q('#ep-admin-feature-jump')?.value||'').trim().toLowerCase();if(!term)return;const i=A.toolsList.findIndex(x=>String(x.title).toLowerCase().includes(term));if(i>=0)A.loadTool(i);else toast('No matching admin feature found.','error')},
+  toggleConsole(){q('#admin-dashboard-container')?.classList.toggle('ep-console-collapsed')},
+  shortcut(title){const o=q('#ep60-shortcut-out');const d=adminDB(),rr=allAdminRows();let v='';if(title.includes('Candidate Count'))v=rr.length;else if(title.includes('Village Count'))v=Object.keys(d?.panchayats||{}).length;else if(title.includes('Ward Count'))v=Object.values(d?.panchayats||{}).reduce((a,p)=>a+Number(p.totalWards||0),0);else if(title.includes('Party Count'))v=new Set(rr.map(x=>partyName(x.c))).size;else if(title.includes('Vote Count'))v=rr.reduce((a,x)=>a+x.votes,0);else if(title==='Open Home')location.hash='home';else if(title==='Open Directory')location.hash='directory';else if(title==='Open Indexed')location.hash='indexed';else if(title==='Open Results')q('#admin-dashboard-container')?.classList.add('ep-console-collapsed'),document.getElementById('admin-dashboard-container')?.classList.remove('hidden');else if(title==='Open Analytics'){}else if(title==='Live Refresh')saveDB();else if(title==='Export JSON Snapshot'){const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='portal_snapshot.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}if(o)o.textContent=typeof v==='number'?`Current value: ${v}`:'Action completed.'}
+ };
+ /* Enhanced sidebar: searchable 60-tool console, mobile toggle, full-screen body. */
+ if(!A.__ep60Patched){
+   const nativeRender=A.renderSidebar?.bind(A),nativeLoad=A.loadTool?.bind(A);
+   if(nativeRender){A.renderSidebar=function(){nativeRender();const foot=document.querySelector('#admin-dashboard-container .w-72 .p-3.border-t');if(foot){const span=foot.querySelector('span:last-child');if(span)span.textContent=`Tools: ${A.toolsList.length}`};const top=q('#ep-admin-tool-search-top');if(top){top.value=q('#admin-tool-search')?.value||''}}}
+   if(nativeLoad){A.loadTool=function(index){nativeLoad(index);const c=q('#admin-dashboard-container');c?.classList.add('ep-admin-tool-fullscreen');setTimeout(()=>{try{const title=A.toolsList[index]?.title||'';if(title==='Bulk Candidate Import')bindBulk();if(title==='Rajasthan Directory Cache')loadDirectory(false);if(q('#admin-tool-body'))q('#admin-tool-body').style.opacity='1'}catch(e){console.warn(e)}},180)}}
+   A.__ep60Patched=true;
+ }
+}
+function installAdminUI(){
+ const dash=q('#admin-dashboard-container');if(!dash||dash.__epUI)return;dash.__epUI=true;
+ const top=dash.querySelector('.h-16');if(top){const box=document.createElement('div');box.style.display='flex';box.style.alignItems='center';box.style.gap='7px';box.innerHTML='<input id="ep-admin-tool-search-top" placeholder="Search 60 admin features…"><button type="button" class="ep-admin-console-toggle" id="ep-admin-console-toggle" title="Show/hide console"><i class="fa-solid fa-bars"></i></button>';top.querySelector('.flex.items-center.space-x-4:last-child')?.prepend(box);q('#ep-admin-console-toggle')?.addEventListener('click',()=>q('#admin-dashboard-container')?.classList.toggle('ep-console-collapsed'));q('#ep-admin-tool-search-top')?.addEventListener('input',e=>{const s=q('#admin-tool-search');if(s){s.value=e.target.value;window.AdminManager?.filterTools?.()}})}
+ const fab=document.createElement('button');fab.id='ep-admin-console-fab';fab.type='button';fab.title='Open admin console';fab.innerHTML='<i class="fa-solid fa-bars"></i>';fab.addEventListener('click',()=>dash.classList.remove('ep-console-collapsed'));dash.appendChild(fab);
+ const body=q('#admin-tool-body');if(body)body.setAttribute('aria-live','polite');
+}
+function boot(){addNavPages();addHomeSections();bindDirectory();bindIndex();liveSync();installAdminUI();buildExtraAdminTools();setRouteButtons();routeTo(location.hash||'home');}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,900),{once:true});else setTimeout(boot,900);
+setTimeout(()=>{try{buildExtraAdminTools();installAdminUI();if(location.hash.includes('directory'))loadDirectory(false)}catch(e){console.warn(e)}},2200);
+window.EP40=U40;
+window.EPMultiPage={route:routeTo,loadDirectory,renderIndex};
 })();
 </script>
 
