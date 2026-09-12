@@ -665,18 +665,34 @@ footer{background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#
 window.EP50ElectionPosters=['Sewing Machine','Bat','Ball','Balloon','Bicycle','Lotus','Tree','Chair','Table','Cup','Umbrella','Bell','Book','Pen','Key','Lock','Lamp','Fan','Clock','Mobile','Camera','Car','Bus','Tractor','Plough','Spade','Bucket','Jug','Glass','Basket','Ladder','Wheel','Star','Sun','Moon','Flower','Rose','Coconut','Mango','Banana','Apple','Kite','Boat','Airplane','House','Road Roller','Hand Pump','Bulb','Football','Cricket'];
 </script>
 
-<style id="rajasthan-hierarchy-style">
-#rajasthan-election-hierarchy{margin:0 0 28px;padding:24px;border:1px solid rgba(148,163,184,.25);border-radius:24px;background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(30,41,59,.94));box-shadow:0 20px 60px rgba(2,6,23,.25)}
-#rajasthan-election-hierarchy .reh-title{display:flex;align-items:center;gap:12px;margin-bottom:8px;color:#fff;font-weight:900;font-size:1.35rem}
-#rajasthan-election-hierarchy .reh-sub{color:#cbd5e1;margin:0 0 18px;font-size:.9rem;line-height:1.6}
-.reh-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.reh-field label{display:block;color:#f8fafc;font-size:.78rem;font-weight:800;margin:0 0 7px}.reh-field select{width:100%;min-height:48px;border-radius:13px;padding:0 13px;border:1px solid #475569;background:#0f172a;color:#fff;font-weight:700;outline:none}.reh-field select:focus{border-color:#fbbf24;box-shadow:0 0 0 3px rgba(251,191,36,.13)}
-.reh-status{margin-top:15px;padding:12px 14px;border-radius:13px;background:rgba(15,23,42,.8);color:#cbd5e1;font-size:.82rem}.reh-status.ready{border:1px solid rgba(34,197,94,.35);color:#bbf7d0}.reh-status.warn{border:1px solid rgba(251,191,36,.35);color:#fde68a}
-.reh-import{margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.reh-import input{color:#cbd5e1;font-size:.8rem}.reh-btn{border:0;border-radius:11px;padding:10px 14px;background:#fbbf24;color:#111827;font-weight:900;cursor:pointer}.reh-btn.secondary{background:#334155;color:#fff}.reh-lock{opacity:.5;pointer-events:none}.reh-note{font-size:.72rem;color:#94a3b8;margin-top:8px}
-#user-panchayat-select.reh-locked{opacity:.55;pointer-events:none}
-@media(max-width:900px){.reh-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.reh-grid{grid-template-columns:1fr}#rajasthan-election-hierarchy{padding:18px}}
+<style id="ep-cascading-booth-style">
+#ep-cascading-booth{margin:0 0 26px;background:linear-gradient(135deg,#fff7ed,#fff 48%,#eef8f0);border:2px solid #c7d9cc;border-radius:24px;padding:24px;box-shadow:0 18px 44px rgba(6,35,61,.10);position:relative;overflow:hidden}
+#ep-cascading-booth:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666%)}
+.ep-booth-header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}
+.ep-booth-kicker{font-size:11px;font-weight:950;letter-spacing:.13em;color:#0b7a42}
+.ep-booth-header h2{margin:4px 0;font-size:28px;font-weight:950;color:#082742}
+.ep-booth-header p{margin:0;color:#5b6f80;font-size:13px;line-height:1.6;max-width:840px}
+.ep-booth-status{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:#fff;border:1px solid #cbdad0;font-size:11px;font-weight:900;color:#7a520e;white-space:nowrap}
+.ep-booth-status.ready{color:#0b6c39;border-color:#9dceb0;background:#effaf2}
+.ep-booth-step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ep-booth-step-card{padding:17px;border:1px solid #ccddd1;border-radius:18px;background:rgba(255,255,255,.82);position:relative}
+.ep-booth-step-card.is-disabled{opacity:.72}
+.ep-booth-step-number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#082742;color:#fff;font-weight:950;margin-bottom:11px}
+.ep-booth-step-card label{display:block;font-size:13px;font-weight:950;color:#13344d;margin-bottom:7px}
+.ep-booth-step-card small{display:block;margin-top:8px;color:#6b7e8e;font-size:10px;line-height:1.45}
+.ep-booth-step-card select:disabled{cursor:not-allowed;background:#eef2f0!important;color:#87958d!important}
+.ep-booth-summary{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px;padding:13px 14px;border-radius:14px;background:#fff;border:1px solid #d7e3da}
+.ep-booth-summary span{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;background:#f7faf8;font-size:11px;color:#536878}
+.ep-booth-summary i{color:#138808}.ep-booth-summary b{color:#16324b}.ep-booth-summary em{font-style:normal;font-weight:850;color:#082742}
+.ep-booth-lock{display:flex;align-items:center;gap:12px;margin-top:14px;padding:14px;border-radius:14px;border:1px dashed #dbad73;background:#fff8ee;color:#7b511c}
+.ep-booth-lock i{font-size:22px}.ep-booth-lock strong,.ep-booth-lock span{display:block}.ep-booth-lock strong{font-size:12px}.ep-booth-lock span{font-size:11px;margin-top:2px}
+#ep-cascading-booth.ep-ready .ep-booth-lock{display:none}
+/* Keep every original character in the source, while the new flow becomes the visible selector. */
+#voting-section > .mb-10{display:none!important}
+#voting-section > .ep-voting-note{margin-bottom:18px}
+@media(max-width:1000px){.ep-booth-step-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){#ep-cascading-booth{padding:18px}.ep-booth-header{flex-direction:column}.ep-booth-header h2{font-size:23px}.ep-booth-step-grid{grid-template-columns:1fr}.ep-booth-summary{flex-direction:column}.ep-booth-status{white-space:normal}}
 </style>
-
 </head>
 <body class="text-slate-800 h-full flex flex-col relative">
 <!-- TOAST NOTIFICATION CONTAINER -->
@@ -784,26 +800,6 @@ window.EP50ElectionPosters=['Sewing Machine','Bat','Ball','Balloon','Bicycle','L
   </div>
 </section>
 
-
-<!-- RAJASTHAN ELECTION HIERARCHY: TYPE -> DISTRICT -> TEHSIL -> VILLAGE / LOCAL BODY -->
-<section id="rajasthan-election-hierarchy" aria-labelledby="reh-title">
-  <div class="reh-title" id="reh-title"><i class="fa-solid fa-sitemap"></i><span>पहले चुनाव का प्रकार चुनें, फिर स्थान चुनें</span></div>
-  <p class="reh-sub">मतदान क्षेत्र खोलने का क्रम: <b>चुनाव का प्रकार → जिला → तहसील → गाँव / नगर निकाय / वार्ड</b>। किसी विकल्प को छोड़े बिना अगला चरण सक्रिय होगा।</p>
-  <div class="reh-grid">
-    <div class="reh-field"><label for="reh-election-type">1. चुनाव का प्रकार</label><select id="reh-election-type"><option value="">-- चुनाव का प्रकार चुनें --</option></select></div>
-    <div class="reh-field"><label for="reh-district">2. जिला</label><select id="reh-district" disabled><option value="">-- पहले चुनाव का प्रकार चुनें --</option></select></div>
-    <div class="reh-field"><label for="reh-tehsil">3. तहसील</label><select id="reh-tehsil" disabled><option value="">-- पहले जिला चुनें --</option></select></div>
-    <div class="reh-field"><label for="reh-target">4. गाँव / स्थानीय क्षेत्र</label><select id="reh-target" disabled><option value="">-- पहले तहसील चुनें --</option></select></div>
-  </div>
-  <div id="reh-status" class="reh-status warn">पहले चुनाव का प्रकार चुनें।</div>
-  <div class="reh-import">
-    <input id="reh-location-csv" type="file" accept=".csv,text/csv" aria-label="स्थान CSV आयात करें">
-    <button type="button" class="reh-btn secondary" id="reh-import-btn"><i class="fa-solid fa-file-import"></i> Location CSV Import</button>
-    <button type="button" class="reh-btn secondary" id="reh-clear-btn"><i class="fa-solid fa-rotate-left"></i> Selection Reset</button>
-  </div>
-  <div class="reh-note">CSV columns: electionType,district,tehsil,target,targetType,panchayatId. Existing candidate/village database को हटाया नहीं जाता; यह hierarchy केवल सही क्षेत्र चुनने के लिए है।</div>
-</section>
-
 <div id="voting-section"><div class="ep-voting-note" id="ep-voting-note">
 <span class="ep-voting-note-mark"><i class="fa-solid fa-person-circle-check"></i></span>
 <div><strong data-en="This is not an official government election" data-hi="यह वास्तविक सरकारी चुनाव नहीं है">यह वास्तविक सरकारी चुनाव नहीं है</strong>
@@ -823,6 +819,76 @@ window.EP50ElectionPosters=['Sewing Machine','Bat','Ball','Balloon','Bicycle','L
 </div>
 </div>
 </div>
+
+<!-- ============================================================
+     PUBLIC OPINION BOOTH — CASCADING ELECTION SELECTION
+     Required order: Election Type -> District -> Tehsil -> Village
+     This layer is additive: original source code remains intact.
+     ============================================================ -->
+<div id="ep-cascading-booth" class="ep-cascading-booth" aria-label="Public Opinion Booth">
+  <div class="ep-booth-header">
+    <div>
+      <span class="ep-booth-kicker">PUBLIC OPINION BOOTH</span>
+      <h2>जनमत मतदान केंद्र</h2>
+      <p>पहले चुनाव का प्रकार चुनें, फिर जिला → तहसील → गाँव चुनें। इसके बाद संबंधित सार्वजनिक राय बूथ और उम्मीदवार दिखाई देंगे।</p>
+    </div>
+    <div class="ep-booth-status" id="ep-booth-status"><i class="fa-solid fa-circle-info"></i><span>चयन पूरा करें</span></div>
+  </div>
+
+  <div class="ep-booth-step-grid">
+    <div class="ep-booth-step-card">
+      <div class="ep-booth-step-number">1</div>
+      <label for="ep-election-type">चुनाव / जनमत प्रकार</label>
+      <select id="ep-election-type" class="input-premium">
+        <option value="">-- चुनाव का प्रकार चुनें --</option>
+      </select>
+      <small>जैसे लोकसभा, विधानसभा, जिला परिषद, पंचायत समिति, नगर पालिका, वार्ड आदि।</small>
+    </div>
+
+    <div class="ep-booth-step-card is-disabled" id="ep-district-card">
+      <div class="ep-booth-step-number">2</div>
+      <label for="ep-district-select">जिला</label>
+      <select id="ep-district-select" class="input-premium" disabled>
+        <option value="">-- पहले चुनाव प्रकार चुनें --</option>
+      </select>
+      <small>केवल चुने गए चुनाव प्रकार के उपलब्ध जिले दिखेंगे।</small>
+    </div>
+
+    <div class="ep-booth-step-card is-disabled" id="ep-tehsil-card">
+      <div class="ep-booth-step-number">3</div>
+      <label for="ep-tehsil-select">तहसील</label>
+      <select id="ep-tehsil-select" class="input-premium" disabled>
+        <option value="">-- पहले जिला चुनें --</option>
+      </select>
+      <small>जिले के अंदर उपलब्ध तहसील/क्षेत्र यहाँ आएँगे।</small>
+    </div>
+
+    <div class="ep-booth-step-card is-disabled" id="ep-village-card">
+      <div class="ep-booth-step-number">4</div>
+      <label for="ep-location-village-select">गाँव / ग्राम पंचायत</label>
+      <select id="ep-location-village-select" class="input-premium" disabled>
+        <option value="">-- पहले तहसील चुनें --</option>
+      </select>
+      <small>गाँव चुनने के बाद Public Opinion Booth खुल जाएगा।</small>
+    </div>
+  </div>
+
+  <div class="ep-booth-summary" id="ep-booth-summary">
+    <span><i class="fa-solid fa-landmark"></i><b>चुनाव:</b> <em id="ep-selected-election-label">—</em></span>
+    <span><i class="fa-solid fa-location-dot"></i><b>जिला:</b> <em id="ep-selected-district-label">—</em></span>
+    <span><i class="fa-solid fa-map-location-dot"></i><b>तहसील:</b> <em id="ep-selected-tehsil-label">—</em></span>
+    <span><i class="fa-solid fa-house"></i><b>गाँव:</b> <em id="ep-selected-village-label">—</em></span>
+  </div>
+
+  <div class="ep-booth-lock" id="ep-booth-lock">
+    <i class="fa-solid fa-lock"></i>
+    <div>
+      <strong>Public Opinion Booth अभी लॉक है</strong>
+      <span>पहले चारों चयन पूरे करें।</span>
+    </div>
+  </div>
+</div>
+
 <!-- Step 1: Village Selection -->
 <div class="mb-10 relative z-10 max-w-xl">
 <label class="block text-sm font-bold text-slate-700 mb-3 flex items-center">
@@ -4217,56 +4283,206 @@ body{background:linear-gradient(180deg,#f7fafc 0,#eef3f7 100%)!important;color:v
   function saveVillage(){const v=villageId();if(!v)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');put('EP_SAVED_VILLAGE',v);toast(t('गाँव इस डिवाइस पर सेव हो गया।','Village saved on this device.'),'success')}
   async function shareVillage(){const v=villageId(),p=dbx()?.panchayats?.[v],url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:p?.name||'Panchayat Portal',text:`${p?.name||v} — ${t('सार्वजनिक जनमत पोर्टल','Public opinion portal')}`,url})}else if(navigator.clipboard){await navigator.clipboard.writeText(url);toast(t('लिंक कॉपी हो गया।','Link copied.'),'success')}}catch(e){if(String(e?.name)!=='AbortError')toast(t('शेयर करना पूरा नहीं हो सका।','Sharing could not be completed.'),'error')}}
   function printVillage(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');const rows=candidatesFor(p);const w=window.open('','_blank');if(!w)return toast(t('प्रिंट विंडो ब्लॉक हो गई।','Print window was blocked by the browser.'),'error');w.document.open();w.document.write(`<!doctype html><html><head><title>${esc(p.name)} Summary</title><style>body{font-family:Arial,sans-serif;padding:28px;color:#17324a}table{border-collapse:collapse;width:100%;margin-top:18px}th,td{border:1px solid #d9e2e9;padding:9px;text-align:left;font-size:12px}th{background:#f4f7f9}.note{font-size:11px;color:#687a8b}</style></head><body><h1>${esc(p.name)}</h1><p class="note">${esc(t('यह स्वतंत्र सार्वजनिक राय पोर्टल है; यह आधिकारिक सरकारी चुनाव परिणाम नहीं है।','Independent public-opinion portal; not an official government election result.'))}</p><table><tr><th>Ward</th><th>Candidate</th><th>Post</th><th>Party</th><th>Votes</th></tr>${rows.map(x=>`<tr><td>${x.w}</td><td>${esc(x.c.name||'')}</td><td>${esc(x.c.post||'—')}</td><td>${esc(x.c.partyName||x.c.party||'Independent')}</td><td>${x.votes}</td></tr>`).join('')}</table>
-<script id="rajasthan-election-hierarchy-engine">
+<script id="ep-cascading-election-flow">
 (function(){
-'use strict';
-const H={
- key:'EP_RAJASTHAN_LOCATION_MASTER_V2',
- types:[
-  ['lok-sabha','लोकसभा जनमत / Lok Sabha'],['vidhan-sabha','विधानसभा जनमत / Vidhan Sabha'],['zila-parishad','जिला परिषद / Zila Parishad'],['panchayat-samiti','पंचायत समिति / Panchayat Samiti'],['gram-panchayat','ग्राम पंचायत / Gram Panchayat'],['nagar-nigam','नगर निगम / Nagar Nigam'],['nagar-parishad','नगर परिषद / Nagar Parishad'],['nagar-palika','नगर पालिका / Nagar Palika'],['ward','वार्ड जनमत / Ward Opinion']
- ],
- districts:[['Ajmer','अजमेर'],['Alwar','अलवर'],['Balotra','बालोतरा'],['Banswara','बांसवाड़ा'],['Baran','बारां'],['Barmer','बाड़मेर'],['Beawar','ब्यावर'],['Bharatpur','भरतपुर'],['Bhilwara','भीलवाड़ा'],['Bikaner','बीकानेर'],['Bundi','बूंदी'],['Chittorgarh','चित्तौड़गढ़'],['Churu','चूरू'],['Dausa','दौसा'],['Deeg','डीग'],['Dholpur','धौलपुर'],['Didwana-Kuchaman','डीडवाना-कुचामन'],['Dungarpur','डूंगरपुर'],['Hanumangarh','हनुमानगढ़'],['Jaipur','जयपुर'],['Jaisalmer','जैसलमेर'],['Jalore','जालौर'],['Jhalawar','झालावाड़'],['Jhunjhunu','झुंझुनूं'],['Jodhpur','जोधपुर'],['Karauli','करौली'],['Khairthal-Tijara','खैरथल-तिजारा'],['Kota','कोटा'],['Kotputli-Behror','कोटपूतली-बहरोड़'],['Nagaur','नागौर'],['Pali','पाली'],['Phalodi','फलोदी'],['Pratapgarh','प्रतापगढ़'],['Rajsamand','राजसमंद'],['Salumber','सलूंबर'],['Sawai Madhopur','सवाई माधोपुर'],['Sikar','सीकर'],['Sirohi','सिरोही'],['Sri Ganganagar','श्रीगंगानगर'],['Tonk','टोंक'],['Udaipur','उदयपुर']]
-};
-const $=id=>document.getElementById(id);
-const esc=x=>String(x??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));
-const norm=x=>String(x??'').trim().toLowerCase().replace(/\s+/g,' ');
-function read(){try{return JSON.parse(localStorage.getItem(H.key)||'[]')}catch{return[]}}
-function write(a){localStorage.setItem(H.key,JSON.stringify(a||[]))}
-function seed(){let a=read(); if(!a.length){a=H.districts.map(d=>({electionType:'',district:d[0],districtHi:d[1],tehsils:[]}));write(a)} return a}
-function type(){return $('reh-election-type')?.value||''}
-function data(){return read()}
-function db(){try{return window.DBManager?.get?.()||window.__EP_DB__||window.db||null}catch{return null}}
-function panchayats(){const d=db();return d?.panchayats&&typeof d.panchayats==='object'?d.panchayats:{} }
-function deriveRows(){
- const rows=[]; const ps=panchayats();
- Object.entries(ps).forEach(([id,p])=>{
-  const district=p.district||p.districtName||p.districtEn||p.location?.district||'';
-  const tehsil=p.tehsil||p.tehsilName||p.tehsilEn||p.location?.tehsil||'';
-  const target=p.village||p.villageName||p.name||p.nameEn||p.panchayatName||p.gramPanchayat||'';
-  const et=p.electionType||p.election||'gram-panchayat';
-  if(target) rows.push({electionType:et,district,tehsil,target,targetType:p.targetType||'village',panchayatId:id,districtHi:p.districtHi||district,tehsilHi:p.tehsilHi||tehsil,targetHi:p.villageHi||p.nameHi||target});
- });
- return rows;
-}
-function allRows(){return [...data().flatMap(x=>x.rows||[]),...deriveRows()];}
-function fill(sel,items,placeholder,disabled){if(!sel)return;sel.innerHTML='<option value="">'+esc(placeholder)+'</option>';const seen=new Set();items.forEach(x=>{const v=typeof x==='string'?x:x.value;if(!v||seen.has(norm(v)))return;seen.add(norm(v));const o=document.createElement('option');o.value=v;o.textContent=typeof x==='string'?x:(x.label||v);if(x?.data)o.dataset.json=JSON.stringify(x.data);sel.appendChild(o)});sel.disabled=!!disabled}
-function initTypes(){fill($('reh-election-type'),H.types.map(x=>({value:x[0],label:x[1]})),'-- चुनाव का प्रकार चुनें --',false)}
-function districtList(){const a=H.districts.map(d=>({value:d[0],label:d[1]+' / '+d[0]}));const rows=allRows();rows.filter(r=>!type()||r.electionType===type()).forEach(r=>{if(r.district)a.push({value:r.district,label:(r.districtHi&&r.districtHi!==r.district?r.districtHi+' / ':'')+r.district})});return a}
-function selectedRows(){const t=type(),d=$('reh-district')?.value||'',te=$('reh-tehsil')?.value||'';return allRows().filter(r=>(!t||!r.electionType||norm(r.electionType)===norm(t))&&(!d||norm(r.district)===norm(d))&&(!te||norm(r.tehsil)===norm(te)))}
-function renderDistricts(){fill($('reh-district'),districtList(),'-- जिला चुनें --',false);fill($('reh-tehsil'),[],'-- पहले जिला चुनें --',true);fill($('reh-target'),[],'-- पहले तहसील चुनें --',true);status('जिला चुनें।','warn')}
-function renderTehsils(){const d=$('reh-district').value;const rows=selectedRows();let a=[];rows.forEach(r=>{if(r.tehsil)a.push({value:r.tehsil,label:(r.tehsilHi&&r.tehsilHi!==r.tehsil?r.tehsilHi+' / ':'')+r.tehsil})});const master=data().find(x=>norm(x.district)===norm(d));(master?.tehsils||[]).forEach(t=>a.push({value:typeof t==='string'?t:t.name,label:typeof t==='string'?t:(t.hi?t.hi+' / ':'')+t.name}));fill($('reh-tehsil'),a,'-- तहसील चुनें --',false);fill($('reh-target'),[],'-- पहले तहसील चुनें --',true);status('तहसील चुनें।','warn')}
-function renderTargets(){const rows=selectedRows();const a=[];rows.forEach(r=>{if(r.target)a.push({value:r.target+'||'+(r.panchayatId||''),label:(r.targetHi&&r.targetHi!==r.target?r.targetHi+' / ':'')+r.target,data:r})});fill($('reh-target'),a,'-- गाँव / स्थानीय क्षेत्र चुनें --',false);status(a.length?'अब गाँव / स्थानीय क्षेत्र चुनें।':'इस स्थान के लिए अभी target data नहीं है। Admin/CSV से location data जोड़ें।',a.length?'warn':'warn')}
-function syncLegacy(){const o=$('reh-target')?.selectedOptions?.[0];if(!o||!o.value)return;let r;try{r=JSON.parse(o.dataset.json||'null')}catch{};const pid=r?.panchayatId||o.value.split('||')[1]||'';const legacy=$('user-panchayat-select');if(legacy){legacy.value=pid;legacy.dataset.electionType=type();legacy.dataset.district=$('reh-district').value;legacy.dataset.tehsil=$('reh-tehsil').value;legacy.classList.remove('reh-locked');legacy.disabled=false;legacy.style.pointerEvents='auto';} if(pid&&window.UserInterface?.handleVillageSelection){try{window.UserInterface.handleVillageSelection()}catch(e){console.warn(e)}};status('स्थान चयन पूरा है। अब नीचे उम्मीदवार चुनकर जनमत दर्ज करें।','ready');document.getElementById('voting-section')?.scrollIntoView({behavior:'smooth',block:'start'})}
-function status(msg,cls){const e=$('reh-status');if(e){e.className='reh-status '+(cls||'');e.textContent=msg}}
-function reset(){if($('reh-election-type'))$('reh-election-type').value='';fill($('reh-district'),[],'-- पहले चुनाव का प्रकार चुनें --',true);fill($('reh-tehsil'),[],'-- पहले जिला चुनें --',true);fill($('reh-target'),[],'-- पहले तहसील चुनें --',true);const l=$('user-panchayat-select');if(l){l.value='';l.disabled=true;l.classList.add('reh-locked')}status('पहले चुनाव का प्रकार चुनें।','warn')}
-function csv(text){const lines=text.split(/\r?\n/).filter(x=>x.trim());if(lines.length<2)throw Error('CSV empty');const parse=line=>{const out=[];let cur='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(c===','&&!q){out.push(cur.trim());cur=''}else cur+=c}out.push(cur.trim());return out};const h=parse(lines[0]).map(x=>norm(x));const rows=[];for(let i=1;i<lines.length;i++){const v=parse(lines[i]),o={};h.forEach((k,j)=>o[k]=v[j]||'');rows.push(o)}return rows}
-function importCSV(file){const rd=new FileReader();rd.onload=()=>{try{const incoming=csv(String(rd.result));let a=read();incoming.forEach(r=>{if(!r.district)return;let d=a.find(x=>norm(x.district)===norm(r.district));if(!d){d={district:r.district,districtHi:r.district,tehsils:[],rows:[]};a.push(d)}d.rows=d.rows||[];d.rows.push({electionType:r.electiontype||r.election||type()||'gram-panchayat',district:r.district,tehsil:r.tehsil,target:r.target||r.village||r.localbody||r.ward,targetType:r.targettype||'village',panchayatId:r.panchayatid||''}) ; if(r.tehsil&&!d.tehsils.some(t=>norm(typeof t==='string'?t:t.name)===norm(r.tehsil)))d.tehsils.push(r.tehsil)});write(a);renderDistricts();alert('Location CSV imported successfully.');}catch(e){alert('CSV error: '+e.message)}};rd.readAsText(file)}
-function bind(){initTypes();reset();$('reh-election-type')?.addEventListener('change',renderDistricts);$('reh-district')?.addEventListener('change',renderTehsils);$('reh-tehsil')?.addEventListener('change',renderTargets);$('reh-target')?.addEventListener('change',syncLegacy);$('reh-clear-btn')?.addEventListener('click',reset);$('reh-import-btn')?.addEventListener('click',()=>{const f=$('reh-location-csv')?.files?.[0];if(!f)return alert('पहले CSV file चुनें।');importCSV(f)});const l=$('user-panchayat-select');if(l){l.classList.add('reh-locked');l.disabled=true;l.title='पहले ऊपर Election Type → District → Tehsil → Village चुनें';} }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(bind,250),{once:true});else setTimeout(bind,250);
-window.RajasthanElectionHierarchy={reset,read,data,types:H.types,districts:H.districts,allRows,renderDistricts};
+  'use strict';
+  const ELECTION_TYPES=[
+    {id:'lok-sabha',hi:'लोकसभा',en:'Lok Sabha'},
+    {id:'vidhan-sabha',hi:'विधानसभा',en:'Vidhan Sabha'},
+    {id:'zila-parishad',hi:'जिला परिषद',en:'Zila Parishad'},
+    {id:'panchayat-samiti',hi:'पंचायत समिति',en:'Panchayat Samiti'},
+    {id:'gram-panchayat',hi:'ग्राम पंचायत',en:'Gram Panchayat'},
+    {id:'nagar-nigam',hi:'नगर निगम',en:'Nagar Nigam'},
+    {id:'nagar-parishad',hi:'नगर परिषद',en:'Nagar Parishad'},
+    {id:'nagar-palika',hi:'नगर पालिका',en:'Nagar Palika'},
+    {id:'ward',hi:'वार्ड',en:'Ward'},
+    {id:'independent-public-opinion',hi:'स्वतंत्र सार्वजनिक जनमत',en:'Independent Public Opinion'}
+  ];
+  const LS='EP_CASCADE_SELECTION_V1';
+  const q=id=>document.getElementById(id);
+  const clean=v=>String(v??'').trim();
+  const db=()=>window.DBManager?.get?.()||window.__EP_DB__||window.db||null;
+  const safe=v=>clean(v).replace(/[<>]/g,'');
+  const norm=v=>clean(v).toLowerCase().replace(/[^a-z0-9\u0900-\u097F]+/g,'');
+  const uniqueSorted=a=>Array.from(new Set(a.filter(Boolean).map(clean))).sort((x,y)=>x.localeCompare(y,'hi'));
+  const state={type:'',district:'',tehsil:'',villageId:''};
+
+  function storageGet(){try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{return{}}}
+  function storageSet(){try{localStorage.setItem(LS,JSON.stringify(state))}catch{}}
+  function villageRecords(){const D=db();return Object.values(D?.panchayats||{}).filter(Boolean)}
+  function electionOf(p){return clean(p.electionType||p.election_type||p.pollType||p.poll_type||'independent-public-opinion')||'independent-public-opinion'}
+  function districtOf(p){return clean(p.district||p.districtName||p.district_name||p.jila||p.jilaName||p.locationDistrict)}
+  function tehsilOf(p){return clean(p.tehsil||p.tehsilName||p.tehsil_name||p.tahsil||p.tahsilName||p.locationTehsil)}
+  function villageName(p){return clean(p.nameHi||p.name||p.villageName||p.gramPanchayatName)||'गाँव'}
+
+  const RAJASTHAN_DISTRICTS=[
+    'Ajmer','Alwar','Balotra','Banswara','Baran','Barmer','Beawar','Bharatpur','Bhilwara','Bikaner',
+    'Bundi','Chittorgarh','Churu','Dausa','Deeg','Deedwana-Kuchaman','Dholpur','Dungarpur','Hanumangarh','Jaipur',
+    'Jaisalmer','Jalore','Jhalawar','Jhunjhunu','Jodhpur','Karauli','Khairthal-Tijara','Kota','Kotputli-Behror','Nagaur',
+    'Pali','Phalodi','Pratapgarh','Rajsamand','Salumber','Sawai Madhopur','Sikar','Sirohi','Sri Ganganagar','Tonk','Udaipur'
+  ];
+
+  function districtUniverse(){
+    const arr=[...RAJASTHAN_DISTRICTS];
+    villageRecords().forEach(p=>{const d=districtOf(p);if(d)arr.push(d)});
+    // Optional administrator-provided master hierarchy can coexist with the live DB.
+    try{const m=JSON.parse(localStorage.getItem('EP_LOCATION_MASTER')||'{}');(Array.isArray(m.districts)?m.districts:[]).forEach(d=>arr.push(typeof d==='string'?d:d.name))}catch{}
+    return uniqueSorted(arr);
+  }
+  function villagesFor(type,district,tehsil){
+    return villageRecords().filter(p=>{
+      const et=electionOf(p);
+      const d=districtOf(p), t=tehsilOf(p);
+      if(type && et!==type && !(type==='independent-public-opinion' && !p.electionType && !p.election_type)) return false;
+      if(district && d!==district)return false;
+      if(tehsil && t!==tehsil)return false;
+      return true;
+    });
+  }
+  function option(el,value,label,disabled){const o=document.createElement('option');o.value=value;o.textContent=label;o.disabled=!!disabled;el.appendChild(o);return o}
+  function resetSelect(id,placeholder,disabled=true){const el=q(id);if(!el)return;el.innerHTML='';option(el,'',placeholder);el.disabled=disabled}
+  function setDisabledCard(cardId,disabled){q(cardId)?.classList.toggle('is-disabled',disabled)}
+
+  function populateTypes(){
+    const el=q('ep-election-type');if(!el)return;
+    el.innerHTML='';option(el,'','-- चुनाव का प्रकार चुनें --');
+    ELECTION_TYPES.forEach(x=>option(el,x.id,`${x.hi} / ${x.en}`));
+  }
+
+  function populateDistricts(){
+    const el=q('ep-district-select'); if(!el)return;
+    resetSelect('ep-district-select','-- पहले चुनाव प्रकार चुनें --',!state.type);
+    if(!state.type)return;
+    const records=villagesFor(state.type,'','');
+    const mapped=uniqueSorted(records.map(districtOf).filter(Boolean));
+    const manual=districtUniverse();
+    // Always present the Rajasthan district master; mapped districts are marked as ready.
+    manual.forEach(d=>{
+      const isMapped=mapped.includes(d);
+      option(el,d,isMapped?`${d}  ✓`:`${d}  · location mapping pending`);
+    });
+    if(ds.includes(state.district))el.value=state.district;else state.district='';
+    setDisabledCard('ep-district-card',false);
+    updateSummary();
+  }
+
+  function populateTehsils(){
+    const el=q('ep-tehsil-select');if(!el)return;
+    resetSelect('ep-tehsil-select',state.district?'-- तहसील चुनें --':'-- पहले जिला चुनें --',!state.district);
+    if(!state.district)return;
+    const ts=uniqueSorted(villagesFor(state.type,state.district,'').map(tehsilOf).filter(Boolean));
+    ts.forEach(t=>option(el,t,t));
+    if(ts.includes(state.tehsil))el.value=state.tehsil;else state.tehsil='';
+    setDisabledCard('ep-tehsil-card',false);
+    updateSummary();
+  }
+
+  function populateVillages(){
+    const el=q('ep-location-village-select');if(!el)return;
+    resetSelect('ep-location-village-select',state.tehsil?'-- गाँव चुनें --':'-- पहले तहसील चुनें --',!state.tehsil);
+    if(!state.tehsil)return;
+    const rows=villagesFor(state.type,state.district,state.tehsil);
+    rows.sort((a,b)=>villageName(a).localeCompare(villageName(b),'hi'));
+    rows.forEach(p=>option(el,p.id,villageName(p)));
+    if(rows.some(p=>p.id===state.villageId))el.value=state.villageId;else state.villageId='';
+    setDisabledCard('ep-village-card',false);
+    updateSummary();
+  }
+
+  function syncLegacyVillage(){
+    const legacy=q('user-panchayat-select');
+    if(!legacy||!state.villageId)return false;
+    const D=db();
+    if(D?.panchayats?.[state.villageId]){
+      legacy.value=state.villageId;
+      try{legacy.dispatchEvent(new Event('change',{bubbles:true}))}catch{}
+      try{window.UserInterface?.handleVillageSelection?.()}catch(e){console.warn(e)}
+      try{window.EPFinalWorking?.refresh?.()}catch{}
+      return true;
+    }
+    return false;
+  }
+
+  function hideInitialVillage(){
+    const legacy=q('user-panchayat-select');
+    if(legacy)legacy.value='';
+    const wrap=q('user-candidates-wrapper');
+    if(wrap)wrap.classList.add('hidden');
+    const lock=q('ep-booth-lock');if(lock)lock.style.display='flex';
+    q('ep-cascading-booth')?.classList.remove('ep-ready');
+  }
+
+  function showReady(){
+    const type=ELECTION_TYPES.find(x=>x.id===state.type);
+    q('ep-booth-status').classList.add('ready');
+    q('ep-booth-status').innerHTML='<i class="fa-solid fa-circle-check"></i><span>चयन पूरा — बूथ खुला</span>';
+    q('ep-cascading-booth')?.classList.add('ep-ready');
+    updateSummary();
+    syncLegacyVillage();
+  }
+
+  function updateSummary(){
+    const type=ELECTION_TYPES.find(x=>x.id===state.type);
+    q('ep-selected-election-label').textContent=type?`${type.hi} / ${type.en}`:'—';
+    q('ep-selected-district-label').textContent=state.district||'—';
+    q('ep-selected-tehsil-label').textContent=state.tehsil||'—';
+    const p=db()?.panchayats?.[state.villageId];
+    q('ep-selected-village-label').textContent=p?villageName(p):'—';
+    storageSet();
+  }
+
+  function chooseType(v){
+    state.type=v;state.district='';state.tehsil='';state.villageId='';
+    populateDistricts();resetSelect('ep-tehsil-select','-- पहले जिला चुनें --',true);resetSelect('ep-location-village-select','-- पहले तहसील चुनें --',true);
+    setDisabledCard('ep-tehsil-card',true);setDisabledCard('ep-village-card',true);hideInitialVillage();updateSummary();
+  }
+  function chooseDistrict(v){
+    state.district=v;state.tehsil='';state.villageId='';
+    populateTehsils();resetSelect('ep-location-village-select','-- पहले तहसील चुनें --',true);setDisabledCard('ep-village-card',true);hideInitialVillage();updateSummary();
+  }
+  function chooseTehsil(v){
+    state.tehsil=v;state.villageId='';populateVillages();hideInitialVillage();updateSummary();
+  }
+  function chooseVillage(v){
+    state.villageId=v;updateSummary();
+    if(!v){hideInitialVillage();return;}
+    const ok=syncLegacyVillage();
+    if(ok)showReady();
+  }
+
+  function init(){
+    populateTypes();
+    const saved=storageGet();
+    const D=db();
+    state.type=ELECTION_TYPES.some(x=>x.id===saved.type)?saved.type:'';
+    state.district=clean(saved.district);
+    state.tehsil=clean(saved.tehsil);
+    state.villageId=clean(saved.villageId);
+    q('ep-election-type').value=state.type;
+    if(state.type){populateDistricts();q('ep-district-select').value=state.district;populateTehsils();q('ep-tehsil-select').value=state.tehsil;populateVillages();q('ep-location-village-select').value=state.villageId}
+    [
+      ['ep-election-type','change',e=>chooseType(e.target.value)],
+      ['ep-district-select','change',e=>chooseDistrict(e.target.value)],
+      ['ep-tehsil-select','change',e=>chooseTehsil(e.target.value)],
+      ['ep-location-village-select','change',e=>chooseVillage(e.target.value)]
+    ].forEach(([id,ev,fn])=>q(id)?.addEventListener(ev,fn));
+    updateSummary();
+    if(state.villageId && D?.panchayats?.[state.villageId])showReady();else hideInitialVillage();
+  }
+
+  // Expose a safe API for the existing app and future admin importer.
+  window.EPCascadingBooth={
+    state,
+    electionTypes:ELECTION_TYPES,
+    refresh:()=>{populateTypes();if(state.type)populateDistricts();if(state.district)populateTehsils();if(state.tehsil)populateVillages();updateSummary()},
+    openForVillage:id=>{const p=db()?.panchayats?.[id];if(!p)return false;state.type=electionOf(p);state.district=districtOf(p);state.tehsil=tehsilOf(p);state.villageId=id;const et=q('ep-election-type');if(et)et.value=state.type;populateDistricts();const ds=q('ep-district-select');if(ds)ds.value=state.district;populateTehsils();const ts=q('ep-tehsil-select');if(ts)ts.value=state.tehsil;populateVillages();const vs=q('ep-location-village-select');if(vs)vs.value=id;showReady();return true;}
+  };
+
+  // Re-apply after the original app has initialized its database.
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120),{once:true});else setTimeout(init,120);
+  setTimeout(()=>{try{window.EPCascadingBooth?.refresh()}catch{}},900);
 })();
 </script>
-
 </body></html>`);w.document.close();setTimeout(()=>w.print(),250)}
   function villageSummary(){const p=village();if(!p)return showHtml(['गाँव सारांश','Village Summary'],`<p>${esc(t('पहले गाँव चुनें।','Select a village first.'))}</p>`);const rows=candidatesFor(p);const total=rows.reduce((a,x)=>a+x.votes,0);showHtml(['गाँव सारांश','Village Summary'],`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div><strong>${p.totalWards}</strong><div style="font-size:11px;color:#687a8b">${esc(t('वार्ड','Wards'))}</div></div><div><strong>${rows.length}</strong><div style="font-size:11px;color:#687a8b">${esc(t('उम्मीदवार','Candidates'))}</div></div><div><strong>${total}</strong><div style="font-size:11px;color:#687a8b">${esc(t('दर्ज जनमत वोट','Recorded votes'))}</div></div></div>`)}
   function wardSnapshot(){const p=village();if(!p)return toast(t('पहले गाँव चुनें।','Select a village first.'),'error');showHtml(['वार्ड स्थिति','Ward Snapshot'],`<div>${Array.from({length:Number(p.totalWards||0)},(_,i)=>{const w=i+1,rows=candidatesFor(p).filter(x=>x.w===w),votes=rows.reduce((a,x)=>a+x.votes,0),wd=p.wardsData?.[w]||{};return `<div style="padding:12px 0;border-bottom:1px solid #e7edf1"><strong>Ward ${w}</strong><div style="font-size:11px;color:#687a8b;margin-top:4px">${esc(wd.reservation||'General')} · ${rows.length} ${esc(t('उम्मीदवार','candidates'))} · ${votes} ${esc(t('वोट','votes'))}</div></div>`}).join('')}</div>`)}
